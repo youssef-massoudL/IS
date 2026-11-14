@@ -1,6 +1,7 @@
 downloads/*.zip
 _site/
 node_modules/
+Skills/
 .DS_Store
 Thumbs.db
 desktop.ini
