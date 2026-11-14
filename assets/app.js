@@ -55,6 +55,7 @@ const state = {
   questionIndex: null,
   renderedSubject: null,
   filtersOpen: false,
+  searchOpen: false,
   sidebarOpen: false,
 };
 
@@ -71,6 +72,8 @@ const sidebarEl = $("#sidebar");
 const sidebarToggleEl = $("#sidebar-toggle");
 const sidebarBackdropEl = $("#sidebar-backdrop");
 const filterToggleEl = $("#filter-toggle");
+const searchPanelEl = $("#search-panel");
+const searchToggleEl = $("#search-toggle");
 const tabsPrevEl = $("#tabs-prev");
 const tabsNextEl = $("#tabs-next");
 const modeSwitcherEl = $("#mode-switcher");
@@ -308,13 +311,37 @@ function resetFacets() {
   state.facets = { subject: "all", lecture: "all", kind: "all" };
 }
 
+function updateSearchPanel() {
+  if (!searchPanelEl) return;
+  const open = Boolean(state.searchOpen || searchActive() || state.filtersOpen);
+  searchPanelEl.hidden = !open;
+  searchToggleEl?.setAttribute("aria-expanded", String(open));
+  searchToggleEl?.classList.toggle("is-active", open);
+}
+
 function resetSearchUI() {
   state.query = "";
   state.filtersOpen = false;
+  state.searchOpen = false;
   searchEl.value = "";
   resetFacets();
   searchEl.blur();
   render();
+}
+
+function openSearch() {
+  state.searchOpen = true;
+  updateSearchPanel();
+  searchEl.focus();
+}
+
+function closeSearch() {
+  if (searchActive() || state.filtersOpen) {
+    resetSearchUI();
+    return;
+  }
+  state.searchOpen = false;
+  updateSearchPanel();
 }
 
 function parseQuery(raw) {
@@ -614,7 +641,6 @@ const fmtSize = (bytes) => {  if (!bytes) return "0 KB";
 
 const subjectFiles = (subject) => subject.sections.flatMap((section) => section.files);
 const subjectSize = (subject) => subjectFiles(subject).reduce((sum, file) => sum + (file.size || 0), 0);
-const totalFiles = () => state.data.subjects.reduce((sum, subject) => sum + subjectFiles(subject).length, 0);
 const sectionIconKey = (section) => SECTION_ICONS[section.id] || "folder";
 const subjectById = (id) => state.data?.subjects?.find((subject) => subject.id === id) || null;
 
@@ -809,9 +835,29 @@ function todayMidterm() {
 }
 
 function defaultSubjectId() {
-  const current = todayMidterm() || nextMidterm();
-  if (current?.subjectId && subjectById(current.subjectId)) return current.subjectId;
-  return subjectById("system-analysis")?.id || state.data?.subjects?.[0]?.id || null;
+  const sorted = (state.schedule?.midterms || [])
+    .map((midterm) => ({
+      ...midterm,
+      startAt: parseDateTime(midterm.date, midterm.startTime),
+      endAt: parseDateTime(midterm.date, midterm.endTime || midterm.startTime),
+    }))
+    .filter((midterm) => !Number.isNaN(midterm.endAt.getTime()))
+    .sort((a, b) => a.startAt - b.startAt);
+
+  const fallback = subjectById("system-analysis")?.id || state.data?.subjects?.[0]?.id || null;
+  if (!sorted.length) return fallback;
+
+  const now = new Date();
+  const windowStart = new Date(sorted[0].startAt);
+  windowStart.setHours(0, 0, 0, 0);
+  const windowEnd = new Date(sorted[sorted.length - 1].endAt);
+  const insideMidterms = now >= windowStart && now <= windowEnd;
+  if (!insideMidterms) return fallback;
+
+  const current = sorted.find(
+    (midterm) => midterm.endAt >= now && subjectById(midterm.subjectId),
+  );
+  return current?.subjectId || fallback;
 }
 
 function countdownLabel(date) {
@@ -1668,6 +1714,7 @@ function render() {
   renderModeSwitcher();
   renderSmartStrip();
   renderFacets();
+  updateSearchPanel();
   if (searchActive()) {
     renderTabs();
     renderSearch(state.query);
@@ -1886,7 +1933,17 @@ viewEl.addEventListener("click", (event) => {
   }
 
   const row = event.target.closest(".file");
-  if (row && !event.target.closest("a")) downloadRow(row);
+  if (row && !event.target.closest("a")) {
+    const wantsDownload = Boolean(event.target.closest(".dl-pill"));
+    if (wantsDownload || !isMobileView()) {
+      downloadRow(row);
+      return;
+    }
+    const subject = state.data.subjects.find((entry) => entry.id === row.dataset.subject);
+    const file =
+      subject && subjectFiles(subject).find((entry) => entry.path === row.dataset.file);
+    if (file) openPreview(file);
+  }
 });
 
 viewEl.addEventListener("change", (event) => {
@@ -1908,7 +1965,14 @@ viewEl.addEventListener("keydown", (event) => {
   if (!row || event.target !== row) return;
   if (event.key === "Enter" || event.key === " ") {
     event.preventDefault();
-    downloadRow(row);
+    if (!isMobileView()) {
+      downloadRow(row);
+      return;
+    }
+    const subject = state.data.subjects.find((entry) => entry.id === row.dataset.subject);
+    const file =
+      subject && subjectFiles(subject).find((entry) => entry.path === row.dataset.file);
+    if (file) openPreview(file);
   }
 });
 
@@ -1943,10 +2007,19 @@ facetsEl?.addEventListener("click", (event) => {
   render();
 });
 
+searchToggleEl?.addEventListener("click", () => {
+  if (!searchPanelEl?.hidden) {
+    state.searchOpen = false;
+    closeSearch();
+    return;
+  }
+  openSearch();
+});
+
 filterToggleEl?.addEventListener("click", () => {
   state.filtersOpen = !state.filtersOpen;
+  state.searchOpen = true;
   render();
-  if (state.filtersOpen) searchEl.focus();
 });
 
 sidebarToggleEl?.addEventListener("click", () => {
@@ -2016,12 +2089,43 @@ document.addEventListener("keydown", (event) => {
   const typing = /^(input|textarea)$/i.test(document.activeElement?.tagName || "");
   if (event.key === "/" && !typing) {
     event.preventDefault();
-    searchEl.focus();
+    openSearch();
   }
   if (event.key === "Escape" && state.sidebarOpen) setSidebarOpen(false, { focus: true });
   if (event.key === "Escape" && !modalEl.hidden) closePreview();
   if (event.key === "Escape" && !uploadEl.hidden) closeUpload();
+  if (
+    event.key === "Escape" &&
+    modalEl.hidden &&
+    uploadEl.hidden &&
+    !state.sidebarOpen &&
+    (state.searchOpen || searchActive() || state.filtersOpen)
+  ) {
+    closeSearch();
+  }
 });
+
+document.addEventListener("click", (event) => {
+  if (!state.searchOpen || searchActive() || state.filtersOpen) return;
+  if (event.target.closest(".search-panel, #search-toggle")) return;
+  state.searchOpen = false;
+  updateSearchPanel();
+});
+
+function isMobileView() {
+  return (
+    window.matchMedia("(max-width: 860px)").matches ||
+    window.matchMedia("(hover: none)").matches
+  );
+}
+
+function absoluteUrl(value) {
+  try {
+    return new URL(value, location.href).href;
+  } catch (error) {
+    return value;
+  }
+}
 
 function openPreview(file) {
   $("#modal-title").textContent = file.title;
@@ -2035,7 +2139,12 @@ function openPreview(file) {
   const ext = (file.ext || "").toLowerCase();
 
   if (ext === "pdf") {
-    body.innerHTML = `<iframe src="${esc(file.path)}#view=FitH" title="${esc(file.title)}"></iframe>`;
+    if (isMobileView() && location.protocol !== "file:") {
+      const viewer = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(absoluteUrl(file.path))}`;
+      body.innerHTML = `<iframe src="${esc(viewer)}" title="${esc(file.title)}" loading="lazy"></iframe>`;
+    } else {
+      body.innerHTML = `<iframe src="${esc(file.path)}#view=FitH" title="${esc(file.title)}"></iframe>`;
+    }
   } else if (["jpg", "jpeg", "png", "webp", "gif"].includes(ext)) {
     body.innerHTML = `<img src="${esc(file.path)}" alt="${esc(file.title)}" style="height:100%;width:100%;object-fit:contain">`;
   } else if (ext === "txt") {
@@ -2091,11 +2200,8 @@ uploadEl.addEventListener("click", (event) => {
 });
 
 function setFooter() {
-  const total = totalFiles();
-  const size = state.data.subjects.reduce((sum, subject) => sum + subjectSize(subject), 0);
   $("#site-title").textContent = state.data.title;
   $("#site-subtitle").textContent = state.data.subtitle;
-  $("#footer-note").textContent = `${total} ملف · ${fmtSize(size)} · آخر تحديث ${state.data.updated}`;
 }
 
 window.addEventListener("hashchange", route);
