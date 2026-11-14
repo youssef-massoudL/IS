@@ -9,7 +9,8 @@ Run after editing data/subjects.json:
 #>
 [CmdletBinding()]
 param(
-  [switch]$Quiet
+  [switch]$Quiet,
+  [switch]$IncludeAll
 )
 
 $ErrorActionPreference = "Stop"
@@ -79,8 +80,10 @@ foreach ($subject in $manifest.subjects) {
   $perSubject[$subject.id] = $entries
 }
 
-$allZip = Join-Path $outRoot "all.zip"
-New-Archive -ZipPath $allZip -Entries $allEntries.ToArray()
+if ($IncludeAll) {
+  $allZip = Join-Path $outRoot "all.zip"
+  New-Archive -ZipPath $allZip -Entries $allEntries.ToArray()
+}
 
 foreach ($subject in $manifest.subjects) {
   $zipPath = Join-Path $outRoot ($subject.id + ".zip")

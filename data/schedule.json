@@ -43,8 +43,8 @@
       "studentsCount": 410,
       "marks": 15,
       "marksNote": "15 درجة ميدترم + 10 درجات Presentation البحث (أو 25 درجة حسب التوزيع النهائي)",
-      "lecturesInScope": [1, 2, 3, 4, 5],
-      "scopeNote": "أول 4 أو 5 محاضرات"
+      "lecturesInScope": [1, 2, 3, 4],
+      "scopeNote": "أول 4 محاضرات"
     },
     {
       "subjectId": "information-theory",
@@ -112,8 +112,8 @@
       "code": "IS315T",
       "doctors": ["د/ هالة عكاشة"],
       "midtermMarks": "15 درجة (+ 10 درجات عرض البحث)",
-      "midtermLectures": [1, 2, 3, 4, 5],
-      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 5"
+      "midtermLectures": [1, 2, 3, 4],
+      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 4"
     },
     "computer-networks": {
       "code": "IS314P",

@@ -57,6 +57,7 @@ const state = {
   filtersOpen: false,
   searchOpen: false,
   sidebarOpen: false,
+  tabsExpanded: false,
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -78,6 +79,7 @@ const tabsPrevEl = $("#tabs-prev");
 const tabsNextEl = $("#tabs-next");
 const modeSwitcherEl = $("#mode-switcher");
 const tabsBarEl = $("#tabs-bar");
+const midtermPinEl = $("#midterm-pin");
 
 const SECTION_VALUES = Array.from({ length: 11 }, (_, index) => String(index + 1));
 const AR_DAYS = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
@@ -640,9 +642,24 @@ const fmtSize = (bytes) => {  if (!bytes) return "0 KB";
 };
 
 const subjectFiles = (subject) => subject.sections.flatMap((section) => section.files);
-const subjectSize = (subject) => subjectFiles(subject).reduce((sum, file) => sum + (file.size || 0), 0);
 const sectionIconKey = (section) => SECTION_ICONS[section.id] || "folder";
 const subjectById = (id) => state.data?.subjects?.find((subject) => subject.id === id) || null;
+
+const MIDTERM_TO_SUBJECT_ID = {
+  "computer-networks": "computer-networks",
+  database: "database-2",
+  "information-theory": "information-theory",
+  research: "research-methods",
+  "system-analysis": "system-analysis",
+};
+
+const SUBJECT_TO_MIDTERM_SEC = {
+  "computer-networks": "computer-networks",
+  "database-2": "database",
+  "information-theory": "information-theory",
+  "research-methods": "research",
+  "system-analysis": "system-analysis",
+};
 
 function themeInit() {
   const forced = new URLSearchParams(location.search).get("theme");
@@ -828,12 +845,6 @@ function nextMidterm() {
   );
 }
 
-function todayMidterm() {
-  const now = new Date();
-  const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-  return (state.schedule?.midterms || []).find((midterm) => midterm.date === date) || null;
-}
-
 function defaultSubjectId() {
   const sorted = (state.schedule?.midterms || [])
     .map((midterm) => ({
@@ -952,20 +963,90 @@ function renderSmartStrip() {
 function renderTabs() {
   const searching = searchActive();
   const featureActive = Boolean(state.feature) && !searching;
-  const subjectTabs = state.data.subjects
-    .map((subject) => {
-      const count = subjectFiles(subject).length;
-      const active = !featureActive && !searching && subject.id === state.subjectId ? "true" : "false";
-      return `<button class="tab" type="button" role="tab" aria-selected="${active}"
-        data-subject="${subject.id}" style="--tab-accent:${subject.accent}">
+  const midtermSubject = state.data.subjects.find((subject) => subject.id === "midterm-revision");
+  const regularSubjects = state.data.subjects.filter(
+    (subject) => subject.id !== "midterm-revision",
+  );
+  const collapsed =
+    !searching &&
+    !featureActive &&
+    Boolean(state.subjectId && state.subjectId !== "midterm-revision") &&
+    !state.tabsExpanded;
+
+  const isInitialMount = !tabsEl.dataset.mounted;
+  if (isInitialMount) {
+    const subjectTabs = regularSubjects
+      .map(
+        (subject, index) => `<button class="tab" type="button" role="tab" aria-selected="false"
+          data-subject="${subject.id}" style="--tab-accent:${subject.accent};--tab-index:${index}">
+          <span class="dot"></span>
+          <span>${esc(subject.nameAr)}</span>
+        </button>`,
+      )
+      .join("");
+    const collector = `<button class="tab tab-collector" type="button" data-collector="1"
+      aria-expanded="false" aria-label="اعرض كل المواد" title="اعرض كل المواد">
+      <span class="dot"></span>
+      <span class="collector-icon">${ICONS.grid}</span>
+      <span>كل المواد</span>
+      <span class="count">${regularSubjects.length}</span>
+    </button>`;
+    tabsEl.classList.add("is-no-anim");
+    tabsEl.innerHTML = subjectTabs + collector;
+    tabsEl.dataset.mounted = "1";
+
+    if (midtermPinEl && midtermSubject) {
+      midtermPinEl.innerHTML = `<button class="tab tab-pinned" type="button" role="tab"
+        aria-selected="false" data-subject="midterm-revision"
+        style="--tab-accent:${midtermSubject.accent}">
         <span class="dot"></span>
-        <span>${esc(subject.nameAr)}</span>
-        <span class="count">${count}</span>
+        <span class="pinned-icon">${ICONS.revision}</span>
+        <span>${esc(midtermSubject.nameAr)}</span>
       </button>`;
-    })
-    .join("");
-  tabsEl.innerHTML = subjectTabs;
+    }
+  }
+
+  tabsEl.querySelectorAll(".tab[data-subject]").forEach((btn) => {
+    const active = !featureActive && !searching && btn.dataset.subject === state.subjectId;
+    const hidden = collapsed && !active;
+    btn.setAttribute("aria-selected", active ? "true" : "false");
+    if (hidden) {
+      btn.setAttribute("tabindex", "-1");
+      btn.setAttribute("aria-hidden", "true");
+    } else {
+      btn.removeAttribute("tabindex");
+      btn.removeAttribute("aria-hidden");
+    }
+  });
+
+  const collectorBtn = tabsEl.querySelector(".tab-collector");
+  if (collectorBtn) {
+    collectorBtn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    if (collapsed) {
+      collectorBtn.removeAttribute("tabindex");
+      collectorBtn.removeAttribute("aria-hidden");
+    } else {
+      collectorBtn.setAttribute("tabindex", "-1");
+      collectorBtn.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  const pinnedBtn = midtermPinEl?.querySelector(".tab-pinned");
+  if (pinnedBtn) {
+    const active = !featureActive && !searching && state.subjectId === "midterm-revision";
+    pinnedBtn.setAttribute("aria-selected", active ? "true" : "false");
+  }
+
+  tabsEl.classList.toggle("is-collapsed", collapsed);
+
+  if (isInitialMount) {
+    void tabsEl.offsetWidth;
+    requestAnimationFrame(() => tabsEl.classList.remove("is-no-anim"));
+  }
+
   requestAnimationFrame(updateTabsScrollButtons);
+  clearTimeout(tabsExpandTimer);
+  tabsExpandTimer = setTimeout(updateTabsScrollButtons, 560);
 }
 
 function updateTabsScrollButtons() {
@@ -987,10 +1068,11 @@ function fileRow(file, subject, sectionId, variant = "", options = {}) {
       ? `<a class="act run" href="${esc(file.path)}" target="_blank" rel="noopener" title="تشغيل الملف التفاعلي" aria-label="تشغيل">${ICONS.play}</a>`
       : "";
   const className = `file${variant ? ` ${variant}` : ""}`;
-  return `<div class="${className}" tabindex="0" data-file="${esc(file.path)}" data-subject="${subject.id}" data-section="${esc(sectionId)}" title="اضغط لتحميل الملف">
+  return `<div class="${className}" tabindex="0" data-file="${esc(file.path)}" data-subject="${subject.id}" data-section="${esc(sectionId)}" title="معاينة أو تحميل الملف">
     <span class="file-badge ${badge}">${badge}</span>
     <div class="file-main">
       <span class="file-title" title="${esc(file.original || file.title)}">${highlightText(file.title, tokens)}</span>
+      ${file.docTag ? `<span class="doc-tag ${file.docTag === "ملخص" ? "is-summary" : "is-questions"}">${esc(file.docTag)}</span>` : ""}
       ${options.showOriginal && file.original ? `<span class="file-original" dir="ltr">${highlightText(file.original, tokens)}</span>` : ""}
       <span class="file-sub">
         ${meta ? `<span class="file-meta">${esc(meta)}</span><span class="sep">·</span>` : ""}
@@ -998,7 +1080,8 @@ function fileRow(file, subject, sectionId, variant = "", options = {}) {
         <span class="sep">·</span>
         <span dir="ltr">${badge.toUpperCase()}</span>
         <span class="sep hint-sep">·</span>
-        <span class="file-hint">اضغط للتحميل</span>
+        <span class="file-hint hint-desktop">اضغط للتحميل</span>
+        <span class="file-hint hint-mobile">اضغط للمعاينة</span>
       </span>
     </div>
     <div class="file-actions">
@@ -1101,15 +1184,14 @@ function renderCourseInfo(subject) {
 function renderReviewBlock(subject, files) {
   const practiceHref = `#practice/${esc(subject.id)}`;
   const midtermSection = subject.sections?.find((section) => section.id === "midterm-revision");
-  const important = Boolean(midtermSection?.important);
   return `<section class="review-block" id="sec-review" data-spy-section="review" data-spy-label="مراجعات الميدترم">
     <div class="review-head">
       <div>
         <div class="review-title-row">
           <h3>مراجعات الميدترم والملفات الشاملة</h3>
-          ${important ? '<span class="important-badge">★ مهمة</span>' : ""}
+          <span class="important-badge">★ مهم</span>
         </div>
-        ${important && midtermSection?.nameEn ? `<span class="review-folder" dir="ltr">${esc(midtermSection.nameEn)}</span>` : ""}
+        ${midtermSection?.nameEn ? `<span class="review-folder" dir="ltr">${esc(midtermSection.nameEn)}</span>` : ""}
         <p>${files.length} ملف · تشغيل مباشر للملفات التفاعلية أو اختبار سريع</p>
       </div>
       <a class="btn btn-sm" href="${practiceHref}">${ICONS.question}<span>اختبر نفسك</span></a>
@@ -1136,12 +1218,55 @@ function renderMatrix(subject) {
   const midtermLectures = new Set(meta?.midtermLectures || []);
   const files = subjectFiles(subject);
   const lectureCount = lectureTotal(subject);
-  const reviewFiles = files.filter(
+  const midtermSection = subject.sections.find((section) => section.id === "midterm-revision");
+  const curatedSection = SUBJECT_TO_MIDTERM_SEC[subject.id]
+    ? subjectById("midterm-revision")?.sections.find(
+        (section) => section.id === SUBJECT_TO_MIDTERM_SEC[subject.id],
+      )
+    : null;
+  const curatedFiles = curatedSection?.files || [];
+  const curatedOrder = new Map();
+  const curatedTags = new Map();
+  curatedFiles.forEach((file, index) => {
+    if (file.id) {
+      curatedOrder.set(file.id, index);
+      if (file.docTag) curatedTags.set(file.id, file.docTag);
+    }
+    curatedOrder.set(file.path, index);
+    if (file.docTag) curatedTags.set(file.path, file.docTag);
+  });
+  let reviewFiles = files.filter(
     (file) =>
       file.midtermReview === true ||
       (file.midtermReview !== false &&
         (file.kind === "review" || file.kind === "book" || file.lecture === null)),
   );
+  if (subject.id !== "system-analysis") {
+    reviewFiles = curatedFiles
+      .map((curated) => {
+        const file = files.find(
+          (entry) => entry.id === curated.id || entry.path === curated.path,
+        );
+        return file ? { ...file, docTag: curated.docTag || file.docTag } : curated;
+      })
+      .filter(Boolean);
+  } else {
+    const orderOf = (file) =>
+      (file.id && curatedOrder.has(file.id) ? curatedOrder.get(file.id) : undefined) ??
+      (curatedOrder.has(file.path) ? curatedOrder.get(file.path) : Number.MAX_SAFE_INTEGER);
+    reviewFiles.sort((a, b) => orderOf(a) - orderOf(b));
+  }
+  const reviewSet = new Set(reviewFiles.map((file) => file.path));
+  const extraFiles = ["computer-networks", "database-2", "information-theory"].includes(
+    subject.id,
+  )
+    ? files.filter(
+        (file) =>
+          !reviewSet.has(file.path) &&
+          !Number.isInteger(file.lecture) &&
+          !(Array.isArray(file.lectureSpan) && file.lectureSpan.length),
+      )
+    : [];
   const studiedMap = getStudied();
   let studiedCount = 0;
   const rows = [];
@@ -1190,13 +1315,26 @@ function renderMatrix(subject) {
         ${rows.join("")}
       </div></div>`
     : `<div class="empty">${ICONS.lecture}<strong>لا توجد محاضرات مفهرسة</strong><span>لم يتم العثور على ملفات محاضرات مرقمة لهذه المادة.</span></div>`;
+  const extraSection = extraFiles.length
+    ? `<section class="section matrix-extra" id="sec-extra" data-section="extra" data-spy-section="extra" data-spy-label="مراجع وملفات إضافية" data-open="true">
+        <button class="section-head" type="button" aria-expanded="true">
+          <span class="section-icon">${ICONS.file}</span>
+          <span class="section-titles"><h3>مراجع وملفات إضافية</h3><span class="en">Reference Files</span></span>
+          <span class="section-badge">${extraFiles.length}</span>
+        </button>
+        <div class="section-body">${extraFiles
+          .map((file) => fileRow(file, subject, sectionIdOf(subject, file)))
+          .join("")}</div>
+      </section>`
+    : "";
 
   return `${renderReviewBlock(subject, reviewFiles)}
     <div class="matrix-toolbar" data-progress="${esc(subject.id)}">
       <div class="progress-head"><span>تمت مذاكرة ${studiedCount} من ${lectureCount} ${lectureNoun(lectureCount)}</span><strong>${percent}%</strong></div>
       <div class="progress"><span style="width:${percent}%"></span></div>
     </div>
-    ${table}`;
+    ${table}
+    ${extraSection}`;
 }
 
 function renderClassicSections(subject) {
@@ -1221,9 +1359,41 @@ function renderClassicSections(subject) {
     .join("");
 }
 
+function renderMidtermKanban(subject) {
+  const columns = subject.sections.filter((section) => section.id !== "general");
+  return `<div class="kanban-board">
+    ${columns
+      .map((section) => {
+        const targetId = MIDTERM_TO_SUBJECT_ID[section.id] || section.id;
+        const targetSubject = subjectById(targetId);
+        return `<section class="kanban-col" id="sec-${esc(section.id)}"
+          data-spy-section="${esc(section.id)}" data-spy-label="${esc(section.name)}"
+          style="--col-accent:${esc(targetSubject?.accent || subject.accent)}">
+          <header class="kanban-col-head">
+            <div class="kanban-col-title">
+              <span class="dot" style="background:var(--col-accent)"></span>
+              <h3>${esc(section.name)}</h3>
+            </div>
+            <a class="kanban-col-link" href="#${esc(targetId)}">المادة ↗</a>
+          </header>
+          <div class="kanban-col-body">
+            ${
+              section.files.length
+                ? section.files
+                    .map((file) =>
+                      fileRow(file, targetSubject || subject, section.id, "file-kanban"),
+                    )
+                    .join("")
+                : '<span class="cell-empty">غير متاح حالياً</span>'
+            }
+          </div>
+        </section>`;
+      })
+      .join("")}
+  </div>`;
+}
+
 function renderSubject(subject) {
-  const files = subjectFiles(subject);
-  const isTodayMidterm = todayMidterm()?.subjectId === subject.id;
   const yt = subject.youtube
     ? `<a class="btn yt-btn" href="${esc(subject.youtube)}" target="_blank" rel="noopener">
         ${ICONS.play}<span>قائمة المحاضرات</span></a>`
@@ -1238,7 +1408,12 @@ function renderSubject(subject) {
         </button>
       </div>`
     : "";
-  const body = useMatrix ? renderMatrix(subject) : renderClassicSections(subject);
+  const body =
+    subject.id === "midterm-revision"
+      ? renderMidtermKanban(subject)
+      : useMatrix
+        ? renderMatrix(subject)
+        : renderClassicSections(subject);
 
   viewEl.innerHTML = `<div class="subject-wrap" style="--accent:${subject.accent}">
     <div class="subject-head">
@@ -1251,17 +1426,9 @@ function renderSubject(subject) {
         <a class="btn" href="downloads/${subject.id}.zip" download>${ICONS.download}<span>تحميل المادة</span></a>
       </div>
     </div>
+    ${renderCourseInfo(subject)}
     ${toggle}
     ${body}
-    <div class="subject-info">
-      <div class="subject-meta">
-        <span class="chip">${ICONS.file}<span>${files.length} ملف</span></span>
-        <span class="chip">${ICONS.folder}<span dir="ltr">${fmtSize(subjectSize(subject))}</span></span>
-        <span class="chip">${ICONS.folder}<span>${subject.sections.length} أقسام</span></span>
-        ${isTodayMidterm ? `<span class="chip today-chip">${ICONS.calendar}<span>ميدترم اليوم</span></span>` : ""}
-      </div>
-      ${renderCourseInfo(subject)}
-    </div>
   </div>`;
 }
 
@@ -1546,6 +1713,25 @@ function examSubtabsHtml(activeTab) {
   </div><div id="quiz-mount"></div>`;
 }
 
+function syncMistakesBadge() {
+  const link = document.querySelector('.exam-subtab[href="#mistakes"]');
+  if (!link) return;
+  const mistakesObj = store.getJson("hub:mistakes", {});
+  const count =
+    mistakesObj && typeof mistakesObj === "object" ? Object.keys(mistakesObj).length : 0;
+  let badge = link.querySelector(".exam-subtab-badge");
+  if (!count) {
+    badge?.remove();
+    return;
+  }
+  if (!badge) {
+    badge = document.createElement("span");
+    badge.className = "exam-subtab-badge";
+    link.appendChild(badge);
+  }
+  badge.textContent = String(count);
+}
+
 function renderPractice() {
   if (window.HubQuiz) {
     viewEl.innerHTML = examSubtabsHtml("practice");
@@ -1789,11 +1975,26 @@ function clearSearch() {
 
 function route() {
   setSidebarOpen(false);
+  window.HubQuiz?.closeSync?.();
   const parsed = parseHash();
   if (!parsed) {
     state.feature = null;
     state.subjectId = defaultSubjectId();
+    state.tabsExpanded = false;
     render();
+    return;
+  }
+
+  if (parsed.raw.indexOf("sync=") === 0) {
+    const payload = parsed.raw.slice(5);
+    history.replaceState(null, "", location.pathname + location.search + "#mistakes");
+    state.feature = "mistakes";
+    window.HubQuiz?.reset();
+    clearSearch();
+    if (!modalEl.hidden) closePreview(false);
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.HubQuiz?.openSyncImport(payload);
     return;
   }
 
@@ -1844,6 +2045,7 @@ function route() {
   state.feature = null;
   state.subjectId = subject.id;
   state.lastSubject = subject.id;
+  state.tabsExpanded = false;
   render();
 
   if (!parsed.fileId && !modalEl.hidden) closePreview(false);
@@ -1871,7 +2073,7 @@ function route() {
     const file = subjectFiles(subject).find(
       (entry) => entry.id === parsed.fileId || entry.path.endsWith(`/${parsed.fileId}`),
     );
-    if (file) openPreview(file);
+    if (file) openPreview(file, { fromDeepLink: true });
   }
 }
 
@@ -1881,10 +2083,24 @@ function navigate(hash) {
   else location.hash = next;
 }
 
-tabsEl.addEventListener("click", (event) => {
+let tabsExpandTimer;
+
+tabsBarEl.addEventListener("click", (event) => {
+  const collector = event.target.closest("[data-collector]");
+  if (collector) {
+    state.tabsExpanded = true;
+    renderTabs();
+    const firstOther = [...tabsEl.querySelectorAll(".tab:not(.tab-collector)")].find(
+      (button) => button.getAttribute("aria-selected") !== "true",
+    );
+    firstOther?.focus({ preventScroll: true });
+    return;
+  }
+
   const tab = event.target.closest(".tab");
   if (!tab) return;
   state.filtersOpen = false;
+  state.tabsExpanded = false;
   clearSearch();
   if (tab.dataset.route) navigate(tab.dataset.route);
   else navigate(tab.dataset.subject);
@@ -2040,7 +2256,7 @@ sidebarEl?.addEventListener("click", (event) => {
     setSidebarOpen(false);
     const el = viewEl.querySelector(`[data-spy-section="${CSS.escape(spyBtn.dataset.spyTarget)}"]`);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
       setActiveSpy(spyBtn.dataset.spyTarget);
     }
   }
@@ -2119,15 +2335,24 @@ function isMobileView() {
   );
 }
 
-function absoluteUrl(value) {
-  try {
-    return new URL(value, location.href).href;
-  } catch (error) {
-    return value;
-  }
+function shouldOpenPdfInNewTab() {
+  return isMobileView() || navigator.pdfViewerEnabled === false;
 }
 
-function openPreview(file) {
+function openPreview(file, options = {}) {
+  const ext = (file.ext || "").toLowerCase();
+  if (ext === "pdf" && shouldOpenPdfInNewTab() && !options.fromDeepLink) {
+    const win = window.open(file.path, "_blank");
+    if (win) {
+      try {
+        win.opener = null;
+      } catch (error) {
+        void error;
+      }
+      return;
+    }
+  }
+
   $("#modal-title").textContent = file.title;
   $("#modal-badge").textContent = (file.ext || "file").toUpperCase();
   $("#modal-badge").className = `file-badge ${file.ext || ""}`;
@@ -2136,12 +2361,18 @@ function openPreview(file) {
   $("#modal-open").href = file.path;
 
   const body = $("#modal-body");
-  const ext = (file.ext || "").toLowerCase();
 
   if (ext === "pdf") {
-    if (isMobileView() && location.protocol !== "file:") {
-      const viewer = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(absoluteUrl(file.path))}`;
-      body.innerHTML = `<iframe src="${esc(viewer)}" title="${esc(file.title)}" loading="lazy"></iframe>`;
+    if (shouldOpenPdfInNewTab()) {
+      body.innerHTML = `<div class="pdf-fallback">
+        <span class="pdf-fallback-badge">PDF</span>
+        <strong>${esc(file.title)}</strong>
+        <span>${fmtSize(file.size)} · يمكنك فتح الملف في تبويب جديد أو تحميله.</span>
+        <div class="pdf-fallback-actions">
+          <a class="btn btn-primary" href="${esc(file.path)}" target="_blank" rel="noopener">فتح الـ PDF في تبويب جديد</a>
+          <a class="btn" href="${esc(file.path)}" download>تحميل الملف</a>
+        </div>
+      </div>`;
     } else {
       body.innerHTML = `<iframe src="${esc(file.path)}#view=FitH" title="${esc(file.title)}"></iframe>`;
     }
@@ -2204,6 +2435,7 @@ function setFooter() {
   $("#site-subtitle").textContent = state.data.subtitle;
 }
 
+window.addEventListener("hub:mistakes-updated", syncMistakesBadge);
 window.addEventListener("hashchange", route);
 
 async function loadData() {

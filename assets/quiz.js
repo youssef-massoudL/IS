@@ -22,6 +22,7 @@
       '<svg viewBox="0 0 24 24" fill="none"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z" stroke="currentColor" stroke-width="1.6"/><path d="M8 6H4.5v2A3.5 3.5 0 0 0 8 11.5M16 6h3.5v2A3.5 3.5 0 0 1 16 11.5M12 13v4M8.5 20h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
     arrow: '<svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5m0 0 6-6m-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     back: '<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m0 0-6-6m6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    sync: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.6"/><path d="M14 14h3v3h-3zM20 14h1M14 20h1M20 20h1M17 20h1M20 17h1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   };
 
   var esc = function (value) {
@@ -57,6 +58,7 @@
   };
 
   var MISTAKES_KEY = "hub:mistakes";
+  var CORRECTED_KEY = "hub:corrected";
   var CONFIG_KEY = "hub:quizConfig";
   var MAX_LECTURE = 7;
   var PASS_MARK = 50;
@@ -73,16 +75,35 @@
     session: null,
     message: "",
     mastered: 0,
-    mistakesFilter: "all",
+    mistakesView: "active",
+    mistakesSubject: "all",
+    mistakesExamType: "all",
+    mistakesLecture: "all",
+    retryingId: null,
+    retryFeedback: null,
   };
   var timerId = null;
 
   var DIFFICULTY_LABELS = { all: "كل المستويات", easy: "سهل", medium: "متوسط", hard: "صعب" };
-  var MODE_LABELS = { practice: "تدريب فوري", timed: "محاكاة ميدترم" };
+  var MODE_LABELS = {
+    practice: "تدريب حر (بدون وقت)",
+    timed: "محاكاة ميدترم (30 دقيقة)",
+  };
+  var REVEAL_LABELS = {
+    after: "بعد انتهاء الامتحان",
+    instant: "فوراً بعد كل سؤال",
+  };
   var COUNT_LABELS = { 10: "10", 20: "20", 30: "30", 50: "50", all: "الكل" };
 
   function defaultConfig() {
-    return { difficulty: "all", mode: "practice", count: 20, shuffle: true, lectures: [] };
+    return {
+      difficulty: "all",
+      mode: "practice",
+      revealMode: "after",
+      count: 20,
+      shuffle: true,
+      lectures: [],
+    };
   }
 
   function init(options) {
@@ -170,6 +191,20 @@
 
   function saveMistakes(value) {
     store.setJson(MISTAKES_KEY, value);
+    try {
+      window.dispatchEvent(new CustomEvent("hub:mistakes-updated"));
+    } catch (error) {
+      return;
+    }
+  }
+
+  function getCorrected() {
+    var value = store.getJson(CORRECTED_KEY, {});
+    return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  }
+
+  function saveCorrected(value) {
+    store.setJson(CORRECTED_KEY, value);
   }
 
   function getMistakeQuestion(id) {
@@ -186,7 +221,13 @@
         return {
           id: id,
           wrongCount: Number(entry.wrongCount) || 1,
-          correctStreak: Number(entry.correctStreak) || 0,
+          selectedAnswer:
+            entry.selectedAnswer === undefined ? undefined : Number(entry.selectedAnswer),
+          correctAnswer:
+            entry.correctAnswer === undefined
+              ? question.answer
+              : Number(entry.correctAnswer),
+          examType: entry.examType || "اختبار",
           lastAt: entry.lastAt || "",
           question: question,
           subjectId: entry.subjectId || question.subjectId,
@@ -199,33 +240,85 @@
       });
   }
 
-  function recordWrong(question) {
+  function correctedEntries() {
+    var corrected = getCorrected();
+    return Object.keys(corrected)
+      .map(function (id) {
+        var entry = corrected[id];
+        var question = getMistakeQuestion(id);
+        if (!question) return null;
+        return {
+          id: id,
+          wrongCount: Number(entry.wrongCount) || 1,
+          previousSelectedAnswer:
+            entry.previousSelectedAnswer === undefined
+              ? undefined
+              : Number(entry.previousSelectedAnswer),
+          correctAnswer:
+            entry.correctAnswer === undefined
+              ? question.answer
+              : Number(entry.correctAnswer),
+          examType: entry.examType || "اختبار",
+          subjectId: entry.subjectId || question.subjectId,
+          lecture: entry.lecture || question.lecture,
+          correctedAt: entry.correctedAt || "",
+          lastWrongAt: entry.lastWrongAt || "",
+          question: question,
+        };
+      })
+      .filter(Boolean)
+      .sort(function (a, b) {
+        return String(b.correctedAt).localeCompare(String(a.correctedAt));
+      });
+  }
+
+  function recordWrong(question, meta) {
     var mistakes = getMistakes();
+    var corrected = getCorrected();
     var existing = mistakes[question.id] || {};
+    var previousCorrected = corrected[question.id] || {};
+    var now = new Date().toISOString();
+    var selectedAnswer = meta && meta.selectedAnswer !== undefined ? meta.selectedAnswer : existing.selectedAnswer;
+    var examType = (meta && meta.examType) || existing.examType || previousCorrected.examType || "اختبار";
+    var wrongCount =
+      (Number(existing.wrongCount) || 0) +
+      (Number(previousCorrected.wrongCount) || 0) +
+      1;
     mistakes[question.id] = {
-      wrongCount: (Number(existing.wrongCount) || 0) + 1,
-      correctStreak: 0,
-      firstAt: existing.firstAt || new Date().toISOString(),
-      lastAt: new Date().toISOString(),
+      wrongCount: wrongCount,
+      selectedAnswer: selectedAnswer,
+      correctAnswer: question.answer,
+      examType: examType,
       subjectId: question.subjectId,
       lecture: question.lecture,
+      firstAt: existing.firstAt || previousCorrected.lastWrongAt || now,
+      lastAt: now,
     };
+    if (previousCorrected && Object.keys(previousCorrected).length) delete corrected[question.id];
     saveMistakes(mistakes);
+    saveCorrected(corrected);
   }
 
   function recordCorrect(question) {
     var mistakes = getMistakes();
+    var corrected = getCorrected();
     var existing = mistakes[question.id];
     if (!existing) return false;
-    existing.correctStreak = (Number(existing.correctStreak) || 0) + 1;
-    existing.lastAt = new Date().toISOString();
-    if (existing.correctStreak >= 2) {
-      delete mistakes[question.id];
-      saveMistakes(mistakes);
-      return true;
-    }
+    var now = new Date().toISOString();
+    corrected[question.id] = {
+      wrongCount: Number(existing.wrongCount) || 1,
+      previousSelectedAnswer: existing.selectedAnswer,
+      correctAnswer: question.answer,
+      examType: existing.examType || "اختبار",
+      subjectId: existing.subjectId || question.subjectId,
+      lecture: existing.lecture || question.lecture,
+      lastWrongAt: existing.lastAt || now,
+      correctedAt: now,
+    };
+    delete mistakes[question.id];
     saveMistakes(mistakes);
-    return false;
+    saveCorrected(corrected);
+    return true;
   }
 
   function formatTime(milliseconds) {
@@ -372,6 +465,20 @@
       ) +
       "</div></div>" +
       "</section>" +
+      '<section class="quiz-panel">' +
+      "<h3>إظهار الإجابات</h3><div class=\"qchips\">" +
+      configChips(
+        Object.keys(REVEAL_LABELS).map(function (value) {
+          return {
+            value: value,
+            label: REVEAL_LABELS[value] + (value === "after" ? " (الافتراضي)" : ""),
+          };
+        }),
+        ui.config.revealMode,
+        "reveal-mode",
+      ) +
+      "</div>" +
+      "</section>" +
       '<section class="quiz-panel quiz-two-col">' +
       "<div><h3>5. عدد الأسئلة</h3><div class=\"qchips\">" +
       configChips(
@@ -474,6 +581,261 @@
     startTimer();
   }
 
+  function subjectName(subjectId) {
+    var subject = subjectById(subjectId);
+    return subject ? subject.nameAr : subjectId;
+  }
+
+  function subjectAccent(subjectId) {
+    var subject = subjectById(subjectId);
+    return subject ? subject.accent : "#dc2626";
+  }
+
+  function optionText(question, index) {
+    if (index === undefined || index === null || !question.options[index]) return "غير مسجل";
+    return question.options[index];
+  }
+
+  function rawMistakeEntries() {
+    return ui.mistakesView === "corrected" ? correctedEntries() : mistakeEntries();
+  }
+
+  function currentMistakeViewEntries() {
+    return rawMistakeEntries().filter(function (entry) {
+      if (ui.mistakesSubject !== "all" && entry.subjectId !== ui.mistakesSubject) return false;
+      if (ui.mistakesExamType !== "all" && entry.examType !== ui.mistakesExamType) return false;
+      if (ui.mistakesLecture !== "all" && String(entry.lecture) !== String(ui.mistakesLecture)) {
+        return false;
+      }
+      return true;
+    });
+  }
+
+  function filterChips(entries, key, action, labelPrefix) {
+    var values = [];
+    entries.forEach(function (entry) {
+      var value = String(entry[key]);
+      if (values.indexOf(value) === -1) values.push(value);
+    });
+    values.sort(function (a, b) {
+      var an = Number(a);
+      var bn = Number(b);
+      if (!Number.isNaN(an) && !Number.isNaN(bn)) return an - bn;
+      return a.localeCompare(b, "ar");
+    });
+    return values
+      .map(function (value) {
+        var selected =
+          key === "lecture" ? ui.mistakesLecture === value : ui.mistakesExamType === value;
+        return (
+          '<button type="button" class="qchip' +
+          (selected ? " is-active" : "") +
+          '" data-quiz-action="' +
+          action +
+          '" data-value="' +
+          esc(value) +
+          '">' +
+          esc(labelPrefix ? labelPrefix + " " + value : value) +
+          "</button>"
+        );
+      })
+      .join("");
+  }
+
+  function retryForm(entry, feedback) {
+    var question = entry.question;
+    return (
+      '<div class="mistake-retry">' +
+      '<div class="quiz-options">' +
+      question.options
+        .map(function (option, index) {
+          var state = "";
+          if (feedback) {
+            if (index === entry.correctAnswer || index === question.answer) state = " is-correct";
+            else if (index === feedback.selected) state = " is-wrong";
+          }
+          return (
+            '<button type="button" class="quiz-option' +
+            state +
+            '" data-quiz-action="retry-single-answer" data-id="' +
+            esc(entry.id) +
+            '" data-value="' +
+            index +
+            '">' +
+            '<span class="quiz-option-letter">' +
+            String.fromCharCode(65 + index) +
+            "</span>" +
+            '<span dir="auto">' +
+            esc(option) +
+            "</span>" +
+            "</button>"
+          );
+        })
+        .join("") +
+      "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderMistakeCard(entry) {
+    var question = entry.question;
+    var feedback = ui.retryFeedback && ui.retryFeedback.id === entry.id ? ui.retryFeedback : null;
+    return (
+      '<article class="mistake-card" data-mistake-id="' +
+      esc(entry.id) +
+      '" style="--accent:' +
+      subjectAccent(entry.subjectId) +
+      '">' +
+      '<div class="mistake-badges">' +
+      '<span class="chip">' +
+      esc(subjectName(entry.subjectId)) +
+      "</span>" +
+      '<span class="chip">محاضرة ' +
+      esc(entry.lecture) +
+      "</span>" +
+      '<span class="chip">' +
+      esc(entry.examType) +
+      "</span>" +
+      '<span class="chip is-wrong">أخطأت ' +
+      entry.wrongCount +
+      " مرة</span>" +
+      "</div>" +
+      '<p class="mistake-question" dir="auto">' +
+      esc(question.q) +
+      "</p>" +
+      '<div class="mistake-compare">' +
+      '<div class="mistake-answer is-wrong"><span>اختيارك</span><p dir="auto">' +
+      esc(optionText(question, entry.selectedAnswer)) +
+      "</p></div>" +
+      '<div class="mistake-answer is-correct"><span>الصحيح (الغلط كان فين)</span><p dir="auto">' +
+      esc(optionText(question, entry.correctAnswer === undefined ? question.answer : entry.correctAnswer)) +
+      "</p></div>" +
+      "</div>" +
+      '<div class="mistake-explanation"><strong>الشرح</strong><p dir="auto">' +
+      esc(question.explanation || "لا يوجد شرح متاح لهذا السؤال.") +
+      "</p></div>" +
+      (feedback
+        ? '<div class="retry-feedback ' +
+          (feedback.correct ? "is-correct" : "is-wrong") +
+          '">' +
+          (feedback.correct
+            ? "أحسنت! تم نقل السؤال إلى تبويب تصحيح."
+            : "لسه غلط — راجع الشرح وحاول تاني.") +
+          "</div>"
+        : "") +
+      '<div class="mistake-actions">' +
+      '<button type="button" class="btn btn-sm" data-quiz-action="retry-single" data-value="' +
+      esc(entry.id) +
+      '">' +
+      (ui.retryingId === entry.id ? "إغلاق المحاولة" : "حل السؤال تاني") +
+      "</button>" +
+      "</div>" +
+      (ui.retryingId === entry.id ? retryForm(entry, feedback) : "") +
+      "</article>"
+    );
+  }
+
+  function correctedCard(entry) {
+    var question = entry.question;
+    return (
+      '<article class="mistake-card is-corrected" style="--accent:' +
+      subjectAccent(entry.subjectId) +
+      '">' +
+      '<div class="mistake-badges">' +
+      '<span class="chip">' +
+      esc(subjectName(entry.subjectId)) +
+      "</span>" +
+      '<span class="chip">محاضرة ' +
+      esc(entry.lecture) +
+      "</span>" +
+      '<span class="chip">' +
+      esc(entry.examType) +
+      "</span>" +
+      '<span class="chip is-correct">تم التصحيح ' +
+      esc(formatDate(entry.correctedAt)) +
+      "</span>" +
+      "</div>" +
+      '<p class="mistake-question" dir="auto">' +
+      esc(question.q) +
+      "</p>" +
+      '<div class="mistake-compare">' +
+      '<div class="mistake-answer is-wrong"><span>إجابتك السابقة</span><p dir="auto">' +
+      esc(optionText(question, entry.previousSelectedAnswer)) +
+      "</p></div>" +
+      '<div class="mistake-answer is-correct"><span>الإجابة الصحيحة</span><p dir="auto">' +
+      esc(optionText(question, entry.correctAnswer === undefined ? question.answer : entry.correctAnswer)) +
+      "</p></div>" +
+      "</div>" +
+      '<div class="mistake-explanation"><strong>الشرح</strong><p dir="auto">' +
+      esc(question.explanation || "لا يوجد شرح متاح لهذا السؤال.") +
+      "</p></div>" +
+      "</article>"
+    );
+  }
+
+  function renderCorrectedGroups(entries) {
+    if (!entries.length) {
+      return (
+        '<div class="empty">' +
+        ICONS.trophy +
+        "<strong>لا توجد أسئلة مصححة بعد</strong><span>حل سؤالًا من أخطائك بشكل صحيح مرة واحدة لينتقل إلى هنا.</span></div>"
+      );
+    }
+    var tree = {};
+    entries.forEach(function (entry) {
+      tree[entry.subjectId] = tree[entry.subjectId] || {};
+      tree[entry.subjectId][entry.examType] = tree[entry.subjectId][entry.examType] || {};
+      var lectureKey = String(entry.lecture);
+      tree[entry.subjectId][entry.examType][lectureKey] =
+        tree[entry.subjectId][entry.examType][lectureKey] || [];
+      tree[entry.subjectId][entry.examType][lectureKey].push(entry);
+    });
+    return Object.keys(tree)
+      .map(function (subjectId) {
+        var examTypes = tree[subjectId];
+        return (
+          '<section class="corrected-subject">' +
+          '<h3 class="corrected-subject-head"><span class="dot" style="background:' +
+          subjectAccent(subjectId) +
+          '"></span>' +
+          esc(subjectName(subjectId)) +
+          "</h3>" +
+          Object.keys(examTypes)
+            .map(function (examType) {
+              var lectures = examTypes[examType];
+              return (
+                '<div class="corrected-exam">' +
+                '<h4 class="corrected-exam-head">' +
+                esc(examType) +
+                "</h4>" +
+                Object.keys(lectures)
+                  .sort(function (a, b) {
+                    return Number(a) - Number(b);
+                  })
+                  .map(function (lecture) {
+                    var items = lectures[lecture];
+                    return (
+                      '<div class="corrected-lecture">' +
+                      '<h5 class="corrected-lecture-head">محاضرة ' +
+                      esc(lecture) +
+                      '<span class="count">' +
+                      items.length +
+                      "</span></h5>" +
+                      items.map(correctedCard).join("") +
+                      "</div>"
+                    );
+                  })
+                  .join("") +
+                "</div>"
+              );
+            })
+            .join("") +
+          "</section>"
+        );
+      })
+      .join("");
+  }
+
   function renderMistakes(container) {
     bind(container);
     ui.container = container;
@@ -493,101 +855,136 @@
       renderResult(container);
       return;
     }
-    var entries = mistakeEntries();
-    var grouped = {};
-    entries.forEach(function (entry) {
-      grouped[entry.subjectId] = (grouped[entry.subjectId] || 0) + 1;
+    var activeEntries = mistakeEntries();
+    var corrected = correctedEntries();
+    var baseEntries = ui.mistakesView === "corrected" ? corrected : activeEntries;
+    var viewEntries = currentMistakeViewEntries();
+    var subjectCounts = {};
+    baseEntries.forEach(function (entry) {
+      subjectCounts[entry.subjectId] = (subjectCounts[entry.subjectId] || 0) + 1;
     });
-    var list = entries
-      .map(function (entry) {
-        var subject = subjectById(entry.subjectId);
-        return (
-          '<div class="mistake-row">' +
-          '<div class="mistake-main">' +
-          '<div class="mistake-meta"><span class="chip" style="--accent:' +
-          (subject ? subject.accent : "#dc2626") +
-          '">' +
-          esc(subject ? subject.nameAr : entry.subjectId) +
-          "</span><span>محاضرة " +
-          esc(entry.lecture) +
-          "</span><span>أخطأت " +
-          entry.wrongCount +
-          " مرة</span></div>" +
-          '<p dir="auto">' +
-          esc(entry.question.q) +
-          "</p>" +
-          (entry.lastAt ? '<span class="muted">آخر خطأ: ' + esc(formatDate(entry.lastAt)) + "</span>" : "") +
-          "</div>" +
-          '<button type="button" class="icon-btn" title="حذف من بنك الأخطاء" data-quiz-action="delete-mistake" data-value="' +
-          esc(entry.id) +
-          '">' +
-          ICONS.trash +
-          "</button>" +
+    var subjectTabs =
+      '<button type="button" class="qchip' +
+      (ui.mistakesSubject === "all" ? " is-active" : "") +
+      '" data-quiz-action="mistakes-subject-tab" data-value="all">كل المواد (' +
+      baseEntries.length +
+      ")</button>" +
+      subjects
+        .map(function (subject) {
+          return (
+            '<button type="button" class="qchip' +
+            (ui.mistakesSubject === subject.id ? " is-active" : "") +
+            '" data-quiz-action="mistakes-subject-tab" data-value="' +
+            esc(subject.id) +
+            '">' +
+            esc(subject.nameAr) +
+            " (" +
+            (subjectCounts[subject.id] || 0) +
+            ")</button>"
+          );
+        })
+        .join("");
+    var subjectFiltered = baseEntries.filter(function (entry) {
+      return ui.mistakesSubject === "all" || entry.subjectId === ui.mistakesSubject;
+    });
+    var examTypeChips = filterChips(subjectFiltered, "examType", "mistakes-exam-type", "");
+    var lectureSource = subjectFiltered.filter(function (entry) {
+      return ui.mistakesExamType === "all" || entry.examType === ui.mistakesExamType;
+    });
+    var lectureChips = filterChips(lectureSource, "lecture", "mistakes-lecture", "محاضرة");
+    var filters =
+      ui.mistakesView === "corrected"
+        ? '<div class="mistakes-filters">' +
+          '<div class="filter-row"><span>نوع الاختبار</span><div class="qchips">' +
+          '<button type="button" class="qchip' +
+          (ui.mistakesExamType === "all" ? " is-active" : "") +
+          '" data-quiz-action="mistakes-exam-type" data-value="all">الكل</button>' +
+          examTypeChips +
+          "</div></div>" +
+          '<div class="filter-row"><span>المحاضرة</span><div class="qchips">' +
+          '<button type="button" class="qchip' +
+          (ui.mistakesLecture === "all" ? " is-active" : "") +
+          '" data-quiz-action="mistakes-lecture" data-value="all">الكل</button>' +
+          lectureChips +
+          "</div></div>" +
           "</div>"
-        );
-      })
-      .join("");
-    var subjectBreakdown = Object.keys(grouped)
-      .map(function (subjectId) {
-        var subject = subjectById(subjectId);
-        return (
-          '<button type="button" class="qchip" data-quiz-action="mistakes-subject" data-value="' +
-          esc(subjectId) +
-          '">' +
-          esc(subject ? subject.nameAr : subjectId) +
-          " (" +
-          grouped[subjectId] +
-          ")</button>"
-        );
-      })
-      .join("");
-    container.innerHTML =
-      '<div class="feature-page quiz-page">' +
-      '<div class="feature-hero" style="--accent:#dc2626">' +
-      '<span class="eyebrow">' +
-      ICONS.bolt +
-      " بنك أخطائي</span>" +
-      "<h2>امتحن في أخطائك فقط</h2>" +
-      '<p class="feature-sub">كل سؤال تخطئ فيه يُسجَّل هنا. أجب عنه صحيحًا مرتين متتاليتين ليُعتبر مُتقنًا ويُستبعد تلقائيًا.</p>' +
-      '<div class="feature-meta"><span class="chip">' +
-      entries.length +
-      " سؤال في بنك الأخطاء</span><span class=\"chip\">" +
-      Object.keys(grouped).length +
-      " مواد</span></div>" +
-      "</div>" +
-      '<div class="mistakes-toolbar">' +
-      '<button type="button" class="btn btn-primary" data-quiz-action="start-mistakes" data-value="all" ' +
-      (entries.length ? "" : "disabled") +
-      ">" +
-      ICONS.play +
-      "<span>امتحن كل الأخطاء</span></button>" +
-      '<div class="qchips">' +
-      subjectBreakdown +
-      "</div>" +
+        : "";
+    var tools =
       '<div class="quiz-tools">' +
+      '<button type="button" class="btn btn-sm btn-primary" data-quiz-action="open-sync">' +
+      ICONS.sync +
+      "<span>نقل تقدمي للموبايل</span></button>" +
       '<button type="button" class="btn btn-sm" data-quiz-action="export">' +
       ICONS.download +
       "<span>تصدير</span></button>" +
       '<button type="button" class="btn btn-sm" data-quiz-action="import">' +
       ICONS.upload +
       "<span>استيراد</span></button>" +
-      '<button type="button" class="btn btn-sm btn-danger" data-quiz-action="clear-mistakes" ' +
-      (entries.length ? "" : "disabled") +
-      ">" +
-      ICONS.trash +
-      "<span>مسح الكل</span></button>" +
+      "</div>";
+    var toolsTop =
+      ui.mistakesView === "corrected"
+        ? '<div class="mistakes-tools-top">' + tools + "</div>"
+        : "";
+    var activeList = viewEntries.map(renderMistakeCard).join("");
+    var correctedList = renderCorrectedGroups(viewEntries);
+    var isEmpty = !viewEntries.length;
+    container.innerHTML =
+      '<div class="feature-page quiz-page">' +
+      '<div class="feature-hero" style="--accent:#dc2626">' +
+      '<span class="eyebrow">' +
+      ICONS.bolt +
+      " بنك أخطائي</span>" +
+      "<h2>راجع أخطاءك وثبّت الصح</h2>" +
+      '<p class="feature-sub">كل سؤال تخطئ فيه يُسجَّل هنا باختيارك والإجابة الصحيحة والشرح. حلّه صحيحًا مرة واحدة لينتقل إلى تبويب تصحيح.</p>' +
+      '<div class="feature-meta"><span class="chip">' +
+      activeEntries.length +
+      " في الأخطاء</span><span class=\"chip\">" +
+      corrected.length +
+      " في التصحيح</span><span class=\"chip\">" +
+      Object.keys(subjectCounts).length +
+      " مواد</span></div>" +
+      "</div>" +
+      '<div class="mistakes-toolbar">' +
+      '<div class="mistakes-view-tabs" role="tablist" aria-label="عرض بنك الأخطاء">' +
+      '<button type="button" class="qchip' +
+      (ui.mistakesView === "active" ? " is-active" : "") +
+      '" data-quiz-action="mistakes-view" data-value="active">أخطائي (' +
+      activeEntries.length +
+      ")</button>" +
+      '<button type="button" class="qchip' +
+      (ui.mistakesView === "corrected" ? " is-active" : "") +
+      '" data-quiz-action="mistakes-view" data-value="corrected">تصحيح (' +
+      corrected.length +
+      ")</button>" +
+      "</div>" +
+      '<div class="qchips mistakes-subject-tabs">' +
+      subjectTabs +
+      "</div>" +
+      toolsTop +
+      filters +
+      '<div class="mistakes-actions">' +
+      (ui.mistakesView === "active" && viewEntries.length
+        ? '<button type="button" class="btn btn-primary" data-quiz-action="start-mistakes" data-value="all">' +
+          ICONS.play +
+          "<span>امتحن في أخطاء التبويب الحالي (" +
+          viewEntries.length +
+          ")</span></button>"
+        : "") +
+      (ui.mistakesView === "active" ? tools : "") +
       "</div>" +
       '<input type="file" accept="application/json,.json" data-quiz-import hidden>' +
       "</div>" +
       (ui.message ? '<div class="quiz-note">' + ui.message + "</div>" : "") +
-      (entries.length
-        ? '<div class="mistake-list">' + list + "</div>"
-        : '<div class="empty">' +
-          ICONS.trophy +
-          "<strong>لا توجد أخطاء مسجلة بعد</strong><span>ابدأ اختبارًا، وسيظهر هنا كل سؤال تخطئ فيه.</span>" +
-          '<a class="btn btn-sm" href="#practice">' +
-          ICONS.question +
-          "<span>ابدأ أول اختبار</span></a></div>") +
+      (ui.mistakesView === "active"
+        ? isEmpty
+          ? '<div class="empty">' +
+            ICONS.trophy +
+            "<strong>لا توجد أخطاء في هذا التبويب</strong><span>ابدأ اختبارًا، وسيظهر هنا كل سؤال تخطئ فيه.</span>" +
+            '<a class="btn btn-sm" href="#practice">' +
+            ICONS.question +
+            "<span>ابدأ أول اختبار</span></a></div>"
+          : '<div class="mistake-list">' + activeList + "</div>"
+        : correctedList) +
       "</div>";
   }
 
@@ -623,11 +1020,24 @@
     if (config.shuffle) pool = shuffle(pool);
     var limit = config.count === "all" ? pool.length : Math.min(Number(config.count) || 20, pool.length);
     var chosen = pool.slice(0, limit);
+    var revealMode = config.revealMode || "after";
+    var examTypeLabel;
+    if (kind === "mistakes") {
+      examTypeLabel = "اختبار أخطائي";
+    } else if (config.mode === "timed") {
+      examTypeLabel =
+        "محاكاة ميدترم" + (revealMode === "instant" ? " (تصحيح فوري)" : " (بعد الانتهاء)");
+    } else {
+      examTypeLabel =
+        revealMode === "instant" ? "تدريب فوري" : "تدريب حر (بعد الانتهاء)";
+    }
     var session = {
       version: 1,
       kind: kind,
       subjectId: subjectId,
       mode: config.mode,
+      revealMode: revealMode,
+      examTypeLabel: examTypeLabel,
       ids: chosen.map(function (question) {
         return question.id;
       }),
@@ -649,18 +1059,57 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function startFromMistakes(subjectId) {
-    var entries = mistakeEntries().filter(function (entry) {
-      return subjectId === "all" || entry.subjectId === subjectId;
-    });
+  function startFromMistakes() {
+    var entries = currentMistakeViewEntries();
+    if (!entries.length) return;
     startSession(
       "mistakes",
-      "mistakes:" + subjectId,
-      { count: "all", mode: "practice", shuffle: true },
+      "mistakes:filtered",
+      {
+        count: "all",
+        mode: "practice",
+        shuffle: true,
+        revealMode: ui.config.revealMode || "after",
+      },
       entries.map(function (entry) {
         return entry.id;
       }),
     );
+  }
+
+  function retrySingleAnswer(id, selected) {
+    var question = getMistakeQuestion(id);
+    if (!question) return;
+    var entry =
+      mistakeEntries().find(function (item) {
+        return item.id === id;
+      }) || {};
+    if (selected === question.answer) {
+      var moved = recordCorrect(question);
+      if (moved) ui.mastered += 1;
+      ui.retryFeedback = {
+        id: id,
+        selected: selected,
+        correct: true,
+        movedToCorrected: moved,
+      };
+      ui.retryingId = null;
+      ui.message = "";
+    } else {
+      recordWrong(question, {
+        selectedAnswer: selected,
+        examType: entry.examType || "إعادة حل سؤال",
+      });
+      ui.retryFeedback = {
+        id: id,
+        selected: selected,
+        correct: false,
+        movedToCorrected: false,
+      };
+      ui.retryingId = id;
+      ui.message = "";
+    }
+    rerender();
   }
 
   function currentQuestion() {
@@ -713,7 +1162,7 @@
       total +
       "</span>" +
       timer +
-      (session.mode === "practice"
+      (session.revealMode === "instant"
         ? '<span class="quiz-score">' + correctCount(session) + " صحيحة</span>"
         : '<span class="quiz-score">' + answeredCount(session) + " مُجابة</span>") +
       "</div>" +
@@ -727,7 +1176,7 @@
   function optionClass(session, question, index) {
     var selected = session.answers[question.id];
     var revealed = session.revealed[question.id];
-    if (revealed || (session.mode === "timed" && selected !== undefined)) {
+    if (revealed) {
       if (index === question.answer) return " is-correct";
       if (index === selected) return " is-wrong";
     }
@@ -766,7 +1215,7 @@
         );
       })
       .join("");
-    var practice = session.mode === "practice";
+    var instant = session.revealMode === "instant";
     var isLast = session.index === total - 1;
     var answered = selected !== undefined;
     var explanation =
@@ -801,20 +1250,22 @@
       options +
       "</div>" +
       explanation +
-      (practice && !revealed
+      (instant && !revealed
         ? '<p class="quiz-hint">اختر إجابة لعرض التصحيح والتفسير فورًا.</p>'
-        : "") +
+        : !instant && !revealed
+          ? '<p class="quiz-hint">ستظهر الإجابات بعد انتهاء الامتحان.</p>'
+          : "") +
       "</div>" +
       '<div class="quiz-nav">' +
       '<button type="button" class="btn" data-quiz-action="prev" ' +
       (session.index === 0 ? "disabled" : "") +
       ">السابق</button>" +
       "<div>" +
-      (practice && isLast
+      (instant && isLast
         ? '<button type="button" class="btn btn-primary" data-quiz-action="finish" ' +
           (answered ? "" : "disabled") +
           ">عرض النتيجة</button>"
-        : practice
+        : instant
           ? '<button type="button" class="btn btn-primary" data-quiz-action="next" ' +
             (answered ? "" : "") +
             ">التالي</button>"
@@ -856,7 +1307,7 @@
     session.finished = true;
     session.finishedAt = new Date().toISOString();
     session.score = { correct: correctCount(session), total: session.ids.length, auto: Boolean(auto) };
-    if (session.mode === "timed") {
+    if (session.revealMode !== "instant") {
       session.ids.forEach(function (id) {
         var question = questionById[id];
         if (!question) return;
@@ -865,7 +1316,10 @@
         if (answer === question.answer) {
           if (recordCorrect(question)) ui.mastered += 1;
         } else {
-          recordWrong(question);
+          recordWrong(question, {
+            selectedAnswer: answer,
+            examType: session.examTypeLabel,
+          });
         }
       });
     }
@@ -1014,14 +1468,17 @@
     var session = ui.session;
     var question = currentQuestion();
     if (!session || !question) return;
-    if (session.mode === "practice" && session.revealed[question.id]) return;
+    if (session.revealed[question.id]) return;
     session.answers[question.id] = index;
-    if (session.mode === "practice") {
+    if (session.revealMode === "instant") {
       session.revealed[question.id] = true;
       if (index === question.answer) {
         if (recordCorrect(question)) ui.mastered += 1;
       } else {
-        recordWrong(question);
+        recordWrong(question, {
+          selectedAnswer: index,
+          examType: session.examTypeLabel,
+        });
       }
     }
     store.setJson(examKey(session.subjectId), session);
@@ -1035,7 +1492,7 @@
       session.index += 1;
       store.setJson(examKey(session.subjectId), session);
       rerender();
-    } else if (session.mode === "timed") {
+    } else if (session.mode === "timed" || session.revealMode !== "instant") {
       finishSession();
     }
   }
@@ -1083,8 +1540,456 @@
     }
   }
 
+  function buildSyncPayload() {
+    return {
+      v: 2,
+      ts: Date.now(),
+      mistakes: getMistakes(),
+      corrected: getCorrected(),
+      config: Object.assign({}, ui.config || defaultConfig()),
+      studied: store.getJson("hub:studied", {}),
+    };
+  }
+
+  function bytesToBase64Url(bytes) {
+    var binary = "";
+    var chunk = 0x8000;
+    for (var index = 0; index < bytes.length; index += chunk) {
+      binary += String.fromCharCode.apply(
+        null,
+        bytes.subarray ? bytes.subarray(index, index + chunk) : bytes.slice(index, index + chunk),
+      );
+    }
+    return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+
+  function base64UrlToBytes(value) {
+    var base64 = String(value || "").replace(/-/g, "+").replace(/_/g, "/");
+    while (base64.length % 4) base64 += "=";
+    var binary = atob(base64);
+    var bytes = new Uint8Array(binary.length);
+    for (var index = 0; index < binary.length; index += 1) {
+      bytes[index] = binary.charCodeAt(index);
+    }
+    return bytes;
+  }
+
+  async function encodeSyncPayload(data) {
+    var json = new TextEncoder().encode(JSON.stringify(data));
+    if (typeof CompressionStream === "function") {
+      try {
+        var compressed = new Blob([json])
+          .stream()
+          .pipeThrough(new CompressionStream("deflate-raw"));
+        var buffer = await new Response(compressed).arrayBuffer();
+        return "HUB2:" + bytesToBase64Url(new Uint8Array(buffer));
+      } catch (error) {
+        void error;
+      }
+    }
+    return "HUB1:" + bytesToBase64Url(json);
+  }
+
+  async function decodeSyncPayload(value) {
+    var code = String(value || "").trim();
+    var hashIndex = code.indexOf("#sync=");
+    if (hashIndex !== -1) code = code.slice(hashIndex + 6);
+    else if (code.indexOf("sync=") === 0) code = code.slice(5);
+    if (code.indexOf("HUB2:") === 0) {
+      if (typeof DecompressionStream !== "function") {
+        throw new Error("compressed");
+      }
+      var compressedBytes = base64UrlToBytes(code.slice(5));
+      var stream = new Blob([compressedBytes])
+        .stream()
+        .pipeThrough(new DecompressionStream("deflate-raw"));
+      var buffer = await new Response(stream).arrayBuffer();
+      return JSON.parse(new TextDecoder().decode(buffer));
+    }
+    if (code.indexOf("HUB1:") === 0) {
+      return JSON.parse(new TextDecoder().decode(base64UrlToBytes(code.slice(5))));
+    }
+    throw new Error("invalid");
+  }
+
+  function buildSyncUrl(code) {
+    if (location.protocol === "file:") return "";
+    return location.origin + location.pathname + location.search + "#sync=" + code;
+  }
+
+  function qrSvg(text) {
+    try {
+      var qr = window.qrcode(0, "L");
+      qr.addData(text);
+      qr.make();
+      return qr.createSvgTag({
+        cellSize: 4,
+        margin: 8,
+        scalable: true,
+        alt: "رمز QR لنقل التقدم",
+      });
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function mergeMistakes(current, incoming) {
+    var result = Object.assign({}, current);
+    Object.keys(incoming || {}).forEach(function (id) {
+      var before = result[id];
+      var after = incoming[id];
+      if (!after || typeof after !== "object") return;
+      if (!before) {
+        result[id] = after;
+        return;
+      }
+      var newest =
+        String(after.lastAt || "") >= String(before.lastAt || "") ? after : before;
+      var merged = Object.assign({}, before, after, newest);
+      merged.wrongCount = Math.max(
+        Number(before.wrongCount) || 1,
+        Number(after.wrongCount) || 1,
+      );
+      merged.lastAt = newest.lastAt || before.lastAt || after.lastAt || "";
+      result[id] = merged;
+    });
+    return result;
+  }
+
+  function mergeCorrected(current, incoming) {
+    var result = Object.assign({}, current);
+    Object.keys(incoming || {}).forEach(function (id) {
+      var before = result[id];
+      var after = incoming[id];
+      if (!after || typeof after !== "object") return;
+      if (!before) {
+        result[id] = after;
+        return;
+      }
+      var newest =
+        String(after.correctedAt || "") >= String(before.correctedAt || "") ? after : before;
+      var merged = Object.assign({}, before, after, newest);
+      merged.wrongCount = Math.max(
+        Number(before.wrongCount) || 1,
+        Number(after.wrongCount) || 1,
+      );
+      merged.correctedAt = newest.correctedAt || before.correctedAt || after.correctedAt || "";
+      result[id] = merged;
+    });
+    return result;
+  }
+
+  function mergeStudied(current, incoming) {
+    var result = Object.assign({}, current || {});
+    Object.keys(incoming || {}).forEach(function (key) {
+      if (incoming[key]) result[key] = true;
+    });
+    return result;
+  }
+
+  function reconcileMistakes(mistakes, corrected) {
+    Object.keys(corrected || {}).forEach(function (id) {
+      if (!mistakes[id]) return;
+      var wrongAt = String(mistakes[id].lastAt || "");
+      var correctAt = String(corrected[id].correctedAt || "");
+      if (correctAt >= wrongAt) delete mistakes[id];
+      else delete corrected[id];
+    });
+  }
+
+  function applySyncData(data, mode) {
+    var incomingMistakes =
+      data.mistakes && typeof data.mistakes === "object" && !Array.isArray(data.mistakes)
+        ? data.mistakes
+        : {};
+    var incomingCorrected =
+      data.corrected && typeof data.corrected === "object" && !Array.isArray(data.corrected)
+        ? data.corrected
+        : {};
+    var incomingStudied =
+      data.studied && typeof data.studied === "object" && !Array.isArray(data.studied)
+        ? data.studied
+        : {};
+    var mistakes;
+    var corrected;
+    var studied;
+    if (mode === "replace") {
+      mistakes = Object.assign({}, incomingMistakes);
+      corrected = Object.assign({}, incomingCorrected);
+      studied = Object.assign({}, incomingStudied);
+    } else {
+      mistakes = mergeMistakes(getMistakes(), incomingMistakes);
+      corrected = mergeCorrected(getCorrected(), incomingCorrected);
+      studied = mergeStudied(store.getJson("hub:studied", {}), incomingStudied);
+    }
+    reconcileMistakes(mistakes, corrected);
+    saveMistakes(mistakes);
+    saveCorrected(corrected);
+    store.setJson("hub:studied", studied);
+    if (data.config && typeof data.config === "object" && !Array.isArray(data.config)) {
+      ui.config = Object.assign(defaultConfig(), mode === "replace" ? data.config : ui.config, data.config);
+      store.setJson(CONFIG_KEY, ui.config);
+    }
+    return {
+      mistakes: Object.keys(mistakes).length,
+      corrected: Object.keys(corrected).length,
+      studied: Object.keys(studied).length,
+    };
+  }
+
+  function syncSummary(data) {
+    var mistakes = data && data.mistakes && typeof data.mistakes === "object" ? data.mistakes : {};
+    var corrected = data && data.corrected && typeof data.corrected === "object" ? data.corrected : {};
+    var studied = data && data.studied && typeof data.studied === "object" ? data.studied : {};
+    return (
+      Object.keys(mistakes).length +
+      " خطأ · " +
+      Object.keys(corrected).length +
+      " مصحح · " +
+      Object.keys(studied).length +
+      " عنصر مذاكرة"
+    );
+  }
+
+  function syncStatus(overlay, message, isError) {
+    var status = overlay.querySelector("[data-sync-status]");
+    if (!status) return;
+    status.textContent = message;
+    status.classList.toggle("is-error", Boolean(isError));
+  }
+
+  function ensureSyncModal() {
+    var overlay = document.getElementById("hub-sync-modal");
+    if (overlay) return overlay;
+    overlay = document.createElement("div");
+    overlay.id = "hub-sync-modal";
+    overlay.className = "hub-sync-overlay";
+    overlay.hidden = true;
+    overlay.addEventListener("click", onSyncClick);
+    overlay.addEventListener("keydown", onSyncKeydown);
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
+  function syncMarkup(code, url, svg) {
+    var shareValue = url || code;
+    var tooLarge = Boolean(url && url.length > 2200);
+    var qrBlock = svg
+      ? '<div class="sync-qr">' + svg + "</div>"
+      : '<div class="sync-qr is-unavailable">' +
+        ICONS.sync +
+        "<span>" +
+        (tooLarge
+          ? "البيانات كبيرة على رمز QR — استخدم نسخ الكود أو ملف النسخ الاحتياطي."
+          : url
+            ? "تعذّر توليد رمز QR في هذا المتصفح."
+            : "افتح الموقع عبر رابط ويب لتوليد رمز QR، أو استخدم نسخ الكود.") +
+        "</span></div>";
+    return (
+      '<div class="sync-dialog" role="dialog" aria-modal="true" aria-labelledby="sync-title">' +
+      '<header class="sync-head">' +
+      '<div><span class="eyebrow">' +
+      ICONS.sync +
+      " نقل التقدم</span><h2 id=\"sync-title\">نقل تقدمي للموبايل</h2>" +
+      "<p>انقل بنك أخطائك وقائمة التصحيح وإعدادات الاختبار وعناصر المذاكرة بين الأجهزة. البيانات تبقى داخل متصفحك.</p></div>" +
+      '<button type="button" class="sync-close" data-sync-close aria-label="إغلاق">' +
+      ICONS.close +
+      "</button></header>" +
+      '<div class="sync-grid">' +
+      '<section class="sync-panel">' +
+      "<h3>إرسال من هذا الجهاز</h3>" +
+      '<div class="sync-qr-wrap">' +
+      qrBlock +
+      "</div>" +
+      '<label class="sync-label" for="sync-share-value">رابط أو كود النقل</label>' +
+      '<textarea id="sync-share-value" class="sync-code" data-sync-share readonly dir="ltr">' +
+      esc(shareValue) +
+      "</textarea>" +
+      '<div class="sync-panel-actions">' +
+      '<button type="button" class="btn btn-primary btn-sm" data-sync-copy>' +
+      ICONS.sync +
+      "<span>نسخ رابط / كود النقل</span></button>" +
+      '<button type="button" class="btn btn-sm" data-sync-download>' +
+      ICONS.download +
+      "<span>تحميل نسخة احتياطية (JSON)</span></button>" +
+      "</div>" +
+      (tooLarge
+        ? '<p class="sync-note">البيانات كبيرة على رمز QR — استخدم نسخ الكود أو ملف النسخ الاحتياطي.</p>'
+        : "") +
+      "</section>" +
+      '<section class="sync-panel">' +
+      "<h3>استقبال على هذا الجهاز</h3>" +
+      '<label class="sync-label" for="sync-import-value">الصق كود HUB1/HUB2 أو رابط النقل</label>' +
+      '<textarea id="sync-import-value" class="sync-code" data-sync-input dir="ltr" placeholder="HUB2:..."></textarea>' +
+      '<div class="sync-modes" role="group" aria-label="طريقة التطبيق">' +
+      '<button type="button" class="qchip is-active" data-sync-mode="merge">دمج مع الحالي (موصى به)</button>' +
+      '<button type="button" class="qchip" data-sync-mode="replace">استبدال الكل</button>' +
+      "</div>" +
+      '<button type="button" class="btn btn-primary sync-apply" data-sync-apply>' +
+      ICONS.check +
+      "<span>تطبيق النقل</span></button>" +
+      '<p class="sync-status" data-sync-status aria-live="polite"></p>' +
+      "</section>" +
+      "</div>" +
+      "</div>"
+    );
+  }
+
+  async function openSync(options) {
+    options = options || {};
+    var overlay = ensureSyncModal();
+    var data = buildSyncPayload();
+    var code;
+    try {
+      code = await encodeSyncPayload(data);
+    } catch (error) {
+      ui.message = "تعذّر تجهيز كود النقل.";
+      rerender();
+      return;
+    }
+    var url = buildSyncUrl(code);
+    var svg = url && url.length <= 2200 ? qrSvg(url) : "";
+    overlay.innerHTML = syncMarkup(code, url, svg);
+    overlay.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+    if (options.importCode) {
+      var input = overlay.querySelector("[data-sync-input]");
+      input.value = options.importCode;
+      try {
+        var incoming = await decodeSyncPayload(options.importCode);
+        syncStatus(overlay, "تم قراءة كود النقل: " + syncSummary(incoming) + " — اختر دمج أو استبدال.", false);
+      } catch (error) {
+        syncStatus(overlay, "تعذّر قراءة كود النقل. تأكد من نسخه كاملًا.", true);
+      }
+      input.focus();
+    } else {
+      overlay.querySelector("[data-sync-close]")?.focus();
+    }
+  }
+
+  function closeSync() {
+    var overlay = document.getElementById("hub-sync-modal");
+    if (!overlay) return;
+    overlay.hidden = true;
+    overlay.innerHTML = "";
+    document.documentElement.style.overflow = "";
+  }
+
+  function copyText(value) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(value);
+    }
+    return new Promise(function (resolve, reject) {
+      var area = document.createElement("textarea");
+      area.value = value;
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand("copy") ? resolve() : reject(new Error("copy"));
+      } catch (error) {
+        reject(error);
+      } finally {
+        area.remove();
+      }
+    });
+  }
+
+  async function applySyncFromModal(overlay) {
+    var input = overlay.querySelector("[data-sync-input]");
+    var raw = input ? input.value.trim() : "";
+    if (!raw) {
+      syncStatus(overlay, "الصق كود النقل أو رابطه أولًا.", true);
+      input?.focus();
+      return;
+    }
+    var modeEl = overlay.querySelector("[data-sync-mode].is-active");
+    var mode = modeEl && modeEl.dataset.syncMode === "replace" ? "replace" : "merge";
+    var data;
+    try {
+      data = await decodeSyncPayload(raw);
+    } catch (error) {
+      syncStatus(overlay, "الكود غير صالح أو غير مكتمل. انسخ الكود كاملًا وحاول مرة أخرى.", true);
+      return;
+    }
+    if (!data || typeof data !== "object") {
+      syncStatus(overlay, "لا تحتوي البيانات على تقدم صالح.", true);
+      return;
+    }
+    if (
+      mode === "replace" &&
+      !window.confirm("سيتم استبدال بنك الأخطاء وقائمة التصحيح وعناصر المذاكرة وإعدادات الاختبار بالبيانات المستلمة. هل تريد المتابعة؟")
+    ) {
+      return;
+    }
+    var counts = applySyncData(data, mode);
+    ui.message =
+      (mode === "replace" ? "تم استبدال التقدم" : "تم دمج التقدم") +
+      ": " +
+      counts.mistakes +
+      " خطأ، " +
+      counts.corrected +
+      " مصحح.";
+    syncStatus(overlay, "تم تطبيق النقل بنجاح. سيُحدَّث بنك الأخطاء الآن.", false);
+    setTimeout(function () {
+      closeSync();
+      ui.screen = "builder";
+      ui.session = null;
+      rerender();
+    }, 650);
+  }
+
+  function onSyncClick(event) {
+    var overlay = event.currentTarget;
+    if (event.target === overlay || event.target.closest("[data-sync-close]")) {
+      closeSync();
+      return;
+    }
+    var modeButton = event.target.closest("[data-sync-mode]");
+    if (modeButton) {
+      overlay.querySelectorAll("[data-sync-mode]").forEach(function (button) {
+        button.classList.toggle("is-active", button === modeButton);
+      });
+      return;
+    }
+    if (event.target.closest("[data-sync-copy]")) {
+      var share = overlay.querySelector("[data-sync-share]");
+      if (!share) return;
+      copyText(share.value)
+        .then(function () {
+          syncStatus(overlay, "تم نسخ رابط / كود النقل.", false);
+        })
+        .catch(function () {
+          share.focus();
+          share.select();
+          syncStatus(overlay, "تعذّر النسخ تلقائيًا. الكود محدد، اضغط Ctrl+C.", true);
+        });
+      return;
+    }
+    if (event.target.closest("[data-sync-download]")) {
+      exportProgress();
+      syncStatus(overlay, "تم تجهيز ملف النسخة الاحتياطية.", false);
+      return;
+    }
+    if (event.target.closest("[data-sync-apply]")) {
+      applySyncFromModal(overlay);
+    }
+  }
+
+  function onSyncKeydown(event) {
+    if (event.key === "Escape") closeSync();
+  }
+
   function exportProgress() {
-    var data = { version: 1, exportedAt: new Date().toISOString(), mistakes: getMistakes(), exams: {} };
+    var data = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      mistakes: getMistakes(),
+      corrected: getCorrected(),
+      exams: {},
+    };
     try {
       for (var index = 0; index < localStorage.length; index += 1) {
         var key = localStorage.key(index);
@@ -1121,15 +2026,17 @@
         var data = JSON.parse(String(reader.result || ""));
         if (!data || typeof data !== "object") throw new Error("invalid");
         var mistakes = data.mistakes && typeof data.mistakes === "object" ? data.mistakes : null;
-        if (!mistakes && !data.exams) throw new Error("invalid");
+        var corrected = data.corrected && typeof data.corrected === "object" ? data.corrected : null;
+        if (!mistakes && !corrected && !data.exams) throw new Error("invalid");
         if (
           !window.confirm(
-            "سيتم استبدال بنك الأخطاء وجلسات الاختبار المحفوظة بالبيانات الموجودة في الملف. هل تريد المتابعة؟",
+            "سيتم استبدال بنك الأخطاء وقائمة التصحيح وجلسات الاختبار المحفوظة بالبيانات الموجودة في الملف. هل تريد المتابعة؟",
           )
         ) {
           return;
         }
         if (mistakes) saveMistakes(mistakes);
+        if (corrected) saveCorrected(corrected);
         if (data.exams && typeof data.exams === "object") {
           Object.keys(data.exams).forEach(function (key) {
             if (key.indexOf("hub:examState:") !== 0) return;
@@ -1147,21 +2054,6 @@
       }
     };
     reader.readAsText(file);
-  }
-
-  function clearMistakes() {
-    if (!window.confirm("هل تريد مسح كل الأسئلة من بنك الأخطاء؟")) return;
-    saveMistakes({});
-    ui.message = "تم مسح بنك الأخطاء.";
-    rerender();
-  }
-
-  function deleteMistake(id) {
-    var mistakes = getMistakes();
-    if (!mistakes[id]) return;
-    delete mistakes[id];
-    saveMistakes(mistakes);
-    rerender();
   }
 
   function toggleLecture(value) {
@@ -1209,6 +2101,11 @@
       rerender();
       return;
     }
+    if (action === "reveal-mode") {
+      setConfig({ revealMode: value });
+      rerender();
+      return;
+    }
     if (action === "count") {
       setConfig({ count: value === "all" ? "all" : Number(value) });
       rerender();
@@ -1221,6 +2118,11 @@
     if (action === "resume") {
       var session = store.getJson(examKey(ui.subjectId), null);
       if (!session || !Array.isArray(session.ids)) return;
+      session.revealMode = session.revealMode || "after";
+      if (!session.examTypeLabel) {
+        session.examTypeLabel =
+          session.mode === "timed" ? "محاكاة ميدترم" : "تدريب حر (بعد الانتهاء)";
+      }
       ui.session = session;
       ui.screen = session.finished ? "result" : "exam";
       ui.mastered = 0;
@@ -1280,6 +2182,10 @@
       rerender();
       return;
     }
+    if (action === "open-sync") {
+      openSync();
+      return;
+    }
     if (action === "export") {
       exportProgress();
       return;
@@ -1289,20 +2195,47 @@
       if (input) input.click();
       return;
     }
-    if (action === "clear-mistakes") {
-      clearMistakes();
-      return;
-    }
-    if (action === "delete-mistake") {
-      deleteMistake(value);
-      return;
-    }
     if (action === "start-mistakes") {
-      startFromMistakes(value || "all");
+      startFromMistakes(value || ui.mistakesSubject || "all");
       return;
     }
-    if (action === "mistakes-subject") {
-      startFromMistakes(value);
+    if (action === "mistakes-view") {
+      ui.mistakesView = value === "corrected" ? "corrected" : "active";
+      ui.mistakesExamType = "all";
+      ui.mistakesLecture = "all";
+      ui.retryingId = null;
+      ui.retryFeedback = null;
+      rerender();
+      return;
+    }
+    if (action === "mistakes-subject-tab") {
+      ui.mistakesSubject = value || "all";
+      ui.mistakesExamType = "all";
+      ui.mistakesLecture = "all";
+      ui.retryingId = null;
+      ui.retryFeedback = null;
+      rerender();
+      return;
+    }
+    if (action === "mistakes-exam-type") {
+      ui.mistakesExamType = value || "all";
+      ui.mistakesLecture = "all";
+      rerender();
+      return;
+    }
+    if (action === "mistakes-lecture") {
+      ui.mistakesLecture = value || "all";
+      rerender();
+      return;
+    }
+    if (action === "retry-single") {
+      ui.retryingId = ui.retryingId === value ? null : value;
+      ui.retryFeedback = null;
+      rerender();
+      return;
+    }
+    if (action === "retry-single-answer") {
+      retrySingleAnswer(trigger.dataset.id, Number(value));
       return;
     }
   }
@@ -1322,6 +2255,7 @@
   window.HubQuiz = {
     init: init,
     reset: function () {
+      closeSync();
       ui.screen = "builder";
       ui.session = null;
       ui.message = "";
@@ -1331,5 +2265,10 @@
     renderPractice: renderPractice,
     renderMistakes: renderMistakes,
     exportProgress: exportProgress,
+    openSync: openSync,
+    closeSync: closeSync,
+    openSyncImport: function (payload) {
+      return openSync({ importCode: payload });
+    },
   };
 })();
