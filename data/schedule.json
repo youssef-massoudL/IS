@@ -1,0 +1,213 @@
+{
+  "term": "الفصل الدراسي الأول 2026-2027",
+  "faculty": "كلية الحاسبات والمعلومات — جامعة المنصورة",
+  "department": "قسم نظم المعلومات — الفرقة الثالثة",
+  "studyStartDate": "2026-09-19",
+  "calendar": [
+    { "id": "study-start", "title": "بداية الدراسة للفصل الدراسي الأول", "startDate": "2026-09-19", "endDate": "2026-09-19", "note": "الأسبوع الأول (فردي)" },
+    { "id": "midterm-week", "title": "امتحانات الميدترم (الأسبوع التاسع)", "startDate": "2026-11-14", "endDate": "2026-11-19", "note": "تستمر الدراسة بالتوازي مع الاختبارات" },
+    { "id": "practical-oral", "title": "الامتحانات العملية والشفوية", "startDate": "2026-12-19", "endDate": "2026-12-31", "note": "الأسبوع 14 و15" },
+    { "id": "final-exams", "title": "امتحانات نهاية الفصل الدراسي الأول (النظري)", "startDate": "2027-01-02", "endDate": "2027-01-21", "note": "حسب الجدول المعلن" },
+    { "id": "midyear-break", "title": "إجازة نصف العام", "startDate": "2027-01-23", "endDate": "2027-02-04", "note": "أسبوعان" }
+  ],
+  "periods": [
+    { "id": 1, "label": "الفترة الأولى", "start": "08:30", "end": "10:10" },
+    { "id": 2, "label": "الفترة الثانية", "start": "10:20", "end": "12:00" },
+    { "id": 3, "label": "الفترة الثالثة", "start": "12:20", "end": "14:00" },
+    { "id": 4, "label": "الفترة الرابعة", "start": "14:10", "end": "15:50" },
+    { "id": 5, "label": "الفترة الخامسة", "start": "16:00", "end": "17:40" },
+    { "id": 6, "label": "الفترة السادسة", "start": "17:50", "end": "19:30" }
+  ],
+  "midterms": [
+    {
+      "subjectId": "system-analysis",
+      "subjectName": "تحليل النظم والتصميم المنطقي",
+      "date": "2026-11-14",
+      "dayAr": "السبت",
+      "startTime": "11:00",
+      "endTime": "11:30",
+      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
+      "studentsCount": 403,
+      "marks": 10,
+      "lecturesInScope": [1, 2, 3, 4, 5],
+      "scopeNote": "أول 5 محاضرات"
+    },
+    {
+      "subjectId": "research-methods",
+      "subjectName": "أساليب البحث العلمي",
+      "date": "2026-11-15",
+      "dayAr": "الأحد",
+      "startTime": "11:00",
+      "endTime": "11:30",
+      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
+      "studentsCount": 410,
+      "marks": 15,
+      "marksNote": "15 درجة ميدترم + 10 درجات Presentation البحث (أو 25 درجة حسب التوزيع النهائي)",
+      "lecturesInScope": [1, 2, 3, 4, 5],
+      "scopeNote": "أول 4 أو 5 محاضرات"
+    },
+    {
+      "subjectId": "information-theory",
+      "subjectName": "نظرية المعلومات",
+      "date": "2026-11-16",
+      "dayAr": "الاثنين",
+      "startTime": "11:00",
+      "endTime": "11:30",
+      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
+      "studentsCount": 427,
+      "marks": 25,
+      "lecturesInScope": [1, 2, 3, 4, 5, 6, 7],
+      "scopeNote": "أول 6 أو 7 محاضرات"
+    },
+    {
+      "subjectId": "database-2",
+      "subjectName": "قواعد بيانات 2",
+      "date": "2026-11-17",
+      "dayAr": "الثلاثاء",
+      "startTime": "11:00",
+      "endTime": "11:30",
+      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
+      "studentsCount": 433,
+      "marks": 10,
+      "lecturesInScope": [1, 2, 3, 4, 5, 6],
+      "scopeNote": "أول 6 محاضرات"
+    },
+    {
+      "subjectId": "computer-networks",
+      "subjectName": "شبكات الحاسب",
+      "date": "2026-11-18",
+      "dayAr": "الأربعاء",
+      "startTime": "11:00",
+      "endTime": "11:30",
+      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
+      "studentsCount": 428,
+      "marks": 10,
+      "lecturesInScope": [1, 2, 3, 4, 5, 6, 7],
+      "scopeNote": "أول 7 محاضرات (متاح منها 6 ملفات لأن محاضرة 3 و4 مدمجين)"
+    }
+  ],
+  "coursesMeta": {
+    "system-analysis": {
+      "code": "IS312P",
+      "doctors": ["أ.د/ سمير عبدالرازق"],
+      "midtermMarks": "10 درجات",
+      "midtermLectures": [1, 2, 3, 4, 5],
+      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 5"
+    },
+    "database-2": {
+      "code": "IS313P",
+      "doctors": ["أ.د/ أميرة رزق"],
+      "midtermMarks": "10 درجات",
+      "midtermLectures": [1, 2, 3, 4, 5, 6],
+      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 6"
+    },
+    "information-theory": {
+      "code": "IS311T",
+      "doctors": ["د/ إسراء جمال"],
+      "midtermMarks": "25 درجة",
+      "midtermLectures": [1, 2, 3, 4, 5, 6, 7],
+      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 7"
+    },
+    "research-methods": {
+      "code": "IS315T",
+      "doctors": ["د/ هالة عكاشة"],
+      "midtermMarks": "15 درجة (+ 10 درجات عرض البحث)",
+      "midtermLectures": [1, 2, 3, 4, 5],
+      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 5"
+    },
+    "computer-networks": {
+      "code": "IS314P",
+      "doctors": ["أ.د/ أحمد عطوان", "أ.د/ محمد محفوظ"],
+      "midtermMarks": "10 درجات",
+      "midtermLectures": [1, 2, 3, 4, 5, 6, 7],
+      "midtermScopeText": "أول 7 محاضرات"
+    }
+  },
+  "sharedLectures": [
+    { "day": "الأحد", "periods": [1, 2], "sections": [1, 2, 3, 4, 5, 6], "subjectId": "computer-networks", "title": "محاضرة شبكات الحاسب", "instructor": "أ.د/ أحمد عطوان، أ.د/ محمد محفوظ", "room": "مدرج 3", "type": "lecture" },
+    { "day": "الأحد", "periods": [2, 3], "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "subjectId": "research-methods", "title": "محاضرة أساليب البحث العلمي", "instructor": "د/ هالة عكاشة", "room": "مدرج 2", "type": "lecture" },
+    { "day": "الأحد", "periods": [3, 4], "sections": [7, 8, 9, 10, 11], "subjectId": "computer-networks", "title": "محاضرة شبكات وأمن الحاسبات", "instructor": "أ.د/ أحمد عطوان، أ.د/ محمد محفوظ", "room": "مدرج 3", "type": "lecture" },
+    { "day": "الاثنين", "periods": [1, 2], "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "subjectId": "system-analysis", "title": "محاضرة تحليل النظم والتصميم المنطقي", "instructor": "أ.د/ سمير عبدالرازق", "room": "مدرج 3", "type": "lecture" },
+    { "day": "الاثنين", "periods": [3, 4], "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "subjectId": "information-theory", "title": "محاضرة نظرية المعلومات", "instructor": "د/ إسراء جمال", "room": "مدرج 3", "type": "lecture" },
+    { "day": "الخميس", "periods": [1, 2], "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "subjectId": "database-2", "title": "محاضرة قواعد بيانات 2", "instructor": "أ.د/ أميرة رزق", "room": "مدرج 2", "type": "lecture" }
+  ],
+  "sectionsTimetable": {
+    "1": [
+      { "day": "السبت", "periods": [3, 4], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ نورمين لطفي", "room": "قاعة 2", "type": "section" },
+      { "day": "السبت", "periods": [5, 6], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ أحمد كرد", "room": "B4 (Hardware)", "type": "section" },
+      { "day": "الاثنين", "periods": [4, 5], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ مروة جمال", "room": "C6", "type": "section" },
+      { "day": "الاثنين", "periods": [5, 6], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ أمنية المنزلاوي", "room": "مدرج 3", "type": "section" },
+      { "day": "الخميس", "periods": [3, 4], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ محمد البربير", "room": "B5", "type": "section" }
+    ],
+    "2": [
+      { "day": "السبت", "periods": [3, 4], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ نورمين لطفي", "room": "قاعة 2", "type": "section" },
+      { "day": "الأحد", "periods": [3, 4], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ أحمد كرد", "room": "B3", "type": "section" },
+      { "day": "الأحد", "periods": [5, 6], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ محمد البربير", "room": "B5", "type": "section" },
+      { "day": "الاثنين", "periods": [5, 6], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ أمنية المنزلاوي", "room": "مدرج 3", "type": "section" },
+      { "day": "الخميس", "periods": [3, 4], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ مروة جمال", "room": "B2 (Hardware)", "type": "section" }
+    ],
+    "3": [
+      { "day": "الاثنين", "periods": [4, 5], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ أمنية المنزلاوي", "room": "قاعة 1", "type": "section" },
+      { "day": "الاثنين", "periods": [5, 6], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ أحمد كرد", "room": "D1", "type": "section" },
+      { "day": "الثلاثاء", "periods": [2, 3], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ مروة جمال", "room": "D1", "type": "section" },
+      { "day": "الثلاثاء", "periods": [3, 4], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ آلاء جلال", "room": "B2 (Hardware)", "type": "section" },
+      { "day": "الخميس", "periods": [3, 4], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ آية عياد", "room": "قاعة 6", "type": "section" }
+    ],
+    "4": [
+      { "day": "الأحد", "periods": [5, 6], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ نهى عاطف", "room": "B3", "type": "section" },
+      { "day": "الاثنين", "periods": [5, 6], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ أمنية المنزلاوي", "room": "قاعة 1", "type": "section" },
+      { "day": "الخميس", "periods": [3, 4], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ آية عياد", "room": "قاعة 6", "type": "section" },
+      { "day": "الخميس", "periods": [4, 5], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ مروة جمال", "room": "C2", "type": "section" },
+      { "day": "الخميس", "periods": [5, 6], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ آلاء جلال", "room": "B3", "type": "section" }
+    ],
+    "5": [
+      { "day": "الاثنين", "periods": [5, 6], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ أحمد كرد", "room": "C7", "type": "section" },
+      { "day": "الاثنين", "periods": [6, 6], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ منة الله سراج", "room": "A4", "type": "section" },
+      { "day": "الثلاثاء", "periods": [3, 4], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ آية عياد", "room": "قاعة 6", "type": "section" },
+      { "day": "الثلاثاء", "periods": [4, 5], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ آلاء جلال", "room": "C6", "type": "section" },
+      { "day": "الخميس", "periods": [3, 4], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ أحمد عماد الدين", "room": "قاعة 1", "type": "section" }
+    ],
+    "6": [
+      { "day": "الأحد", "periods": [1, 2], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ آلاء جلال", "room": "B4 (Hardware)", "type": "section" },
+      { "day": "الأحد", "periods": [3, 4], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ منة الله سراج", "room": "D8", "type": "section" },
+      { "day": "الثلاثاء", "periods": [3, 4], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ آية عياد", "room": "قاعة 6", "type": "section" },
+      { "day": "الثلاثاء", "periods": [4, 5], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ محمود سعيد، م/ هداية عادل", "room": "B5", "type": "section" },
+      { "day": "الخميس", "periods": [3, 4], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ أحمد عماد الدين", "room": "قاعة 1", "type": "section" }
+    ],
+    "7": [
+      { "day": "السبت", "periods": [3, 4], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ هداية عادل", "room": "B2 (Hardware)", "type": "section" },
+      { "day": "السبت", "periods": [5, 6], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ عبير الخميسي، م/ محمود سعيد", "room": "B1", "type": "section" },
+      { "day": "الخميس", "periods": [3, 4], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ منة الله سراج", "room": "C1", "type": "section" },
+      { "day": "الخميس", "periods": [4, 5], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ آية عياد", "room": "قاعة 2", "type": "section" },
+      { "day": "الخميس", "periods": [5, 6], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ أحمد عماد الدين", "room": "قاعة 3 (Hardware)", "type": "section" }
+    ],
+    "8": [
+      { "day": "السبت", "periods": [5, 6], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ عبير الخميسي، م/ محمود سعيد", "room": "C6", "type": "section" },
+      { "day": "الأحد", "periods": [3, 4], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ آلاء جلال", "room": "B2 (Hardware)", "type": "section" },
+      { "day": "الأحد", "periods": [4, 5], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ منة الله سراج", "room": "B5", "type": "section" },
+      { "day": "الخميس", "periods": [4, 5], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ آية عياد", "room": "قاعة 2", "type": "section" },
+      { "day": "الخميس", "periods": [5, 6], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ أحمد عماد الدين", "room": "قاعة 3 (Hardware)", "type": "section" }
+    ],
+    "9": [
+      { "day": "السبت", "periods": [1, 2], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ نورمين لطفي", "room": "B1", "type": "section" },
+      { "day": "الأحد", "periods": [3, 4], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ طاهر العدلي", "room": "قاعة 2", "type": "section" },
+      { "day": "الأحد", "periods": [4, 5], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ محمود سعيد، م/ نهى عاطف", "room": "B2 (Hardware)", "type": "section" },
+      { "day": "الأحد", "periods": [5, 6], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ محمد سعد", "room": "C6", "type": "section" },
+      { "day": "الأربعاء", "periods": [1, 2], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ كرم محمد", "room": "B2 (Hardware)", "type": "section" }
+    ],
+    "10": [
+      { "day": "السبت", "periods": [1, 2], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ نورمين لطفي", "room": "B1", "type": "section" },
+      { "day": "الأحد", "periods": [3, 4], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ طاهر العدلي", "room": "قاعة 2", "type": "section" },
+      { "day": "الأحد", "periods": [4, 5], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ محمد سعد", "room": "D7", "type": "section" },
+      { "day": "الأربعاء", "periods": [2, 3], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ كرم محمد", "room": "B3", "type": "section" },
+      { "day": "الأربعاء", "periods": [4, 5], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ عبير الخميسي", "room": "B4 (Hardware)", "type": "section" }
+    ],
+    "11": [
+      { "day": "الأحد", "periods": [1, 1], "subjectId": "information-theory", "title": "سكشن نظرية المعلومات", "instructor": "م/ طاهر العدلي", "room": "قاعة 2", "type": "section" },
+      { "day": "الأحد", "periods": [2, 2], "subjectId": "research-methods", "title": "سكشن أساليب البحث العلمي", "instructor": "م/ ريهام الباز", "room": "A4", "type": "section" },
+      { "day": "الثلاثاء", "periods": [3, 4], "subjectId": "system-analysis", "title": "سكشن تحليل النظم والتصميم المنطقي", "instructor": "م/ محمود سعيد، م/ هداية عادل", "room": "D7", "type": "section" },
+      { "day": "الثلاثاء", "periods": [4, 5], "subjectId": "database-2", "title": "سكشن قواعد بيانات 2", "instructor": "م/ محمد عبدالسلام", "room": "D1", "type": "section" },
+      { "day": "الخميس", "periods": [3, 4], "subjectId": "computer-networks", "title": "سكشن شبكات الحاسب", "instructor": "م/ كرم محمد", "room": "B4 (Hardware)", "type": "section" }
+    ]
+  }
+}

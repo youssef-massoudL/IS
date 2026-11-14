@@ -1,0 +1,5349 @@
+[
+  {
+    "id": "db-l1-001",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which of the following is a potential consequence of data redundancy in a database?",
+    "options": [
+      "Improved data integrity",
+      "Increased storage requirements",
+      "Enhanced data accessibility",
+      "Reduced data inconsistency"
+    ],
+    "answer": 1,
+    "explanation": "Duplicated data takes extra storage and risks inconsistency. .inconsistency يعمل وممكن زيادة تخزين مساحة بياخد البيانات تكرار"
+  },
+  {
+    "id": "db-l1-002",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the best way to eliminate data redundancy in a database?",
+    "options": [
+      "Creating multiple copies of the data",
+      "Using a data warehouse",
+      "Normalizing the database",
+      "Deleting unnecessary data"
+    ],
+    "answer": 2,
+    "explanation": "Normalization removes duplicated data by organizing tables. .الجداول بتنظيم التكرار بيشيل Normalization الـ"
+  },
+  {
+    "id": "db-l1-003",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Why is it difficult to access data stored in multiple files and formats?",
+    "options": [
+      "It requires specialized software for each format",
+      "It is time-consuming to convert data between formats",
+      "It can lead to data inconsistencies",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "All three reasons apply to data scattered across files and formats. .مختلفة وصيغ ملفات في تبقى البيانات لما صح كلها التالتة األسباب"
+  },
+  {
+    "id": "db-l1-004",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How can a database management system (DBMS) help address the challenge of data accessibility?",
+    "options": [
+      "By providing a centralized repository for data",
+      "By enforcing data integrity constraints",
+      "By allowing concurrent access by multiple users",
+      "By providing security features to protect data"
+    ],
+    "answer": 0,
+    "explanation": "Marked answer in the bank: one centralized repository makes data easy to reach. (The other options are also DBMS features, but this is the one the bank marks.) لكن DBMS الـ ممزيات من كمان الختيارات باقي( .الوصول بيس ّه ل للبيانات واحد مركزي مخزن :البنك في المع ّلمة اإلجابة .)دي مع ّلم البنك"
+  },
+  {
+    "id": "db-l1-005",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the main disadvantage of storing data in multiple files and formats?",
+    "options": [
+      "Increased storage requirements",
+      "Difficulty in accessing data",
+      "Reduced data integrity",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "It causes all of these problems together. .بعض مع دي المشاكل كل بتسبب"
+  },
+  {
+    "id": "db-l1-006",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How can data isolation be overcome in a database system?",
+    "options": [
+      "By using a data warehouse",
+      "By normalizing the database",
+      "By creating a data mart",
+      "By integrating data from different sources"
+    ],
+    "answer": 3,
+    "explanation": "Data isolation (many files and formats) is solved by integrating the data in one database. .واحدة داتابزي في المختلفة مصادرها من البيانات بدمج بيتحل البيانات عزل"
+  },
+  {
+    "id": "db-l1-007",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which of the following is an example of an integrity constraint in a database?",
+    "options": [
+      "A foreign key constraint",
+      "A unique constraint",
+      "A check constraint",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "Foreign key, unique and check are all integrity constraints. .integrity constraints كلهم check و unique و foreign key الـ"
+  },
+  {
+    "id": "db-l1-008",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Why is it difficult to add new constraints or change existing ones in a database?",
+    "options": [
+      "It requires modifying the database schema",
+      "It can impact data integrity",
+      "It can affect database performance",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "All of these make changing constraints costly. .مكلف constraints الـ تغيري لبتخ يّ دي األسباب كل"
+  },
+  {
+    "id": "db-l1-009",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "What is the importance of atomicity in database transactions?",
+    "options": [
+      "It ensures that transactions are executed in isolation",
+      "It guarantees that transactions are either fully completed or not executed at all",
+      "It prevents concurrent access conflicts",
+      "It enforces data integrity constraints"
+    ],
+    "answer": 1,
+    "explanation": "Atomicity = all or nothing. .يشء ال أو الكل معناها Atomicity الـ"
+  },
+  {
+    "id": "db-l1-010",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How can atomicity be ensured in a database system?",
+    "options": [
+      "By using a transaction log",
+      "By implementing a recovery mechanism",
+      "By using a two-phase commit protocol",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "Log, recovery and commit protocols together ensure atomicity. .atomicity الـ بيضمنوا كلهم commit الـ وبروتوكول recovery والـ log الـ"
+  },
+  {
+    "id": "db-l1-011",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the main challenge associated with concurrent access to a database by multiple users?",
+    "options": [
+      "Reduced database performance",
+      "Increased storage requirements",
+      "Data inconsistency",
+      "Security problems"
+    ],
+    "answer": 2,
+    "explanation": "Uncontrolled concurrent access can leave the data inconsistent. .البيانات في inconsistency بيعمل تحكم غري من المزتامن الوصول"
+  },
+  {
+    "id": "db-l1-012",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How can concurrent access conflicts be prevented in a database system?",
+    "options": [
+      "By using a locking mechanism",
+      "By implementing a timestamping mechanism",
+      "By using optimistic concurrency control",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "Locking, timestamping and optimistic control are all concurrency control techniques. .concurrency control تقنيات كلهم optimistic والـ timestamping والـ locking الـ"
+  },
+  {
+    "id": "db-l1-013",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following is a security risk associated with granting users access to some but not all data in a database?",
+    "options": [
+      "Data leakage",
+      "Unauthorized access",
+      "Data corruption",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "Partial access still carries all of these risks. .دي المخاطر كل فيها الجزئية الصالحية"
+  },
+  {
+    "id": "db-l1-014",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How can security be ensured in a database system?",
+    "options": [
+      "By implementing access controls",
+      "By encrypting data",
+      "By using strong passwords",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "Use all of these measures together. .بعض مع دي اإلجراءات كل بنستخدم"
+  },
+  {
+    "id": "db-l1-015",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If the same data may be stored in multiple files; this causes the data ______ problem.",
+    "options": [
+      "isolation",
+      "redundancy",
+      "fragmentation",
+      "volatility"
+    ],
+    "answer": 1,
+    "explanation": "Duplicate copies of the same data = data redundancy (and inconsistency). .data redundancy = ملف من أكرت في البيانات نفس"
+  },
+  {
+    "id": "db-l1-016",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "An advantage of the database management approach is ______.",
+    "options": [
+      "Accessing all data or not",
+      "Multilevel security",
+      "Data dependent",
+      "Update anomalies"
+    ],
+    "answer": 1,
+    "explanation": "A DBMS can give users different access levels (multilevel security). The others are file-system problems. .file system الـ عيوب الباقي .multilevel security)( مختلفة وصول مستويات بي ّدي DBMS الـ"
+  },
+  {
+    "id": "db-l1-017",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ______, it is easy to add new constraints or change existing ones.",
+    "options": [
+      "File system",
+      "Database system",
+      "Both of them",
+      "None of them"
+    ],
+    "answer": 1,
+    "explanation": "In file systems constraints are buried in program code; a DBMS states them explicitly, so they are easy to change. .تغيريها فسهل رصاحة بيكتبها DBMS الـ لكن ،الكود في مدفونة القيود file system الـ في"
+  },
+  {
+    "id": "db-l1-018",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An advantage of the database management approach; Data is ______.",
+    "options": [
+      "dependent on programs",
+      "integrated",
+      "redundant",
+      "Unrecoverable"
+    ],
+    "answer": 1,
+    "explanation": "A database keeps data integrated and independent of programs. .الربامج عىل معتمدة ومش integrated البيانات لبتخ يّ الداتابزي"
+  },
+  {
+    "id": "db-l1-019",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a file system, what is a common challenge caused by storing duplicate data in multiple locations?",
+    "options": [
+      "Data volatility",
+      "Data redundancy",
+      "Data independence",
+      "Data fragmentation"
+    ],
+    "answer": 1,
+    "explanation": "Duplicate copies = data redundancy. .data redundancy = المكررة النسخ"
+  },
+  {
+    "id": "db-l1-020",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What feature of a DBMS allows users to access data securely at different privilege levels?",
+    "options": [
+      "Multilevel security",
+      "Data isolation",
+      "Data redundancy",
+      "Dependency on programs"
+    ],
+    "answer": 0,
+    "explanation": "Multilevel security gives each user the privileges they need. .محتاجها اليل الصالحيات مستخدم كل بي ّدي multilevel security الـ"
+  },
+  {
+    "id": "db-l1-021",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which of the following is a disadvantage of the file system?",
+    "options": [
+      "Data independence",
+      "Multiple users can access data at the same time",
+      "Data redundancy",
+      "Allowing multilevel security"
+    ],
+    "answer": 2,
+    "explanation": "Redundancy is a file-system drawback; the others are DBMS advantages. .DBMS ممزيات والباقي ،file system الـ في عيب redundancy الـ"
+  },
+  {
+    "id": "db-l1-022",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In file system, integrity constraints are written in program code rather than being stated explicitly.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: constraints get “buried” in program code. .الربنامج كود في مدفونة بتبقى القيود :صح"
+  },
+  {
+    "id": "db-l1-023",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Writing a new program to carry out each new task is a drawback of file systems called ______. (authored)",
+    "options": [
+      "Data isolation",
+      "Difficulty in accessing data",
+      "Atomicity of updates",
+      "Security problems"
+    ],
+    "answer": 1,
+    "explanation": "Each new task needs a new program, so data is hard to access. .صعب للبيانات فالوصول ،جديد برنامج محتاجة جديدة مهمة كل"
+  },
+  {
+    "id": "db-l1-024",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Two people read a balance of 100 and each withdraws 50 at the same time, so the final balance is 50. This problem is caused by ______. (authored)",
+    "options": [
+      "Concurrent access by multiple users",
+      "Atomicity of updates",
+      "Data redundancy",
+      "Security problems"
+    ],
+    "answer": 0,
+    "explanation": "Uncontrolled concurrent access leads to inconsistency (a lost update). .inconsistency (lost update) لـ بيوصل تحكم غري من المزتامن الوصول"
+  },
+  {
+    "id": "db-l1-025",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A transfer of funds from one account to another that must either complete fully or not happen at all illustrates ______. (authored)",
+    "options": [
+      "Atomicity of updates",
+      "Data isolation",
+      "Integrity constraints",
+      "Concurrent access"
+    ],
+    "answer": 0,
+    "explanation": "All-or-nothing behavior is atomicity. .atomicity الـ هو يشء ال أو الكل"
+  },
+  {
+    "id": "db-l1-026",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following is NOT a drawback of using file systems to store data? (authored)",
+    "options": [
+      "Data redundancy and inconsistency",
+      "Difficulty in accessing data",
+      "Integrity problems",
+      "Centralized control of security and concurrency"
+    ],
+    "answer": 3,
+    "explanation": "Centralized control of security and concurrency is what a database system provides. .database system الـ بيقدمه اليل هو concurrency والـ األمان في المركزي التحكم"
+  },
+  {
+    "id": "db-l1-027",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Integrity constraints such as “account balance > 0” become buried in program code in ______. (authored)",
+    "options": [
+      "Database systems",
+      "File systems",
+      "Data warehouses",
+      "Relational schemas"
+    ],
+    "answer": 1,
+    "explanation": "File systems keep constraints inside application code. .التطبيق كود جوه القيود بتحط file systems الـ 2"
+  },
+  {
+    "id": "db-l2-028",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "What is the difference between a single-user system and a multi-user system?",
+    "options": [
+      "Single-user systems can only be accessed by one user at a time, while multi-user systems can be accessed by multiple users simultaneously.",
+      "Single-user systems are typically installed on a single computer, while multi-user systems are typically installed on a network server.",
+      "Single-user systems are used for personal tasks, while multi-user systems are used for business applications.",
+      "All of the above."
+    ],
+    "answer": 0,
+    "explanation": "systems can be accessed by multiple users simultaneously. Marked answer in the bank: one user at a time vs. many users simultaneously. .بعض مع مستخدم من أكرت مقابل الوقت في واحد مستخدم :البنك في المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l2-029",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What are the two main types of concurrency control mechanisms?",
+    "options": [
+      "Serialization and parallelism",
+      "Locking and timestamping",
+      "Optimistic and pessimistic",
+      "Interleaved and parallel"
+    ],
+    "answer": 1,
+    "explanation": "Marked answer in the bank: locking and timestamping. (Lecture 3 also classifies them as pessimistic vs. optimistic.) .optimistic) و pessimistic كمان بتصنفهم 3 المحارضة( .timestamping و locking :البنك في المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l2-030",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "What is the difference between interleaved processing and parallel processing?",
+    "options": [
+      "Interleaved processing executes transactions one after the other, while parallel processing executes transactions simultaneously.",
+      "Interleaved processing is used in single-user systems, while parallel processing is used in multi- user systems.",
+      "Interleaved processing is more efficient than parallel processing.",
+      "None of the above."
+    ],
+    "answer": 0,
+    "explanation": "processing executes transactions simultaneously. Marked answer in the bank. In the slides, interleaved = one CPU switches between transactions; parallel = several CPUs run them truly at the same time. معالج من أكرت = parallel و ،transactions الـ بني بيب ّدل واحد معالج = interleaved :الساليدات في .البنك في المع ّلمة اإلجابة .الوقت نفس في لفع اً بينفذوا"
+  },
+  {
+    "id": "db-l2-031",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "What is the main disadvantage of interleaved processing?",
+    "options": [
+      "It can lead to long wait times for transactions.",
+      "It is difficult to implement.",
+      "It is not suitable for real-time applications.",
+      "It can cause data inconsistencies."
+    ],
+    "answer": 0,
+    "explanation": "Marked answer in the bank: transactions may wait long for the CPU. .طويل وقت تستىن ممكن transactions الـ :البنك في المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l2-032",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the main advantage of parallel processing?",
+    "options": [
+      "It can improve system performance.",
+      "It is easier to implement than interleaved processing.",
+      "It is suitable for all types of applications.",
+      "It eliminates the need for concurrency control."
+    ],
+    "answer": 0,
+    "explanation": "Several CPUs working at once improve performance. .األداء فبيحسنوا بعض مع بيشتغلوا معالج من أكرت"
+  },
+  {
+    "id": "db-l2-033",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "What is the main disadvantage of parallel processing?",
+    "options": [
+      "It can be difficult to coordinate multiple transactions.",
+      "It can lead to data inconsistencies.",
+      "It is not suitable for real-time applications.",
+      "It is less efficient than interleaved processing."
+    ],
+    "answer": 0,
+    "explanation": "Coordinating many simultaneous transactions is hard. .صعب المزتامنة transactions الـ من كبري عدد تنسيق"
+  },
+  {
+    "id": "db-l2-034",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the purpose of concurrency control?",
+    "options": [
+      "To prevent data inconsistencies.",
+      "To improve system performance.",
+      "To ensure that transactions are executed in the correct order.",
+      "All of the above."
+    ],
+    "answer": 3,
+    "explanation": "Marked answer: all of the above. .سبق ما كل :المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l2-035",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What are the three main concurrency control problems?",
+    "options": [
+      "Lost update, dirty read, and unrepeatable read.",
+      "Deadlock, livelock, and starvation.",
+      "Serialization, parallelism, and interleaving.",
+      "None of the above."
+    ],
+    "answer": 0,
+    "explanation": "Marked answer in the bank. (The slides list four: lost update, dirty read, incorrect summary, unrepeatable read.) .unrepeatable read) و incorrect summary و dirty read و 4: lost update فيها الساليدات( .البنك في المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l2-036",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the primary cause of the lost update problem in database transactions?",
+    "options": [
+      "Incorrect data types",
+      "Lack of indexing",
+      "Interleaved execution of transactions",
+      "Insufficient storage space"
+    ],
+    "answer": 2,
+    "explanation": "Operations of transactions on the same item get interleaved incorrectly. .غلط بشكل بتتداخل العنرص نفس عىل transactions الـ عمليات"
+  },
+  {
+    "id": "db-l2-037",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When does a lost update occur?",
+    "options": [
+      "When two transactions read the same data item, modify it, and then write the modified value back without proper synchronization.",
+      "When a transaction is aborted due to a system failure.",
+      "When a transaction is rolled back due to an error.",
+      "When a transaction is executed in isolation."
+    ],
+    "answer": 0,
+    "explanation": "modified value back without proper synchronization. Both read the old value and the second write overwrites the first. .األوىل بتمسح التانية والكتابة القديمة القيمة بيقرأوا الت ني"
+  },
+  {
+    "id": "db-l2-038",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the main consequence of the lost update problem?",
+    "options": [
+      "Data corruption",
+      "Increased system performance",
+      "Reduced transaction throughput",
+      "Improved data consistency"
+    ],
+    "answer": 0,
+    "explanation": "Wrong values end up in the database. .الداتابزي في بتتخزن غلط قيم"
+  },
+  {
+    "id": "db-l2-039",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Why is the lost update problem considered a serious issue in database systems?",
+    "options": [
+      "It can lead to financial losses.",
+      "It can damage the reputation of the organization.",
+      "It can disrupt business operations.",
+      "All of the above."
+    ],
+    "answer": 3,
+    "explanation": "All consequences apply. .بتحصل دي النتايج كل"
+  },
+  {
+    "id": "db-l2-040",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which concurrency control mechanism can help prevent lost updates?",
+    "options": [
+      "Two-phase locking",
+      "Timestamping",
+      "Optimistic concurrency control",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "All three techniques prevent lost updates. .lost update الـ بتمنع تقنيات التالت"
+  },
+  {
+    "id": "db-l2-041",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "How does two-phase locking prevent lost updates?",
+    "options": [
+      "By ensuring that transactions acquire all necessary locks before modifying data.",
+      "By assigning timestamps to transactions and using them to determine the order of execution.",
+      "By allowing transactions to modify data without acquiring locks.",
+      "By using a versioning mechanism."
+    ],
+    "answer": 0,
+    "explanation": "Locks stop two transactions from modifying the same item at the same time. .الوقت نفس في العنرص نفس تعديل من ينtransaction بتمنع locks الـ"
+  },
+  {
+    "id": "db-l2-042",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "What is the difference between a lost update and a dirty read?",
+    "options": [
+      "A lost update occurs when two transactions modify the same data item without proper synchronization, while a dirty read occurs when a transaction reads a value that has not yet been committed.",
+      "A lost update occurs when a transaction is rolled back due to an error, while a dirty read occurs when a transaction is aborted due to a system failure.",
+      "A lost update occurs when a transaction is executed in isolation, while a dirty read occurs when a transaction is executed in parallel.",
+      "There is no difference between a lost update and a dirty read."
+    ],
+    "answer": 0,
+    "explanation": "proper synchronization, while a dirty read occurs when a transaction reads a value that has not yet been committed. Lost update = overwritten update; dirty read = reading uncommitted data. .commit اتعملهاش ما لسه بيانات قراءة = dirty read و ،اتمسح تحديث = Lost update"
+  },
+  {
+    "id": "db-l2-043",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How can the lost update problem be further mitigated?",
+    "options": [
+      "By using appropriate data types.",
+      "By indexing frequently accessed data.",
+      "By optimizing database queries.",
+      "All of the above."
+    ],
+    "answer": 3,
+    "explanation": "Marked answer in the bank: all of the above. .سبق ما كل :البنك في المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l2-044",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is typically installed on a network server and can be accessed by users who are logged in to the network.",
+    "options": [
+      "Single user system",
+      "Multi user system"
+    ],
+    "answer": 1,
+    "explanation": "Multi-user systems run on a network server. .network server عىل بيرتكب multi-user system الـ"
+  },
+  {
+    "id": "db-l2-045",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "______ is typically installed on a single computer and can only be accessed by the user who installed it or the user who is currently logged in.",
+    "options": [
+      "Single user system",
+      "Multi user system"
+    ],
+    "answer": 0,
+    "explanation": "That describes a single-user system. .single-user system الـ وصف ده"
+  },
+  {
+    "id": "db-l2-046",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ can be accessed by multiple users simultaneously.",
+    "options": [
+      "Single user system",
+      "Multi user system"
+    ],
+    "answer": 1,
+    "explanation": "Multi-user system. .multi-user system الـ"
+  },
+  {
+    "id": "db-l2-047",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is a process in which the tasks are divided into small sub-tasks that are processed simultaneously (in parallel).",
+    "options": [
+      "Interleaved processing",
+      "Parallel processing"
+    ],
+    "answer": 1,
+    "explanation": "Parallel processing. .parallel processing الـ"
+  },
+  {
+    "id": "db-l2-048",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is a process in which more than one task is being processed at the same time.",
+    "options": [
+      "Interleaved processing",
+      "Parallel processing"
+    ],
+    "answer": 0,
+    "explanation": "Marked answer in the bank: interleaved processing (concurrency on one CPU). .interleaved processing :البنك في المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l2-049",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is the logical unit of database processing that includes one or more database access operations.",
+    "options": [
+      "Transaction",
+      "DBMS",
+      "Recovery manager"
+    ],
+    "answer": 0,
+    "explanation": "That is the definition of a transaction. .transaction الـ تعريف ده"
+  },
+  {
+    "id": "db-l2-050",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "______ is the atomic unit of work that is either completed in its entirety or not done at all.",
+    "options": [
+      "Transaction",
+      "Recovery manager",
+      "DBMS",
+      "System log"
+    ],
+    "answer": 0,
+    "explanation": "A transaction is atomic. .atomic)( ذرية transaction الـ"
+  },
+  {
+    "id": "db-l2-051",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An application program may contain several transactions separated by transaction boundaries.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: begin_transaction and end_transaction mark the boundaries. .الحدود بيحددوا end_transaction و begin_transaction :صح"
+  },
+  {
+    "id": "db-l2-052",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ occurs when a transaction T reads the same item twice and the item is changed by another transaction between the two reads, so T receives different values.",
+    "options": [
+      "The lost update",
+      "The temporary update (dirty read)",
+      "The incorrect summary problem",
+      "The unrepeatable read problem"
+    ],
+    "answer": 3,
+    "explanation": "Unrepeatable read. .unrepeatable read الـ"
+  },
+  {
+    "id": "db-l2-053",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ occurs when two transactions that access the same database items have their operations interleaved in a way that makes the value of some items incorrect.",
+    "options": [
+      "The lost update",
+      "The temporary update (dirty read)",
+      "The incorrect summary problem",
+      "The unrepeatable read problem"
+    ],
+    "answer": 0,
+    "explanation": "Lost update. .lost update الـ"
+  },
+  {
+    "id": "db-l2-054",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ occurs if one transaction is calculating an aggregate summary function on a number of items while other transactions are updating some of these items.",
+    "options": [
+      "The lost update",
+      "The incorrect summary problem",
+      "The temporary update (dirty read)",
+      "The unrepeatable read problem"
+    ],
+    "answer": 1,
+    "explanation": "Incorrect summary. .incorrect summary الـ"
+  },
+  {
+    "id": "db-l2-055",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ occurs when one transaction updates an item and then fails; meanwhile another transaction reads the updated item before it is changed back.",
+    "options": [
+      "The lost update",
+      "The temporary update (dirty read)",
+      "The incorrect summary problem",
+      "The unrepeatable read problem"
+    ],
+    "answer": 1,
+    "explanation": "Temporary update = dirty read. .temporary update = dirty read الـ"
+  },
+  {
+    "id": "db-l2-056",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "One of the reasons for transaction failure, ______ means data for the transaction may not be found.",
+    "options": [
+      "Computer failure",
+      "Local errors",
+      "Disk failure"
+    ],
+    "answer": 1,
+    "explanation": "Local errors or exception conditions detected by the transaction. .transaction الـ بتكتشفها exceptions أو Local errors"
+  },
+  {
+    "id": "db-l2-057",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "One of the reasons for transaction failure, ______ means that if the hardware crashes, the contents of the computer’s internal memory may be lost.",
+    "options": [
+      "Local errors",
+      "Computer failure",
+      "Disk failure"
+    ],
+    "answer": 1,
+    "explanation": "Computer failure (system crash). .Computer failure (system crash)"
+  },
+  {
+    "id": "db-l2-058",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "One of the reasons for transaction failure, ______ means erroneous parameter values or a logical programming error.",
+    "options": [
+      "Local errors",
+      "Computer failure",
+      "Transaction or system error"
+    ],
+    "answer": 2,
+    "explanation": "Transaction or system error. .Transaction or system error"
+  },
+  {
+    "id": "db-l2-059",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ keeps track of all transaction operations that affect the values of database items.",
+    "options": [
+      "SYSTEM LOG",
+      "Recovery manager"
+    ],
+    "answer": 0,
+    "explanation": "The system log (journal). .system log (journal) الـ"
+  },
+  {
+    "id": "db-l2-060",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "This specifies that read and write operations have ended and marks the end limit of transaction execution; at this point the system checks whether changes can be applied permanently or the transaction must abort.",
+    "options": [
+      "Begin-transaction",
+      "Read or Write",
+      "End-transaction"
+    ],
+    "answer": 2,
+    "explanation": "end_transaction. .end_transaction الـ"
+  },
+  {
+    "id": "db-l2-061",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "This signals a successful end of the transaction so that its changes can be safely committed and will not be undone.",
+    "options": [
+      "Begin-transaction",
+      "Read or Write",
+      "Commit-transaction"
+    ],
+    "answer": 2,
+    "explanation": "commit_transaction. .commit_transaction الـ"
+  },
+  {
+    "id": "db-l2-062",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "This signals that the transaction has ended unsuccessfully, so any changes it applied must be undone.",
+    "options": [
+      "Begin-transaction",
+      "Read or Write",
+      "Rollback (Abort)"
+    ],
+    "answer": 2,
+    "explanation": "rollback (abort). .rollback (abort) الـ"
+  },
+  {
+    "id": "db-l2-063",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "ACID stands for all of the following except:",
+    "options": [
+      "Atomicity",
+      "Consistency preservation",
+      "Isolation",
+      "Durability (permanency)",
+      "None of the above"
+    ],
+    "answer": 4,
+    "explanation": "All four are ACID properties, so “none of the above” is the exception. .none of the above فاإلجابة ،ACID خصائص األربعة"
+  },
+  {
+    "id": "db-l2-064",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ACID properties, ______ means once a transaction changes the database and the changes are committed, these changes must never be lost because of a subsequent failure.",
+    "options": [
+      "Atomicity",
+      "Consistency preservation",
+      "Isolation",
+      "Durability (permanency)"
+    ],
+    "answer": 3,
+    "explanation": "Durability. .Durability الـ"
+  },
+  {
+    "id": "db-l2-065",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ACID properties, ______ means a correct execution of the transaction must take the database from one consistent state to another.",
+    "options": [
+      "Atomicity",
+      "Consistency preservation",
+      "Isolation",
+      "Transaction schedule or history"
+    ],
+    "answer": 1,
+    "explanation": "Consistency preservation. .Consistency preservation الـ"
+  },
+  {
+    "id": "db-l2-066",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In ACID properties, ______ means a transaction is an atomic unit of processing; it is either performed in its entirety or not at all.",
+    "options": [
+      "Atomicity",
+      "Consistency preservation",
+      "Isolation"
+    ],
+    "answer": 0,
+    "explanation": "Atomicity. .Atomicity الـ"
+  },
+  {
+    "id": "db-l2-067",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In ACID properties, ______ means a transaction should not make its updates visible to other transactions until it is committed.",
+    "options": [
+      "Atomicity",
+      "Consistency preservation",
+      "Isolation",
+      "Durability (permanency)"
+    ],
+    "answer": 2,
+    "explanation": "Isolation. .Isolation الـ"
+  },
+  {
+    "id": "db-l2-068",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ______ every transaction reads only the items that are written by committed transactions.",
+    "options": [
+      "Recoverable schedule",
+      "Cascadeless schedule",
+      "Strict schedule",
+      "Schedules requiring cascaded rollback"
+    ],
+    "answer": 1,
+    "explanation": "That is a cascadeless schedule. .cascadeless schedule الـ ده"
+  },
+  {
+    "id": "db-l2-069",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule in which a transaction can neither read nor write an item X until the last transaction that wrote X has committed:",
+    "options": [
+      "Recoverable schedule",
+      "Strict schedule",
+      "Cascadeless schedule",
+      "Schedules requiring cascaded rollback"
+    ],
+    "answer": 1,
+    "explanation": "Strict schedule. .strict schedule الـ"
+  },
+  {
+    "id": "db-l2-070",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A conflict occurs if two operations satisfy which condition?",
+    "options": [
+      "They belong to different transactions",
+      "They access the same item X",
+      "At least one of the operations is write_item(X)",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "All three conditions must hold together. .بعض مع يتحققوا الزم رشوط التالت"
+  },
+  {
+    "id": "db-l2-071",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A less restrictive definition of equivalence of schedules is:",
+    "options": [
+      "View equivalence schedule",
+      "View serializability schedule"
+    ],
+    "answer": 0,
+    "explanation": "View equivalence. .view equivalence الـ"
+  },
+  {
+    "id": "db-l2-072",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The definition of serializability based on view equivalence is:",
+    "options": [
+      "View serializability schedule",
+      "View equivalence schedule"
+    ],
+    "answer": 0,
+    "explanation": "View serializability. .view serializability الـ"
+  },
+  {
+    "id": "db-l2-073",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The schedule S: r2(y), w1(x), w2(x), r1(x), C1, A2 causes ______ problem.",
+    "options": [
+      "Dirty read",
+      "Lost update",
+      "Incorrect summary",
+      "Unrepeatable read"
+    ],
+    "answer": 0,
+    "explanation": "T1 reads x written by T2, and T2 then aborts, so T1 read uncommitted data: dirty read. .dirty read :مؤكدة غري بيانات قرأت يعين ،abort عملت T2 وبعدين T2 كتبتها اليل x قرأت T1"
+  },
+  {
+    "id": "db-l2-074",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The schedule S: r1(x), w1(x), r2(x), w2(x), A1, C2 causes ______ problem.",
+    "options": [
+      "dirty read",
+      "lost update",
+      "Incorrect summary",
+      "unrepeatable read"
+    ],
+    "answer": 0,
+    "explanation": "T2 reads x written by T1, which later aborts: dirty read. .abort: dirty read عملت T1 وبعدين T1 كتبتها اليل x قرأت T2"
+  },
+  {
+    "id": "db-l2-075",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The schedule S: r1(x), w1(x), r2(x), w2(x), C2, A1 causes ______ problem.",
+    "options": [
+      "uncommitted read",
+      "lost update",
+      "Incorrect summary",
+      "dirty read"
+    ],
+    "answer": 3,
+    "explanation": "T2 reads and overwrites x written by uncommitted T1, which then aborts: dirty read. .abort: dirty read عملت T1 وبعدين commit تعمل ما قبل T1 كتبتها اليل x قرأت T2"
+  },
+  {
+    "id": "db-l2-076",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The schedule S: r1(x), w1(y), r2(x), w2(x), r1(x), C1, C2 causes ______ problem.",
+    "options": [
+      "Lost update",
+      "Dirty read",
+      "Incorrect summary",
+      "Unrepeatable read"
+    ],
+    "answer": 3,
+    "explanation": "T1 reads x twice and T2 changes x between the two reads: unrepeatable read. .unrepeatable read :القراءتني بني غ رّي ته T2 و مرتني x قرأت T1"
+  },
+  {
+    "id": "db-l2-077",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The schedule S: r1(x), r2(x), w1(x), w2(x), w1(y), C2, C1 causes ______ problem.",
+    "options": [
+      "Unrepeatable read",
+      "Lost update",
+      "Incorrect summary",
+      "Dirty read"
+    ],
+    "answer": 1,
+    "explanation": "Both read the same x, then T2’s write overwrites T1’s update: lost update. .T1: lost update تحديث مسحت T2 وكتابة x نفس قرأوا الت ني"
+  },
+  {
+    "id": "db-l2-078",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which concurrency problem occurs when two transactions overwrite each other’s updates?",
+    "options": [
+      "Incorrect Summary",
+      "Temporary Update",
+      "Lost Update",
+      "Unrepeatable Read"
+    ],
+    "answer": 2,
+    "explanation": "Lost update. .lost update الـ"
+  },
+  {
+    "id": "db-l2-079",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following is an example of an “incorrect summary problem”?",
+    "options": [
+      "A transaction’s changes are overwritten by another transaction.",
+      "A transaction reads a value that another transaction has not yet committed.",
+      "Two transactions write to the same data item at the same time.",
+      "An aggregate function reads a mix of updated and non-updated values."
+    ],
+    "answer": 3,
+    "explanation": "Incorrect summary = an aggregate sees some items before and some after an update. .التحديث وبعد قبل قيم من خليط بيقرأ incorrect summary = aggregate الـ"
+  },
+  {
+    "id": "db-l2-080",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ problem occurs when a transaction T reads the same item twice and the item is changed by another transaction between the two reads.",
+    "options": [
+      "Lost update",
+      "Dirty read",
+      "Incorrect summary",
+      "Unrepeatable read"
+    ],
+    "answer": 3,
+    "explanation": "Unrepeatable read. .unrepeatable read الـ"
+  },
+  {
+    "id": "db-l2-081",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule can be tested against conflict serializability by constructing ______.",
+    "options": [
+      "Histogram",
+      "wait-for-graph",
+      "Gantt chart",
+      "Precedence graph"
+    ],
+    "answer": 3,
+    "explanation": "A precedence (serialization) graph; no cycle means conflict serializable. .conflict serializable يبقى cycle مفيهوش ولو ،precedence graph بنبين"
+  },
+  {
+    "id": "db-l2-082",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule S is said to be conflict serializable if it is conflict equivalent to some ______ schedule.",
+    "options": [
+      "parallel",
+      "serial",
+      "strict",
+      "cascadeless"
+    ],
+    "answer": 1,
+    "explanation": "Conflict equivalent to a serial schedule. .serial schedule لـ conflict مكافئ"
+  },
+  {
+    "id": "db-l2-083",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "ACID properties refer to all the following except ______.",
+    "options": [
+      "Atomicity",
+      "Consistency",
+      "Integrity",
+      "Durability"
+    ],
+    "answer": 2,
+    "explanation": "Integrity is not an ACID property (the I is Isolation). .Isolation) هي I الـ( ACID من مش Integrity الـ"
+  },
+  {
+    "id": "db-l2-084",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "True or false: The properties of transactions (ACID) refer to Automated, Correct, Integrated, Defined.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: Atomicity, Consistency, Isolation, Durability. .Durability و Isolation و Consistency و Atomicity :غلط"
+  },
+  {
+    "id": "db-l2-085",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The A in the ACID properties refers to ______.",
+    "options": [
+      "Authentication",
+      "Atomicity",
+      "Authorization",
+      "Availability"
+    ],
+    "answer": 1,
+    "explanation": "Atomicity. .Atomicity الـ"
+  },
+  {
+    "id": "db-l2-086",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The schedule S: r1(x), r1(y), w1(x), r2(x), r2(z), w2(z) is ______.",
+    "options": [
+      "serial",
+      "not serial",
+      "serializable",
+      "conflict serializable"
+    ],
+    "answer": 0,
+    "explanation": "All of T1’s operations come before all of T2’s, so it is serial (and therefore also serializable). “Serial” is the most specific answer. .serial األدق .)كمان serializable وبالتايل( serial فهو T2 عمليات قبل T1 عمليات كل"
+  },
+  {
+    "id": "db-l2-087",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The schedule S: r1(x), r2(y), w1(x), r2(y), r2(x), w2(y), C2, C1 is ______.",
+    "options": [
+      "recoverable",
+      "unrecoverable",
+      "cascadeless",
+      "cascaded rollback"
+    ],
+    "answer": 1,
+    "explanation": "T2 reads x written by T1 and commits before T1 commits: unrecoverable. .T1: unrecoverable قبل commit وعملت T1 كتبتها اليل x قرأت T2"
+  },
+  {
+    "id": "db-l2-088",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The schedule S: r1(x), r2(y), r3(z), r2(z), w1(x), w2(y), w3(z), w2(z) is ______.",
+    "options": [
+      "serial",
+      "strict",
+      "conflict serializable",
+      "not conflict serializable"
+    ],
+    "answer": 3,
+    "explanation": "r2(z) before w3(z) gives T2→T3, and r3(z) before w2(z) gives T3→T2: a cycle, so not conflict serializable. .conflict serializable مش يعين T3→T2: cycle ت ّدي w2(z) قبل r3(z) و T2→T3 ت ّدي w3(z) قبل r2(z)"
+  },
+  {
+    "id": "db-l2-089",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The schedule S: r1(x), r1(y), w1(x), r2(y), r2(x), w2(y), C1, C2 is ______.",
+    "options": [
+      "Serializable",
+      "serial",
+      "Unrecoverable",
+      "requiring cascaded rollback"
+    ],
+    "answer": 3,
+    "explanation": "T2 reads x written by T1 before T1 commits, but T2 commits after T1, so it is recoverable yet not cascadeless: it requires cascaded rollback if T1 fails. (It is also serializable, since the only edge is T1→T2, but the question is about recoverability.) T1 لو :cascadeless مش بس recoverable فهو ،T1 بعد commit عملت T2 لكن commit الـ قبل T1 كتبتها اليل x قرأت T2 .recoverability) الـ عن السؤال لكن serializable كمان وهو( .cascaded rollback الزم فشلت"
+  },
+  {
+    "id": "db-l2-090",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule S is ______ if it contains transactions executed one by one.",
+    "options": [
+      "serializable",
+      "serial",
+      "recoverable",
+      "cascade-less"
+    ],
+    "answer": 1,
+    "explanation": "Serial: transactions run one after another. .التانية ورا واحدة بتتنفذ transactions الـ :Serial"
+  },
+  {
+    "id": "db-l2-091",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The schedule S: r1(x), r2(y), w1(x), r1(y), r2(x), w2(y), C2, C1 is cascade-less.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: T2 reads x written by uncommitted T1. .commit تعمل ما قبل T1 كتبتها اليل x قرأت T2 :غلط"
+  },
+  {
+    "id": "db-l2-092",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule can be tested against conflict serializability by constructing a precedence graph.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l2-093",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Being serializable implies that the schedule is a correct schedule.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: it leaves the database in a consistent state, as if the transactions ran serially. .serial اتنفذت transactions الـ كأن متسقة حالة في الداتابزي بيسيب :صح"
+  },
+  {
+    "id": "db-l2-094",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The equivalent serial schedule of S = {r1(Z), r2(Y), w2(Y), r3(Y), r2(X), w2(X), w1(Z), w3(Y), r3(X), r1(Y), w1(Y), w3(X)} is ______.",
+    "options": [
+      "T1 – T2 – T3",
+      "T2 – T1 – T3",
+      "T2 – T3 – T1",
+      "not serializable"
+    ],
+    "answer": 2,
+    "explanation": "Edges: T2→T3 (on X and Y), T2→T1 and T3→T1 (on Y). No cycle; the order is T2, T3, T1. .T1 ثم T3 ثم T2 والرتتيب cycle مفيش .T3→T1 و T2→T1 و edges: T2→T3 الـ"
+  },
+  {
+    "id": "db-l2-095",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "______ is an atomic unit of work in a DBS that is either completed in its entirety or not done at all.",
+    "options": [
+      "Query",
+      "process",
+      "task",
+      "transaction"
+    ],
+    "answer": 3,
+    "explanation": "A transaction. .transaction الـ"
+  },
+  {
+    "id": "db-l2-096",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is a logical unit of database processing.",
+    "options": [
+      "Operation",
+      "Transaction",
+      "Table",
+      "Relation"
+    ],
+    "answer": 1,
+    "explanation": "A transaction. .transaction الـ"
+  },
+  {
+    "id": "db-l2-097",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If the transaction has ended unsuccessfully, the log file will contain ______.",
+    "options": [
+      "Commit",
+      "abort",
+      "Failure",
+      "error"
+    ],
+    "answer": 1,
+    "explanation": "An [abort,T] record. .abort,T][ سجل"
+  },
+  {
+    "id": "db-l2-098",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The D in the ACID properties refers to ______.",
+    "options": [
+      "dependency",
+      "Dead lock",
+      "durability",
+      "defined"
+    ],
+    "answer": 2,
+    "explanation": "Durability. .Durability الـ"
+  },
+  {
+    "id": "db-l2-099",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Transaction ______ means that once a transaction changes the database and the changes are committed, these changes must never be lost because of a subsequent failure.",
+    "options": [
+      "Atomicity",
+      "Consistency",
+      "Isolation",
+      "Durability"
+    ],
+    "answer": 3,
+    "explanation": "Durability. .Durability الـ"
+  },
+  {
+    "id": "db-l2-100",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Transaction ______ means a transaction shouldn’t make its updates visible to other transactions until it is committed.",
+    "options": [
+      "consistency",
+      "isolation",
+      "durability",
+      "atomicity"
+    ],
+    "answer": 1,
+    "explanation": "Isolation. .isolation الـ"
+  },
+  {
+    "id": "db-l2-101",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "______ ensures that updates made by the transaction are not visible to other transactions until it is committed.",
+    "options": [
+      "Atomicity",
+      "Consistency",
+      "Isolation",
+      "Durability"
+    ],
+    "answer": 2,
+    "explanation": "Isolation. .Isolation الـ"
+  },
+  {
+    "id": "db-l2-102",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ means a transaction is an atomic unit of processing.",
+    "options": [
+      "Atomicity",
+      "Consistency",
+      "Durability",
+      "Isolation"
+    ],
+    "answer": 0,
+    "explanation": "Atomicity. .Atomicity الـ"
+  },
+  {
+    "id": "db-l2-103",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does a “cascade less schedule” ensure?",
+    "options": [
+      "Transactions read only items written by committed transactions.",
+      "All transactions are executed in single-user mode.",
+      "Transactions execute without any interleaving.",
+      "Every transaction commits in the order it started."
+    ],
+    "answer": 0,
+    "explanation": "Cascadeless = reads only committed values, so no cascading rollback. .cascading rollback فمفيش commit اتعملها قيم بس بيقرأ = cascadeless الـ"
+  },
+  {
+    "id": "db-l2-104",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A logical error in the program that is accessing the database, which causes one or more transactions to fail, is known as ______.",
+    "options": [
+      "application software errors",
+      "user fault",
+      "media failure",
+      "system crash"
+    ],
+    "answer": 0,
+    "explanation": "A logical programming error is a transaction/system (software) error. .software error أو transaction هو الربنامج في المنطقي الخطأ"
+  },
+  {
+    "id": "db-l2-105",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The D in the ACID properties refers to dependency.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: Durability. .Durability :غلط"
+  },
+  {
+    "id": "db-l2-106",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule in which all operations of each transaction are executed consecutively is called a ______ schedule. (authored)",
+    "options": [
+      "serial",
+      "nonserial",
+      "strict",
+      "cascadeless"
+    ],
+    "answer": 0,
+    "explanation": "Serial schedule. .serial schedule الـ"
+  },
+  {
+    "id": "db-l2-107",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Two schedules are called ______ if they produce the same final state of the database. (authored)",
+    "options": [
+      "result equivalent",
+      "conflict equivalent",
+      "view equivalent",
+      "serial"
+    ],
+    "answer": 0,
+    "explanation": "Result equivalent. .result equivalent الـ"
+  },
+  {
+    "id": "db-l2-108",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An edge Ti → Tj in a precedence graph means ______. (authored)",
+    "options": [
+      "an operation in Ti appears before a conflicting operation in Tj",
+      "Tj commits before Ti",
+      "Ti and Tj access different items",
+      "Ti is waiting for Tj"
+    ],
+    "answer": 0,
+    "explanation": "The edge goes from the transaction that comes first in a conflicting pair. .المتعارضتني العمليتني في أول جت اليل transaction الـ من بيطلع السهم"
+  },
+  {
+    "id": "db-l2-109",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule is conflict serializable if and only if its precedence graph has ______. (authored)",
+    "options": [
+      "no cycles",
+      "at least one cycle",
+      "exactly one edge",
+      "no nodes"
+    ],
+    "answer": 0,
+    "explanation": "No cycles. .cycles مفيهوش"
+  },
+  {
+    "id": "db-l2-110",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "r1(X) and r2(X) are ______ operations. (authored)",
+    "options": [
+      "non-conflicting",
+      "conflicting"
+    ],
+    "answer": 0,
+    "explanation": "Two reads never conflict; at least one operation must be a write. .write األقل عىل واحدة الزم ،مايتعارضوش قراءتني"
+  },
+  {
+    "id": "db-l2-111",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "w2(X) and r1(X) are ______ operations. (authored)",
+    "options": [
+      "non-conflicting",
+      "conflicting"
+    ],
+    "answer": 1,
+    "explanation": "Different transactions, same item, and one is a write. .write وواحدة العنرص ونفس مختلفة transactions"
+  },
+  {
+    "id": "db-l2-112",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Any conflict serializable schedule is also view serializable, but not vice versa. (authored)",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: view serializability is less restrictive (blind writes can make a schedule view serializable but not conflict serializable). .blind writes) الـ( تشد ًدا أقل view serializability الـ :صح"
+  },
+  {
+    "id": "db-l2-113",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A write operation that does not read the item first is called a ______ write. (authored)",
+    "options": [
+      "blind",
+      "strict",
+      "dirty",
+      "constrained"
+    ],
+    "answer": 0,
+    "explanation": "Blind (unconstrained) write. .blind write الـ"
+  },
+  {
+    "id": "db-l2-114",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A transaction reaches its ______ when all its operations have been executed successfully and their effect has been recorded in the log. (authored)",
+    "options": [
+      "commit point",
+      "checkpoint",
+      "rollback",
+      "savepoint"
+    ],
+    "answer": 0,
+    "explanation": "Commit point. .commit point الـ"
+  },
+  {
+    "id": "db-l2-115",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Rollback is needed for a transaction that has a [start_transaction,T] entry in the log but ______. (authored)",
+    "options": [
+      "no [commit,T] entry",
+      "a [commit,T] entry",
+      "a [checkpoint] entry",
+      "a [read_item,T,X] entry"
+    ],
+    "answer": 0,
+    "explanation": "No commit record means it never reached its commit point. .commit point للـ ماوصلتش يعين commit record غري من"
+  },
+  {
+    "id": "db-l2-116",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following is NOT a state of a transaction? (authored)",
+    "options": [
+      "Active",
+      "Partially committed",
+      "Failed",
+      "Locked"
+    ],
+    "answer": 3,
+    "explanation": "States: active, partially committed, committed, failed, terminated. .terminated و failed و committed و partially committed و active :الح الت"
+  },
+  {
+    "id": "db-l2-117",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A log record that stores the old and new values of an item is ______. (authored)",
+    "options": [
+      "[write_item,T,X,old_value,new_value]",
+      "[read_item,T,X]",
+      "[start_transaction,T]",
+      "[commit,T]"
+    ],
+    "answer": 0,
+    "explanation": "The write_item record. .write_item الـ سجل 3"
+  },
+  {
+    "id": "db-l3-118",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which technique ASSUMES THAT CONFLICTS WILL HAPPEN?",
+    "options": [
+      "Pessimistic concurrency control (locking)",
+      "Optimistic concurrency control (no-lock)"
+    ],
+    "answer": 0,
+    "explanation": "Pessimistic control assumes conflicts are likely, so it locks items first. .األول lock فبيعمل هتحصل conflicts الـ إن بيفرتض Pessimistic الـ"
+  },
+  {
+    "id": "db-l3-119",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which technique ASSUMES THAT CONFLICTS BETWEEN TRANSACTIONS ARE RARE?",
+    "options": [
+      "Pessimistic concurrency control (locking)",
+      "Optimistic concurrency control (no-lock)"
+    ],
+    "answer": 1,
+    "explanation": "Optimistic control assumes conflicts are rare, so it lets transactions run freely. .بحرية تشتغل transactions الـ فبيسيب نادرة conflicts الـ إن بيفرتض Optimistic الـ"
+  },
+  {
+    "id": "db-l3-120",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which technique DETECTS CONFLICTS AS SOON AS THEY OCCUR?",
+    "options": [
+      "Pessimistic concurrency control (locking)",
+      "Optimistic concurrency control (no-lock)"
+    ],
+    "answer": 0,
+    "explanation": "Locking detects the conflict immediately: the second transaction finds the lock and waits. .وتستىن lock الـ بتالقي التانية :فو ًرا conflict الـ بيكتشف locking الـ"
+  },
+  {
+    "id": "db-l3-121",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In which technique is a transaction EXECUTED WITHOUT RESTRICTIONS?",
+    "options": [
+      "Pessimistic concurrency control (locking)",
+      "Optimistic concurrency control (no-lock)"
+    ],
+    "answer": 1,
+    "explanation": "Optimistic: no locks during execution. .التنفيذ أثناء locks مفيش :Optimistic الـ"
+  },
+  {
+    "id": "db-l3-122",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which technique CHECKS FOR CONFLICTS JUST BEFORE COMMIT?",
+    "options": [
+      "Pessimistic concurrency control (locking)",
+      "Optimistic concurrency control (no-lock)"
+    ],
+    "answer": 1,
+    "explanation": "Optimistic: validation happens at commit time. .commit الـ قبل بيحصل validation الـ :Optimistic الـ"
+  },
+  {
+    "id": "db-l3-123",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The main assumption of pessimistic concurrency control is that conflicts ______.",
+    "options": [
+      "are rare",
+      "will happen",
+      "are ignored",
+      "are not important"
+    ],
+    "answer": 1,
+    "explanation": "Pessimistic = expects conflicts. .conflicts متوقع = Pessimistic الـ"
+  },
+  {
+    "id": "db-l3-124",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "There is a lock for each data item in the database.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: each item X has its own lock variable. .بيه خاص lock ليه X عنرص كل :صح"
+  },
+  {
+    "id": "db-l3-125",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is used for synchronising the access by concurrent transactions to the database items?",
+    "options": [
+      "Timestamp",
+      "Lock"
+    ],
+    "answer": 1,
+    "explanation": "Locks control concurrent access to items. .للعنارص المزتامن الوصول بتنظم locks الـ"
+  },
+  {
+    "id": "db-l3-126",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When an object is locked by another transaction, the requesting transaction must wait.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l3-127",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A ______ can have two states or values: locked and unlocked (1 / 0).",
+    "options": [
+      "Binary lock",
+      "Shared/exclusive (read/write) locks"
+    ],
+    "answer": 0,
+    "explanation": "Binary lock. .binary lock الـ"
+  },
+  {
+    "id": "db-l3-128",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In a binary lock, items not in the lock table are considered to be locked.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: items not in the lock table are considered unlocked. .unlocked بتتعترب lock table الـ في مش اليل العنارص :غلط"
+  },
+  {
+    "id": "db-l3-129",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In its simplest form, each lock can be a record with ______ field(s): data item name, LOCK, and locking transaction.",
+    "options": [
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": 2,
+    "explanation": "Three fields. .حقول تالت"
+  },
+  {
+    "id": "db-l3-130",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The ______ has a lock manager subsystem to keep track of and control access to locks.",
+    "options": [
+      "Timestamp",
+      "Lock",
+      "DBMS",
+      "Database management system",
+      "C and D"
+    ],
+    "answer": 4,
+    "explanation": "The DBMS (database management system) has the lock manager. .lock manager الـ فيه اليل هو DBMS (Database Management System) الـ"
+  },
+  {
+    "id": "db-l3-131",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The lock manager subsystem in a DBMS is responsible for:",
+    "options": [
+      "Executing transaction logic",
+      "Keeping track of and controlling access to locks",
+      "Assigning timestamps to transactions",
+      "Creating database backups"
+    ],
+    "answer": 1,
+    "explanation": "It tracks and controls locks. .ليها الوصول في ويتحكم locks الـ بيتابع"
+  },
+  {
+    "id": "db-l3-132",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a binary lock, two transactions can access the same item concurrently.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: only one transaction can hold the lock. .lock الـ تمسك بس واحدة transaction :غلط"
+  },
+  {
+    "id": "db-l3-133",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the simple binary locking scheme, a transaction T must issue lock_item(X) AFTER any read_item(X) or write_item(X) operations are performed in T.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: lock_item(X) must be issued BEFORE them. .قبلهم lock_item(X) الزم :غلط"
+  },
+  {
+    "id": "db-l3-134",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the simple binary locking scheme, a transaction T must issue lock_item(X) after all read_item(X) and write_item(X) operations are completed in T.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: the lock comes before the operations. .العمليات قبل lock الـ :غلط"
+  },
+  {
+    "id": "db-l3-135",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In the simple binary locking scheme, a transaction T will not issue unlock_item(X) unless it already holds the lock on item X.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l3-136",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a binary lock, a transaction T must issue read_lock(X) or write_lock(X) before any read_item(X) is performed in T.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: read_lock and write_lock belong to shared/exclusive locking; a binary lock only has lock_item and unlock_item. .بس unlock_item و lock_item ففيه binary lock الـ أما ،shared/exclusive الـ تبع write_lock و read_lock :غلط"
+  },
+  {
+    "id": "db-l3-137",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "There are three locking operations: read_lock(X), write_lock(X), and unlock(X). These belong to ______.",
+    "options": [
+      "Shared/exclusive (read/write) locks",
+      "Binary locks",
+      "Both"
+    ],
+    "answer": 0,
+    "explanation": "The bank marks “both” for this stem, but the three operations belong to shared/exclusive locking. .shared/exclusive الـ تبع التالتة العمليات لكن both مع ّلم البنك"
+  },
+  {
+    "id": "db-l3-138",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A read-locked item is also called ______.",
+    "options": [
+      "Exclusive",
+      "Shared"
+    ],
+    "answer": 1,
+    "explanation": "Shared lock. .Shared lock"
+  },
+  {
+    "id": "db-l3-139",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A write-locked item is called ______.",
+    "options": [
+      "Exclusive",
+      "Shared"
+    ],
+    "answer": 0,
+    "explanation": "Exclusive lock. .Exclusive lock"
+  },
+  {
+    "id": "db-l3-140",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ______, a transaction T must issue write_lock(X) before any write_item(X) operation is performed in T.",
+    "options": [
+      "Binary lock",
+      "Shared/exclusive locks"
+    ],
+    "answer": 1,
+    "explanation": "Shared/exclusive locks. .Shared/exclusive locks"
+  },
+  {
+    "id": "db-l3-141",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In shared/exclusive locking, a transaction T will not issue read_lock(X) if it already holds a read (shared) lock or a write (exclusive) lock on item X.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: it would be redundant. .مكررة هتبقى :صح"
+  },
+  {
+    "id": "db-l3-142",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A transaction that already holds a lock on item X is allowed, under certain conditions, to convert the lock from one state to another. This is called ______.",
+    "options": [
+      "Lock conversion",
+      "Shared/exclusive",
+      "Binary lock"
+    ],
+    "answer": 0,
+    "explanation": "Lock conversion (upgrade or downgrade). .downgrade) أو Lock conversion (upgrade"
+  },
+  {
+    "id": "db-l3-143",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Guaranteeing serializability by two-phase locking involves:",
+    "options": [
+      "Locking, unlocking",
+      "Growing, (shrinking)",
+      "Locking, growing",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "Marked answer: all of the above (the two phases are the locking/growing phase and the unlocking/shrinking phase). .unlocking/shrinking) و locking/growing المرحلتني( all of the above :المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l3-144",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A transaction applies locks (read or write) on desired data items one at a time in the ______.",
+    "options": [
+      "Locking phase",
+      "Unlocking phase"
+    ],
+    "answer": 0,
+    "explanation": "Locking (growing) phase. .locking (growing) الـ مرحلة"
+  },
+  {
+    "id": "db-l3-145",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A transaction unlocks its locked data items one at a time in the ______.",
+    "options": [
+      "Locking phase",
+      "Unlocking phase"
+    ],
+    "answer": 1,
+    "explanation": "Unlocking (shrinking) phase. .unlocking (shrinking) الـ مرحلة"
+  },
+  {
+    "id": "db-l3-146",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The transaction locks data items incrementally. This may cause deadlock, which is dealt with. Which 2PL variant is this?",
+    "options": [
+      "Basic",
+      "Strict",
+      "Conservative"
+    ],
+    "answer": 0,
+    "explanation": "Basic 2PL: deadlock is possible and must be handled. .يتعالج والزم deadlock ممكن :Basic 2PL الـ"
+  },
+  {
+    "id": "db-l3-147",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which is the most commonly used two-phase locking algorithm?",
+    "options": [
+      "Basic",
+      "Strict",
+      "Conservative"
+    ],
+    "answer": 1,
+    "explanation": "Strict 2PL. .Strict 2PL الـ"
+  },
+  {
+    "id": "db-l3-148",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which 2PL variant prevents deadlock by locking all desired data items before the transaction begins execution?",
+    "options": [
+      "Basic",
+      "Strict",
+      "Conservative",
+      "Rigorous"
+    ],
+    "answer": 2,
+    "explanation": "Conservative 2PL. .Conservative 2PL الـ"
+  },
+  {
+    "id": "db-l3-149",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Deadlock prevention: a transaction locks all data items it refers to AFTER it begins execution.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: conservative 2PL locks everything BEFORE execution. .التنفيذ قبل حاجة لكل lock بيعمل conservative الـ :غلط"
+  },
+  {
+    "id": "db-l3-150",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In deadlock avoidance, the Wound-Wait and Wait-Die algorithms use timestamps to avoid deadlocks by rolling back a victim.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l3-151",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ occurs when a particular transaction consistently waits or is restarted and never gets a chance to proceed.",
+    "options": [
+      "Deadlock",
+      "Dirty read",
+      "Starvation",
+      "Lost update"
+    ],
+    "answer": 2,
+    "explanation": "Starvation. .Starvation الـ"
+  },
+  {
+    "id": "db-l3-152",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is a unique identifier created by the DBMS to identify a transaction.",
+    "options": [
+      "Timestamp",
+      "Starvation",
+      "Deadlock detection and resolution"
+    ],
+    "answer": 0,
+    "explanation": "Timestamp. .Timestamp الـ"
+  },
+  {
+    "id": "db-l3-153",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If transaction T needs to hold a read lock on an item that already has a read lock, then ______.",
+    "options": [
+      "T will wait",
+      "T will rollback",
+      "T will hold the lock",
+      "the operation will reject"
+    ],
+    "answer": 2,
+    "explanation": "Read locks are shared, so T is granted the lock. .lock الـ بتاخد T فـ مشرتكة read locks الـ"
+  },
+  {
+    "id": "db-l3-154",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T has a ______ lock on item X, it means T can both read and write X.",
+    "options": [
+      "Composite",
+      "shared",
+      "Exclusive",
+      "Linear"
+    ],
+    "answer": 2,
+    "explanation": "Exclusive (write) lock. .Exclusive (write) lock"
+  },
+  {
+    "id": "db-l3-155",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T has a ______ lock on item X, it means T can only read item X.",
+    "options": [
+      "Composite",
+      "Shared",
+      "Exclusive",
+      "Linear"
+    ],
+    "answer": 1,
+    "explanation": "Shared (read) lock. .Shared (read) lock"
+  },
+  {
+    "id": "db-l3-156",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Two modes of locking a data item are termed “shared” and ______ lock.",
+    "options": [
+      "Composite",
+      "Compatible",
+      "Exclusive",
+      "Linear"
+    ],
+    "answer": 2,
+    "explanation": "Shared and exclusive. .exclusive و Shared"
+  },
+  {
+    "id": "db-l3-157",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which type of lock allows multiple transactions to read the same item?",
+    "options": [
+      "Binary lock",
+      "Exclusive lock",
+      "Shared lock",
+      "Timestamp lock"
+    ],
+    "answer": 2,
+    "explanation": "Shared lock. .Shared lock"
+  },
+  {
+    "id": "db-l3-158",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If each transaction in a set of two or more transactions is waiting for some item locked by another transaction in the set, this situation is called ______.",
+    "options": [
+      "Starvation",
+      "Deadlock",
+      "Two-phase locking",
+      "Serializable"
+    ],
+    "answer": 1,
+    "explanation": "Deadlock. .Deadlock"
+  },
+  {
+    "id": "db-l3-159",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If one transaction T needs to hold a binary lock on an item that is already locked, then ______.",
+    "options": [
+      "T will wait",
+      "T will rollback",
+      "T will hold the lock",
+      "the operation will reject"
+    ],
+    "answer": 0,
+    "explanation": "T waits until the lock is released. .يتفك lock الـ ما لحد تستىن T"
+  },
+  {
+    "id": "db-l3-160",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If we apply the wait-die algorithm and a younger transaction T needs an item locked by an older transaction S, then ______.",
+    "options": [
+      "T will wait",
+      "T will rollback",
+      "S will wait",
+      "S will rollback"
+    ],
+    "answer": 1,
+    "explanation": "Wait-die: younger requester dies (rolls back). .rollback)( بيموت األصغر :Wait-die"
+  },
+  {
+    "id": "db-l3-161",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If we apply the wait-die algorithm and an older transaction T needs an item locked by a younger transaction S, then ______.",
+    "options": [
+      "T will wait",
+      "T will rollback",
+      "S will wait",
+      "S will rollback"
+    ],
+    "answer": 0,
+    "explanation": "Wait-die: older requester waits. .بيستىن األقدم :Wait-die"
+  },
+  {
+    "id": "db-l3-162",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If we apply the wound-wait algorithm and an older transaction T needs an item locked by a younger transaction S, then ______.",
+    "options": [
+      "T will wait",
+      "T will rollback",
+      "S will wait",
+      "S will rollback"
+    ],
+    "answer": 3,
+    "explanation": "Wound-wait: the older wounds (aborts) the younger holder. .لألصغر abort) يعمل( بيجرح األقدم :Wound-wait"
+  },
+  {
+    "id": "db-l3-163",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule can be tested against deadlocks by constructing ______.",
+    "options": [
+      "Histogram",
+      "wait-for-graph",
+      "Gantt chart",
+      "Precedence graph"
+    ],
+    "answer": 1,
+    "explanation": "Wait-for graph. .Wait-for graph"
+  },
+  {
+    "id": "db-l3-164",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The wait-for graph is used to detect ______.",
+    "options": [
+      "the recovery problem",
+      "the serializability",
+      "the deadlock",
+      "the integrity violation"
+    ],
+    "answer": 2,
+    "explanation": "Deadlock. .deadlock الـ"
+  },
+  {
+    "id": "db-l3-165",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a deadlock detection approach using a wait-for graph, what indicates a deadlock?",
+    "options": [
+      "The graph has more edges than nodes",
+      "A transaction holds no locks",
+      "Many transactions are waiting",
+      "A cycle exists in the graph"
+    ],
+    "answer": 3,
+    "explanation": "A cycle in the wait-for graph. .wait-for graph الـ في cycle وجود"
+  },
+  {
+    "id": "db-l3-166",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In ______ two-phase locking, a transaction does not release any of its locks (exclusive or shared) until after it commits or aborts.",
+    "options": [
+      "Basic",
+      "Conservative",
+      "Strict",
+      "Rigorous"
+    ],
+    "answer": 3,
+    "explanation": "Rigorous 2PL holds ALL locks until commit/abort (strict 2PL holds only the exclusive ones). .)بس exclusive بالـ بيحتفظ strict الـ( commit/abort الـ لحد locks الـ بكل بيحتفظ Rigorous الـ"
+  },
+  {
+    "id": "db-l3-167",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In which type of two-phase locking does a transaction not release any of its locks until it commits or aborts?",
+    "options": [
+      "Basic",
+      "Strict",
+      "Conservative",
+      "Rigorous"
+    ],
+    "answer": 3,
+    "explanation": "Rigorous 2PL. .Rigorous 2PL الـ"
+  },
+  {
+    "id": "db-l3-168",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In ______ two-phase locking, deadlocks are not allowed to happen.",
+    "options": [
+      "Basic",
+      "conservative",
+      "strict",
+      "Time stamp"
+    ],
+    "answer": 1,
+    "explanation": "Conservative 2PL locks everything first, so no deadlock. .deadlock فمفيش األول حاجة لكل lock بيعمل Conservative الـ"
+  },
+  {
+    "id": "db-l3-169",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Strict two-phase locking protocol permits releasing (exclusive) locks ______ of the transaction.",
+    "options": [
+      "at the beginning",
+      "during execution",
+      "at the end",
+      "never in the lifetime"
+    ],
+    "answer": 2,
+    "explanation": "Strict 2PL releases exclusive locks at the end (after commit/abort). .commit/abort) بعد( اآلخر في exclusive locks الـ بيفك strict الـ"
+  },
+  {
+    "id": "db-l3-170",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the main advantage of using the two-phase locking protocol?",
+    "options": [
+      "Reduces disk I/O operations",
+      "Enhances transaction speed",
+      "Prevents all database crashes",
+      "Guarantees serializability of transactions"
+    ],
+    "answer": 3,
+    "explanation": "2PL guarantees serializability. .serializability بيضمن 2PL الـ"
+  },
+  {
+    "id": "db-l3-171",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T needs to hold a read lock on an item that already has a write lock, then ______.",
+    "options": [
+      "T will wait",
+      "T will rollback",
+      "T will hold the lock",
+      "the operation will reject"
+    ],
+    "answer": 0,
+    "explanation": "Read and write locks conflict, so T waits. .تستىن T فـ بيتعارضوا write locks والـ read الـ"
+  },
+  {
+    "id": "db-l3-172",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If transaction T needs to upgrade its read lock on item X and another transaction S holds a read lock on X, then ______.",
+    "options": [
+      "T will wait",
+      "T will rollback",
+      "T will upgrade its lock",
+      "the operation will reject"
+    ],
+    "answer": 0,
+    "explanation": "T must wait until S releases its read lock. .read lock الـ تفك S ما لحد تستىن الزم T"
+  },
+  {
+    "id": "db-l3-173",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A transaction that already holds a read lock on item X is allowed, under certain conditions, to convert it to a write lock; this is referred to as ______.",
+    "options": [
+      "lock shrinking",
+      "lock downgrade",
+      "lock upgrade",
+      "lock expanding"
+    ],
+    "answer": 2,
+    "explanation": "Lock upgrade. .Lock upgrade"
+  },
+  {
+    "id": "db-l3-174",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T is rolled back, any transaction S that has read the value of some item X written by T must be ______.",
+    "options": [
+      "Rolled back",
+      "Wait",
+      "Reject",
+      "Continue"
+    ],
+    "answer": 0,
+    "explanation": "Cascading rollback. .Cascading rollback"
+  },
+  {
+    "id": "db-l3-175",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The write timestamp of item X is ______ all the timestamps of transactions that have successfully written item X.",
+    "options": [
+      "the largest of",
+      "equal to",
+      "the smallest of",
+      "different from"
+    ],
+    "answer": 0,
+    "explanation": "write_TS(X) = the largest TS among successful writers. .بنجاح X كتبوا اليل من TS أكرب = write_TS(X) الـ"
+  },
+  {
+    "id": "db-l3-176",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T needs to read an item X and write_TS(X) > TS(T), then ______.",
+    "options": [
+      "T will read the item",
+      "T will wait",
+      "T will rollback",
+      "X will be locked"
+    ],
+    "answer": 2,
+    "explanation": "A younger transaction already wrote X, so T is aborted and rolled back. .rollback بتتعمل T فـ كده قبل X كتبت أصغر transaction"
+  },
+  {
+    "id": "db-l3-177",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T needs to write an item X and read_TS(X) > TS(T), then ______.",
+    "options": [
+      "T will write the item",
+      "T will wait",
+      "T will rollback",
+      "X will be locked"
+    ],
+    "answer": 2,
+    "explanation": "A younger transaction already read X, so T is rolled back. .rollback بتتعمل T فـ X قرأت أصغر transaction"
+  },
+  {
+    "id": "db-l3-178",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T needs to write an item X and write_TS(X) > TS(T), then ______.",
+    "options": [
+      "T will write the item X",
+      "T will wait",
+      "T will rollback",
+      "X will be locked"
+    ],
+    "answer": 2,
+    "explanation": "Basic timestamp ordering: abort T. .تتلغي Basic timestamp ordering: T"
+  },
+  {
+    "id": "db-l3-179",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T needs to write an item X where write_TS(X) < TS(T) and read_TS(X) > TS(T), then ______.",
+    "options": [
+      "T will write the item X",
+      "T will wait",
+      "T will rollback",
+      "X will be locked"
+    ],
+    "answer": 2,
+    "explanation": "read_TS(X) > TS(T) already forces a rollback. .rollback يعمل كفاية لوحده gt; TS(T)& read_TS(X) الـ"
+  },
+  {
+    "id": "db-l3-180",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T needs to write an item X where write_TS(X) < TS(T) (and read_TS(X) ≤ TS(T)), then ______.",
+    "options": [
+      "T will write the item",
+      "T will wait",
+      "T will rollback",
+      "X will be locked"
+    ],
+    "answer": 0,
+    "explanation": "No younger transaction touched X, so the write executes and write_TS(X) = TS(T). .بتتنفذ فالكتابة X لمست أصغر transaction مفيش"
+  },
+  {
+    "id": "db-l3-181",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "In strict timestamp ordering, if TS(T) > read_TS(X) when T issues write_item(X), then ______.",
+    "options": [
+      "T is aborted immediately",
+      "T is delayed until the transaction that wrote or read X has terminated",
+      "T writes immediately",
+      "X is deleted"
+    ],
+    "answer": 1,
+    "explanation": "Strict TO delays T until the other transaction commits or aborts. .abort أو commit تعمل التانية ما لحد T بيأجل strict TO الـ"
+  },
+  {
+    "id": "db-l3-182",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Transaction T1 (younger) is waiting for a lock held by T2 (older), and T2 is waiting for a lock held by T1. With the “wound-wait” scheme, what is the outcome?",
+    "options": [
+      "T1 is aborted (wounded)",
+      "T2 is aborted (wounded)",
+      "T1 is allowed to wait",
+      "The system enters a deadlock state until timeout"
+    ],
+    "answer": 0,
+    "explanation": "The older T2 requesting from the younger T1 wounds T1, so T1 is aborted and the cycle is broken. .بيتكرس cycle والـ abort فبتتعمل T1 األصغر بيجرح T2 األقدم"
+  },
+  {
+    "id": "db-l3-183",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A schedule S has the precedence-graph cycle T1 → T2 → T3 → T1, and all conflicting operations in the cycle involve the same item X. What can be concluded?",
+    "options": [
+      "It is conflict serializable",
+      "It is view serializable",
+      "It is not conflict serializable",
+      "It is recoverable"
+    ],
+    "answer": 2,
+    "explanation": "Any cycle in the precedence graph means the schedule is NOT conflict serializable. .conflict serializable مش يعين precedence graph الـ في cycle أي"
+  },
+  {
+    "id": "db-l3-184",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Transaction ______ means once a transaction changes the database and the changes are committed, they must never be lost.",
+    "options": [
+      "Atomicity",
+      "Consistency",
+      "Isolation",
+      "Durability"
+    ],
+    "answer": 3,
+    "explanation": "Durability. .Durability"
+  },
+  {
+    "id": "db-l3-185",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the wound-wait scheme, a younger transaction can be wounded repeatedly by older ones; this can cause ______. (authored)",
+    "options": [
+      "Starvation",
+      "Dirty read",
+      "Incorrect summary",
+      "Lost update"
+    ],
+    "answer": 0,
+    "explanation": "Repeated aborts of the same transaction = starvation. .transaction = starvation الـ لنفس abort الـ تكرار"
+  },
+  {
+    "id": "db-l3-186",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following is NOT a way to handle deadlock? (authored)",
+    "options": [
+      "Prevention",
+      "Avoidance",
+      "Detection and resolution",
+      "Normalization"
+    ],
+    "answer": 3,
+    "explanation": "Normalization is a design technique, not a deadlock technique. .deadlock عالج مش تصميم تقنية Normalization الـ"
+  },
+  {
+    "id": "db-l3-187",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In the two-phase locking protocol, after a transaction releases its first lock it ______. (authored)",
+    "options": [
+      "cannot acquire any new lock",
+      "can acquire new locks freely",
+      "must abort",
+      "must commit immediately"
+    ],
+    "answer": 0,
+    "explanation": "Once the shrinking phase starts, no new lock can be acquired. .جديد lock مفيش shrinking الـ مرحلة تبدأ ما بعد"
+  },
+  {
+    "id": "db-l3-188",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Two transactions that both only read the same item ______ conflict. (authored)",
+    "options": [
+      "do",
+      "do not"
+    ],
+    "answer": 1,
+    "explanation": "Shared locks are compatible, so reads do not conflict. .بتتعارض مش فالقراءات متوافقة shared locks الـ"
+  },
+  {
+    "id": "db-l3-189",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A transaction holding an exclusive lock on X; another transaction asks for a shared lock on X. The request is ______. (authored)",
+    "options": [
+      "granted",
+      "made to wait",
+      "ignored",
+      "converted to exclusive"
+    ],
+    "answer": 1,
+    "explanation": "Exclusive conflicts with everything. .حاجة كل مع بيتعارض exclusive الـ"
+  },
+  {
+    "id": "db-l3-190",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In timestamp ordering, timestamps are assigned ______. (authored)",
+    "options": [
+      "in the order transactions are submitted to the system",
+      "randomly",
+      "by the user",
+      "in the order transactions commit"
+    ],
+    "answer": 0,
+    "explanation": "TS(T) is like the start time of T. .T بداية وقت زي TS(T) الـ"
+  },
+  {
+    "id": "db-l3-191",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule that is allowed by 2PL is always ______. (authored)",
+    "options": [
+      "conflict serializable",
+      "serial",
+      "non-serializable",
+      "unrecoverable"
+    ],
+    "answer": 0,
+    "explanation": "2PL guarantees conflict serializability (not necessarily serial). .serial) الزم مش( conflict serializability بيضمن 2PL الـ 4"
+  },
+  {
+    "id": "db-l4-192",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A ______ system restores the database to a previous consistent state following a hardware or software failure.",
+    "options": [
+      "concurrency control",
+      "security",
+      "recovery",
+      "integrity"
+    ],
+    "answer": 2,
+    "explanation": "The recovery subsystem. .recovery system الـ"
+  },
+  {
+    "id": "db-l4-193",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A logical error in the program that is accessing the database, which causes one or more transactions to fail, is known as ______.",
+    "options": [
+      "application software errors",
+      "user fault",
+      "media failure",
+      "system crash"
+    ],
+    "answer": 0,
+    "explanation": "A transaction/system (software) error. .software error أو transaction ده"
+  },
+  {
+    "id": "db-l4-194",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction fails after updating the database but before it commits, it will need to ______ its update operations.",
+    "options": [
+      "Redo",
+      "undo",
+      "wait",
+      "ignore"
+    ],
+    "answer": 1,
+    "explanation": "Uncommitted changes must be undone. .undo تتعمل الزم commit اتعملهاش ما اليل التغيريات"
+  },
+  {
+    "id": "db-l4-195",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "For transactions that have both (T start) and (T commit) before the checkpoint record in the log, T is ______.",
+    "options": [
+      "ignored",
+      "undone",
+      "redone",
+      "restarted"
+    ],
+    "answer": 0,
+    "explanation": "Its updates were already flushed at the checkpoint, so recovery ignores it. .فبيتتجاهل checkpoint الـ عند disk الـ عىل اتكتبت تحديثاته"
+  },
+  {
+    "id": "db-l4-196",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If we use UNDO/REDO, transactions that have {T commit} before the checkpoint record in the log will be ______.",
+    "options": [
+      "redone",
+      "undone",
+      "wait",
+      "ignored"
+    ],
+    "answer": 3,
+    "explanation": "Ignored. .Ignored"
+  },
+  {
+    "id": "db-l4-197",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the UNDO/NO-REDO algorithm, if the log contains <Ti start> and <Ti commit>, the transaction Ti needs to be ______.",
+    "options": [
+      "ignored",
+      "undone",
+      "redone",
+      "restarted"
+    ],
+    "answer": 0,
+    "explanation": "UNDO/NO-REDO forces all updates to disk before commit, so a committed transaction needs nothing. .حاجة محتاج مش committed فالـ commit الـ قبل التحديثات كل بيكتب UNDO/NO-REDO الـ"
+  },
+  {
+    "id": "db-l4-198",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the UNDO/REDO algorithm, if the log contains <Ti start> only, the transaction Ti needs to be ______.",
+    "options": [
+      "ignored",
+      "undone",
+      "redone",
+      "restarted"
+    ],
+    "answer": 1,
+    "explanation": "No commit record, so undo. .undo فبيتعمل commit مفيش"
+  },
+  {
+    "id": "db-l4-199",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In recovery, if the log contains <Ti start> and <Ti commit> (commit after the last checkpoint), transaction Ti needs to be ______.",
+    "options": [
+      "redone",
+      "undone",
+      "wait",
+      "wound"
+    ],
+    "answer": 0,
+    "explanation": "Committed after the checkpoint: its updates may not be on disk, so redo. .redo يعين ،disk الـ عىل مش تحديثاته فممكن checkpoint الـ بعد commit اتعمله"
+  },
+  {
+    "id": "db-l4-200",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If ______ update is used, there is no need for the system log file.",
+    "options": [
+      "in-place",
+      "immediate",
+      "deferred",
+      "shadow"
+    ],
+    "answer": 3,
+    "explanation": "Shadow paging keeps the old page table, so no log is needed. .log محتاج فمش القديم page table بالـ بيحتفظ shadow paging الـ"
+  },
+  {
+    "id": "db-l4-201",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the ______ approach, a cache page updated by a transaction can be written to disk before the transaction commits.",
+    "options": [
+      "steal",
+      "shadow",
+      "no steal",
+      "deferred"
+    ],
+    "answer": 0,
+    "explanation": "Steal. .Steal"
+  },
+  {
+    "id": "db-l4-202",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In ______ update, the modified version of a data item does not overwrite its disk copy but is written at a separate disk location.",
+    "options": [
+      "in-place",
+      "immediate",
+      "shadow",
+      "deferred"
+    ],
+    "answer": 2,
+    "explanation": "Shadow update. .Shadow update"
+  },
+  {
+    "id": "db-l4-203",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ______ update, AFIM must be flushed to the disk before a transaction commits.",
+    "options": [
+      "Immediate",
+      "deferred",
+      "Shadow",
+      "in-place"
+    ],
+    "answer": 0,
+    "explanation": "Per the slides: in the UNDO/NO-REDO (immediate) technique, all updates are recorded on disk before commit so REDO is never needed. .REDO فمفيش commit الـ قبل بتتكتب التحديثات كل immediate (UNDO/NO-REDO) الـ في :الساليدات حسب"
+  },
+  {
+    "id": "db-l4-204",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In immediate update, AFIM must be flushed to the disk before a transaction commits.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True (this is what makes REDO unnecessary in UNDO/NO-REDO). .)الزم مش REDO الـ لبيخ يّ اليل ده( صح"
+  },
+  {
+    "id": "db-l4-205",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The Steal/Force approach is also referred to as ______ approach.",
+    "options": [
+      "Undo/Redo",
+      "No Undo/Redo",
+      "Undo/No redo",
+      "No Undo/No Redo"
+    ],
+    "answer": 2,
+    "explanation": "Steal needs undo; Force means no redo, so Undo/No-Redo. .Undo/No-Redo فـ ،redo مفيش يعين Force و undo يعين Steal"
+  },
+  {
+    "id": "db-l4-206",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The Steal/No-Force approach is also referred to as ______ approach.",
+    "options": [
+      "Undo/Redo",
+      "No Undo/Redo",
+      "Undo/No Redo",
+      "No Undo/No Redo"
+    ],
+    "answer": 0,
+    "explanation": "Steal needs undo; No-Force needs redo. .redo يعين No-Force و undo يعين Steal"
+  },
+  {
+    "id": "db-l4-207",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The No-Steal/No-Force approach is also referred to as ______ approach. (authored)",
+    "options": [
+      "Undo/Redo",
+      "No Undo/Redo",
+      "Undo/No Redo",
+      "No Undo/No Redo"
+    ],
+    "answer": 1,
+    "explanation": "No-Steal means no undo; No-Force means redo. .redo يعين No-Force و undo مفيش يعين No-Steal"
+  },
+  {
+    "id": "db-l4-208",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "WAL stands for:",
+    "options": [
+      "Wall-ahead logging",
+      "Wall-ahead language",
+      "Write-ahead language",
+      "Write-ahead logging"
+    ],
+    "answer": 3,
+    "explanation": "Write-Ahead Logging. .Write-Ahead Logging"
+  },
+  {
+    "id": "db-l4-209",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "WAL stands for Write-ahead language.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: it is Write-Ahead Logging. .Write-Ahead Logging :غلط"
+  },
+  {
+    "id": "db-l4-210",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the context of recovery techniques, what does the Write-Ahead Logging (WAL) protocol ensure?",
+    "options": [
+      "Redo operations are skipped entirely",
+      "The before image is logged before data is written to the database",
+      "Data is directly written to the database without logging",
+      "Log entries are written only after the transaction commits"
+    ],
+    "answer": 1,
+    "explanation": "The log record (BFIM) must reach disk before the data item is overwritten. .disk الـ عىل يتع ّدل العنرص ما قبل log الـ في يتكتب الزم BFIM الـ سجل"
+  },
+  {
+    "id": "db-l4-211",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a recovery system, what does “Undo/Redo” recovery imply?",
+    "options": [
+      "All transactions are redone first, then uncommitted transactions are undone",
+      "Only redo operations are necessary for recovery",
+      "Transactions are immediately written to disk without logging",
+      "Undo operations are applied to active transactions, while redo operations are applied to committed ones"
+    ],
+    "answer": 3,
+    "explanation": "applied to committed ones Active table → undo; commit table → redo. .committed → redo والـ active → undo الـ"
+  },
+  {
+    "id": "db-l4-212",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Why is a checkpoint used in recovery mechanisms?",
+    "options": [
+      "To terminate long-running transactions automatically",
+      "To reduce the time needed for recovery by identifying a recent consistent state",
+      "To prioritize redo operations over undo operations",
+      "To remove old log entries and reduce storage usage"
+    ],
+    "answer": 1,
+    "explanation": "Recovery only needs to look at the log after the last checkpoint. .بس checkpoint آخر بعد log الـ عىل بيبص recovery الـ"
+  },
+  {
+    "id": "db-l4-213",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The “dirty bit” indicates whether or not the buffer has been ______.",
+    "options": [
+      "corrupted",
+      "deleted",
+      "retrieved",
+      "modified"
+    ],
+    "answer": 3,
+    "explanation": "A modified buffer page has dirty bit = 1. .dirty bit = 1 المتعدلة page الـ"
+  },
+  {
+    "id": "db-l4-214",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which recovery technique requires that no AFIM is flushed to the disk before the transaction commits?",
+    "options": [
+      "Undo/Redo",
+      "Undo/No-Redo",
+      "No-Undo/Redo",
+      "No-Undo/No-Redo"
+    ],
+    "answer": 2,
+    "explanation": "Deferred update: NO-UNDO/REDO. .deferred: NO-UNDO/REDO الـ"
+  },
+  {
+    "id": "db-l4-215",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If ______ update is used, no need for the system log file.",
+    "options": [
+      "in-place",
+      "immediate",
+      "deferred",
+      "shadow"
+    ],
+    "answer": 3,
+    "explanation": "Shadow. .Shadow"
+  },
+  {
+    "id": "db-l4-216",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The BFIM and AFIM are included in the ______.",
+    "options": [
+      "shadow page",
+      "relation",
+      "log file",
+      "record"
+    ],
+    "answer": 2,
+    "explanation": "The log records old (BFIM) and new (AFIM) values. .AFIM)( والجديدة BFIM)( القديمة القيمة بيسجل log الـ"
+  },
+  {
+    "id": "db-l4-217",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If you use the immediate update protocol with a checkpoint, a transaction in the active list will be ______.",
+    "options": [
+      "rolled back",
+      "redo",
+      "ignored",
+      "reject"
+    ],
+    "answer": 0,
+    "explanation": "Uncommitted updates may already be on disk, so the transaction is rolled back (undone). .rollback (undo) فبيتعمل disk الـ عىل تكون ممكن التحديثات"
+  },
+  {
+    "id": "db-l4-218",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If you use deferred update, a transaction in the active list will be ______.",
+    "options": [
+      "rolled back",
+      "redo",
+      "ignored",
+      "reject"
+    ],
+    "answer": 2,
+    "explanation": "In deferred update nothing was written to the database before commit, so it is simply ignored. .فبيتتجاهل commit الـ قبل اتكتبت حاجة مفيش deferred الـ في"
+  },
+  {
+    "id": "db-l4-219",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If we use NO-UNDO/REDO to recover from a system failure, the log must contain ______.",
+    "options": [
+      "AFIM",
+      "BFIM",
+      "AFIM and BFIM",
+      "neither AFIM nor BFIM"
+    ],
+    "answer": 0,
+    "explanation": "Only redo is needed, so only the new values (AFIM). .كفاية AFIM)( الجديدة فالقيم بس redo محتاجني"
+  },
+  {
+    "id": "db-l4-220",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If we use shadow update, then we will need to save ______.",
+    "options": [
+      "AFIM",
+      "BFIM",
+      "AFIM and BFIM",
+      "neither AFIM nor BFIM"
+    ],
+    "answer": 3,
+    "explanation": "Shadow paging keeps page tables instead of logging old/new values. .القيم يسجل ما بدل page tables بـ بيحتفظ shadow paging الـ"
+  },
+  {
+    "id": "db-l4-221",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "BFIM stands for ______. (authored)",
+    "options": [
+      "Before Image",
+      "Buffer File In Memory",
+      "Backup File Index Map",
+      "Binary File Image"
+    ],
+    "answer": 0,
+    "explanation": "BFIM = before image (old value); AFIM = after image (new value). .)الجديدة( AFIM = after image و ،)القديمة القيمة( BFIM = before image"
+  },
+  {
+    "id": "db-l4-222",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In deferred update (NO-UNDO/REDO), the database is updated ______. (authored)",
+    "options": [
+      "only after the transaction reaches its commit point",
+      "before the transaction starts",
+      "at every read operation",
+      "never"
+    ],
+    "answer": 0,
+    "explanation": "Updates are deferred until commit. .commit الـ لحد بتتأجل التحديثات"
+  },
+  {
+    "id": "db-l4-223",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In NO-UNDO/REDO recovery, a transaction that has not committed at the time of the crash is ______. (authored)",
+    "options": [
+      "ignored (nothing was written to disk)",
+      "redone",
+      "undone using BFIM",
+      "restarted from the checkpoint"
+    ],
+    "answer": 0,
+    "explanation": "Nothing of it reached the database. .للداتابزي وصلت منه حاجة وال"
+  },
+  {
+    "id": "db-l4-224",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In NO-UNDO/REDO recovery, a transaction with a <commit> record after the last checkpoint is ______. (authored)",
+    "options": [
+      "redone",
+      "undone",
+      "wait",
+      "ignored"
+    ],
+    "answer": 0,
+    "explanation": "Redo using AFIM. .AFIM باستخدام Redo"
+  },
+  {
+    "id": "db-l4-225",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In UNDO/REDO recovery, a transaction that is in the active table at the crash is ______. (authored)",
+    "options": [
+      "redone",
+      "undone",
+      "wait",
+      "ignored"
+    ],
+    "answer": 1,
+    "explanation": "Active → undo. .Active → undo"
+  },
+  {
+    "id": "db-l4-226",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In UNDO/REDO recovery, a transaction that is in the commit table at the crash is ______. (authored)",
+    "options": [
+      "redone",
+      "undone",
+      "wait",
+      "ignored"
+    ],
+    "answer": 0,
+    "explanation": "Commit table → redo. .Commit table → redo"
+  },
+  {
+    "id": "db-l4-227",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In UNDO/NO-REDO recovery, a transaction that reached its commit point before the crash is ______. (authored)",
+    "options": [
+      "redone",
+      "undone",
+      "wait",
+      "ignored"
+    ],
+    "answer": 3,
+    "explanation": "All its updates were forced to disk before commit. .commit الـ قبل اتكتبت تحديثاته كل"
+  },
+  {
+    "id": "db-l4-228",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The purpose of the system log is to ______. (authored)",
+    "options": [
+      "keep track of all transaction operations that affect the values of database items",
+      "store user passwords",
+      "improve query speed",
+      "enforce referential integrity"
+    ],
+    "answer": 0,
+    "explanation": "The log is the basis for recovery. .recovery الـ أساس هو log الـ"
+  },
+  {
+    "id": "db-l4-229",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A checkpoint record is written to the log periodically; at that moment the system ______. (authored)",
+    "options": [
+      "writes all modified buffers (committed work) to disk",
+      "deletes the log",
+      "aborts all transactions",
+      "locks the database permanently"
+    ],
+    "answer": 0,
+    "explanation": "The checkpoint forces the buffers of committed transactions to disk. .disk الـ عىل committed الـ بتاعة buffers الـ بيكتب checkpoint الـ"
+  },
+  {
+    "id": "db-l4-230",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In shadow paging, recovery after a crash is done by ______. (authored)",
+    "options": [
+      "discarding the current page table and using the shadow page table",
+      "replaying the whole log",
+      "using the BFIM values",
+      "restarting the DBMS only"
+    ],
+    "answer": 0,
+    "explanation": "The shadow (old) page table still points to the old consistent pages. .السليمة القديمة الصفحات عىل بيشاور لسه shadow page table الـ"
+  },
+  {
+    "id": "db-l4-231",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Recovery from physical damage (e.g. disk crash) relies on ______. (authored)",
+    "options": [
+      "a backup",
+      "the undo operation",
+      "locking",
+      "checkpoints only"
+    ],
+    "answer": 0,
+    "explanation": "Physical damage needs a backup; non-physical damage uses log-based recovery. .log فبـ الفزييائي غري أما ،backup محتاج الفزييائي الرضر"
+  },
+  {
+    "id": "db-l4-232",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the Steal approach, a cache page updated by a transaction can be written to disk before the transaction commits. (authored)",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح 5"
+  },
+  {
+    "id": "db-l5-233",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Mandatory policies have the drawback of being too rigid, and they are only applicable in limited environments.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-234",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In many practical situations, mandatory policies are preferred because they offer a better trade-off between security and applicability.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: they are too rigid, which is exactly their drawback. .عيبها وده زيادة صارمة هي :غلط"
+  },
+  {
+    "id": "db-l5-235",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which model emerged rapidly in the 1990s as a proven technology for managing and enforcing security in large-scale enterprise-wide systems?",
+    "options": [
+      "DAC",
+      "MAC",
+      "RBAC"
+    ],
+    "answer": 2,
+    "explanation": "RBAC. .RBAC الـ"
+  },
+  {
+    "id": "db-l5-236",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In DAC, the basic notion is that permissions are associated with roles, and users are assigned to appropriate roles.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: that is the RBAC notion, not DAC. .DAC الـ مش RBAC الـ مفهوم ده :غلط"
+  },
+  {
+    "id": "db-l5-237",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Roles in RBAC can be created using the CREATE ROLE and DESTROY ROLE commands.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-238",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The GRANT and REVOKE commands discussed under DAC can then be used to assign and revoke privileges from roles.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-239",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which model appears to be a viable alternative to traditional discretionary and mandatory access controls?",
+    "options": [
+      "DAC",
+      "MAC",
+      "RBAC"
+    ],
+    "answer": 2,
+    "explanation": "RBAC. .RBAC الـ"
+  },
+  {
+    "id": "db-l5-240",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which model ensures that only authorized users are given access to certain data or resources?",
+    "options": [
+      "DAC",
+      "MAC",
+      "RBAC"
+    ],
+    "answer": 2,
+    "explanation": "Marked answer: RBAC. .RBAC :المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l5-241",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Using a DAC model is a highly desirable goal for addressing the key security requirements of Web-based applications.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: DAC lacks the capabilities needed for them. .إمكانيات ناقصه DAC الـ :غلط"
+  },
+  {
+    "id": "db-l5-242",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "DAC and MAC models lack capabilities needed to support the security requirements of emerging enterprises and Web-based applications.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-243",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ means protecting the database from unauthorized access, modification or destruction.",
+    "options": [
+      "Database security",
+      "DAC",
+      "MAC"
+    ],
+    "answer": 0,
+    "explanation": "Database security. .Database security"
+  },
+  {
+    "id": "db-l5-244",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ refers to the process of identifying a user.",
+    "options": [
+      "Authentication",
+      "Authorization",
+      "Confidentiality"
+    ],
+    "answer": 0,
+    "explanation": "Authentication. .Authentication"
+  },
+  {
+    "id": "db-l5-245",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "______ refers to the process of determining what a user can do.",
+    "options": [
+      "Authentication",
+      "Authorization",
+      "Confidentiality"
+    ],
+    "answer": 1,
+    "explanation": "Authorization. .Authorization"
+  },
+  {
+    "id": "db-l5-246",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which process occurs during both initial login and each time a user attempts to use a database for the first time during a session?",
+    "options": [
+      "Authentication",
+      "Authorization",
+      "Confidentiality",
+      "Integrity"
+    ],
+    "answer": 0,
+    "explanation": "Authentication. .Authentication"
+  },
+  {
+    "id": "db-l5-247",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which process occurs every time a user attempts to perform any operation within a database?",
+    "options": [
+      "Authentication",
+      "Authorization",
+      "Confidentiality"
+    ],
+    "answer": 1,
+    "explanation": "Authorization. .Authorization"
+  },
+  {
+    "id": "db-l5-248",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "______ refers to the need to maintain secrecy over data.",
+    "options": [
+      "Confidentiality",
+      "Privacy"
+    ],
+    "answer": 0,
+    "explanation": "Confidentiality. .Confidentiality"
+  },
+  {
+    "id": "db-l5-249",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ refers to the need to protect data about individuals.",
+    "options": [
+      "Confidentiality",
+      "Privacy"
+    ],
+    "answer": 1,
+    "explanation": "Privacy. .Privacy"
+  },
+  {
+    "id": "db-l5-250",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Generally, protection of information against unauthorized disclosure means ______.",
+    "options": [
+      "Authentication",
+      "Authorization",
+      "Confidentiality",
+      "Integrity"
+    ],
+    "answer": 2,
+    "explanation": "Confidentiality. .Confidentiality"
+  },
+  {
+    "id": "db-l5-251",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ means prevention of unauthorized or improper modification of data.",
+    "options": [
+      "Authentication",
+      "Authorization",
+      "Confidentiality",
+      "Integrity"
+    ],
+    "answer": 3,
+    "explanation": "Integrity. .Integrity"
+  },
+  {
+    "id": "db-l5-252",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ means that users can access the database in general and all the data for which they are authorized.",
+    "options": [
+      "Authentication",
+      "Authorization",
+      "Confidentiality",
+      "Availability"
+    ],
+    "answer": 3,
+    "explanation": "Availability. .Availability"
+  },
+  {
+    "id": "db-l5-253",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which concept ensures that data is accessible to the right person when it is needed?",
+    "options": [
+      "Authentication",
+      "Authorization",
+      "Confidentiality",
+      "Availability"
+    ],
+    "answer": 3,
+    "explanation": "Availability. .Availability"
+  },
+  {
+    "id": "db-l5-254",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The statement of the security that the system is expected to enforce is the ______.",
+    "options": [
+      "security policy",
+      "Authorization",
+      "Confidentiality",
+      "Availability"
+    ],
+    "answer": 0,
+    "explanation": "Security policy. .Security policy الـ"
+  },
+  {
+    "id": "db-l5-255",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "There are ______ types of security controls that need to be implemented for a successful security policy.",
+    "options": [
+      "4",
+      "3"
+    ],
+    "answer": 1,
+    "explanation": "Three: administrative, physical, technical. .technical و physical و administrative :تالتة"
+  },
+  {
+    "id": "db-l5-256",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "______ consist of policies that determine how the organization will function.",
+    "options": [
+      "Administrative controls",
+      "Technical controls",
+      "Physical controls"
+    ],
+    "answer": 0,
+    "explanation": "Administrative controls. .Administrative controls"
+  },
+  {
+    "id": "db-l5-257",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ monitor and protect the physical environment of the workplace and computing facilities.",
+    "options": [
+      "Administrative controls",
+      "Technical controls",
+      "Physical controls"
+    ],
+    "answer": 2,
+    "explanation": "Physical controls. .Physical controls"
+  },
+  {
+    "id": "db-l5-258",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ use software and hardware resources to control access to information and computing systems.",
+    "options": [
+      "Administrative controls",
+      "Technical controls",
+      "Physical controls"
+    ],
+    "answer": 1,
+    "explanation": "Technical controls. .Technical controls"
+  },
+  {
+    "id": "db-l5-259",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is the central authority for managing a database system.",
+    "options": [
+      "Administrative controls",
+      "DBA",
+      "Database administrator",
+      "A and B"
+    ],
+    "answer": 3,
+    "explanation": "The DBA / database administrator (marked answer: A & B, i.e. both the administrative role and the DBA). .amp;B)&A مع ّلم البنك( DBA / database administrator الـ"
+  },
+  {
+    "id": "db-l5-260",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The DBA’s responsibilities include granting privileges to users who need to use the system and classifying users and data according to the organization’s policy.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-261",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The DBA account in the DBMS is sometimes called a ______.",
+    "options": [
+      "Superuser account",
+      "System account",
+      "Both"
+    ],
+    "answer": 2,
+    "explanation": "Both names are used. .مستخدمني السمني"
+  },
+  {
+    "id": "db-l5-262",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The database system must also keep track of all operations applied by a certain user throughout each login session (log file).",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-263",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "A database log that is used mainly for security purposes is sometimes called an ______.",
+    "options": [
+      "Audit trail",
+      "Audisa trail",
+      "DAC"
+    ],
+    "answer": 0,
+    "explanation": "Audit trail. .Audit trail"
+  },
+  {
+    "id": "db-l5-264",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Access control is the most important technique or mechanism for implementing authorization.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-265",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The basic principle in all access control models is that a subject is or is not permitted to perform a certain operation on an object.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-266",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The default approach adopted by most access control policies is that any request which is authorized by the access control policies is denied.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: authorized requests are granted; everything not authorized is denied. .بيتمنع والباقي بيتسمح بيه المرصح :غلط"
+  },
+  {
+    "id": "db-l5-267",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The typical method of enforcing ______ in a database system is based on granting and revoking privileges.",
+    "options": [
+      "DAC",
+      "MAC",
+      "RBAC"
+    ],
+    "answer": 0,
+    "explanation": "DAC. .DAC الـ"
+  },
+  {
+    "id": "db-l5-268",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "At this level the DBA specifies the particular privileges that each account holds independently of the relations in the database.",
+    "options": [
+      "Account level",
+      "Relation level",
+      "Table level"
+    ],
+    "answer": 0,
+    "explanation": "Account level. .Account level"
+  },
+  {
+    "id": "db-l5-269",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "At this level the DBA can control the privilege to access each individual relation or view in the database.",
+    "options": [
+      "Account level",
+      "Relation level",
+      "Table level",
+      "B and C"
+    ],
+    "answer": 3,
+    "explanation": "Relation (table) level. .Relation (table) level"
+  },
+  {
+    "id": "db-l5-270",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The granting and revoking of privileges generally follow an authorization model for discretionary privileges known as ______.",
+    "options": [
+      "Bell-LaPadula model",
+      "Access matrix model"
+    ],
+    "answer": 1,
+    "explanation": "Access matrix model. .Access matrix model"
+  },
+  {
+    "id": "db-l5-271",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the access matrix model, the rows of matrix M represent subjects (users, accounts, programs) and the columns represent objects (relations, records, columns, views, operations).",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-272",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The owner account holder can pass privileges on any of the owned relations to other users by granting privileges to their accounts.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-273",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "To create a view, the account must have the SELECT privilege on all relations involved in the view definition.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-274",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In some cases it is desirable to grant a privilege to a user temporarily.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: then it is revoked when the task is done. .تخلص المهمة لما بتتسحب وبعدين :صح"
+  },
+  {
+    "id": "db-l5-275",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "In SQL, a GRANT command is included for the purpose of canceling privileges.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: REVOKE cancels privileges. .بيلغي اليل هو REVOKE :غلط"
+  },
+  {
+    "id": "db-l5-276",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If A gives the GRANT OPTION to B, B can also grant the privilege on the relation to C.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-277",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If the owner account A revokes the privilege granted to B, all the privileges that B propagated based on it should automatically be revoked by the system.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: cascading revoke. .cascading revoke :صح"
+  },
+  {
+    "id": "db-l5-278",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "TS ≥ S ≥ U ≥ C, where TS is the highest level and C the lowest.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: the order is TS ≥ S ≥ C ≥ U. .TS ≥ S ≥ C ≥ U الرتتيب :غلط"
+  },
+  {
+    "id": "db-l5-279",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The commonly used model for multilevel security is known as ______.",
+    "options": [
+      "Bell-LaPadula model",
+      "Access matrix model"
+    ],
+    "answer": 0,
+    "explanation": "Bell-LaPadula. .Bell-LaPadula"
+  },
+  {
+    "id": "db-l5-280",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which model ensures a high degree of protection by preventing any illegal flow of information?",
+    "options": [
+      "DAC",
+      "MAC",
+      "RBAC"
+    ],
+    "answer": 1,
+    "explanation": "MAC. .MAC الـ"
+  },
+  {
+    "id": "db-l5-281",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If privilege is revoked from user A, who granted it to user B with the GRANT OPTION, then ______.",
+    "options": [
+      "the operation will be rejected",
+      "privilege is revoked from A only",
+      "privilege is revoked from B only",
+      "privilege is revoked from A and the revoke cascades to B"
+    ],
+    "answer": 3,
+    "explanation": "Revoking cascades to everyone who received the privilege through A. .A طريق عن الصالحية خدوا اليل لكل cascade)( بيع ّدي revoke الـ"
+  },
+  {
+    "id": "db-l5-282",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In MAC, a subject S from class (C) tries to read an object O from class (C). The operation will be ______.",
+    "options": [
+      "Accept",
+      "Rejected",
+      "Rollback",
+      "Redo"
+    ],
+    "answer": 0,
+    "explanation": "Simple security property: read allowed when class(S) ≥ class(O); here they are equal. .متساويني وهنا ،class(S) ≥ class(O) لما مسموحة القراءة :Simple security"
+  },
+  {
+    "id": "db-l5-283",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In MAC, a subject S from class (C) tries to read an object O from class (TS). The operation will be ______.",
+    "options": [
+      "accept",
+      "rejected",
+      "rollback",
+      "redo"
+    ],
+    "answer": 1,
+    "explanation": "No read-up: C < TS. .TS من أقل read-up: C ممنوع"
+  },
+  {
+    "id": "db-l5-284",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In MAC, a subject S from class (TS) tries to read an object O from class (TS). The operation will be ______.",
+    "options": [
+      "Accept",
+      "rejected",
+      "rollback",
+      "Redo"
+    ],
+    "answer": 0,
+    "explanation": "Equal classes: allowed. .مسموح :المستوى نفس"
+  },
+  {
+    "id": "db-l5-285",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In MAC, a subject S from class (TS) tries to write an object O from class (C). The operation will be ______.",
+    "options": [
+      "Accept",
+      "rejected",
+      "rollback",
+      "wait"
+    ],
+    "answer": 1,
+    "explanation": "Star property: no write-down (class(S) must be ≤ class(O)). .write-down ممنوع :star property الـ"
+  },
+  {
+    "id": "db-l5-286",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is characterized by a high degree of flexibility, which makes it suitable for a large variety of application domains.",
+    "options": [
+      "DAC",
+      "MAC",
+      "RBAC",
+      "OAC"
+    ],
+    "answer": 0,
+    "explanation": "DAC. .DAC الـ"
+  },
+  {
+    "id": "db-l5-287",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Confidentiality is one of the ______.",
+    "options": [
+      "Security pillars",
+      "access controls",
+      "rules",
+      "technical controls"
+    ],
+    "answer": 0,
+    "explanation": "Confidentiality, integrity and availability are the security pillars. .األمان أعمدة هي availability و integrity و confidentiality الـ"
+  },
+  {
+    "id": "db-l5-288",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The mechanisms to ensure authorization include ______.",
+    "options": [
+      "Biometrics",
+      "access controls",
+      "Encryption",
+      "recovery control"
+    ],
+    "answer": 1,
+    "explanation": "Access control implements authorization. .authorization الـ بينفذ اليل هو access control الـ"
+  },
+  {
+    "id": "db-l5-289",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The mechanisms to ensure authentication include ______.",
+    "options": [
+      "Biometrics",
+      "access controls",
+      "Encryption",
+      "recovery problem"
+    ],
+    "answer": 0,
+    "explanation": "Biometrics identify who the user is. .المستخدم بتع ّرف Biometrics الـ"
+  },
+  {
+    "id": "db-l5-290",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The mechanisms to ensure confidentiality include ______.",
+    "options": [
+      "Biometrics",
+      "access controls",
+      "Encryption",
+      "recovery problem"
+    ],
+    "answer": 2,
+    "explanation": "Encryption (this one is not covered in the slides; it is the closest standard answer). .)معروفة إجابة أقرب لكنها ،الساليدات في مش( Encryption"
+  },
+  {
+    "id": "db-l5-291",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The types of security controls that need to be implemented for a successful security policy are the following EXCEPT ______.",
+    "options": [
+      "Access control",
+      "Administrative controls",
+      "Technical controls",
+      "Physical controls"
+    ],
+    "answer": 0,
+    "explanation": "The three types are administrative, technical and physical. .physical و technical و administrative التالتة األنواع"
+  },
+  {
+    "id": "db-l5-292",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The types of security controls are all the following EXCEPT ______.",
+    "options": [
+      "concurrency control",
+      "Administrative controls",
+      "Technical controls",
+      "Physical controls"
+    ],
+    "answer": 0,
+    "explanation": "Concurrency control is not a security control. .security control مش concurrency control الـ"
+  },
+  {
+    "id": "db-l5-293",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the primary goal of database security?",
+    "options": [
+      "Ensuring transaction atomicity",
+      "Enhancing query performance",
+      "Preventing unauthorized access to data",
+      "Eliminating data redundancy"
+    ],
+    "answer": 2,
+    "explanation": "Protecting data from unauthorized access. .المرصح غري الوصول من البيانات حماية"
+  },
+  {
+    "id": "db-l5-294",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "An advantage of the database management approach is ______.",
+    "options": [
+      "Accessing all data or not",
+      "Multilevel security",
+      "Data dependent",
+      "Update anomalies"
+    ],
+    "answer": 1,
+    "explanation": "Multilevel security. .Multilevel security"
+  },
+  {
+    "id": "db-l5-295",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In RBAC, roles may exist before users do.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l5-296",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Views may assist with security policy implementation.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: a view can expose only some attributes/rows. .بس معينة صفوف/أعمدة بتعرض view الـ :صح"
+  },
+  {
+    "id": "db-l5-297",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "To let user Ahmed update only the Salary attribute of EMPLOYEE, the DBA writes ______. (authored)",
+    "options": [
+      "GRANT UPDATE (Salary) ON EMPLOYEE TO Ahmed;",
+      "GRANT SELECT ON EMPLOYEE TO Ahmed;",
+      "REVOKE UPDATE ON EMPLOYEE FROM Ahmed;",
+      "GRANT ALL ON Salary TO Ahmed;"
+    ],
+    "answer": 0,
+    "explanation": "Column-level privilege syntax: GRANT UPDATE (column) ON table TO user. .column privilege: GRANT UPDATE (column) ON table TO user الـ صيغة"
+  },
+  {
+    "id": "db-l5-298",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In Bell-LaPadula, the simple security property says a subject can read an object only if class(S) ______ class(O). (authored)",
+    "options": [
+      "≥",
+      "≤",
+      "=",
+      "≠"
+    ],
+    "answer": 0,
+    "explanation": "No read-up. .read-up ممنوع"
+  },
+  {
+    "id": "db-l5-299",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In Bell-LaPadula, the star (*) property says a subject can write an object only if class(S) ______ class(O). (authored)",
+    "options": [
+      "≤",
+      "≥",
+      "≠",
+      "<"
+    ],
+    "answer": 0,
+    "explanation": "No write-down. .write-down ممنوع"
+  },
+  {
+    "id": "db-l5-300",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which security mechanism checks the user name and password at login? (authored)",
+    "options": [
+      "Authentication",
+      "Authorization",
+      "Auditing",
+      "Encryption"
+    ],
+    "answer": 0,
+    "explanation": "Authentication identifies the user. .المستخدم هوية من بيتحقق authentication الـ"
+  },
+  {
+    "id": "db-l5-301",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In MAC, each subject and object is assigned a ______. (authored)",
+    "options": [
+      "security class (clearance/classification)",
+      "role",
+      "privilege table",
+      "view"
+    ],
+    "answer": 0,
+    "explanation": "Subjects get clearances and objects get classifications. .classification ليها objects والـ clearance ليها subjects الـ"
+  },
+  {
+    "id": "db-l5-302",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "An audit trail is mainly used for ______. (authored)",
+    "options": [
+      "security (tracking user operations)",
+      "query optimization",
+      "indexing",
+      "normalization"
+    ],
+    "answer": 0,
+    "explanation": "It records what each user did. .إيه عمل مستخدم كل بيسجل 6"
+  },
+  {
+    "id": "db-l6-303",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The DBMS must not monitor user operations to ensure that the rules are enforced.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: the DBMS must monitor operations to enforce the rules. .القواعد يطبق عشان العمليات يراقب الزم DBMS الـ :غلط"
+  },
+  {
+    "id": "db-l6-304",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Protection of the completeness and accuracy of data as it is stored, maintained and retrieved is ______.",
+    "options": [
+      "Physical integrity",
+      "Logical integrity"
+    ],
+    "answer": 0,
+    "explanation": "Marked answer in the bank: physical integrity (the stem is garbled in the bank). .)واضحة مش البنك في السؤال صياغة( physical integrity :البنك في المع ّلمة اإلجابة"
+  },
+  {
+    "id": "db-l6-305",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Protecting data from human error and hackers is ______.",
+    "options": [
+      "Physical integrity",
+      "Logical integrity"
+    ],
+    "answer": 1,
+    "explanation": "Logical integrity. .Logical integrity"
+  },
+  {
+    "id": "db-l6-306",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "There are ______ types of logical integrity.",
+    "options": [
+      "1",
+      "2",
+      "4",
+      "3"
+    ],
+    "answer": 2,
+    "explanation": "Four: entity, referential, domain, user-defined. .user-defined و domain و referential و entity :أربعة"
+  },
+  {
+    "id": "db-l6-307",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ are used to restrict the data that can be entered into the table.",
+    "options": [
+      "Restrict",
+      "Constraints",
+      "Conditions"
+    ],
+    "answer": 1,
+    "explanation": "Integrity constraints. .Integrity constraints الـ"
+  },
+  {
+    "id": "db-l6-308",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A constraint is a Boolean expression that must evaluate to false.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: it must evaluate to TRUE. .TRUE يطلع الزم :غلط"
+  },
+  {
+    "id": "db-l6-309",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What must an integrity constraint (IC) always evaluate to?",
+    "options": [
+      "TRUE",
+      "FALSE",
+      "NULL",
+      "Unknown"
+    ],
+    "answer": 0,
+    "explanation": "TRUE. .TRUE"
+  },
+  {
+    "id": "db-l6-310",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Changes to the DB are allowed to create an instance that violates any IC.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. .غلط"
+  },
+  {
+    "id": "db-l6-311",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "No primary key value can be NULL; this is a(n) ______ constraint.",
+    "options": [
+      "referential integrity",
+      "entity integrity",
+      "trigger",
+      "semantic integrity"
+    ],
+    "answer": 1,
+    "explanation": "Entity integrity. .Entity integrity"
+  },
+  {
+    "id": "db-l6-312",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which integrity constraint ensures that no primary key can have a NULL value?",
+    "options": [
+      "Key constraint",
+      "Domain constraint",
+      "Referential integrity",
+      "Entity integrity"
+    ],
+    "answer": 3,
+    "explanation": "Entity integrity. .Entity integrity"
+  },
+  {
+    "id": "db-l6-313",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which constraint relies on the creation of primary keys?",
+    "options": [
+      "Entity integrity constraint",
+      "Referential integrity constraint",
+      "Domain constraints"
+    ],
+    "answer": 0,
+    "explanation": "Entity integrity. .Entity integrity"
+  },
+  {
+    "id": "db-l6-314",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which constraint is about how foreign keys are used to ensure that only appropriate changes, additions or deletions of data occur?",
+    "options": [
+      "Entity integrity constraint",
+      "Referential integrity constraint",
+      "Domain constraints",
+      "User-defined integrity"
+    ],
+    "answer": 1,
+    "explanation": "Referential integrity. .Referential integrity"
+  },
+  {
+    "id": "db-l6-315",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Collections of processes that ensure the accuracy of each piece of data in a domain are ______.",
+    "options": [
+      "Entity integrity constraint",
+      "Referential integrity constraint",
+      "Domain constraints",
+      "User-defined integrity"
+    ],
+    "answer": 2,
+    "explanation": "Domain constraints. .Domain constraints"
+  },
+  {
+    "id": "db-l6-316",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "A domain is a set of unacceptable values that a column is allowed to contain.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: a domain is the set of ACCEPTABLE (allowable) values. .المسموحة القيم مجموعة هو domain الـ :غلط"
+  },
+  {
+    "id": "db-l6-317",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "______ is the set of allowable values for one or more attributes.",
+    "options": [
+      "Null",
+      "key",
+      "domain",
+      "constraints"
+    ],
+    "answer": 2,
+    "explanation": "Domain. .Domain"
+  },
+  {
+    "id": "db-l6-318",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which constraint is used to restrict the value of a column between a range?",
+    "options": [
+      "Check",
+      "Not Null",
+      "Unique",
+      "Default"
+    ],
+    "answer": 0,
+    "explanation": "CHECK. .CHECK"
+  },
+  {
+    "id": "db-l6-319",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which constraint is used to restrict the value of a column so it cannot take a NULL value?",
+    "options": [
+      "Check",
+      "Not Null",
+      "Unique",
+      "Default"
+    ],
+    "answer": 1,
+    "explanation": "NOT NULL. .NOT NULL"
+  },
+  {
+    "id": "db-l6-320",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which constraint ensures that a column will only have unique values / prevents two records from having identical values in a column?",
+    "options": [
+      "Check",
+      "Not Null",
+      "Unique",
+      "Default"
+    ],
+    "answer": 2,
+    "explanation": "UNIQUE. .UNIQUE"
+  },
+  {
+    "id": "db-l6-321",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which constraint provides a default value for a column?",
+    "options": [
+      "Check",
+      "Not Null",
+      "Unique",
+      "Default"
+    ],
+    "answer": 3,
+    "explanation": "DEFAULT. .DEFAULT"
+  },
+  {
+    "id": "db-l6-322",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Basic operations that change the states of relations in the database include all of the following EXCEPT ______.",
+    "options": [
+      "Insert",
+      "Delete",
+      "Select",
+      "Update",
+      "Modify"
+    ],
+    "answer": 2,
+    "explanation": "SELECT only reads. .بس بيقرأ SELECT الـ"
+  },
+  {
+    "id": "db-l6-323",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which operation provides a list of attribute values for a new tuple that is to be inserted into a relation R?",
+    "options": [
+      "Insert",
+      "Delete",
+      "Select",
+      "Update",
+      "Modify"
+    ],
+    "answer": 0,
+    "explanation": "INSERT. .INSERT"
+  },
+  {
+    "id": "db-l6-324",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If an insertion violates one or more constraints, the default is to ______ the operation.",
+    "options": [
+      "Reject",
+      "Accept",
+      "Cascade",
+      "Set default"
+    ],
+    "answer": 0,
+    "explanation": "Reject the insertion. .Reject"
+  },
+  {
+    "id": "db-l6-325",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In an update operation, if the attribute is not part of a primary key nor of a foreign key, the update ______.",
+    "options": [
+      "causes no problems",
+      "causes problems"
+    ],
+    "answer": 0,
+    "explanation": "Only constraint checks like domain/NOT NULL may apply. .مشاكل مفيش غال ًبا"
+  },
+  {
+    "id": "db-l6-326",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The rules and constraints created by the user to fit their particular needs are ______.",
+    "options": [
+      "Entity integrity constraint",
+      "Referential integrity constraint",
+      "Domain constraints",
+      "User-defined integrity"
+    ],
+    "answer": 3,
+    "explanation": "User-defined integrity. .User-defined integrity"
+  },
+  {
+    "id": "db-l6-327",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Database ______ refers to the accuracy or correctness of the data in the database.",
+    "options": [
+      "Security",
+      "Privacy",
+      "Integrity",
+      "Confidentiality"
+    ],
+    "answer": 2,
+    "explanation": "Integrity. .Integrity"
+  },
+  {
+    "id": "db-l6-328",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Referential integrity constraints are specified between two ______.",
+    "options": [
+      "relations",
+      "databases",
+      "tuples",
+      "attributes"
+    ],
+    "answer": 0,
+    "explanation": "Two relations. .عالقتني"
+  },
+  {
+    "id": "db-l6-329",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "If a foreign key value in a child table does not match any primary key value in the parent table, this violates ______.",
+    "options": [
+      "Referential integrity",
+      "Entity integrity",
+      "Semantic integrity",
+      "Domain integrity"
+    ],
+    "answer": 0,
+    "explanation": "Referential integrity. .Referential integrity"
+  },
+  {
+    "id": "db-l6-330",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which type of constraint ensures that attribute values adhere to specific data types or ranges?",
+    "options": [
+      "Referential integrity",
+      "Entity integrity",
+      "Semantic integrity",
+      "Domain integrity"
+    ],
+    "answer": 3,
+    "explanation": "Domain integrity. .Domain integrity"
+  },
+  {
+    "id": "db-l6-331",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "If the user deletes a tuple that contains a PK referenced by an FK, the DBMS can do one of the following EXCEPT ______.",
+    "options": [
+      "execute it",
+      "reject it",
+      "Set default",
+      "Cascade delete"
+    ],
+    "answer": 0,
+    "explanation": "It cannot simply execute the delete and leave dangling references. .معلقة references ويسيب الحذف ينفذ مينفعش"
+  },
+  {
+    "id": "db-l6-332",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "If a tuple that is referenced by foreign keys is deleted, the DBMS will NOT perform which of the following?",
+    "options": [
+      "Restrict",
+      "Cascade",
+      "Set null or set default",
+      "UNDO"
+    ],
+    "answer": 3,
+    "explanation": "The options are restrict, cascade, set null/default. .set null/default و cascade و restrict الختيارات"
+  },
+  {
+    "id": "db-l6-333",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "INSERT INTO EMPLOYEE (SSN, Fname, Lname, Dno) VALUES (MOHAMED, AHMED, 4, 611215120); When this statement is submitted, the DBMS will ______.",
+    "options": [
+      "execute it",
+      "reject it",
+      "raise a syntax error",
+      "set default values"
+    ],
+    "answer": 1,
+    "explanation": "The values do not match the attribute order/domains (a name in SSN, a number in Lname), so the insertion violates domain constraints and is rejected. .reject ويتعمل domain constraint الـ فبيخالف األعمدة نطاق/لرتتيب مطابقة مش القيم"
+  },
+  {
+    "id": "db-l6-334",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Integrity constraints are specified and enforced only at run time.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. .غلط"
+  },
+  {
+    "id": "db-l6-335",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a file system, integrity constraints are written in program code rather than being stated explicitly.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. .صح"
+  },
+  {
+    "id": "db-l6-336",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is a complete definition or description of the database structure and constraints stored in the catalog.",
+    "options": [
+      "meta data",
+      "DBMS",
+      "Database",
+      "application"
+    ],
+    "answer": 0,
+    "explanation": "Metadata. .Metadata الـ"
+  },
+  {
+    "id": "db-l6-337",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does data integrity in a database refer to?",
+    "options": [
+      "Encrypting the database for security",
+      "Ensuring the accuracy and correctness of the data",
+      "Protecting the data from unauthorized access",
+      "Monitoring the performance of the database"
+    ],
+    "answer": 1,
+    "explanation": "Accuracy and correctness of data. .البيانات وصحة دقة"
+  },
+  {
+    "id": "db-l6-338",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following constraints cannot be expressed directly in a schema?",
+    "options": [
+      "Domain constraints",
+      "Key constraints",
+      "Application-based constraints",
+      "Referential integrity"
+    ],
+    "answer": 2,
+    "explanation": "Application-based (semantic) constraints need triggers/program code. .كود أو triggers محتاجة application-based constraints الـ"
+  },
+  {
+    "id": "db-l6-339",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Deleting a tuple that is referenced by another relation’s foreign key may violate ______ integrity. (authored)",
+    "options": [
+      "referential",
+      "entity",
+      "domain",
+      "key"
+    ],
+    "answer": 0,
+    "explanation": "Referential integrity (delete may leave dangling references). .referential integrity الـ يخالف ممكن"
+  },
+  {
+    "id": "db-l6-340",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Inserting a tuple with a NULL primary key violates ______ integrity. (authored)",
+    "options": [
+      "entity",
+      "referential",
+      "domain",
+      "none of them"
+    ],
+    "answer": 0,
+    "explanation": "Entity integrity. .Entity integrity"
+  },
+  {
+    "id": "db-l6-341",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Inserting a tuple whose foreign key value does not exist in the referenced relation violates ______ integrity. (authored)",
+    "options": [
+      "referential",
+      "entity",
+      "key",
+      "none of them"
+    ],
+    "answer": 0,
+    "explanation": "Referential integrity. .Referential integrity"
+  },
+  {
+    "id": "db-l6-342",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Inserting a tuple with a duplicate primary key value violates the ______ constraint. (authored)",
+    "options": [
+      "key",
+      "referential",
+      "domain",
+      "check"
+    ],
+    "answer": 0,
+    "explanation": "Key constraint. .Key constraint"
+  },
+  {
+    "id": "db-l6-343",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Inserting an employee with Age = ‘abc’ in an INTEGER column violates a ______ constraint. (authored)",
+    "options": [
+      "domain",
+      "key",
+      "entity",
+      "referential"
+    ],
+    "answer": 0,
+    "explanation": "The value is outside the attribute’s domain. .domain الـ خارج القيمة"
+  },
+  {
+    "id": "db-l6-344",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which options can the DBMS take when a deleted tuple is referenced by foreign keys? (authored)",
+    "options": [
+      "Restrict, cascade, set null/default",
+      "Only restrict",
+      "Only commit",
+      "Rollback only"
+    ],
+    "answer": 0,
+    "explanation": "The standard referential actions. .المعروفة referential actions الـ"
+  },
+  {
+    "id": "db-l6-345",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Updating a primary key value that is referenced by other tuples may violate ______. (authored)",
+    "options": [
+      "referential integrity",
+      "domain integrity only",
+      "nothing",
+      "the lock protocol"
+    ],
+    "answer": 0,
+    "explanation": "Referencing tuples would be left dangling unless cascaded. .cascade لو إال هتتعلق المشرية tuples الـ"
+  },
+  {
+    "id": "db-l6-346",
+    "subjectId": "database-2",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Physical integrity protects data from ______. (authored)",
+    "options": [
+      "hardware failures, power outages, disasters",
+      "invalid values",
+      "unauthorized users",
+      "duplicate keys"
+    ],
+    "answer": 0,
+    "explanation": "Physical integrity is about the storage layer. .التخزين طبقة يخص physical integrity الـ W"
+  }
+]

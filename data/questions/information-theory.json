@@ -1,0 +1,852 @@
+[
+  {
+    "id": "it-l1-001",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Information theory was founded primarily by:",
+    "options": [
+      "Bit",
+      "1 bit",
+      "Entropy",
+      "Claude Shannon"
+    ],
+    "answer": 3,
+    "explanation": "1948 سنة المعلومات نظرية مؤسس"
+  },
+  {
+    "id": "it-l1-002",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The uncertainty associated with a random variable is measured by:",
+    "options": [
+      "1 bit",
+      "0",
+      "Entropy",
+      "Bit"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: Entropy"
+  },
+  {
+    "id": "it-l1-003",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The unit of entropy when the logarithm is to base 2 is:",
+    "options": [
+      "0",
+      "H(X) = -∑ p(x) log2 p(x)",
+      "1 bit",
+      "Bit"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Bit"
+  },
+  {
+    "id": "it-l1-004",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "For a binary random variable with equal probabilities, the entropy is:",
+    "options": [
+      "H(X) = -∑ p(x) log2 p(x)",
+      "Equally probable",
+      "0",
+      "1 bit"
+    ],
+    "answer": 3,
+    "explanation": "→ }0.5 ,0.5{ العادلة العملة احتم الت ألن"
+  },
+  {
+    "id": "it-l3-005",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If an event has probability 1, its self- information is:",
+    "options": [
+      "Equally probable",
+      "log2 M",
+      "H(X) = -∑ p(x) log2 p(x)",
+      "0"
+    ],
+    "answer": 3,
+    "explanation": "log2(1) =- :مفاجأة مفيهوش مؤكد حدث ألن"
+  },
+  {
+    "id": "it-l1-006",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The entropy of a discrete random variable X is defined as:",
+    "options": [
+      "Equally probable",
+      "0",
+      "log2 M",
+      "H(X) = -∑ p(x) log2 p(x)"
+    ],
+    "answer": 3,
+    "explanation": "الحتمال مجموع( لإلنتروبي األساسي القانون .)مقلوبه لوغاريتم في"
+  },
+  {
+    "id": "it-l1-007",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Entropy reaches its maximum when the possible outcomes are:",
+    "options": [
+      "0",
+      "log2 M",
+      "Uncertainty about X given Y",
+      "Equally probable"
+    ],
+    "answer": 3,
+    "explanation": ")Uniform( متساوية تكون النواتج"
+  },
+  {
+    "id": "it-l1-009",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "For a random variable with M equally likely outcomes, the entropy is:",
+    "options": [
+      "Uncertainty about X given Y",
+      "I(X; Y) = H(X) - H(X | Y)",
+      "Shared information between X and Y",
+      "log2 M"
+    ],
+    "answer": 3,
+    "explanation": "H(X) = :الحتمال متساوية النواتج لما"
+  },
+  {
+    "id": "it-l2-010",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Conditional entropy H(X | Y) represents:",
+    "options": [
+      "Shared information between X and Y",
+      "I(X; Y) = H(X) - H(X | Y)",
+      "I(X; Y) = 0",
+      "Uncertainty about X given Y"
+    ],
+    "answer": 3,
+    "explanation": "Y قيمة معرفة بعد X في المتبقية الحيرة"
+  },
+  {
+    "id": "it-l2-011",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Mutual information I(X; Y) measures:",
+    "options": [
+      "I(X; Y) = H(X) - H(X | Y)",
+      "D(p || q) ≥ 0",
+      "I(X; Y) = 0",
+      "Shared information between X and Y"
+    ],
+    "answer": 3,
+    "explanation": "بين المتبادلة أو المشتركة المعلومات كمية .Y و X المتغيرين"
+  },
+  {
+    "id": "it-l3-012",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which equation is correct for I(X; Y)?",
+    "options": [
+      "D(p || q) ≥ 0",
+      "p = q almost everywhere",
+      "I(X; Y) = 0",
+      "I(X; Y) = H(X) - H(X | Y)"
+    ],
+    "answer": 3,
+    "explanation": "ناقص األصلية الحيرة = المتبادلة المعلومات .Y معرفة بعد المتبقية الحيرة"
+  },
+  {
+    "id": "it-l3-013",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If X and Y are statistically independent, then:",
+    "options": [
+      "D(p || q) ≥ 0",
+      "Claude Shannon",
+      "p = q almost everywhere",
+      "I(X; Y) = 0"
+    ],
+    "answer": 3,
+    "explanation": "I(X;Y) = 0 فـ بينهم مشتركة"
+  },
+  {
+    "id": "it-l3-014",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "For Kullback-Leibler divergence D(p || q), which property is always true?",
+    "options": [
+      "p = q almost everywhere",
+      "Entropy",
+      "Claude Shannon",
+      "D(p || q) ≥ 0"
+    ],
+    "answer": 3,
+    "explanation": "Non-( صفر تساوي أو موجبة ًدايم )Question( الكتاب في السؤالCorrect( الصحيحة اإلجابة بالعربي والفهم السبب"
+  },
+  {
+    "id": "it-l3-015",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "D(p || q) = 0 if and only if:",
+    "options": [
+      "Claude Shannon",
+      "Entropy",
+      "Bit",
+      "p = q almost everywhere"
+    ],
+    "answer": 3,
+    "explanation": "q و p التوزيعين لو فقط صفر بتساوي .ًتمام متطابقين )88–87 ص ،وغلط صح سؤال 15("
+  },
+  {
+    "id": "it-l1-tf-01",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Entropy measures uncertainty in a random variable.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "العشوائية أو التأكد عدم تقيس اإلنتروبي"
+  },
+  {
+    "id": "it-l1-tf-02",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The entropy of a deterministic source is zero.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "log(1) = 0 فـ 1 احتماله ًمسبق المحدد المصدر"
+  },
+  {
+    "id": "it-l2-tf-03",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Mutual information can be negative.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": ")سالبة تكون مستحيل( I(X;Y) ≥ 0 ًدايم !غلط"
+  },
+  {
+    "id": "it-l3-tf-04",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "KL divergence is always non-negative.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "D(p||q) ≥ 0 ًدايم"
+  },
+  {
+    "id": "it-l5-tf-05",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Huffman coding is a fixed-length coding method.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "Variable-length coding هو هافمان !غلط"
+  },
+  {
+    "id": "it-l5-tf-06",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A prefix code allows one codeword to be the prefix of another.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "بداية يكون كود أي ممنوع Prefix code الـ في !غلط .تاني لكود"
+  },
+  {
+    "id": "it-l5-tf-07",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Kraft's inequality is related to codeword lengths.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "∑ D-li ≤ 1 األكواد أطوال تختبر كرافت متباينة"
+  },
+  {
+    "id": "it-l3-tf-08",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "H(X | Y) ≤ H(X).",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: True"
+  },
+  {
+    "id": "it-l2-tf-09",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Independent variables have zero mutual information.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "I(X;Y) = 0 مستقلين يكونوا لما"
+  },
+  {
+    "id": "it-l6-tf-10",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Channel capacity represents the maximum reliable information transmission rate.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "شانون عند األساسي القناة سعة تعريف"
+  },
+  {
+    "id": "it-l5-tf-11",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Shannon–Fano coding is always optimal.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "بينما ،Optimal ًدايم اللي هو Huffman !غلط"
+  },
+  {
+    "id": "it-l5-tf-12",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Huffman coding is an optimal prefix code for a given set of symbol probabilities.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "Prefix الـ كل بين متوقع طول أقصر يعطي هافمان"
+  },
+  {
+    "id": "it-l1-tf-13",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Entropy is measured in bits when logarithm base 2 is used.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "bits بالـ يقاس 2 األساس"
+  },
+  {
+    "id": "it-l5-tf-14",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Arithmetic coding represents a sequence using an interval.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": ")1 ,0[ من جزئية كفترة كلها السلسلة يمثل"
+  },
+  {
+    "id": "it-l1-tf-15",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Increasing uncertainty generally increases entropy.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "اإلنتروبي زادت والعشوائية الحيرة زادت كلما )77–76 ص ،الكتاب في الرسميين تعريف 30 الـ( Part B: Definition Questions :MCQ الـ أو Written الـ في كاملة الدرجة تاخد عشان مصطلح 30 الـ من مصطلح لكل رسمي تعريف وأدق أقصر )Term( المصطلح بالعربي المعنى + )Official Definition( باإلنجليزي النموذجي التعريف .)التأكد عدم تزيل رسالة( .)واحد حدث معلومات( )Term( المصطلح بالعربي المعنى + )Official Definition( باإلنجليزي النموذجي التعريف )80–77 ص ،مسائل 10 الـ حل( Part C: Equation and Calculation Questions :)Marginals( واألعمدة الصفوف نجمع :ًأو • .H(X) = 1 bit إذن ⇒ p(X=1) = 0.2 + 0.3 = 0.5 و ،p(X=0) = 0.4 + 0.1 = 0.5 :p(X) الصفوف مجموع - إذن ⇒ p(Y=1) = 0.1 + 0.3 = 0.4 و ،p(Y=0) = 0.4 + 0.2 = 0.6 :p(Y) األعمدة مجموع - :Q5 (Joint Entropy H(X,Y)) حل • :Chain Rule الـ باستخدام :Q6 (Conditional Entropy H(X|Y)) حل • :Q7 (Mutual Information I(X;Y)) حل • أن وبما .H(Y|X) = Hb(p) إذن ،}p, p-1{ فيه صف كل BSC الـ في :)Derivation( الستنتاج • .C = 1 - Hb(p) إذن ،p(x) = (0.5, 0.5) عندما bit 1 هي H(Y) لـ قيمة وأقصى ،I(X;Y) = H(Y) - H(Y|X) = H(Y) - Hb(p) :p = 0.1 عند الحساب • )83–80 ص ،مختصرة بطريقة كاملة إثباتات 10 الـ( Part D: Proof Questions :)!بس سطرين إثبات كل( إثباتات 10 الـ من سؤال لكل نموذجي رياضي إثبات أقصر إثباته المطلوب)Model Proof( المختصر النموذجي اإلثبات خطوات إثباته المطلوب)Model Proof( المختصر النموذجي اإلثبات خطوات ،Huffman, Shannon-Fano, Arithmetic( والمقارنات التكويد مسائل حل :Part E, F, & G )85–83 ص )83 ص( Part E — Huffman Coding Questions .1 :}A: 0.40, B: 0.20, C: 0.15, D: 0.15, E: 0.10{ الرموز :E.Q1 مسألة حل نجمع :}0.15 ,0.20 ,0.25 ,0.40{ القائمة )2 .)D=0.15 + E=0.10 = 0.25( اتنين أصغر نجمع )1 :السريعة الجمع خطوات • )4 .)0.60 = 0.25 + 0.35( اتنين أصغر نجمع :}0.25 ,0.35 ,0.40{ القائمة )3 .)B=0.20 + C=0.15 = 0.35( اتنين أصغر .)A=0.40 = 1.0 + 0.60( اتنين آخر نجمع | C (0.15) → 001 (l=3) | B (0.20) → 000 (l=3) | A (0.40) → 1 (l=1) :وأطوالها األكواد • .L = 0.25 + 0.35 + 0.60 + 1.0 = 2.20 bits/symbol :النواتج بجمع )Average Length L( الطول متوسط • :)Source Entropy H(X)( اإلنتروبي • .η = (2.146 / 2.20) × 100% = 97.55% :)Coding Efficiency η( الكفاءة • :P = {0.35, 0.25, 0.20, 0.10, 0.10} التوزيع :E.Q2 مسألة حل )4 .0.35 + 0.25 = 0.60 )3 .0.20 + 0.20 = 0.40 )2 .0.10 + 0.10 = 0.20 )1 :السريعة الجمع خطوات • :األطوال( L = 0.20 + 0.40 + 0.60 + 1.0 = 2.20 bits/symbol :النواتج بجمع )Average Length L( الطول متوسط • .)Optimal( مثالي فالكود ،95.68% والكفاءة H(X) ≤ L < H(X) + 1 أن وبما ،H(X) = 2.105 bits :اإلنتروبي مع المقارنة • )84 ص( Part F — Shannon–Fano Coding .2 :P = {0.4, 0.2, 0.15, 0.15, 0.1} التوزيع :F.Q1 مسألة حل واللي 0 ياخد فوق اللي( المجموع في متقاربتين لمجموعتين لتحت فوق من المرتبة القائمة بنقسم Shannon-Fano طريقة في :)1 ياخد تحت .{0.15, 0.15, 0.1} (1 → 0.4 مجموعهم) و {0.4, 0.2} (0 → 0.6 مجموعهم) :األوىل القسمة )1 .0.2 → 01 (l=2) و ،0.4 → 00 (l=2) :فوق اللي المجموعة نقسم )2 .0.1 → 111 (l=3) و 0.15 110 → التانية (l=3) لـ نقسمه والباقي ،0.15 10 → األوىل (l=2) :تحت اللي المجموعة نقسم )3 2.20 هافمان من أطول إنه الحظ( L = 0.4(2) + 0.2(2) + 0.15(2) + 0.15(3) + 0.1(3) = 2.25 bits :L الطول متوسط • .η = (2.146 / 2.25) × 100% = 95.38% والكفاءة ،H(X) = 2.146 bits :والكفاءة اإلنتروبي • :)Huffman vs. Shannon-Fano مقارنة( F.Q2 سؤال حل Shannon-Fano is Top-Down بينما ،)لفوق تحت من احتمالين أصغر يدمج( Procedure: Huffman is Bottom-Up .1 .)لتحت فوق من لنصين الحتم الت يقسم( .Prefix-free (Instantaneous) الـ شرط يحقق كالهما :Prefix Property .4 .فانو-شانون تساوي أو ًدايم أعىل هافمان كفاءة :Compression Efficiency .5 )85–84 ص( Part G — Arithmetic Coding .3 :P(A) = 0.5, P(B) = 0.3, P(C) = 0.2 بأن ًعلم )ABC( الكلمة تشفير :G.Q1 مسألة حل .C → [0.8, 1.0) | B → [0.5, 0.8) | A → [0, 0.5) :)1 لـ 0 من الحروف فترات تجهيز( 1 خطوة • :)بالقانون C ثم B ثم A الكلمة حروف عىل نمشي( 2 خطوة • .Low = 0.0, High = 0.5 ⇒ Range = 0.5 - 0 = 0.5 :األصلية A الـ فترة ياخد :)A [0, 0.5 األول الحرف .1 :)B [0.5, 0.8 الثاني الحرف .2 :)C [0.8, 1.0 الثالث الحرف .3 .)Tag = 0.38 مثل داخلها رقم أي اختيار ويمكن( )0.40 ,0.37[ :هي ABC لتشفير النهائية الفترة إذن ⇒ :)Huffman vs. Arithmetic Coding مقارنة( G.Q3 سؤال حل المقارنة وجهHuffman Coding .)رمز لكل منفصل كود( Symbol-by-symbol Efficiency .2صحيح رقم الطول ألن كبيرة الحتم الت لو كفاءة أقل .)bit/symbol 1 لـ يصل إهدار( من ًجد يقترب ،)State-of-the-art( كفاءة أعىل .integer الـ إهدار بدون النظرية اإلنتروبي .l(x) ∈ Z+ صحيح طول له رمز كل.الفترة تضييق عبر رمز لكل bit الـ من أجزاء مع يتعامل .كاملة شجرة بناء ويحتاج الغالب في ثابت المتغيرة الحتم الت مع التكيف وسهل ًجد مرن .)مباشر بحث جدول( ًجد وسريع بسيط لتجنب دقيقة عشرية ضرب عمليات يحتاج( ًحسابي أعقد .)underflow الـ )87–85 ص( المقالية واألسئلة شانون نظريات إجابات :Part H & Part I :)ًجد مشهور امتحانات سؤال — األساسية كميات 4 الـ بين الفرق( H.Q5 .)حاجة نستلم ما قبل المرسل في حيرتنا( .H(X): Prior uncertainty about the source input X before transmission • الحيرة( .H(X | Y): Remaining uncertainty (equivocation) about X after observing the channel output Y • .)الخرج استالم بعد المتبقية :Part I (Q16–Q20) في التطبيقات أسئلة إجابات ملخص وتقليل )Arithmetic coding و Huffman عبر ZIP, GZIP, PNG( فقد بدون الملفات ضغط :Data Compression في • .النقل ووقت التخزين مساحة 4G/5G و Wi-Fi الـ شبكات في )Channel coding( األخطاء تصحيح أكواد تصميم :Communication Networks في • .)C( شانون لسعة للوصول الفضائية و التص الت ،)Information Gain / Mutual Information باستخدام Decision Trees( القرار أشجار بناء :Machine Learning & AI في • Image texture( الصور وتحليل ،)العصبية الشبكات في D(p||q) Cross-Entropy & KL Divergence( الخسارة ودوال )Master Formula Sheet( واحد جدول في المتحان مسائل قوانين جميع ملخص Law / Formula( القانون اسم )Mathematical Equation( الرياضية الصيغة المتحان؟ في نستخدمه متى pi احتماله واحد لحدث المعلومات كمية حساب .)متساوية لو log2 M أو( H(X) = -∑ p(x) log2 p(x) bitsلتمثيل bits عدد أقل أو الحيرة متوسط حساب .المصدر H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)وقاعدة p(x,y) المشترك التوزيع جداول مسائل .)Chain Rule( السلسلة والمستقبل المرسل بين المتبادلة المعلومات .)مستقلين لو 0 =( p = لو 0 =( q و p توزيعين بين المسافة قياس .أخطاء بدون التصال لقناة سعة أقصى حساب ،الطول متوسط ،Prefix code الـ أطوال فحص .الكود وكفاءة"
+  },
+  {
+    "id": "it-l1-def-01",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A measure of the average uncertainty of a random variable (average bits required per”?",
+    "options": [
+      "Conditional entropy H(X|Y)",
+      "Mutual information I(X;Y)",
+      "Joint entropy H(X,Y)",
+      "Entropy H(X)"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Entropy H(X)"
+  },
+  {
+    "id": "it-l2-def-02",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “The average uncertainty associated with a pair of random variables (X, Y)”?",
+    "options": [
+      "Mutual information I(X;Y)",
+      "Relative entropy D(p||q)",
+      "Joint entropy H(X,Y)",
+      "Conditional entropy H(X|Y)"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: Joint entropy H(X,Y)"
+  },
+  {
+    "id": "it-l2-def-03",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “The remaining uncertainty about random variable X given the knowledge of another”?",
+    "options": [
+      "Relative entropy D(p||q)",
+      "Redundancy",
+      "Mutual information I(X;Y)",
+      "Conditional entropy H(X|Y)"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Conditional entropy H(X|Y)"
+  },
+  {
+    "id": "it-l2-def-04",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “The reduction in uncertainty of one random variable due to the knowledge of another”?",
+    "options": [
+      "Redundancy",
+      "Information source",
+      "Relative entropy D(p||q)",
+      "Mutual information I(X;Y)"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Mutual information I(X;Y)"
+  },
+  {
+    "id": "it-l1-def-05",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A measure of the distance between two probability distributions p and q (inefficiency of”?",
+    "options": [
+      "Information source",
+      "Discrete memoryless source",
+      "Redundancy",
+      "Relative entropy D(p||q)"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Relative entropy D(p||q)"
+  },
+  {
+    "id": "it-l2-def-06",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “Extra or repeated bits in data beyond the source entropy (L - H(X)); removed in”?",
+    "options": [
+      "Information source",
+      "Discrete memoryless source",
+      "Channel",
+      "Redundancy"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Redundancy"
+  },
+  {
+    "id": "it-l1-def-07",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A mathematical model or entity that generates a sequence of symbols from a finite”?",
+    "options": [
+      "Discrete memoryless source",
+      "Channel",
+      "Communication system",
+      "Information source"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Information source"
+  },
+  {
+    "id": "it-l1-def-08",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A source emitting symbols from a finite alphabet where each symbol is statistically”?",
+    "options": [
+      "Channel",
+      "Communication system",
+      "Channel capacity (C)",
+      "Discrete memoryless source"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Discrete memoryless source"
+  },
+  {
+    "id": "it-l6-def-09",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “The physical or wireless transmission medium used to carry data signals from”?",
+    "options": [
+      "Communication system",
+      "Noiseless channel",
+      "Channel capacity (C)",
+      "Channel"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Channel"
+  },
+  {
+    "id": "it-l3-def-10",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A system consisting of Source Encoder, Channel Encoder, Channel, Channel Decoder,”?",
+    "options": [
+      "Channel capacity (C)",
+      "Noiseless channel",
+      "Noisy channel",
+      "Communication system"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Communication system"
+  },
+  {
+    "id": "it-l6-def-11",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “The maximum rate at which information can be reliably transmitted over a channel”?",
+    "options": [
+      "Noiseless channel",
+      "Source coding",
+      "Noisy channel",
+      "Channel capacity (C)"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Channel capacity (C)"
+  },
+  {
+    "id": "it-l6-def-12",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A channel where the input symbol is reproduced exactly at the output without any error”?",
+    "options": [
+      "Source coding",
+      "Channel coding",
+      "Noisy channel",
+      "Noiseless channel"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Noiseless channel"
+  },
+  {
+    "id": "it-l6-def-13",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A channel where the output is a corrupted version of the input due to random noise”?",
+    "options": [
+      "Source coding",
+      "Prefix code",
+      "Channel coding",
+      "Noisy channel"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Noisy channel"
+  },
+  {
+    "id": "it-l5-def-14",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “Encoding source symbols to remove statistical redundancy and compress data”?",
+    "options": [
+      "Channel coding",
+      "Instantaneous code",
+      "Prefix code",
+      "Source coding"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Source coding"
+  },
+  {
+    "id": "it-l6-def-15",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “Adding controlled redundancy to transmitted data to detect and correct channel errors”?",
+    "options": [
+      "Prefix code",
+      "Instantaneous code",
+      "Fixed-length code",
+      "Channel coding"
+    ],
+    "answer": 3,
+    "explanation": ")Term( المصطلح بالعربي المعنى + )Official Definition( باإلنجليزي النموذجي التعريف"
+  },
+  {
+    "id": "it-l5-def-16",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A code in which no whole codeword is a prefix (initial segment) of any other codeword”?",
+    "options": [
+      "Instantaneous code",
+      "Variable-length code",
+      "Fixed-length code",
+      "Prefix code"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Prefix code"
+  },
+  {
+    "id": "it-l5-def-17",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “Another name for a prefix code; each codeword can be decoded immediately without”?",
+    "options": [
+      "Variable-length code",
+      "Huffman coding",
+      "Fixed-length code",
+      "Instantaneous code"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Instantaneous code"
+  },
+  {
+    "id": "it-l5-def-18",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A code where all source symbols are assigned codewords of the exact same bit length”?",
+    "options": [
+      "Variable-length code",
+      "Huffman coding",
+      "Shannon–Fano coding",
+      "Fixed-length code"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Fixed-length code"
+  },
+  {
+    "id": "it-l5-def-19",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A code that assigns shorter codewords to frequent symbols and longer codewords to”?",
+    "options": [
+      "Huffman coding",
+      "Shannon–Fano coding",
+      "Shannon–Fano–Elias coding",
+      "Variable-length code"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Variable-length code"
+  },
+  {
+    "id": "it-l5-def-20",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “An optimal bottom-up lossless prefix symbol coding algorithm that repeatedly combines”?",
+    "options": [
+      "Shannon–Fano coding",
+      "Arithmetic coding",
+      "Shannon–Fano–Elias coding",
+      "Huffman coding"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Huffman coding"
+  },
+  {
+    "id": "it-l5-def-21",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A top-down variable-length prefix coding method that recursively splits sorted”?",
+    "options": [
+      "Arithmetic coding",
+      "Kraft inequality",
+      "Shannon–Fano–Elias coding",
+      "Shannon–Fano coding"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Shannon–Fano coding"
+  },
+  {
+    "id": "it-l5-def-22",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A prefix coding technique that uses the binary expansion of the modified cumulative”?",
+    "options": [
+      "Arithmetic coding",
+      "Kraft inequality",
+      "Code efficiency (η)",
+      "Shannon–Fano–Elias coding"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Shannon–Fano–Elias coding"
+  },
+  {
+    "id": "it-l5-def-23",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A lossless compression technique that encodes an entire sequence of symbols as a”?",
+    "options": [
+      "Kraft inequality",
+      "Data compression",
+      "Code efficiency (η)",
+      "Arithmetic coding"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Arithmetic coding"
+  },
+  {
+    "id": "it-l5-def-24",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “A necessary and sufficient condition for the existence of a D-ary prefix code with”?",
+    "options": [
+      "Data compression",
+      "Entropy H(X)",
+      "Code efficiency (η)",
+      "Kraft inequality"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Kraft inequality"
+  },
+  {
+    "id": "it-l5-def-25",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “The ratio of the source entropy H(X) to the average codeword length L”?",
+    "options": [
+      "Data compression",
+      "Joint entropy H(X,Y)",
+      "Entropy H(X)",
+      "Code efficiency (η)"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: Code efficiency (η)"
+  },
+  {
+    "id": "it-l5-def-26",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is defined as: “Reducing the size of data files by encoding information more efficiently and eliminating”?",
+    "options": [
+      "Joint entropy H(X,Y)",
+      "Conditional entropy H(X|Y)",
+      "Entropy H(X)",
+      "Data compression"
+    ],
+    "answer": 3,
+    "explanation": ")80–77 ص ،مسائل 10 الـ حل("
+  }
+]

@@ -1,0 +1,3729 @@
+[
+  {
+    "id": "cn-l1-001",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ............, voice and data are transmitted at different frequencies over a dedicated line to the central office using ............",
+    "options": [
+      "digital subscriber line, DSLAM",
+      "cable-based access, DSLAM",
+      "cable-based access, CMTS",
+      "digital subscriber line, CMTS"
+    ],
+    "answer": 0,
+    "explanation": "digital subscriber line, DSLAM (Lecture 1, Slide 16: Dedicated phone line goes to DSLAM in central office; Cable uses shared line to CMTS)."
+  },
+  {
+    "id": "cn-l1-002",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The following are reflections on best-effort service, except ............",
+    "options": [
+      "The simplicity of the mechanism has allowed the Internet to be widely deployed and adopted.",
+      "Sufficient bandwidth provisioning allows for the performance of real-time applications.",
+      "Application-layer distributed services connecting close to clients' networks allow services from multiple locations.",
+      "Guaranteed delivery with less than 40 msec delay."
+    ],
+    "answer": 3,
+    "explanation": "Guaranteed delivery with less than 40 msec delay (Best-effort IP does NOT guarantee packet delivery or strict delay bounds; that is an example of a guaranteed service model)."
+  },
+  {
+    "id": "cn-l2-003",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ............, end-end resources allocated to, reserved for \"call\" between source and destination (involves establishment of a dedicated circuit before transmitting data).",
+    "options": [
+      "packet switching",
+      "routing",
+      "forwarding",
+      "circuit switching"
+    ],
+    "answer": 3,
+    "explanation": "circuit switching (Lecture 2, Slide 9)."
+  },
+  {
+    "id": "cn-l2-004",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ is commonly used in traditional telephone networks.",
+    "options": [
+      "packet switching",
+      "circuit switching",
+      "routing",
+      "forwarding"
+    ],
+    "answer": 1,
+    "explanation": "circuit switching (Lecture 2, Slide 9)."
+  },
+  {
+    "id": "cn-l1-005",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In the home networks, all the following components are often combined in a single box, except ............",
+    "options": [
+      "cable or DSL modem",
+      "router, firewall, NAT",
+      "WiFi wireless access point",
+      "Wireless and wired devices"
+    ],
+    "answer": 3,
+    "explanation": "Wireless and wired devices (Lecture 1, Slide 17: End-user laptops/phones are outside the combined router/modem/AP box)."
+  },
+  {
+    "id": "cn-l1-006",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "All of the following are examples of network edges, except ............",
+    "options": [
+      "server",
+      "mobile phone",
+      "car",
+      "router"
+    ],
+    "answer": 3,
+    "explanation": "router (Lecture 1, Slide 12: Routers belong to the Network Core, while hosts/servers/phones/cars are Network Edge)."
+  },
+  {
+    "id": "cn-l1-007",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ is the main component of the network core that concerns the network interconnection.",
+    "options": [
+      "server",
+      "host",
+      "hub",
+      "router"
+    ],
+    "answer": 3,
+    "explanation": "router (Lecture 1, Slide 12: Network core is a mesh of interconnected routers)."
+  },
+  {
+    "id": "cn-l2-008",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In the network, all of the following are lines of defense, except ............ • CS/IS Options:",
+    "options": [
+      "access restrictions",
+      "authentication",
+      "DNS",
+      "firewalls →"
+    ],
+    "answer": 2,
+    "explanation": "DNS • Credit Options: (A) encryption (B) gateway (C) integrity checks (D) firewalls → ✓ Answer: (B) gateway (Lecture 2, Slide 40 lists the 5 lines of defense: authentication, confidentiality via encryption, integrity checks, access restrictions, firewalls)."
+  },
+  {
+    "id": "cn-l1-009",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A packet switch receives a packet and determines the outbound link to which the packet should be forwarded. When the packet arrives, one other packet is halfway done being transmitted on this outbound link and four other packets are waiting to be transmitted. Packets are transmitted in order of arrival. Suppose all packets are 1,500 bytes and the link rate is 2.5 Mbps. What is the queuing delay for the packet?",
+    "options": [
+      "19.2 ms",
+      "21.6 ms",
+      "16.8 ms",
+      "2.4 ms"
+    ],
+    "answer": 1,
+    "explanation": "21.6 ms Step-by-Step Solution: Packet size $L = 1500 imes 8 = 12,000 ext{ bits}$. Link rate $R = 2.5 ext{ Mbps} = 2,500,000 ext{ bps}$. Transmission time of 1 packet $= L/R = 12,000 / 2,500,000 = 0.0048 ext{ s} = 4.8 ext{ ms}$. Since 4 packets are waiting in the queue and 0.5 packet is left from the currently transmitting packet, total wait $= 4.5 imes 4.8 ext{ ms} = \\mathbf{21.6 ext{ ms}}$."
+  },
+  {
+    "id": "cn-l1-010",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ cable carries light pulses, each pulse a bit. It is also immune to electromagnetic noise (resistant to electrical interference and supports long cable lengths).",
+    "options": [
+      "Fiber optic",
+      "Coaxial",
+      "Twisted pair category 6",
+      "Twisted pair category 5"
+    ],
+    "answer": 0,
+    "explanation": "Fiber optic cable (Lecture 1, Slide 23 — Asked 3 times across 2024 and 2025!)."
+  },
+  {
+    "id": "cn-l1-011",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ cable is two concentric copper conductors that can work in bidirectional with multiple frequency channels on cable.",
+    "options": [
+      "Coaxial",
+      "Fiber optic",
+      "Twisted pair category 5",
+      "Twisted pair category 6"
+    ],
+    "answer": 0,
+    "explanation": "Coaxial (Lecture 1, Slide 23)."
+  },
+  {
+    "id": "cn-l1-012",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ define the format, order of messages sent and received among network entities, and actions taken on message transmission and receipt (all communication activity on the Internet is governed by ............).",
+    "options": [
+      "service",
+      "ISP",
+      "protocol",
+      "router"
+    ],
+    "answer": 2,
+    "explanation": "protocol (Lecture 1, Slide 7)."
+  },
+  {
+    "id": "cn-l1-013",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The typical transmission rate(s) for the twisted pair cable category 5 is ............",
+    "options": [
+      "10 Mbps, 100 Mbps",
+      "100 Mbps, 1 Gbps",
+      "10 Gbps, 100 Gbps",
+      "10 Gbps"
+    ],
+    "answer": 1,
+    "explanation": "100 Mbps, 1 Gbps (Lecture 1, Slide 22; note that 10 Gbps is Category 6)."
+  },
+  {
+    "id": "cn-l2-014",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ layer allows applications to interpret the meaning of data, e.g., encryption, compression, and machine-specific conventions.",
+    "options": [
+      "Application",
+      "Presentation",
+      "Session",
+      "Data link"
+    ],
+    "answer": 1,
+    "explanation": "Presentation (Lecture 2, Slide 53)."
+  },
+  {
+    "id": "cn-l2-015",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ attackers make resources unavailable to legitimate traffic by overwhelming resource with bogus traffic.",
+    "options": [
+      "packet sniffing",
+      "IP spoofing",
+      "Malware",
+      "DoS"
+    ],
+    "answer": 3,
+    "explanation": "DoS (Denial of Service) (Lecture 2, Slide 39)."
+  },
+  {
+    "id": "cn-l2-016",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ............, a promiscuous network interface reads/records all packets passing by.",
+    "options": [
+      "IP spoofing",
+      "DoS",
+      "packet sniffing",
+      "Malware"
+    ],
+    "answer": 2,
+    "explanation": "packet sniffing (Lecture 2, Slide 37)."
+  },
+  {
+    "id": "cn-l1-017",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Users are generating data at a rate of 100 kbps when busy, but are busy generating data only with probability p = 0.1. Suppose that we have 1 Gbps link. What is N, the maximum number of users that can be supported simultaneously under circuit switching?",
+    "options": [
+      "10000",
+      "1000",
+      "5000",
+      "100000"
+    ],
+    "answer": 0,
+    "explanation": "10000 (Under circuit switching, each user reserves a full 100 kbps channel: 109 / 105 = 10,000)."
+  },
+  {
+    "id": "cn-l2-018",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ is a private network that connects its data centers to the Internet, often bypassing tier-1 regional ISPs.",
+    "options": [
+      "Global ISP",
+      "Content provider network",
+      "IXP",
+      "Local ISP"
+    ],
+    "answer": 1,
+    "explanation": "Content provider network (Lecture 2, Slide 21)."
+  },
+  {
+    "id": "cn-l1-019",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The typical transmission rates for wireless local area networks are ............",
+    "options": [
+      "11, 54, 450 Kbps",
+      "11, 56, 540 Mbps",
+      "11, 54, 450 Mbps",
+      "11, 56, 540 Kbps"
+    ],
+    "answer": 2,
+    "explanation": "11, 54, 450 Mbps (Lecture 1, Slide 18 & 19)."
+  },
+  {
+    "id": "cn-l2-020",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Traffic intensity in the network can be calculated as ............",
+    "options": [
+      "L/R",
+      "d/s",
+      "La/R",
+      "dproc + dqueue + dtrans + dprop"
+    ],
+    "answer": 2,
+    "explanation": "La/R (Lecture 2, Slide 28)."
+  },
+  {
+    "id": "cn-l1-021",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ provides retrieval and deletion of the stored E-mail messages on the server.",
+    "options": [
+      "IMAP",
+      "SMTP",
+      "POP",
+      "HTTP"
+    ],
+    "answer": 2,
+    "explanation": "POP (POP3) [and IMAP also retrieves/manages stored messages on server]."
+  },
+  {
+    "id": "cn-l1-022",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which protocol is used to determine the physical address of a host on the network?",
+    "options": [
+      "RARP",
+      "ARP",
+      "ICMP",
+      "UDP"
+    ],
+    "answer": 1,
+    "explanation": "ARP (Chapter 5, Page 109 & 120: ARP maps IP to physical MAC address; Student marked RARP/ICMP on the 2024 sheet which is WRONG!)."
+  },
+  {
+    "id": "cn-l1-023",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the default port number for FTP?",
+    "options": [
+      "21",
+      "25",
+      "53",
+      "80"
+    ],
+    "answer": 0,
+    "explanation": "21 (Student marked 53 in 2024 exam which is WRONG! 53 is DNS, 21 is FTP)."
+  },
+  {
+    "id": "cn-l1-024",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "UDP vs. TCP Complete Exam Set: • 2025 CS/IS Q11: The UDP segment header consists of ............ bytes. → ✓ Answer: 8 bytes (64 bits) (Chapter 5, Page 112). • 2025 CS/IS Q14: All of the following are the main features of the UDP, except ............ → ✓ Answer:",
+    "options": [
+      "Large header size (UDP has a tiny 8-byte header). • 2023 Q15: Primary difference between UDP and TCP? →",
+      "UDP. • 2025 Credit Q50: In ............, demultiplexing uses 4-tuple: source and destination IP addresses and port numbers. →",
+      "TCP. • 2025 Credit Q30: UDP can be used for all of the following, except ............ →",
+      "IMAP (uses TCP)."
+    ],
+    "answer": 2,
+    "explanation": "Large header size (UDP has a tiny 8-byte header). • 2023 Q15: Primary difference between UDP and TCP? → ✓ Answer: B) UDP is faster than TCP but less reliable. • 2023 Q16: The purpose of UDP is to provide: → ✓ Answer: D) quick data transmission with minimal overhead. • 2023 Q17: Which application is likely to use UDP? → ✓ Answer: C) Video streaming (Chapter 5, Page 114). • 2023 Q18: Does UDP provide error-checking and retransmission? → ✓ Answer: B) Yes, it provides error-checking (via Checksum) but not retransmission. • 2025 CS/IS Q46 & 2023 Q32: In ............, demultiplexing uses destination port number only (or destination IP + destination port). → ✓ Answer: (A) UDP. • 2025 Credit Q50: In ............, demultiplexing uses 4-tuple: source and destination IP addresses and port numbers. → ✓ Answer: (C) TCP. • 2025 Credit Q30: UDP can be used for all of the following, except ............ → ✓ Answer: (D) IMAP (uses TCP)."
+  },
+  {
+    "id": "cn-l5-025",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the purpose of the OUI in MAC addresses?",
+    "options": [
+      "To identify the IP address of the device",
+      "To determine the network segment of the device",
+      "To identify the manufacturer of the network equipment",
+      "To encrypt the data transmitted over the network"
+    ],
+    "answer": 2,
+    "explanation": "To identify the manufacturer of the network equipment (Lecture 5 & 6, Page 178: \"The Organizationally Unique Identifier (OUI) is a 24-bit number that uniquely identifies a supplier, manufacturer, or other organization worldwide\"; Student marked A/B on the 2024 sheet which is WRONG!)."
+  },
+  {
+    "id": "cn-l5-026",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which IP address class is used for multicast?",
+    "options": [
+      "Class A",
+      "Class B",
+      "Class C",
+      "Class D"
+    ],
+    "answer": 3,
+    "explanation": "Class D (Lecture 5 & 6, Pages 181, 182, 188)."
+  },
+  {
+    "id": "cn-l5-027",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the purpose of CIDR notation?",
+    "options": [
+      "To represent IP addresses in binary format",
+      "To indicate the number of available host addresses in a network",
+      "To separate the network prefix from the host portion of an IP address",
+      "To indicate the class of an IP address"
+    ],
+    "answer": 2,
+    "explanation": "To separate the network prefix from the host portion of an IP address (Lecture 5 & 6, Pages 188 & 195: CIDR /n defines the mask that separates Net ID prefix from Host ID suffix)."
+  },
+  {
+    "id": "cn-l5-028",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which IP addressing method allows for variable-length subnet masks?",
+    "options": [
+      "Classful addressing",
+      "Classless addressing",
+      "Class-based addressing",
+      "Supernetting"
+    ],
+    "answer": 1,
+    "explanation": "Classless addressing (Lecture 5 & 6, Page 195: In classless addressing, prefix length n can be any number between 0 and 32)."
+  },
+  {
+    "id": "cn-l5-029",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the purpose of subnetting in a network?",
+    "options": [
+      "To extend the geographical coverage of a network",
+      "To establish secure VPN connections",
+      "To allocate IP addresses to devices",
+      "To divide a large network into smaller logical networks"
+    ],
+    "answer": 3,
+    "explanation": "To divide a large network into smaller logical networks."
+  },
+  {
+    "id": "cn-l5-030",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which IP address range is reserved for private networks?",
+    "options": [
+      "10.0.0.0 - 10.255.255.255",
+      "172.16.0.0 - 172.31.255.255",
+      "192.168.0.0 - 192.168.255.255",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "All of the above (Lecture 5 & 6, Page 201 exact table!)."
+  },
+  {
+    "id": "cn-l1-b001",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A network consists of interconnected:",
+    "options": [
+      "Computers",
+      "Nodes",
+      "Workstations",
+      "Servers"
+    ],
+    "answer": 1,
+    "explanation": "Nodes"
+  },
+  {
+    "id": "cn-l1-b002",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In which model do users’ computers process information independently from each other?",
+    "options": [
+      "Centralized",
+      "Distributed",
+      "Collaborative",
+      "None of the above"
+    ],
+    "answer": 1,
+    "explanation": "Distributed"
+  },
+  {
+    "id": "cn-l1-b003",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which network computing model does not take advantage of the processing capability of a user’s desktop computer?",
+    "options": [
+      "Centralized",
+      "Distributed",
+      "Collaborative",
+      "All of the above"
+    ],
+    "answer": 0,
+    "explanation": "Centralized"
+  },
+  {
+    "id": "cn-l1-b004",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "For networking within a building, we use:",
+    "options": [
+      "LAN",
+      "WAN",
+      "MAN",
+      "VAN"
+    ],
+    "answer": 0,
+    "explanation": "LAN"
+  },
+  {
+    "id": "cn-l1-b005",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A basic computer network is:",
+    "options": [
+      "Minimum of five computers linked together.",
+      "Computer and cables that link the network together.",
+      "Two or more computers that are linked together.",
+      "The use of satellites linking computers together."
+    ],
+    "answer": 2,
+    "explanation": "Two or more computers that are linked together."
+  },
+  {
+    "id": "cn-l1-b006",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The three basic elements of each computer system are EXCEPT:",
+    "options": [
+      "Software",
+      "Hardware",
+      "People or users",
+      "Cables"
+    ],
+    "answer": 3,
+    "explanation": "Cables"
+  },
+  {
+    "id": "cn-l1-b007",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Is this definition FALSE for wireless networks?",
+    "options": [
+      "Wireless networks are convenient.",
+      "Wireless networks are slower than wired LANs.",
+      "Wireless networks use radio transmitters.",
+      "Wireless networks are faster than wired networks."
+    ],
+    "answer": 3,
+    "explanation": "Wireless networks are faster than wired networks."
+  },
+  {
+    "id": "cn-l1-b008",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "LAN stands for:",
+    "options": [
+      "Local area nodes",
+      "Logical arrangement of networks",
+      "Local area network",
+      "Linked area network"
+    ],
+    "answer": 2,
+    "explanation": "Local area network"
+  },
+  {
+    "id": "cn-l1-b009",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The main difference between a LAN and a WAN is:",
+    "options": [
+      "Number of software programs available",
+      "Distance",
+      "The variety of hardware devices",
+      "The number of hardware devices"
+    ],
+    "answer": 1,
+    "explanation": "Distance"
+  },
+  {
+    "id": "cn-l1-b010",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Each component attached to a network is a:",
+    "options": [
+      "Node",
+      "Connection point",
+      "Switch",
+      "Hub"
+    ],
+    "answer": 0,
+    "explanation": "Node"
+  },
+  {
+    "id": "cn-l1-b011",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Every node on the network is connected by:",
+    "options": [
+      "Cables",
+      "Satellites",
+      "Microwaves",
+      "Wireless transmission"
+    ],
+    "answer": 0,
+    "explanation": "Cables"
+  },
+  {
+    "id": "cn-l1-b012",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "MAN stands for:",
+    "options": [
+      "Metropolitan area network",
+      "Marked area network",
+      "Metropolitan arranged network",
+      "Manufactured arrangement of networks"
+    ],
+    "answer": 0,
+    "explanation": "Metropolitan area network"
+  },
+  {
+    "id": "cn-l1-b013",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The main path on a WAN is:",
+    "options": [
+      "Nodes",
+      "Hubs",
+      "The backbone",
+      "Routers"
+    ],
+    "answer": 2,
+    "explanation": "The backbone"
+  },
+  {
+    "id": "cn-l1-b014",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Crossing from LAN to LAN or a WAN is done by:",
+    "options": [
+      "Bridges and gateways",
+      "Routers",
+      "Backbones",
+      "MANs"
+    ],
+    "answer": 0,
+    "explanation": "Bridges and gateways"
+  },
+  {
+    "id": "cn-l1-b015",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The hardware component or software that sends messages over networks is known as a:",
+    "options": [
+      "Bridge",
+      "Router",
+      "Backbone",
+      "Gateway"
+    ],
+    "answer": 3,
+    "explanation": "Gateway"
+  },
+  {
+    "id": "cn-l1-b016",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It finds any position:",
+    "options": [
+      "GPS",
+      "LAN",
+      "Receiver",
+      "MAN"
+    ],
+    "answer": 0,
+    "explanation": "GPS"
+  },
+  {
+    "id": "cn-l4-b017",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A port is a:",
+    "options": [
+      "The socket that enables information transfer over a system.",
+      "A hardware device that allows connection to the Internet.",
+      "A peripheral device attached to a computer.",
+      "The space in front of a computer to install additional drives."
+    ],
+    "answer": 0,
+    "explanation": "The socket that enables information transfer over a system."
+  },
+  {
+    "id": "cn-l1-b018",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Older printers connected to computers over:",
+    "options": [
+      "Serial port",
+      "NIC card",
+      "Parallel port",
+      "Jack"
+    ],
+    "answer": 2,
+    "explanation": "Parallel port"
+  },
+  {
+    "id": "cn-l1-b019",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A modem is connected to a computer over:",
+    "options": [
+      "Serial port",
+      "NIC card",
+      "Parallel port",
+      "Jack"
+    ],
+    "answer": 0,
+    "explanation": "Serial port"
+  },
+  {
+    "id": "cn-l4-b020",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "This port is faster than a serial or parallel port?",
+    "options": [
+      "Serial",
+      "USB",
+      "Parallel",
+      "Ethernet"
+    ],
+    "answer": 1,
+    "explanation": "USB"
+  },
+  {
+    "id": "cn-l1-b021",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "NIC stands for:",
+    "options": [
+      "Network internal card",
+      "Newer industrial computer",
+      "Networking Internet connection",
+      "Network interface card"
+    ],
+    "answer": 3,
+    "explanation": "Network interface card"
+  },
+  {
+    "id": "cn-l1-b022",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A NIC makes a direct connection to:",
+    "options": [
+      "The Internet",
+      "A network",
+      "A printer",
+      "A modem"
+    ],
+    "answer": 1,
+    "explanation": "A network"
+  },
+  {
+    "id": "cn-l1-b023",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The NIC manages the flow of data between the computer's RAM and the:",
+    "options": [
+      "Network cable",
+      "Internet",
+      "Hard drive",
+      "CD drive"
+    ],
+    "answer": 0,
+    "explanation": "Network cable"
+  },
+  {
+    "id": "cn-l1-b024",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Bits should be ............. to travel over phone lines.",
+    "options": [
+      "Analog signals",
+      "Digital signals",
+      "Modem signals",
+      "Converted to bytes"
+    ],
+    "answer": 0,
+    "explanation": "Analog signals"
+  },
+  {
+    "id": "cn-l1-b025",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Previous bit entering a modem, the bit is:",
+    "options": [
+      "Stored on the hard drive",
+      "Bitmapped",
+      "Digital",
+      "Analog"
+    ],
+    "answer": 2,
+    "explanation": "Digital"
+  },
+  {
+    "id": "cn-l1-b026",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Modems connect to a telephone network over a ............ jack.",
+    "options": [
+      "Phone",
+      "Coaxial",
+      "Digital",
+      "Analog"
+    ],
+    "answer": 3,
+    "explanation": "Analog"
+  },
+  {
+    "id": "cn-l1-b027",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Modem speeds are measured in:",
+    "options": [
+      "Bits per second",
+      "Bytes per second",
+      "Bits per millisecond",
+      "Bytes per minute"
+    ],
+    "answer": 0,
+    "explanation": "Bits per second"
+  },
+  {
+    "id": "cn-l1-b028",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How much information is transmitted over a communication medium in a definite time?",
+    "options": [
+      "DPI",
+      "BPS",
+      "Bandwidth",
+      "Baud rate"
+    ],
+    "answer": 2,
+    "explanation": "Bandwidth"
+  },
+  {
+    "id": "cn-l1-b029",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Broadband connections include all EXCEPT:",
+    "options": [
+      "Cable modems",
+      "DSL",
+      "Wireless",
+      "Phone modems"
+    ],
+    "answer": 3,
+    "explanation": "Phone modems"
+  },
+  {
+    "id": "cn-l1-b030",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It uses light waves to carry information at high speed.",
+    "options": [
+      "Cable modems",
+      "Fiber optic cables",
+      "Wireless cables",
+      "Phone lines"
+    ],
+    "answer": 1,
+    "explanation": "Fiber optic cables"
+  },
+  {
+    "id": "cn-l1-b031",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which media has the longest distance?",
+    "options": [
+      "Twisted pair",
+      "Wireless",
+      "Coaxial cable",
+      "Fiber optic"
+    ],
+    "answer": 3,
+    "explanation": "Fiber optic"
+  },
+  {
+    "id": "cn-l1-b032",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Palm users frequently connect over:",
+    "options": [
+      "Cable modems",
+      "Fiber optic cables",
+      "Infrared wireless",
+      "Phone lines"
+    ],
+    "answer": 2,
+    "explanation": "Infrared wireless"
+  },
+  {
+    "id": "cn-l1-b033",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The last generation of wireless technology is:",
+    "options": [
+      "G4",
+      "Modem wireless",
+      "3G",
+      "NIC wireless"
+    ],
+    "answer": 2,
+    "explanation": "3G"
+  },
+  {
+    "id": "cn-l1-b034",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The policy for exchanging data between a terminal and computers:",
+    "options": [
+      "Protocol",
+      "Algorithm",
+      "Procedure",
+      "Set of laws"
+    ],
+    "answer": 0,
+    "explanation": "Protocol"
+  },
+  {
+    "id": "cn-l1-b035",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which has one or more dedicated computers, and all others act as recipients?",
+    "options": [
+      "Peer-to-peer model",
+      "P-to-P model",
+      "Ring network",
+      "Client/server model"
+    ],
+    "answer": 3,
+    "explanation": "Client/server model"
+  },
+  {
+    "id": "cn-l1-b036",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A high-speed, high-performance computer with data and resources to be shared.",
+    "options": [
+      "Server",
+      "Supercomputer",
+      "Client",
+      "PDA"
+    ],
+    "answer": 0,
+    "explanation": "Server"
+  },
+  {
+    "id": "cn-l1-b037",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In a client/server, the operating system resides on the:",
+    "options": [
+      "Client machine",
+      "CD",
+      "Server computer",
+      "Mainframe"
+    ],
+    "answer": 2,
+    "explanation": "Server computer"
+  },
+  {
+    "id": "cn-l1-b038",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which allows every computer to act as both a client and a server?",
+    "options": [
+      "Client/server model",
+      "Host system",
+      "Server network",
+      "Peer-to-peer network"
+    ],
+    "answer": 3,
+    "explanation": "Peer-to-peer network"
+  },
+  {
+    "id": "cn-l1-b039",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "The computer that accepts, prioritizes, and processes print jobs:",
+    "options": [
+      "Print client",
+      "Printer file server",
+      "Print server",
+      "Mainframe"
+    ],
+    "answer": 2,
+    "explanation": "Print server"
+  },
+  {
+    "id": "cn-l1-b040",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which stores data and software shared by several?",
+    "options": [
+      "File server",
+      "Mainframe",
+      "Print server",
+      "Client"
+    ],
+    "answer": 0,
+    "explanation": "File server"
+  },
+  {
+    "id": "cn-l1-b041",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "IM session stands for:",
+    "options": [
+      "Internal messaging",
+      "Instant messaging",
+      "Instantaneous market",
+      "Instantaneous messages"
+    ],
+    "answer": 1,
+    "explanation": "Instant messaging"
+  },
+  {
+    "id": "cn-l1-b042",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which blocks unauthorized access and data transfer?",
+    "options": [
+      "A bridge",
+      "A VPN",
+      "A WEB",
+      "A firewall"
+    ],
+    "answer": 3,
+    "explanation": "A firewall"
+  },
+  {
+    "id": "cn-l5-b043",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An IP address has:",
+    "options": [
+      "A portion of the address that identifies the network to which the individual belongs",
+      "A portion of the address that identifies an individual host on a destination network",
+      "A 32-bit addressing scheme",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "All of the above"
+  },
+  {
+    "id": "cn-l1-b044",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The medium that has the fastest transmission rate is:",
+    "options": [
+      "Shielded twisted pair",
+      "Coaxial cable",
+      "Type 3 unshielded twisted pair",
+      "Fiber optics"
+    ],
+    "answer": 3,
+    "explanation": "Fiber optics"
+  },
+  {
+    "id": "cn-l1-b045",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In computer network nodes are:",
+    "options": [
+      "Computer that originates the data",
+      "Computer that routes the data",
+      "Computer that terminates the data",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l1-b046",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Data transfer is shared on the network in:",
+    "options": [
+      "Broadcast network",
+      "Unicast network",
+      "Multicast network",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Broadcast network"
+  },
+  {
+    "id": "cn-l1-b047",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Bluetooth is:",
+    "options": [
+      "A personal area network",
+      "Local area network",
+      "Virtual private network",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "A personal area network"
+  },
+  {
+    "id": "cn-l5-b048",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A ............. is a device processing the routing information in the packet.",
+    "options": [
+      "Bridge",
+      "Firewall",
+      "Router",
+      "All of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Router"
+  },
+  {
+    "id": "cn-l1-b049",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "List as one protocol per layer, this called:",
+    "options": [
+      "Protocol architecture",
+      "Protocol stack",
+      "Protocol suit",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Protocol stack"
+  },
+  {
+    "id": "cn-l4-b050",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Network congestion occurs:",
+    "options": [
+      "Traffic overloading",
+      "When a system terminates",
+      "The connection by two nodes terminates",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Traffic overloading"
+  },
+  {
+    "id": "cn-l1-b051",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It extends a private network across public networks?",
+    "options": [
+      "Local area networks",
+      "Virtual private networks",
+      "Enterprise private networks",
+      "Storage area networks"
+    ],
+    "answer": 1,
+    "explanation": "Virtual private networks"
+  },
+  {
+    "id": "cn-l1-b052",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The IETF standards documents are called:",
+    "options": [
+      "RFC",
+      "RCF",
+      "ID",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "RFC"
+  },
+  {
+    "id": "cn-l1-b053",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The structure or format of data is called:",
+    "options": [
+      "Syntax",
+      "Semantics",
+      "Struct",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Syntax"
+  },
+  {
+    "id": "cn-l1-b054",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Data transfer by a computer and a keyboard involves ............ transmission:",
+    "options": [
+      "Automatic",
+      "Half-duplex",
+      "Full-duplex",
+      "Simplex"
+    ],
+    "answer": 3,
+    "explanation": "Simplex"
+  },
+  {
+    "id": "cn-l1-b055",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The primary Network:",
+    "options": [
+      "CNNET",
+      "NSFNET",
+      "ASAPNET",
+      "ARPANET"
+    ],
+    "answer": 3,
+    "explanation": "ARPANET"
+  },
+  {
+    "id": "cn-l1-b056",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It is the physical path over which a message travels:",
+    "options": [
+      "Path",
+      "Medium",
+      "Protocol",
+      "Route"
+    ],
+    "answer": 1,
+    "explanation": "Medium"
+  },
+  {
+    "id": "cn-l5-b057",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It is organized over international commerce in the communications field?",
+    "options": [
+      "ITU-T",
+      "IEEE",
+      "FCC",
+      "ISOC"
+    ],
+    "answer": 0,
+    "explanation": "ITU-T"
+  },
+  {
+    "id": "cn-l1-b058",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of these is not a network edge device?",
+    "options": [
+      "PC",
+      "Smartphones",
+      "Servers",
+      "Switch"
+    ],
+    "answer": 3,
+    "explanation": "Switch"
+  },
+  {
+    "id": "cn-l1-b059",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A rules that manage data communication:",
+    "options": [
+      "Protocols",
+      "Standards",
+      "RFCs",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Protocols"
+  },
+  {
+    "id": "cn-l1-b060",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Devices share a link in ............ connection:",
+    "options": [
+      "Unipoint",
+      "Multipoint",
+      "Point to point",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Multipoint"
+  },
+  {
+    "id": "cn-l1-b061",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "OSI stands for:",
+    "options": [
+      "Open system interconnection",
+      "Operating system interface",
+      "Optical service implementation",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Open system interconnection"
+  },
+  {
+    "id": "cn-l4-b062",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "TCP/IP model does not have .......... layer.",
+    "options": [
+      "Session layer",
+      "Presentation layer",
+      "Application layer",
+      "Both (1) and (2)"
+    ],
+    "answer": 3,
+    "explanation": "Both (1) and (2)"
+  },
+  {
+    "id": "cn-l4-b063",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which layer links the network support layers and user support layers?",
+    "options": [
+      "Session layer",
+      "Data link layer",
+      "Transport layer",
+      "Network layer"
+    ],
+    "answer": 2,
+    "explanation": "Transport layer"
+  },
+  {
+    "id": "cn-l4-b064",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Address used in the TCP/IP protocols?",
+    "options": [
+      "Physical address and logical address",
+      "Port address",
+      "Specific address",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l4-b065",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "TCP/IP model was developed ............ the OSI model.",
+    "options": [
+      "Prior to",
+      "After",
+      "Simultaneous to",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Prior to"
+  },
+  {
+    "id": "cn-l1-b066",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The physical layer is:",
+    "options": [
+      "Bit-by-bit delivery",
+      "Process to process delivery",
+      "Application to application delivery",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Bit-by-bit delivery"
+  },
+  {
+    "id": "cn-l1-b067",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which transmission media has the highest transmission speed in a network?",
+    "options": [
+      "Coaxial cable",
+      "Twisted pair cable",
+      "Optical fiber",
+      "Electrical cable"
+    ],
+    "answer": 2,
+    "explanation": "Optical fiber"
+  },
+  {
+    "id": "cn-l1-b068",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Bits can be sent over guided and unguided media as analog signal by:",
+    "options": [
+      "Digital modulation",
+      "Amplitude modulation",
+      "Frequency modulation",
+      "Phase modulation"
+    ],
+    "answer": 0,
+    "explanation": "Digital modulation"
+  },
+  {
+    "id": "cn-l1-b069",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The physical layer provides:",
+    "options": [
+      "Mechanical specifications of electrical connectors and cables",
+      "Electrical specification of transmission line signal level",
+      "Specification for IR over optical fiber",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l1-b070",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In asynchronous serial communication, the physical layer provides:",
+    "options": [
+      "Start and stop signaling",
+      "Flow control",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Both (1) and (2)"
+  },
+  {
+    "id": "cn-l1-b071",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The physical layer is responsible for:",
+    "options": [
+      "Line coding",
+      "Channel coding",
+      "Modulation",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l1-b072",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The physical layer translates logical communication requests from the ............ into hardware-specific operations.",
+    "options": [
+      "Data link layer",
+      "Network layer",
+      "Transport layer",
+      "Application layer"
+    ],
+    "answer": 0,
+    "explanation": "Data link layer"
+  },
+  {
+    "id": "cn-l1-b073",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A single channel is shared by multiple signals by:",
+    "options": [
+      "Analog modulation",
+      "Digital modulation",
+      "Multiplexing",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Multiplexing"
+  },
+  {
+    "id": "cn-l1-b074",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Wireless data can be done via:",
+    "options": [
+      "Radio waves",
+      "Microwaves",
+      "Infrared",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l6-b075",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The data link layer takes the packets from ............ and encapsulates them into frames for transmission.",
+    "options": [
+      "Network layer",
+      "Physical layer",
+      "Transport layer",
+      "Application layer"
+    ],
+    "answer": 0,
+    "explanation": "Network layer"
+  },
+  {
+    "id": "cn-l6-b076",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "It is not done by the data link layer?",
+    "options": [
+      "Framing",
+      "Error control",
+      "Flow control",
+      "Channel coding"
+    ],
+    "answer": 3,
+    "explanation": "Channel coding"
+  },
+  {
+    "id": "cn-l6-b077",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Header of a frame includes:",
+    "options": [
+      "Synchronization bytes",
+      "Addresses",
+      "Frame identifier",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l1-b078",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When a data unit has been changed during the transmission, the error is called:",
+    "options": [
+      "Random error",
+      "Burst error",
+      "Inverted error",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Burst error"
+  },
+  {
+    "id": "cn-l1-b079",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "CRC stands for:",
+    "options": [
+      "Cyclic redundancy check",
+      "Code repeat check",
+      "Code redundancy check",
+      "Cyclic repeat check"
+    ],
+    "answer": 0,
+    "explanation": "Cyclic redundancy check"
+  },
+  {
+    "id": "cn-l6-b080",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which is a data link protocol?",
+    "options": [
+      "Ethernet",
+      "Point to point protocol",
+      "HDLC",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l1-b081",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ is the multiple access protocol for channel access control?",
+    "options": [
+      "CSMA/CD",
+      "CSMA/CA",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Both (1) and (2)"
+  },
+  {
+    "id": "cn-l1-b082",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The network layer concerns with:",
+    "options": [
+      "Bits",
+      "Frames",
+      "Packets",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Packets"
+  },
+  {
+    "id": "cn-l1-b083",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "It is not a function of the network layer?",
+    "options": [
+      "Routing",
+      "Inter-networking",
+      "Congestion control",
+      "None of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "None of the mentioned"
+  },
+  {
+    "id": "cn-l5-b084",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The 4 byte IP address consists of:",
+    "options": [
+      "Network address",
+      "Host address",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Both (1) and (2)"
+  },
+  {
+    "id": "cn-l1-b085",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a virtual circuit network, each packet contains:",
+    "options": [
+      "Full source and destination address",
+      "A short VC number",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "A short VC number"
+  },
+  {
+    "id": "cn-l5-b086",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which one of the following routing algorithm can be used for network layer design?",
+    "options": [
+      "Shortest path algorithm",
+      "Distance vector routing",
+      "Link state routing",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l5-b087",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Multi-destination routing:",
+    "options": [
+      "Is the same as broadcast routing",
+      "Contains the list of all destinations",
+      "Data is not sent by packets",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Is the same as broadcast routing"
+  },
+  {
+    "id": "cn-l5-b088",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A subset of a network that includes all the routers but contains no loops is called:",
+    "options": [
+      "Spanning tree",
+      "Spider structure",
+      "Spider tree",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Spanning tree"
+  },
+  {
+    "id": "cn-l4-b089",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which one of the following algorithm is not used for congestion control?",
+    "options": [
+      "Traffic aware routing",
+      "Admission control",
+      "Load shedding",
+      "None of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "None of the mentioned"
+  },
+  {
+    "id": "cn-l1-b090",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The network layer protocol of the internet is:",
+    "options": [
+      "Ethernet",
+      "Internet protocol",
+      "Hypertext transfer protocol",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Internet protocol"
+  },
+  {
+    "id": "cn-l5-b091",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "ICMP is primarily used for:",
+    "options": [
+      "Error and diagnostic functions",
+      "Addressing",
+      "Forwarding",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Error and diagnostic functions"
+  },
+  {
+    "id": "cn-l4-b092",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Transport layer aggregates data from different applications into a single stream before passing it to:",
+    "options": [
+      "Network layer",
+      "Data link layer",
+      "Application layer",
+      "Physical layer"
+    ],
+    "answer": 0,
+    "explanation": "Network layer"
+  },
+  {
+    "id": "cn-l4-b093",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which one of the following is a transport layer protocol used on the internet?",
+    "options": [
+      "TCP",
+      "UDP",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Both (1) and (2)"
+  },
+  {
+    "id": "cn-l5-b094",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "User datagram protocol is called connectionless because:",
+    "options": [
+      "All UDP packets are treated independently by the transport layer",
+      "It sends data as a stream of related packets",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "All UDP packets are treated independently by the transport layer"
+  },
+  {
+    "id": "cn-l1-b095",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The transmission control protocol is:",
+    "options": [
+      "Connection oriented protocol",
+      "Uses a three-way handshake to establish a connection",
+      "Receives data from an application as a single stream",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l1-b096",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "An endpoint of an inter-process communication flow across a computer network is called:",
+    "options": [
+      "Socket",
+      "Pipe",
+      "Port",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Socket"
+  },
+  {
+    "id": "cn-l4-b097",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Socket-style API for Windows is called:",
+    "options": [
+      "Wsock",
+      "Winsock",
+      "Wins",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Winsock"
+  },
+  {
+    "id": "cn-l4-b098",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which one of the following is a version of UDP with congestion control?",
+    "options": [
+      "Datagram congestion control protocol",
+      "Stream control transmission protocol",
+      "Structured stream transport",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Datagram congestion control protocol"
+  },
+  {
+    "id": "cn-l4-b099",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Transport layer protocols deal with:",
+    "options": [
+      "Application to application communication",
+      "Process to process communication",
+      "Node-to-node communication",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Process to process communication"
+  },
+  {
+    "id": "cn-l4-b100",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which one of the following is a transport layer protocol?",
+    "options": [
+      "Stream control transmission protocol",
+      "Internet control message protocol",
+      "Neighbor discovery protocol",
+      "Dynamic host configuration protocol"
+    ],
+    "answer": 0,
+    "explanation": "Stream control transmission protocol"
+  },
+  {
+    "id": "cn-l1-b101",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It allows a user at one site to create a connection to another site and then pass keystrokes from the local host to the remote host?",
+    "options": [
+      "HTTP",
+      "FTP",
+      "Telnet",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Telnet"
+  },
+  {
+    "id": "cn-l3-b102",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Application layer protocol defines:",
+    "options": [
+      "Types of messages exchanged",
+      "Message format, syntax, and semantics",
+      "Rules for when and how processes send and respond to messages",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l1-b103",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which one of the following protocols delivers/stores mail to receiver server?",
+    "options": [
+      "Simple mail transfer protocol",
+      "Post office protocol",
+      "Internet mail access protocol",
+      "Hypertext transfer protocol"
+    ],
+    "answer": 0,
+    "explanation": "Simple mail transfer protocol"
+  },
+  {
+    "id": "cn-l1-b104",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The ASCII encoding of binary data is called:",
+    "options": [
+      "Base 64 encoding",
+      "Base 32 encoding",
+      "Base 16 encoding",
+      "Base 8 encoding"
+    ],
+    "answer": 0,
+    "explanation": "Base 64 encoding"
+  },
+  {
+    "id": "cn-l1-b105",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which one of the following is an Internet standard protocol for managing devices on an IP network?",
+    "options": [
+      "Dynamic host configuration protocol",
+      "Simple network management protocol",
+      "Internet message access protocol",
+      "Media gateway protocol"
+    ],
+    "answer": 1,
+    "explanation": "Simple network management protocol"
+  },
+  {
+    "id": "cn-l3-b106",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which one of the following is not an application layer protocol?",
+    "options": [
+      "Media gateway protocol",
+      "Dynamic host configuration protocol",
+      "Resource reservation protocol",
+      "Session initiation protocol"
+    ],
+    "answer": 2,
+    "explanation": "Resource reservation protocol"
+  },
+  {
+    "id": "cn-l1-b107",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which protocol is a signaling communication protocol used for controlling multimedia communication sessions?",
+    "options": [
+      "Session initiation protocol",
+      "Session modeling protocol",
+      "Session maintenance protocol",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Session initiation protocol"
+  },
+  {
+    "id": "cn-l3-b108",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which one of the following is not correct? 1. Application layer protocols are used by both source and destination devices during a",
+    "options": [
+      "communication session",
+      "Application layer protocols implemented on the source and destination host must match",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "None of the mentioned"
+  },
+  {
+    "id": "cn-l3-b109",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The application layer uses ............ when displaying a web page.",
+    "options": [
+      "HTTP protocol",
+      "FTP protocol",
+      "SMTP protocol",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "HTTP protocol"
+  },
+  {
+    "id": "cn-l3-b110",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "This is not an application layer protocol:",
+    "options": [
+      "HTTP",
+      "SMTP",
+      "FTP",
+      "TCP"
+    ],
+    "answer": 3,
+    "explanation": "TCP"
+  },
+  {
+    "id": "cn-l3-b111",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The packet at the application layer is called:",
+    "options": [
+      "Packet",
+      "Message",
+      "Segment",
+      "Frame"
+    ],
+    "answer": 1,
+    "explanation": "Message"
+  },
+  {
+    "id": "cn-l1-b112",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "............ This is one of the architecture paradigms:",
+    "options": [
+      "Peer to peer",
+      "Client-server",
+      "HTTP",
+      "Both a and b"
+    ],
+    "answer": 3,
+    "explanation": "Both a and b"
+  },
+  {
+    "id": "cn-l4-b113",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The application developer has permission to decide the following on the transport layer side:",
+    "options": [
+      "Transport layer protocol",
+      "Maximum buffers size",
+      "Both of the mentioned",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Both of the mentioned"
+  },
+  {
+    "id": "cn-l3-b114",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Application layer offers ............ service:",
+    "options": [
+      "End to end",
+      "Process to process",
+      "Both of the mentioned",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Both of the mentioned"
+  },
+  {
+    "id": "cn-l1-b115",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "E-mail is:",
+    "options": [
+      "Loss-tolerant application",
+      "Bandwidth-sensitive application",
+      "Elastic application",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Elastic application"
+  },
+  {
+    "id": "cn-l1-b116",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Pick the odd one out:",
+    "options": [
+      "File transfer",
+      "File download",
+      "E-mail",
+      "Interactive games"
+    ],
+    "answer": 3,
+    "explanation": "Interactive games"
+  },
+  {
+    "id": "cn-l3-b117",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "It is an application layer service?",
+    "options": [
+      "Network virtual terminal",
+      "File transfer, access, and management",
+      "Mail service",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l1-b118",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "To deliver a message to the correct application program running on a host, the .............. address must be consulted:",
+    "options": [
+      "IP",
+      "MAC",
+      "Port",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Port"
+  },
+  {
+    "id": "cn-l1-b119",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "This is a time-sensitive service:",
+    "options": [
+      "File transfer",
+      "File download",
+      "E-mail",
+      "Internet telephony"
+    ],
+    "answer": 3,
+    "explanation": "Internet telephony"
+  },
+  {
+    "id": "cn-l4-b120",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Transport services available to applications in one or another form:",
+    "options": [
+      "Reliable data transfer",
+      "Timing",
+      "Security",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l3-b121",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Electronic mail uses this Application layer protocol:",
+    "options": [
+      "SMTP",
+      "HTTP",
+      "FTP",
+      "SIP"
+    ],
+    "answer": 0,
+    "explanation": "SMTP"
+  },
+  {
+    "id": "cn-l4-b122",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Multiple objects can be sent over a TCP connection between client and server in:",
+    "options": [
+      "Persistent HTTP",
+      "Nonpersistent HTTP",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Persistent HTTP"
+  },
+  {
+    "id": "cn-l3-b123",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "HTTP is ............ protocol.",
+    "options": [
+      "Application layer",
+      "Transport layer",
+      "Network layer",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Application layer"
+  },
+  {
+    "id": "cn-l3-b124",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "HTTP client requests by establishing a connection to a particular port on the server.",
+    "options": [
+      "User datagram protocol",
+      "Transmission control protocol",
+      "Broader gateway protocol",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Transmission control protocol"
+  },
+  {
+    "id": "cn-l3-b125",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In FTP protocol, the client contacts the server using ............ as the transport protocol.",
+    "options": [
+      "Transmission control protocol",
+      "User datagram protocol",
+      "Datagram congestion control protocol",
+      "Stream control transmission protocol"
+    ],
+    "answer": 0,
+    "explanation": "Transmission control protocol"
+  },
+  {
+    "id": "cn-l3-b126",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In which mode is FTP, the client initiates both the control and data connections?",
+    "options": [
+      "Active mode",
+      "Passive mode",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Passive mode"
+  },
+  {
+    "id": "cn-l1-b127",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The file transfer protocol is built on:",
+    "options": [
+      "Data-centric architecture",
+      "Service-oriented architecture",
+      "Client-server architecture",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Client-server architecture"
+  },
+  {
+    "id": "cn-l1-b128",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In file transfer protocol, data transfer can be done in:",
+    "options": [
+      "Stream mode",
+      "Block mode",
+      "Compressed mode",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l6-b129",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Ethernet frame consists of:",
+    "options": [
+      "MAC address",
+      "IP address",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "MAC address"
+  },
+  {
+    "id": "cn-l6-b130",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is start frame delimiter (SFD) in an Ethernet frame?",
+    "options": [
+      "10101010",
+      "10101011",
+      "00000000",
+      "11111111"
+    ],
+    "answer": 1,
+    "explanation": "10101011"
+  },
+  {
+    "id": "cn-l6-b131",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "MAC address is of:",
+    "options": [
+      "24 bits",
+      "36 bits",
+      "42 bits",
+      "48 bits"
+    ],
+    "answer": 3,
+    "explanation": "48 bits"
+  },
+  {
+    "id": "cn-l1-b132",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is auto-negotiation?",
+    "options": [
+      "A procedure by which two connected devices choose common transmission parameters",
+      "A security algorithm",
+      "A routing algorithm",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "A procedure by which two connected devices choose common transmission"
+  },
+  {
+    "id": "cn-l6-b133",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Ethernet in metropolitan area network (MAN) can be used as:",
+    "options": [
+      "Pure Ethernet",
+      "Ethernet over SDH",
+      "Ethernet over MPLS",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l6-b134",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A point-to-point protocol over Ethernet is a network protocol for:",
+    "options": [
+      "Encapsulating PPP frames inside Ethernet frames",
+      "Encapsulating Ethernet frames inside PPP frames",
+      "For the security of Ethernet frames",
+      "For the security of PPP frames"
+    ],
+    "answer": 0,
+    "explanation": "Encapsulating PPP frames inside Ethernet frames"
+  },
+  {
+    "id": "cn-l6-b135",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "High-speed Ethernet works on:",
+    "options": [
+      "Coaxial cable",
+      "Twisted pair cable",
+      "Optical fiber",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Optical fiber"
+  },
+  {
+    "id": "cn-l6-b136",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The maximum size of payload field in an Ethernet frame is:",
+    "options": [
+      "1000 bytes",
+      "1200 bytes",
+      "1300 bytes",
+      "1500 bytes"
+    ],
+    "answer": 3,
+    "explanation": "1500 bytes"
+  },
+  {
+    "id": "cn-l6-b137",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is an interframe gap?",
+    "options": [
+      "Idle time between frames",
+      "Idle time between frame bits",
+      "Idle time between packets",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Idle time between frames"
+  },
+  {
+    "id": "cn-l6-b138",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An Ethernet frame that is less than the IEEE 802.3 minimum length of 64 octets is called:",
+    "options": [
+      "Short frame",
+      "Run frame",
+      "Mini frame",
+      "Man frame"
+    ],
+    "answer": 0,
+    "explanation": "Short frame"
+  },
+  {
+    "id": "cn-l1-b139",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A local telephone network is an example of a ............ network:",
+    "options": [
+      "Packet-switched",
+      "Circuit switched",
+      "Both of the mentioned",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Circuit switched"
+  },
+  {
+    "id": "cn-l6-b140",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Most packet switches use this principle:",
+    "options": [
+      "Stop and wait",
+      "Store and forward",
+      "Both of the mentioned",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Store and forward"
+  },
+  {
+    "id": "cn-l5-b141",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If there are N routers from source to destination, the total end-to-end delay in sending packet P (L = number of bits in the packet, R = transmission rate):",
+    "options": [
+      "N",
+      "(N*L)/R",
+      "(2N*L)/R",
+      "L/R"
+    ],
+    "answer": 1,
+    "explanation": "(N*L)/R"
+  },
+  {
+    "id": "cn-l6-b142",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Method(s) to move data through a network of links and switches:",
+    "options": [
+      "Packet switching",
+      "Circuit switching",
+      "Line switching",
+      "Both a and b"
+    ],
+    "answer": 3,
+    "explanation": "Both a and b"
+  },
+  {
+    "id": "cn-l1-b143",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The resources needed for communication between end systems are reserved for the duration of a session between end systems in:",
+    "options": [
+      "Packet switching",
+      "Circuit switching",
+      "Line switching",
+      "Frequency switching"
+    ],
+    "answer": 1,
+    "explanation": "Circuit switching"
+  },
+  {
+    "id": "cn-l6-b144",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "As the resources are reserved between two communicating end systems in circuit switching, this is achieved:",
+    "options": [
+      "Authentication",
+      "Guaranteed a constant rate",
+      "Reliability",
+      "Store and forward"
+    ],
+    "answer": 1,
+    "explanation": "Guaranteed a constant rate"
+  },
+  {
+    "id": "cn-l1-b145",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ............ resources are allocated on demand.",
+    "options": [
+      "Packet switching",
+      "Circuit switching",
+      "Line switching",
+      "Frequency switching"
+    ],
+    "answer": 0,
+    "explanation": "Packet switching"
+  },
+  {
+    "id": "cn-l1-b146",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Physical or logical arrangement of network is:",
+    "options": [
+      "Topology",
+      "Routing",
+      "Networking",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Topology"
+  },
+  {
+    "id": "cn-l1-b147",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In this topology, there is a central controller or hub:",
+    "options": [
+      "Star",
+      "Mesh",
+      "Ring",
+      "Bus"
+    ],
+    "answer": 0,
+    "explanation": "Star"
+  },
+  {
+    "id": "cn-l1-b148",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "This topology requires a multipoint connection:",
+    "options": [
+      "Star",
+      "Mesh",
+      "Ring",
+      "Bus"
+    ],
+    "answer": 3,
+    "explanation": "Bus"
+  },
+  {
+    "id": "cn-l1-b149",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Data communication systems spanning states, countries, or the whole world is:",
+    "options": [
+      "LAN",
+      "WAN",
+      "MAN",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "WAN"
+  },
+  {
+    "id": "cn-l1-b150",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The data communication system within a building or campus is:",
+    "options": [
+      "LAN",
+      "WAN",
+      "MAN",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "LAN"
+  },
+  {
+    "id": "cn-l1-b151",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Expand WAN:",
+    "options": [
+      "World area network",
+      "Wide area network",
+      "Web area network",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Wide area network"
+  },
+  {
+    "id": "cn-l1-b152",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the Internet?",
+    "options": [
+      "A single network",
+      "A vast collection of different networks",
+      "Interconnection of local area networks",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "A vast collection of different networks"
+  },
+  {
+    "id": "cn-l1-b153",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "To join the internet, the computer has to be connected to a:",
+    "options": [
+      "Internet architecture board",
+      "Internet society",
+      "Internet service provider",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Internet service provider"
+  },
+  {
+    "id": "cn-l1-b154",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Internet access by transmitting digital data over the wires of a local telephone network is provided by:",
+    "options": [
+      "Leased line",
+      "Digital subscriber line",
+      "Digital signal line",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Digital subscriber line"
+  },
+  {
+    "id": "cn-l1-b155",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "ISP exchanges internet traffic between their networks by:",
+    "options": [
+      "Internet exchange point",
+      "Subscriber end point",
+      "ISP endpoint",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Internet exchange point"
+  },
+  {
+    "id": "cn-l1-b156",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which one of the following protocol is not used on Internet?",
+    "options": [
+      "HTTP",
+      "DHCP",
+      "DNS",
+      "None of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "None of the mentioned"
+  },
+  {
+    "id": "cn-l5-b157",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "IPv6 addresses have a size of:",
+    "options": [
+      "32 bits",
+      "64 bits",
+      "128 bits",
+      "265 bits"
+    ],
+    "answer": 2,
+    "explanation": "128 bits"
+  },
+  {
+    "id": "cn-l1-b158",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The Internet works on:",
+    "options": [
+      "Packet switching",
+      "Circuit switching",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Packet switching"
+  },
+  {
+    "id": "cn-l3-b159",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which one of the following is not an application layer protocol used on internet?",
+    "options": [
+      "Remote procedure call",
+      "Internet relay chat",
+      "Resource reservation protocol",
+      "None of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "None of the mentioned"
+  },
+  {
+    "id": "cn-l5-b160",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which protocol assigns an IP address to the client connected in the internet?",
+    "options": [
+      "DHCP",
+      "IP",
+      "RPC",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "DHCP"
+  },
+  {
+    "id": "cn-l1-b161",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which one of the following is not used in media access control?",
+    "options": [
+      "Ethernet",
+      "Digital subscriber line",
+      "Fiber-distributed data interface",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Digital subscriber line"
+  },
+  {
+    "id": "cn-l3-b162",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "DHCP (dynamic host configuration protocol) provides ............ to the client.",
+    "options": [
+      "IP address",
+      "MAC address",
+      "URL",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "IP address"
+  },
+  {
+    "id": "cn-l3-b163",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "DHCP is used for:",
+    "options": [
+      "IPv6",
+      "IPv4",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Both (1) and (2)"
+  },
+  {
+    "id": "cn-l3-b164",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The DHCP server:",
+    "options": [
+      "Maintains a database of available IP addresses",
+      "Maintains the information about client configuration parameters",
+      "Grants an IP address when receives a request from a client",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l3-b165",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "IP assigned to a client by the DHCP server is:",
+    "options": [
+      "For a limited period",
+      "For an unlimited period",
+      "Not time-dependent",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "For a limited period"
+  },
+  {
+    "id": "cn-l3-b166",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The DHCP server can provide the ............ of the IP addresses.",
+    "options": [
+      "Dynamic allocation",
+      "Automatic allocation",
+      "Static allocation",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l3-b167",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "DHCP clients and servers on the same subnet communicate via:",
+    "options": [
+      "UDP broadcast",
+      "UDP unicast",
+      "TCP broadcast",
+      "TCP unicast"
+    ],
+    "answer": 0,
+    "explanation": "UDP broadcast"
+  },
+  {
+    "id": "cn-l5-b168",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "After obtaining the IP address, to prevent the IP conflict the client may use:",
+    "options": [
+      "Internet relay chat",
+      "Broader gateway protocol",
+      "Address resolution protocol",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Address resolution protocol"
+  },
+  {
+    "id": "cn-l3-b169",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is DHCP snooping?",
+    "options": [
+      "Techniques applied to ensure the security of an existing DHCP infrastructure",
+      "Encryption of the DHCP server requests",
+      "Algorithm for DHCP",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Techniques applied to ensure the security of an existing DHCP infrastructure"
+  },
+  {
+    "id": "cn-l3-b170",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If DHCP snooping is configured on a LAN switch, then clients having specific ............ can access the network.",
+    "options": [
+      "MAC address",
+      "IP address",
+      "Both (1) and (2)",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "MAC address"
+  },
+  {
+    "id": "cn-l3-b171",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Expansion of FTP is:",
+    "options": [
+      "Fine Transfer Protocol",
+      "File Transfer Protocol",
+      "First Transfer Protocol",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "File Transfer Protocol"
+  },
+  {
+    "id": "cn-l3-b172",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "FTP is built on ............ architecture:",
+    "options": [
+      "Client-server",
+      "P2P",
+      "Both of the mentioned",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Client-server"
+  },
+  {
+    "id": "cn-l1-b173",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Identify the incorrect statement:",
+    "options": [
+      "FTP stands for File Transfer Protocol",
+      "FTP uses two parallel TCP connections",
+      "FTP sends its control information in-band",
+      "FTP sends exactly one file over the data connection"
+    ],
+    "answer": 2,
+    "explanation": "FTP sends its control information in-band"
+  },
+  {
+    "id": "cn-l3-b174",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "FTP server:",
+    "options": [
+      "Maintains state",
+      "Is stateless",
+      "Has single TCP connection for a file transfer",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Maintains state"
+  },
+  {
+    "id": "cn-l3-b175",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Find the FTP reply whose message is wrongly matched:",
+    "options": [
+      "331 — Username OK, password required",
+      "425 — Can’t open data connection",
+      "452 — Error writing file",
+      "452 — Can’t open data connection"
+    ],
+    "answer": 3,
+    "explanation": "452 — Can’t open data connection"
+  },
+  {
+    "id": "cn-l3-b176",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Mode of data transfers in FTP, where all the is left to TCP:",
+    "options": [
+      "Stream mode",
+      "Block mode",
+      "Compressed mode",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Stream mode"
+  },
+  {
+    "id": "cn-l1-b177",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The password is sent to the server using the ............ command:",
+    "options": [
+      "PASSWORD",
+      "PASS",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "PASS"
+  },
+  {
+    "id": "cn-l3-b178",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The default connection type used by HTTP is:",
+    "options": [
+      "Persistent",
+      "Non-persistent",
+      "Either of the mentioned",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Persistent"
+  },
+  {
+    "id": "cn-l1-b179",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The time taken by a packet to travel from client to server and then back to the client is called:",
+    "options": [
+      "STT",
+      "RTT",
+      "PTT",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "RTT"
+  },
+  {
+    "id": "cn-l3-b180",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The HTTP request message is sent in ............ part of the three-way handshake:",
+    "options": [
+      "First",
+      "Second",
+      "Third",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Third"
+  },
+  {
+    "id": "cn-l3-b181",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The first line of HTTP request message is called:",
+    "options": [
+      "Request line",
+      "Header line",
+      "Status line",
+      "Entity line"
+    ],
+    "answer": 0,
+    "explanation": "Request line"
+  },
+  {
+    "id": "cn-l3-b182",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The values GET, POST, HEAD, etc are specified in ............ of HTTP message:",
+    "options": [
+      "Request line",
+      "Header line",
+      "Status line",
+      "Entity body"
+    ],
+    "answer": 0,
+    "explanation": "Request line"
+  },
+  {
+    "id": "cn-l3-b183",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The HTTP response message leaves out the requested object when ............ method is used:",
+    "options": [
+      "GET",
+      "POST",
+      "HEAD",
+      "PUT"
+    ],
+    "answer": 2,
+    "explanation": "HEAD"
+  },
+  {
+    "id": "cn-l3-b184",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Find the oddly matched HTTP status codes:",
+    "options": [
+      "200 OK",
+      "400 Bad Request",
+      "301 Moved permanently",
+      "304 Not Found"
+    ],
+    "answer": 3,
+    "explanation": "304 Not Found"
+  },
+  {
+    "id": "cn-l1-b185",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following is not correct?",
+    "options": [
+      "Web cache doesn't have its own disk space",
+      "Web cache can act both like server and client",
+      "Web cache might reduce the response time",
+      "Web cache contains copies of recently requested objects"
+    ],
+    "answer": 0,
+    "explanation": "Web cache doesn't have its own disk space"
+  },
+  {
+    "id": "cn-l1-b186",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The conditional GET mechanism:",
+    "options": [
+      "Imposes conditions on the objects to be requested",
+      "Limits the number of response from a server",
+      "Helps to keep a cache up to date",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Helps to keep a cache up to date"
+  },
+  {
+    "id": "cn-l3-b187",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which of the following is present in both an HTTP request line and a status line?",
+    "options": [
+      "HTTP version number",
+      "URL",
+      "Method",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "HTTP version number"
+  },
+  {
+    "id": "cn-l1-b188",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following is not applicable for IP?",
+    "options": [
+      "Error reporting",
+      "Handle addressing conventions",
+      "Datagram format",
+      "Packet handling conventions"
+    ],
+    "answer": 0,
+    "explanation": "Error reporting"
+  },
+  {
+    "id": "cn-l5-b189",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following field in the IPv4 datagram is not related to fragmentation?",
+    "options": [
+      "Flags",
+      "Offset",
+      "TOS",
+      "Identifier"
+    ],
+    "answer": 2,
+    "explanation": "TOS"
+  },
+  {
+    "id": "cn-l4-b190",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If the value in the protocol field is 17, the transport layer protocol used is:",
+    "options": [
+      "TCP",
+      "UDP",
+      "Either of the mentioned",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "UDP"
+  },
+  {
+    "id": "cn-l1-b191",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What should be the flag value to indicate the last fragment?",
+    "options": [
+      "0",
+      "1",
+      "TTL value",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "0"
+  },
+  {
+    "id": "cn-l1-b192",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of these is not applicable to IP protocol?",
+    "options": [
+      "Is connectionless",
+      "Offer reliable service",
+      "Offer unreliable service",
+      "None of the mentioned"
+    ],
+    "answer": 1,
+    "explanation": "Offer reliable service"
+  },
+  {
+    "id": "cn-l1-b193",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Fragmentation has the following demerits:",
+    "options": [
+      "Complicates routers",
+      "Open to DOS attack",
+      "Overlapping of fragments",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l1-b194",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which field helps to check rearrangement of the fragments?",
+    "options": [
+      "Offset",
+      "Flag",
+      "TTL",
+      "Identifier"
+    ],
+    "answer": 0,
+    "explanation": "Offset"
+  },
+  {
+    "id": "cn-l5-b195",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The size of the IP address in IPv6 is:",
+    "options": [
+      "4 bytes",
+      "128 bits",
+      "8 bytes",
+      "100 bits"
+    ],
+    "answer": 1,
+    "explanation": "128 bits"
+  },
+  {
+    "id": "cn-l5-b196",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The header length of an IPv6 datagram is:",
+    "options": [
+      "10 bytes",
+      "25 bytes",
+      "30 bytes",
+      "40 bytes"
+    ],
+    "answer": 3,
+    "explanation": "40 bytes"
+  },
+  {
+    "id": "cn-l5-b197",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the IPv6 header, the traffic class field is similar to which field in the IPv4 header?",
+    "options": [
+      "Fragmentation field",
+      "Fast-switching",
+      "ToS field",
+      "Option field"
+    ],
+    "answer": 2,
+    "explanation": "ToS field"
+  },
+  {
+    "id": "cn-l5-b198",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "IPv6 does not use ............ type of address:",
+    "options": [
+      "Broadcast",
+      "Multicast",
+      "Anycast",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Broadcast"
+  },
+  {
+    "id": "cn-l5-b199",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "These are the features present in IPv4 but not in IPv6:",
+    "options": [
+      "Fragmentation",
+      "Header checksum",
+      "Options",
+      "All of the mentioned"
+    ],
+    "answer": 3,
+    "explanation": "All of the mentioned"
+  },
+  {
+    "id": "cn-l5-b200",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The ............ field determines the lifetime of the IPv6 datagram:",
+    "options": [
+      "Hop limit",
+      "TTL",
+      "Next header",
+      "None of the mentioned"
+    ],
+    "answer": 0,
+    "explanation": "Hop limit"
+  },
+  {
+    "id": "cn-l1-b201",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Dual-stack approach refers to:",
+    "options": [
+      "Implementing IPv4 with 2 stacks",
+      "Implementing IPv6 with 2 stacks",
+      "Node has both IPv4 and IPv6 support",
+      "None of the mentioned"
+    ],
+    "answer": 2,
+    "explanation": "Node has both IPv4 and IPv6 support"
+  },
+  {
+    "id": "cn-l5-b202",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Suppose two IPv6 nodes want to interoperate using IPv6 datagrams but are connected by intervening IPv4 routers. The best solution here is:",
+    "options": [
+      "Use the dual-stack approach",
+      "Tunneling",
+      "No solution",
+      "Replace the system"
+    ],
+    "answer": 1,
+    "explanation": "Tunneling"
+  },
+  {
+    "id": "cn-l5-b203",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Teredo is an automatic tunneling technique. In each client, the obfuscated IPv4 address is represented by bits:",
+    "options": [
+      "96 to 127",
+      "0 to 63",
+      "80 to 95",
+      "64 to 79"
+    ],
+    "answer": 0,
+    "explanation": "96 to 127"
+  }
+]

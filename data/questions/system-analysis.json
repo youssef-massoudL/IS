@@ -1,0 +1,1202 @@
+[
+  {
+    "id": "sa-l1-001",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the main purpose of the systems planning phase?",
+    "options": [
+      "Collecting facts and interpreting problems in an existing system",
+      "Comparing alternatives by cost, timeliness, viability, and quality",
+      "Defining components in a new or replacement system",
+      "Testing early inputs, outputs, and interfaces with users"
+    ],
+    "answer": 1,
+    "explanation": "Planning involves comparing alternative solutions before choosing one that is affordable, timely, viable, and of good quality. Collecting facts and identifying problems belongs to systems analysis, not planning."
+  },
+  {
+    "id": "sa-l1-002",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Information technology supports creating, processing, storing, securing, and exchanging electronic data. Which set lists its five areas?",
+    "options": [
+      "Hardware, software, people, business processes, and cybersecurity",
+      "Networks, data management, business profiles, software, and hardware",
+      "Hardware, software, networks, data management, and cybersecurity",
+      "Hardware devices, application software, databases, people, and networks"
+    ],
+    "answer": 2,
+    "explanation": "The five IT areas are hardware, software, networks, data management, and cybersecurity. People and processes are information-system components, not part of this five-area IT list."
+  },
+  {
+    "id": "sa-l1-003",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which description best fits systems analysis and design as a whole?",
+    "options": [
+      "A planning activity that compares alternative solutions before selection",
+      "A process that collects facts and identifies problems in a current system",
+      "A process that defines components or modules for a replacement system",
+      "A step-by-step process for developing high-quality information systems"
+    ],
+    "answer": 3,
+    "explanation": "Systems analysis and design is the overall step-by-step process for developing high-quality information systems. Comparing alternatives is planning, while collecting facts and defining system modules are activities within analysis and design."
+  },
+  {
+    "id": "sa-l1-004",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A team has identified the problems in a current system and now plans the components of its replacement. Which activity is this, and which question does it ask?",
+    "options": [
+      "Systems design, asking how",
+      "Systems design, asking what",
+      "Systems analysis, asking how",
+      "Systems analysis, asking what"
+    ],
+    "answer": 0,
+    "explanation": "Systems design plans a new or replacement system by defining its components or modules, so it asks how the requirements will be met. Systems analysis collects and interprets facts, identifies problems, and asks what."
+  },
+  {
+    "id": "sa-l1-005",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A professional who helps plan, develop, and maintain information systems is expected to have which skill set?",
+    "options": [
+      "Strategic planning, direction, and feedback to supervisors",
+      "Transaction processing, management reporting, and decision support",
+      "Communication, analytical thinking, and critical thinking",
+      "Modeling, prototyping, and CASE-based system development"
+    ],
+    "answer": 2,
+    "explanation": "A systems analyst helps plan, develop, and maintain information systems and must have communication, analytical, and critical thinking skills. The other choices describe management responsibilities, business information system functions, or systems development tools."
+  },
+  {
+    "id": "sa-l1-006",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A clinic's information system includes servers, programs, patient records, staff members, and procedures for handling the records. Which sequence correctly identifies these five components in that order?",
+    "options": [
+      "Hardware, data, software, people, and processes",
+      "Software, hardware, data, processes, and people",
+      "Hardware, software, people, data, and processes",
+      "Hardware, software, data, people, and processes"
+    ],
+    "answer": 3,
+    "explanation": "The five information-system components are hardware, software, data, people, and processes. The records are data, the staff members are people, and the procedures for handling records are processes."
+  },
+  {
+    "id": "sa-l1-007",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A company installs Linux on its servers and a web browser on staff laptops. How is each one classified?",
+    "options": [
+      "Linux is system software; the browser is also system software",
+      "Linux is system software; the browser is application software",
+      "Linux is application software; the browser is system software",
+      "Linux is application software; the browser is also application software"
+    ],
+    "answer": 1,
+    "explanation": "Linux is an operating system that manages hardware resources, so it is system software. A web browser performs a specific task for users, so it is application software."
+  },
+  {
+    "id": "sa-l1-008",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A shop collects individual sale amounts, then software turns them into a summary report that managers use to make a decision. How are these two items classified?",
+    "options": [
+      "The sale amounts are data; the report is information",
+      "The sale amounts are information; the report is data",
+      "Both are data until managers act on the report",
+      "Both are information because both are stored in a database"
+    ],
+    "answer": 0,
+    "explanation": "Data are raw facts and figures, while information results when data are processed into something meaningful for decision-making. Storing data in a database does not by itself turn them into information."
+  },
+  {
+    "id": "sa-l1-009",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An analyst records a company's mission and organization, documents the transactions and results involved in handling an order, and maps the workflow with standard shapes and symbols. Which terms identify these three items, in order?",
+    "options": [
+      "Business profile, business model, and BPMN",
+      "Business process, business profile, and modeling",
+      "Business profile, business process, and BPMN",
+      "Business model, business process, and prototyping"
+    ],
+    "answer": 2,
+    "explanation": "A business profile summarizes a company's mission, functions, and organization, while a business process is a set of transactions, events, and results. BPMN uses standard shapes and symbols to represent events, processes, and workflows."
+  },
+  {
+    "id": "sa-l1-010",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A company needs to record daily orders and payroll, prepare reports for managers, analyze complex decisions, integrate finance, HR, supply chain and production, and manage customer interactions. Which sequence matches these needs, in order?",
+    "options": [
+      "MIS, TPS, DSS, ERP, CRM",
+      "TPS, MIS, DSS, ERP, CRM",
+      "TPS, DSS, MIS, ERP, CRM",
+      "TPS, MIS, ERP, DSS, CRM"
+    ],
+    "answer": 1,
+    "explanation": "TPS handles day-to-day transactions, MIS provides reports and summaries, and DSS supports complex decisions. ERP integrates business operations, while CRM manages customer interactions."
+  },
+  {
+    "id": "sa-l1-011",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which statement about the four organizational levels is false?",
+    "options": [
+      "Top managers develop strategic plans that define the company's goals",
+      "Middle managers give supervisors direction, resources, and performance feedback",
+      "Supervisors oversee operational employees and day-to-day functions",
+      "Operational employees rely on decision support systems for daily transactions"
+    ],
+    "answer": 3,
+    "explanation": "Operational employees are identified as users who rely on transaction processing systems for day-to-day transactions. Decision support systems help with complex decisions rather than routine transaction processing."
+  },
+  {
+    "id": "sa-l1-012",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which group names the three systems development tools?",
+    "options": [
+      "Modeling, prototyping, and CASE tools",
+      "Modeling, planning, and CASE tools",
+      "Prototyping, BPMN, and CASE tools",
+      "Modeling, prototyping, and ERP systems"
+    ],
+    "answer": 0,
+    "explanation": "The three systems development tools are modeling, prototyping, and CASE tools. BPMN is a notation for representing business processes, while ERP is a type of business information system."
+  },
+  {
+    "id": "sa-l1-013",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which statement about modeling and business models is false?",
+    "options": [
+      "Modeling produces a graphical representation of a concept or process",
+      "A business model is an early working version of an information system",
+      "Developers can analyze, test, and modify a model",
+      "A business model describes required system information and customer value in nine blocks"
+    ],
+    "answer": 1,
+    "explanation": "A business model describes the information a system must provide and the value delivered to customers in nine blocks. An early working version of an information system is a prototype, not a business model."
+  },
+  {
+    "id": "sa-l1-014",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A team lets users try a first rough build to check screens and reports before final decisions are made. Which tool is this, and what is its benefit?",
+    "options": [
+      "Modeling, because it speeds up the development process",
+      "Prototyping, because it draws a graphical view of the process",
+      "CASE tools, because they supply a framework for design methods",
+      "Prototyping, because it speeds up the development process"
+    ],
+    "answer": 3,
+    "explanation": "Prototyping tests system concepts and lets users examine input, output, and interfaces early, which speeds up development significantly. Producing a graphical representation is what modeling does, not prototyping."
+  },
+  {
+    "id": "sa-l1-015",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "An analyst needs software that helps develop and maintain information systems while providing a framework that supports different design methodologies. Which systems development tool fits this need?",
+    "options": [
+      "Modeling",
+      "Prototyping",
+      "CASE tools",
+      "BPMN"
+    ],
+    "answer": 2,
+    "explanation": "CASE tools are software that helps systems analysts develop and maintain information systems. They provide an overall framework for systems development and support a wide variety of design methodologies."
+  },
+  {
+    "id": "sa-l2-001",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which description matches the structured analysis approach to building information systems?",
+    "options": [
+      "An adaptive approach that builds prototypes and adjusts to user feedback",
+      "An approach that combines data and processes into objects with classes",
+      "A predictive approach that follows an overall plan through SDLC phases",
+      "A set of practices that merges software development with IT operations"
+    ],
+    "answer": 2,
+    "explanation": "Structured analysis is predictive: it follows a blueprint-like overall plan through the SDLC phases. The approach that adjusts to feedback with prototypes is agile, which is the contrast case, not structured analysis."
+  },
+  {
+    "id": "sa-l2-002",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which pairing of a waterfall phase with its deliverable is incorrect?",
+    "options": [
+      "Analysis produces the system requirements document",
+      "Support and security yields a fully operational system",
+      "Planning produces the preliminary investigation report",
+      "Implementation produces the design specification"
+    ],
+    "answer": 3,
+    "explanation": "The design specification is the deliverable of the design phase, while implementation delivers a functioning system. The pairings of analysis with the requirements document and support and security with the fully operational system are correct."
+  },
+  {
+    "id": "sa-l2-003",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which activity within the preliminary investigation weighs the expected costs of a proposed system against its expected benefits?",
+    "options": [
+      "A feasibility study of the proposed system",
+      "Requirements modeling of business processes",
+      "A systems evaluation of the finished system",
+      "An application architecture for the program modules"
+    ],
+    "answer": 0,
+    "explanation": "A feasibility study is the key part of the preliminary investigation that reviews anticipated costs and benefits. Systems evaluation is tempting, but it takes place in implementation and checks whether the built system operates properly and whether costs and benefits are within expectations."
+  },
+  {
+    "id": "sa-l2-004",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Analysts now define the user interface, the outputs, inputs and processes, and the application architecture that programmers will code from. What kind of model is being created, and in which phase?",
+    "options": [
+      "A logical model, built in systems analysis",
+      "A physical model, built in systems design",
+      "A physical model, built in systems implementation",
+      "A logical model, built in systems design"
+    ],
+    "answer": 1,
+    "explanation": "Systems design creates a physical model that satisfies the documented requirements. The logical model belongs to systems analysis, which is the most tempting confusion."
+  },
+  {
+    "id": "sa-l2-005",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which activity belongs to the implementation phase rather than to the support and security phase?",
+    "options": [
+      "Correcting errors found after the system is in use",
+      "Adapting the system to changes in its environment",
+      "Maximizing return on the IT investment",
+      "Converting data into the new system's files"
+    ],
+    "answer": 3,
+    "explanation": "Final preparations for use, such as converting data to the new system's files, are part of implementation. Correcting errors and adapting to environmental changes are maintenance activities, while maximizing return on the IT investment is an objective of support and security."
+  },
+  {
+    "id": "sa-l2-006",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Why is the waterfall model a reasonable choice for a small project with clearly understood requirements?",
+    "options": [
+      "Stages and goals are defined early, so management stays simple",
+      "A working version is available early so users can test it",
+      "Changes can be made late in the project without difficulty",
+      "It adapts well to maintenance projects with imprecise requirements"
+    ],
+    "answer": 0,
+    "explanation": "Waterfall has clearly defined stages and early goals, which makes project management simple when requirements are clear. Late changes, early working versions, and maintenance projects are not strengths identified for this model."
+  },
+  {
+    "id": "sa-l2-007",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A manager fears the business will change before a long project is delivered. How does the parallel model reduce this risk?",
+    "options": [
+      "It releases sequential versions, starting with the fundamental requirements",
+      "It cycles through analysis, design and implementation on a quick prototype",
+      "It combines data and processes into objects defined by class blueprints",
+      "It cuts the project into subprojects that are developed simultaneously"
+    ],
+    "answer": 3,
+    "explanation": "The parallel model splits the project into subprojects developed at the same time, which shortens delivery time and reduces the chance that business changes will cause rework. Releasing sequential versions describes phased development, which is the most tempting confusion."
+  },
+  {
+    "id": "sa-l2-008",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which statement correctly contrasts structured analysis with object-oriented analysis?",
+    "options": [
+      "Structured analysis combines data and processes; O-O analysis keeps them separate",
+      "Structured analysis keeps data and processes separate; O-O analysis combines them",
+      "Structured analysis relies on classes as blueprints; O-O analysis relies on SDLC phases",
+      "Structured analysis builds prototypes first; O-O analysis builds a blueprint first"
+    ],
+    "answer": 1,
+    "explanation": "Structured analysis treats data and processes as separate components, while object-oriented analysis combines data and the processes that act on it into objects. The first option reverses this distinction."
+  },
+  {
+    "id": "sa-l2-009",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A company wants users to get a first usable version soon, with further versions added later after more analysis. What should the first version contain?",
+    "options": [
+      "A quick-and-dirty program with a minimal set of features",
+      "A complete system containing every documented requirement",
+      "The most important and fundamental requirements of the system",
+      "A system requirements document covering the business processes"
+    ],
+    "answer": 2,
+    "explanation": "In phased development, the most important and fundamental requirements are bundled into the first version, and later versions add more after additional analysis. A quick-and-dirty program with minimal features describes a prototype instead."
+  },
+  {
+    "id": "sa-l2-010",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How do JAD and RAD differ in scope?",
+    "options": [
+      "JAD is team-based fact-finding in one phase; RAD compresses the entire process",
+      "JAD compresses the entire process; RAD is team-based fact-finding in one phase",
+      "JAD and RAD both compress the entire process but use different tools",
+      "JAD and RAD are both team-based fact-finding in one phase of development"
+    ],
+    "answer": 0,
+    "explanation": "JAD focuses on team-based fact-finding, which is just one phase, whereas RAD is more like a compressed version of the whole process. The second option reverses the two, and JAD sessions are one of the techniques recommended for RAD."
+  },
+  {
+    "id": "sa-l2-011",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A team wants users to interact with a minimal system quickly, so it runs analysis, design and implementation together and repeats them. Which approach is this?",
+    "options": [
+      "Waterfall development",
+      "Parallel development",
+      "Phased development",
+      "Prototyping-based development"
+    ],
+    "answer": 3,
+    "explanation": "Prototyping performs analysis, design and implementation concurrently and repeatedly around a quick prototype that users can try. Phased development is tempting, but it delivers sequential versions instead."
+  },
+  {
+    "id": "sa-l2-012",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which statement about agile methods is false?",
+    "options": [
+      "They develop a system incrementally through a series of prototypes",
+      "They value individuals and interactions over processes and tools",
+      "They value comprehensive documentation over working software",
+      "They adjust each iteration to what was learned from user feedback"
+    ],
+    "answer": 2,
+    "explanation": "The Agile Manifesto values working software over comprehensive documentation, so the statement is reversed. The other statements correctly describe incremental, feedback-driven development and the manifesto's values."
+  },
+  {
+    "id": "sa-l2-013",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Team A starts from user stories and codes small, simple modules, while Team B is self-organized, has no designated leader and works in sprints. Which method does each team follow?",
+    "options": [
+      "Team A follows Scrum and Team B follows XP",
+      "Team A follows XP and Team B follows Scrum",
+      "Team A follows XP and Team B follows DevOps",
+      "Team A follows prototyping and Team B follows Scrum"
+    ],
+    "answer": 1,
+    "explanation": "XP begins with user stories, then programmers code and test small, simple modules. Scrum uses self-organized, self-directed teams without a designated team leader and organizes work into sprints."
+  },
+  {
+    "id": "sa-l2-014",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which statement about Agile and DevOps is false?",
+    "options": [
+      "Agile improves communication between the customer and the development team",
+      "DevOps addresses the gap between development and operations in a cloud environment",
+      "Agile addresses the gap between the development team and the operations team",
+      "Cloud DevOps environments such as Azure DevOps merge both methods"
+    ],
+    "answer": 2,
+    "explanation": "The gap between development and operations is the one DevOps addresses, while Agile improves the link between the customer and the development team. This is why the lecture describes the two methods as being merged in cloud DevOps environments."
+  },
+  {
+    "id": "sa-l2-015",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "According to the methodology-selection table, which method is rated Excellent for unclear user requirements, Poor for unfamiliar technology, complex systems, and reliability, and Good for both short schedules and schedule visibility?",
+    "options": [
+      "Phased development",
+      "Prototyping development",
+      "Extreme Programming (XP)",
+      "Parallel development"
+    ],
+    "answer": 1,
+    "explanation": "Prototyping has that exact rating profile in the table: Excellent for unclear requirements, Poor for unfamiliar technology, complexity, and reliability, and Good for short schedules and schedule visibility. XP is a tempting alternative because it is also Excellent for unclear requirements, but it is rated Good for unfamiliar technology and Excellent for reliability."
+  },
+  {
+    "id": "sa-l3-001",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A review team is deciding whether a proposed system deserves approval. What does the term business case refer to?",
+    "options": [
+      "The formal request that asks the IT department for support",
+      "The estimate of time and cost needed for building a system",
+      "The reasons that justify going ahead with a proposal",
+      "The long-term goals that the whole firm pursues"
+    ],
+    "answer": 2,
+    "explanation": "A business case is the set of reasons, or justification, behind a proposal. The tempting option about a formal request describes a systems request, which is the way of asking for IT support, not the justification for it."
+  },
+  {
+    "id": "sa-l3-002",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Two stonecutters are asked what they are doing: one answers 'cutting stones' and the other 'building a cathedral'. Which analyst answer matches the cathedral builder's outlook?",
+    "options": [
+      "'I am using a CASE tool to model the system.'",
+      "'I am following the checklist for my current phase.'",
+      "'I am completing my assigned task before the deadline.'",
+      "'I am helping the company succeed in a new venture.'"
+    ],
+    "answer": 3,
+    "explanation": "The cathedral builder links the daily work to a larger goal, just as an analyst who sees the company's new venture understands why strategic planning matters. Describing the work only as using a CASE tool matches the first stonecutter, who sees only the task."
+  },
+  {
+    "id": "sa-l3-003",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does a company's mission statement express?",
+    "options": [
+      "Its primary objective and what its strategy seeks to achieve",
+      "Its internal weaknesses and the threats it faces outside",
+      "Its estimated costs and benefits for a new project",
+      "Its mandatory limits on a system being developed"
+    ],
+    "answer": 0,
+    "explanation": "A mission statement captures the company's main objective and what its strategic tactics are meant to achieve. Weaknesses and threats belong to a SWOT analysis, which can itself be applied to the mission statement."
+  },
+  {
+    "id": "sa-l3-004",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which statement about a SWOT analysis is false?",
+    "options": [
+      "Strengths are internal and helpful to the organization.",
+      "Weaknesses are external and harmful to the organization.",
+      "Threats are external and harmful to the organization.",
+      "Opportunities are external and helpful to the organization."
+    ],
+    "answer": 1,
+    "explanation": "Weaknesses are internal and harmful, not external. Strengths and weaknesses are internal factors, while opportunities and threats are external factors."
+  },
+  {
+    "id": "sa-l3-005",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A manager submits a systems request because the current system produces reports that do not give enough detail for decisions. Which reason for the request does this describe?",
+    "options": [
+      "Better performance",
+      "Improved service",
+      "More information",
+      "Stronger controls"
+    ],
+    "answer": 2,
+    "explanation": "A system that produces insufficient information leads to a request for more information. Better performance is the reason when the system fails to meet performance requirements."
+  },
+  {
+    "id": "sa-l3-006",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A project is reshaped by a new government rule and a rival's price cut. Which pair contains factors of the same type as these two?",
+    "options": [
+      "Technology and customers",
+      "Top managers and user requests",
+      "Strategic plan and company finances",
+      "IT department and existing systems"
+    ],
+    "answer": 0,
+    "explanation": "Government and competitors are external factors, and technology and customers are also external. The other pairs are internal factors that come from inside the company."
+  },
+  {
+    "id": "sa-l3-007",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A committee asks whether a proposed system can be finished by the date stakeholders expect. Which feasibility test is it applying?",
+    "options": [
+      "Economic",
+      "Technical",
+      "Operational",
+      "Schedule"
+    ],
+    "answer": 3,
+    "explanation": "Schedule feasibility asks whether the system can be completed in time, based on stakeholder expectations about timing and completion dates. Technical feasibility is the tempting alternative, but it concerns hardware, software and network resources."
+  },
+  {
+    "id": "sa-l3-008",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which description fits an intangible benefit of a new system?",
+    "options": [
+      "A gain that must exceed the project's costs",
+      "An advantage that is hard to measure in dollars but matters",
+      "A gain that management has a choice to pursue",
+      "A benefit that can be measured in dollars"
+    ],
+    "answer": 1,
+    "explanation": "Intangible benefits are advantages that are difficult to measure in dollars but are still important to the company. The option about dollar measurement describes tangible benefits, which is the reversed definition."
+  },
+  {
+    "id": "sa-l3-009",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An analyst ranks four requests on importance, process health and feasibility. Which request should be pursued first?",
+    "options": [
+      "Strategically important, process in deep trouble, highly feasible",
+      "Strategically important, process healthy, highly feasible",
+      "Minor strategic impact, process in deep trouble, highly feasible",
+      "Strategically important, process in deep trouble, low feasibility"
+    ],
+    "answer": 0,
+    "explanation": "The ideal request on a PICK chart is important, has low health (a process in deep trouble) and is highly feasible. Each other option misses one of these three conditions."
+  },
+  {
+    "id": "sa-l3-010",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What distinguishes a nondiscretionary project from a discretionary one?",
+    "options": [
+      "Management has a choice, but the benefits are intangible",
+      "Management has a choice, but it can delay until feasible",
+      "Management has no choice about implementing it",
+      "Management has a choice, but the cost is tangible"
+    ],
+    "answer": 2,
+    "explanation": "In a nondiscretionary project management has no choice about implementing it, whereas in a discretionary project management can choose. The other options still describe a project with a choice, so they do not describe a nondiscretionary one."
+  },
+  {
+    "id": "sa-l3-011",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which statement about the preliminary investigation is false?",
+    "options": [
+      "Feasibility is evaluated before any fact-finding has been carried out.",
+      "Understanding the problem or opportunity comes before defining scope and constraints.",
+      "Fact-finding is carried out before the data on usability, cost and schedule is studied.",
+      "Presenting recommendations to management is the final step of the process."
+    ],
+    "answer": 0,
+    "explanation": "Feasibility is evaluated in step 5, after fact-finding (step 3) and after studying the usability, cost, benefit and schedule data (step 4). The evaluation depends on the data gathered earlier."
+  },
+  {
+    "id": "sa-l3-012",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An analyst traces the causes behind a problem and also fears the project may expand without authorization. Which pair names the technique and the risk?",
+    "options": [
+      "Pareto chart and project creep",
+      "Fishbone diagram and project creep",
+      "Fishbone diagram and bounded context",
+      "Pareto chart and mandatory constraint"
+    ],
+    "answer": 1,
+    "explanation": "A fishbone diagram is used to investigate causes and effects, and a vaguely defined scope risks project creep. A Pareto chart ranks issues by frequency instead of tracing causes."
+  },
+  {
+    "id": "sa-l3-013",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A government rule must be met as soon as a payroll system goes live, with no exceptions. How is this constraint best classified?",
+    "options": [
+      "Internal, present, desirable",
+      "External, future, mandatory",
+      "External, present, mandatory",
+      "Internal, future, desirable"
+    ],
+    "answer": 2,
+    "explanation": "The rule comes from outside the organization (external), applies from the start (present) and is essential (mandatory). The option with a future timing is tempting but does not match the immediate requirement."
+  },
+  {
+    "id": "sa-l3-014",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "On a Pareto chart of support issues, the cumulative curve reads 64% after the second bar. What does this mean?",
+    "options": [
+      "Each of the two most frequent issue types makes up 64% of cases",
+      "The two most frequent issue types together make up 64% of all cases",
+      "The two least frequent issue types together make up 64% of all cases",
+      "Sixty-four percent of all recorded issues have already been resolved"
+    ],
+    "answer": 1,
+    "explanation": "Bars are arranged in descending order and the curve adds them up, so 64% is the combined share of the two largest issue types. It is a cumulative value, not the share of each bar."
+  },
+  {
+    "id": "sa-l3-015",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which statement about the final stages of a preliminary investigation is false?",
+    "options": [
+      "Spreadsheets can support financial analysis once cost and benefit data are gathered.",
+      "Economic feasibility uses the cost-benefit data gathered during fact-finding.",
+      "A minor problem may be solved with a simple fix without further analysis.",
+      "Technical feasibility is judged from stakeholder expectations about completion dates."
+    ],
+    "answer": 3,
+    "explanation": "Technical feasibility is judged from the hardware, software and network resources needed, while stakeholder expectations about completion dates belong to schedule feasibility. The other statements are correct."
+  },
+  {
+    "id": "sa-l4-001",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A project manager is responsible for overseeing all relevant tasks in information system development. Which set lists the four functions typically performed in this role?",
+    "options": [
+      "Planning, scheduling, testing, and implementation",
+      "Planning, monitoring, estimating, and risk identification",
+      "Planning, scheduling, monitoring, and reporting",
+      "Scheduling, reporting, design reviews, and risk analysis"
+    ],
+    "answer": 2,
+    "explanation": "The project manager oversees relevant tasks and performs planning, scheduling, monitoring, and reporting. Testing, implementation, and risk identification are covered in the lecture, but they are not the four functions listed for this role."
+  },
+  {
+    "id": "sa-l4-002",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A client adds several features to a project, changing its scope. Based on the project triangle, what should the project manager reconsider?",
+    "options": [
+      "The cost and time, to restore an optimal balance",
+      "The quality and cost, because time is not a triangle leg",
+      "The quality and time, because cost is not a triangle leg",
+      "Only the scope, because cost and time are not affected"
+    ],
+    "answer": 0,
+    "explanation": "The triangle's legs are cost, scope, and time, and a change in one leg affects the other two. Quality appears at the center of the diagram rather than as a fourth leg, so cost and time must be reconsidered when scope changes."
+  },
+  {
+    "id": "sa-l4-003",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A WBS breaks a project into smaller tasks; one item has a beginning and an end and uses people and time, while another is a recognizable checkpoint for monitoring progress. How should these two items be classified?",
+    "options": [
+      "The first is a milestone; the second is a task.",
+      "Both are tasks because each is listed in the WBS.",
+      "Both are milestones because each helps monitor the project.",
+      "The first is a task; the second is a milestone."
+    ],
+    "answer": 3,
+    "explanation": "A WBS breaks a project into smaller tasks; a task has a beginning and an end and uses resources, while a milestone is a recognizable reference point for monitoring progress. Listing both in a WBS does not make the checkpoint a task."
+  },
+  {
+    "id": "sa-l4-004",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which statement best distinguishes a Gantt chart from a PERT/CPM chart?",
+    "options": [
+      "A Gantt chart uses linked task boxes; PERT/CPM uses horizontal bars across a time scale.",
+      "A Gantt chart uses horizontal task bars and integrated modules; PERT/CPM uses linked task boxes.",
+      "A Gantt chart plots time vertically; PERT/CPM groups subsidiary tasks into integrated modules.",
+      "A Gantt chart shows a bottom-up network; PERT/CPM uses horizontal task bars across time."
+    ],
+    "answer": 1,
+    "explanation": "A Gantt chart represents tasks as horizontal bars against time and can combine activities into integrated modules. PERT/CPM analyzes individual tasks in a bottom-up network of linked boxes, which Microsoft calls a Network diagram."
+  },
+  {
+    "id": "sa-l4-005",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A team has a paragraph describing project steps and must turn it into a task list for time estimation. Which sequence follows the required process?",
+    "options": [
+      "Highlight tasks, collect steps with timing words, make bullets, then create a table",
+      "Collect steps with timing words, make bullets, highlight tasks, then create a table",
+      "Collect steps with timing words, highlight verb-based tasks, make bullets, then create a table",
+      "Collect steps with timing words, highlight tasks, create a table, then make bullets"
+    ],
+    "answer": 2,
+    "explanation": "The sequence is to collect steps using timing words, highlight individual verb-based tasks, turn them into bullets, and finally list them in a table for time estimation. Creating the table before the bullet list reverses the final two steps."
+  },
+  {
+    "id": "sa-l4-006",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A manager estimates a task at 20 person-days and assigns two people, expecting it to finish in 10 days. Why might this estimate be unreliable?",
+    "options": [
+      "Work may not divide evenly, so doubling staff may not halve the duration.",
+      "A person-day counts the combined work of two people during one day.",
+      "A person-day describes the whole project's workload, not one person's work in one day.",
+      "The weighted formula must replace person-day estimates when more staff join."
+    ],
+    "answer": 0,
+    "explanation": "A person-day represents the work one person can complete in one day, but adding a second person does not guarantee that the work can be divided evenly. The tempting assumption that twice as many people always halve the duration is specifically rejected by the lecture's example."
+  },
+  {
+    "id": "sa-l4-007",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "An activity has a best-case duration of 2 weeks, a probable-case duration of 3 weeks, and a worst-case duration of 5 weeks. Using (B + 4P + W) / 6, what is the weighted estimate, rounded to one decimal?",
+    "options": [
+      "3.3 weeks",
+      "3.2 weeks",
+      "2.7 weeks",
+      "1.7 weeks"
+    ],
+    "answer": 1,
+    "explanation": "Substitute B = 2, P = 3, and W = 5: (2 + 4 x 3 + 5) / 6 = 19 / 6 = 3.166..., which rounds to 3.2 weeks. The simple average is 3.3 weeks, but it does not give the probable estimate four times the weight."
+  },
+  {
+    "id": "sa-l4-008",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which item is one of the four factors considered when estimating task duration?",
+    "options": [
+      "Number of stakeholders",
+      "Likelihood of the risk",
+      "Number of milestones",
+      "Experience with similar projects"
+    ],
+    "answer": 3,
+    "explanation": "The four factors are project size, human resources, experience with similar projects, and constraints. Stakeholders are included in the risk management plan, but the number of stakeholders is not listed as a duration-estimating factor."
+  },
+  {
+    "id": "sa-l4-009",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A project contains (1) a task that must follow another task, (2) one task that leads to two later tasks, and (3) one task that waits for two earlier tasks. Which sequence names these patterns in order?",
+    "options": [
+      "Multiple successor tasks, dependent tasks, multiple predecessor tasks",
+      "Multiple predecessor tasks, multiple successor tasks, dependent tasks",
+      "Dependent tasks, multiple successor tasks, multiple predecessor tasks",
+      "Dependent tasks, multiple predecessor tasks, multiple successor tasks"
+    ],
+    "answer": 2,
+    "explanation": "A dependent task follows another task, multiple successor tasks arise when one task leads to several later tasks, and multiple predecessor tasks occur when one task waits for several earlier tasks. The order in the answer must match the three relationships in the scenario."
+  },
+  {
+    "id": "sa-l4-010",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a network diagram, Task A (ID 1) and Task B (ID 2) both start on Day 1 and have durations of 15 days and 5 days, respectively. Task C (ID 3) has a duration of 30 days and depends on both; on which days should its start and finish be recorded?",
+    "options": [
+      "Starts Day 16, finishes Day 45",
+      "Starts Day 6, finishes Day 35",
+      "Starts Day 21, finishes Day 50",
+      "Starts Day 16, finishes Day 46"
+    ],
+    "answer": 0,
+    "explanation": "Task A finishes on Day 15 and Task B finishes on Day 5, so Task C must wait for Task A and starts on Day 16. With a 30-day duration, it finishes on Day 45; the task boxes show the task ID, start, finish, and duration."
+  },
+  {
+    "id": "sa-l4-011",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A structured walk-through is a peer review of a team member's work. Which sequence gives the review type for System Design, Implementation, and Support & maintenance, in that order?",
+    "options": [
+      "Code reviews, design reviews, testing reviews",
+      "Testing reviews, code reviews, design reviews",
+      "Design reviews, testing reviews, code reviews",
+      "Design reviews, code reviews, testing reviews"
+    ],
+    "answer": 3,
+    "explanation": "The lecture maps System Design to design reviews, Implementation to code reviews, and Support & maintenance to testing reviews. Swapping the last two phases would assign the wrong review type to each phase."
+  },
+  {
+    "id": "sa-l4-012",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which statement about project reporting and daily stand-ups is false?",
+    "options": [
+      "Team members report progress to the project manager, who reports to management and users.",
+      "A daily stand-up lasts about 30 minutes and covers yesterday, today, and impediments.",
+      "The project manager collects, verifies, organizes, and evaluates the team's information.",
+      "Each team member answers three questions about yesterday, today, and current impediments."
+    ],
+    "answer": 1,
+    "explanation": "A daily stand-up is held for roughly 15 minutes, not 30 minutes. The other statements match the reporting chain, the project manager's information-handling role, and the three stand-up questions."
+  },
+  {
+    "id": "sa-l4-013",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A risk is an event that could affect a project negatively. Which sequence matches the risk management process described in the lecture?",
+    "options": [
+      "Develop the plan, identify and assess risks, perform qualitative analysis, then quantitative analysis.",
+      "Identify and assess risks, perform quantitative analysis, develop the plan, then qualitative analysis.",
+      "Perform qualitative analysis, develop the plan, identify risks, then quantify each risk.",
+      "Use what-if analysis, map the risks, develop the plan, then identify each risk."
+    ],
+    "answer": 0,
+    "explanation": "The process begins with a risk management plan, followed by risk identification and likelihood assessment. Qualitative analysis then maps likelihood and impact to the risk matrix, while quantitative analysis estimates actual effects using what-if analysis."
+  },
+  {
+    "id": "sa-l4-014",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A team rates a risk's probability as High and its impact as Medium, then places the result on a grid of likelihood against impact. Which step is being performed?",
+    "options": [
+      "Quantitative risk analysis",
+      "Risk identification",
+      "Qualitative risk analysis",
+      "What-if analysis"
+    ],
+    "answer": 2,
+    "explanation": "Qualitative risk analysis evaluates the likelihood and degree of impact, then maps the result onto the risk matrix. Quantitative analysis instead estimates actual effects in dollars, time, scope, or quality, often through what-if analysis."
+  },
+  {
+    "id": "sa-l4-015",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A manager uses what-if analysis to estimate a risk's actual impact in dollars, time, scope, or quality. The manager also notes that adding people may increase completion time; which pair of concepts describes these ideas?",
+    "options": [
+      "Risk identification and the project triangle",
+      "Qualitative risk analysis and person-day estimating",
+      "Risk management planning and PERT/CPM",
+      "Quantitative risk analysis and Brooks' Law"
+    ],
+    "answer": 3,
+    "explanation": "What-if analysis is used in quantitative risk analysis to estimate actual project impact. Brooks' Law describes how adding people to a project can increase the time needed to complete it."
+  },
+  {
+    "id": "sa-l5-001",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the overall goal of the systems analysis phase?",
+    "options": [
+      "To decide whether the new system will be built or bought",
+      "To let users examine a working model as early as possible",
+      "To understand the proposed project and lay a base for development",
+      "To choose between microservices and monolithic architectures"
+    ],
+    "answer": 2,
+    "explanation": "The phase exists to understand the proposed project and build a solid foundation for system development. The build-or-buy choice and architecture selection are only part of the development strategy activity, and early working models belong to RAD."
+  },
+  {
+    "id": "sa-l5-002",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "In which order do the four main activities of the systems analysis phase take place?",
+    "options": [
+      "Requirements modeling, object modeling, data and process modeling, development strategy",
+      "Requirements modeling, data and process modeling, object modeling, development strategy",
+      "Data and process modeling, requirements modeling, object modeling, development strategy",
+      "Requirements modeling, data and process modeling, development strategy, object modeling"
+    ],
+    "answer": 1,
+    "explanation": "The phase starts with requirements modeling, then data and process modeling, then object modeling, and ends with development strategy. Swapping the two modeling activities is the most tempting mistake, but data and process modeling comes before object modeling."
+  },
+  {
+    "id": "sa-l5-003",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A customer hands an analyst a long wish list for a new system in which some items contradict each other and none are ranked. What underlying difficulty does this reveal?",
+    "options": [
+      "Users cannot yet examine a working prototype of the system",
+      "Top management has not authorized the project",
+      "Analysts have not yet decided between making and buying the software",
+      "Customers struggle to express precisely what they expect from the system"
+    ],
+    "answer": 3,
+    "explanation": "Customers often find it hard to describe clearly what they want, and the lists they produce tend to be unprioritized and conflicting. This is why requirements modeling is needed, not a lack of prototypes or a pending make-or-buy decision."
+  },
+  {
+    "id": "sa-l5-004",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A team rushes to build features right away just to look busy, without checking what the business needs. What is the likely outcome?",
+    "options": [
+      "A system that seems productive but fails the business requirements",
+      "A system developed more quickly with significant cost savings",
+      "A system backed by stronger commitment from its users",
+      "A system whose later changes cost much less to make"
+    ],
+    "answer": 0,
+    "explanation": "A systems project that does not satisfy business requirements serves no useful purpose, however productive it looks. Faster delivery, user commitment and cheaper changes are claimed benefits of RAD and JAD, which depend on meeting real requirements."
+  },
+  {
+    "id": "sa-l5-005",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "During requirements modeling, which set of areas does fact-finding cover for the new system?",
+    "options": [
+      "Outputs, inputs, objects, architecture, and outsourcing",
+      "Inputs, processes, prototypes, performance, and cutover",
+      "Outputs, inputs, processes, performance, and security",
+      "Outputs, processes, participants, security, and documentation"
+    ],
+    "answer": 2,
+    "explanation": "Fact-finding describes the current system and identifies requirements for outputs, inputs, processes, performance and security. The other sets mix in items from object modeling, development strategy, RAD or JAD."
+  },
+  {
+    "id": "sa-l5-006",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A team follows object-oriented development and must capture its requirements in a matching form. Which representation fits?",
+    "options": [
+      "Use case diagrams together with other diagrams",
+      "A Software Requirements Specification document",
+      "Personas together with user stories",
+      "Data flow diagrams of the current processes"
+    ],
+    "answer": 0,
+    "explanation": "Object-oriented development represents requirements with use case diagrams and other diagrams. The Software Requirements Specification belongs to structured development, and personas with user stories belong to agile development."
+  },
+  {
+    "id": "sa-l5-007",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A team writes an SRS for some requirements and uses personas with user stories for others in one project. Is this practice acceptable?",
+    "options": [
+      "No, a project has to adopt a single representation from the start",
+      "No, personas and user stories belong to structured development",
+      "Yes, provided the project is carried out through outsourcing",
+      "Yes, teams may combine representations to simplify problems"
+    ],
+    "answer": 3,
+    "explanation": "A team can combine representations to simplify the problems in the project. Personas and user stories belong to agile development, not structured development, so that objection is wrong."
+  },
+  {
+    "id": "sa-l5-008",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "An analyst wants to show what data enters a process, how business rules change it, and what data leaves. Which tool suits this best?",
+    "options": [
+      "Class diagram of the objects",
+      "Data flow diagram (DFD)",
+      "Use case diagram",
+      "Persona and user story set"
+    ],
+    "answer": 1,
+    "explanation": "Structured analysis shows data flowing into a process, the rules that transform it and the resulting output, and the data flow diagram is the best tool for this. The class diagram is the usual tool for object modeling, which combines data and processes instead."
+  },
+  {
+    "id": "sa-l5-009",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "A team models a library by grouping each item's data with the operations that act on it into single units. Which style of analysis is this?",
+    "options": [
+      "Structured analysis, which combines data and processes into objects",
+      "Object-oriented analysis, which keeps data and processes as separate components",
+      "Object-oriented analysis, which combines data and processes into objects",
+      "Structured analysis, which keeps data and processes as separate components"
+    ],
+    "answer": 2,
+    "explanation": "Object-oriented analysis merges data and the processes acting on it into objects. Structured analysis is the style that treats data and processes as separate components."
+  },
+  {
+    "id": "sa-l5-010",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An analyst wants to gather as much information as possible about a new system. Which modeling practice is common?",
+    "options": [
+      "Using data and process modeling together with object modeling",
+      "Selecting one of the two methods and discarding the other",
+      "Replacing both methods with a make-or-buy evaluation",
+      "Applying data and process modeling after the system is built"
+    ],
+    "answer": 0,
+    "explanation": "Analysts often use both data and process modeling and object modeling to gain as much information as possible. A make-or-buy evaluation belongs to development strategy and does not replace either modeling method."
+  },
+  {
+    "id": "sa-l5-011",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which statement about the development strategy activity is false?",
+    "options": [
+      "It includes the make-or-buy choice and prepares for the move to systems design",
+      "It considers architectures such as microservices, SOA and monolithic software",
+      "It treats outsourcing as one of the acquisition and development alternatives",
+      "It centers on drawing data flow diagrams to show system processes and data"
+    ],
+    "answer": 3,
+    "explanation": "Drawing data flow diagrams is the job of data and process modeling, not development strategy. Development strategy covers make-or-buy, software architectures, outsourcing and formally documenting requirements."
+  },
+  {
+    "id": "sa-l5-012",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An analyst studies a failing process, pinpoints its causes, and proposes a workable remedy. Which skill does this mainly show?",
+    "options": [
+      "Interpersonal skill, used to identify problems and develop solutions",
+      "Analytical skill, used to identify problems and develop solutions",
+      "Interpersonal skill, used to work with people at all levels",
+      "Analytical skill, used to work with people at all levels"
+    ],
+    "answer": 1,
+    "explanation": "Analytical skills let an analyst identify a problem, evaluate its key elements and develop a useful solution. Interpersonal skills are the ones used to work with people at all organizational levels."
+  },
+  {
+    "id": "sa-l5-013",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Why does JAD bring users into development as active participants?",
+    "options": [
+      "They supply technical help on security, backup and hardware",
+      "They provide enterprise-level authorization and support for the project",
+      "They have a vital stake in the system, which must be user-oriented",
+      "They document session results and help build the system models"
+    ],
+    "answer": 2,
+    "explanation": "Users have a vital stake in the information system, and successful systems must be user-oriented. Technical help comes from IT staff, enterprise-level authorization from top management, and documenting results from the recorder."
+  },
+  {
+    "id": "sa-l5-014",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which statement about JAD is false?",
+    "options": [
+      "Managers give enterprise-level authorization and support for the project",
+      "The recorder documents session results and helps analysts build models",
+      "The project leader develops an agenda and facilitates the session",
+      "A large group can make JAD expensive and cumbersome for a small project"
+    ],
+    "answer": 0,
+    "explanation": "Enterprise-level authorization and support comes from top management, while managers provide department-level support. The other statements match the recorder role, the project leader role and the main drawback of JAD."
+  },
+  {
+    "id": "sa-l5-015",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which statement about RAD is false?",
+    "options": [
+      "It uses prototypes, user involvement, and CASE tools to build early working models",
+      "It emphasizes strategic business needs more than the system's mechanics",
+      "It uses requirements planning, user design, construction, and cutover",
+      "It reduces development time and expense, limits change costs, and supports complex interfaces"
+    ],
+    "answer": 1,
+    "explanation": "RAD relies on prototypes, user involvement and CASE tools, and it is useful for highly interactive or complex user interfaces while reducing development time and change costs. The false claim reverses the stated trade-off: RAD stresses system mechanics rather than the company's strategic business needs."
+  }
+]

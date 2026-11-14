@@ -1,0 +1,2143 @@
+const ICONS = {
+  lan: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="15" width="18" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 9v6M16 9v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  database: '<svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="5.5" rx="7.5" ry="3" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 5.5v13c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3v-13" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 12c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3" stroke="currentColor" stroke-width="1.6"/></svg>',
+  insights: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 19V9m5 10V5m5 14v-7m5 7V8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  science: '<svg viewBox="0 0 24 24" fill="none"><path d="M9 3h6M10 3v5.5L5.4 17A2.4 2.4 0 0 0 7.5 21h9a2.4 2.4 0 0 0 2.1-4L14 8.5V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7.5 15h9" stroke="currentColor" stroke-width="1.6"/></svg>',
+  schema: '<svg viewBox="0 0 24 24" fill="none"><rect x="8.5" y="2.5" width="7" height="5" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="2.5" y="16.5" width="7" height="5" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="14.5" y="16.5" width="7" height="5" rx="1.4" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5v4M6 16.5v-2.5h12v2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  bolt: '<svg viewBox="0 0 24 24" fill="none"><path d="M13 2 5 13.5h5.5L10 22l8-11.5h-5.5L13 2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 5.2A2.2 2.2 0 0 1 6.2 3H19a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6.2A2.2 2.2 0 0 1 4 16.8V5.2Z" stroke="currentColor" stroke-width="1.6"/><path d="M4 16.8A2.2 2.2 0 0 1 6.2 15H20" stroke="currentColor" stroke-width="1.6"/></svg>',
+  lecture: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7.5 9h9M7.5 12h5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  slides: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M12 15.5V20M9 20h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="m9.5 11 2-2.5 1.6 1.6 1.9-2.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  question: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.6 2.3c-.7.4-1.2 1-1.2 1.9v.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>',
+  summary: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 2.5h8.5L19 7v14.5H6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 2.5V7h5M9 12h7M9 15.5h7M9 8.5h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  revision: '<svg viewBox="0 0 24 24" fill="none"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1L3 8.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 4v4.5h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8v4.4l3 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  simple: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 14.3 9l5.7.4-4.3 3.7 1.3 5.4-5-3.1-5 3.1 1.3-5.4L4 9.4 9.7 9 12 3.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+  folder: '<svg viewBox="0 0 24 24" fill="none"><path d="M3.5 7.5A1.5 1.5 0 0 1 5 6h4l2 2.5h8a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 19 19.5H5a1.5 1.5 0 0 1-1.5-1.5v-10Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+  download: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 4v10m0 0 3.5-3.5M12 14l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 18.5h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  folderDown: '<svg viewBox="0 0 24 24" fill="none"><path d="M3.5 7.5A1.5 1.5 0 0 1 5 6h4l2 2.5h8A1.5 1.5 0 0 1 20.5 10v1" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12.5v5m0 0 2.5-2.5M12 17.5 9.5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.5 18.5V21h-17v-2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  eye: '<svg viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="none"><path d="M9.5 7.6v8.8l7-4.4-7-4.4Z" fill="currentColor"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/></svg>',
+  external: '<svg viewBox="0 0 24 24" fill="none"><path d="M14 4h6v6M20 4l-8.5 8.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 14.5V19a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V7.5A1.5 1.5 0 0 1 5 6h4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+  file: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 2.5h8L19 7.5v14H6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 2.5v5h5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+  calendar: '<svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9.5h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7.5 13h2M11 13h2M14.5 13h2M7.5 16.5h2M11 16.5h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5V12l3 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  pin: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21s6.2-5.4 6.2-10.2a6.2 6.2 0 1 0-12.4 0C5.8 15.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10.6" r="2.2" stroke="currentColor" stroke-width="1.6"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.4 4.4L19 7.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  grid: '<svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/></svg>',
+};
+
+const SECTION_ICONS = {
+  lectures: "lecture",
+  "original-pptx": "slides",
+  books: "book",
+  questions: "question",
+  summaries: "summary",
+  "midterm-revision": "revision",
+  "simplified-explanations": "simple",
+  general: "folder",
+};
+
+const state = {
+  data: null,
+  subjectId: null,
+  query: "",
+  lastSubject: null,
+  section: "1",
+  viewMode: "matrix",
+  feature: null,
+  practiceSubject: null,
+  scheduleAll: false,
+  schedule: null,
+  questions: null,
+  facets: { subject: "all", lecture: "all", kind: "all" },
+  searchIndex: null,
+  questionIndex: null,
+  renderedSubject: null,
+  filtersOpen: false,
+  sidebarOpen: false,
+};
+
+const $ = (selector, root = document) => root.querySelector(selector);
+const tabsEl = $("#tabs");
+const viewEl = $("#view");
+const searchEl = $("#search");
+const modalEl = $("#modal");
+const uploadEl = $("#upload");
+const smartStripEl = $("#smart-strip");
+const sectionPickerEl = $("#section-picker");
+const facetsEl = $("#search-facets");
+const sidebarEl = $("#sidebar");
+const sidebarToggleEl = $("#sidebar-toggle");
+const sidebarBackdropEl = $("#sidebar-backdrop");
+const filterToggleEl = $("#filter-toggle");
+const tabsPrevEl = $("#tabs-prev");
+const tabsNextEl = $("#tabs-next");
+const modeSwitcherEl = $("#mode-switcher");
+const tabsBarEl = $("#tabs-bar");
+
+const SECTION_VALUES = Array.from({ length: 11 }, (_, index) => String(index + 1));
+const AR_DAYS = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+const WEEK_DAYS = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"];
+
+const store = {
+  get(key, fallback = null) {
+    try {
+      return localStorage.getItem(key) ?? fallback;
+    } catch (error) {
+      return fallback;
+    }
+  },
+  set(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (error) {
+      return;
+    }
+  },
+  getJson(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (error) {
+      return fallback;
+    }
+  },
+  setJson(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      return;
+    }
+  },
+};
+
+const esc = (value) =>
+  String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[char]);
+
+const AR_NORMALIZE_MAP = {
+  "أ": "ا",
+  "إ": "ا",
+  "آ": "ا",
+  "ٱ": "ا",
+  "ة": "ه",
+  "ى": "ي",
+  "ؤ": "و",
+  "ئ": "ي",
+};
+
+const KIND_LABELS = {
+  lecture: "المحاضرة",
+  summary: "الملخص",
+  questions: "الأسئلة",
+  solution: "الحل",
+  review: "مراجعة ميدترم",
+  book: "كتاب شامل",
+};
+
+const KIND_SYNONYMS = {
+  "ملخص": ["summary"],
+  "ملخصات": ["summary"],
+  summary: ["summary"],
+  summaries: ["summary"],
+  "اسئله": ["questions", "review"],
+  "اسئلة": ["questions", "review"],
+  "امتحان": ["questions", "review"],
+  "امتحانات": ["questions", "review"],
+  questions: ["questions", "review"],
+  exam: ["questions", "review"],
+  exams: ["questions", "review"],
+  "حل": ["solution"],
+  "حلول": ["solution"],
+  "اجابه": ["solution"],
+  "اجابات": ["solution"],
+  solution: ["solution"],
+  solutions: ["solution"],
+  "مراجعه": ["review"],
+  "مراجعات": ["review"],
+  review: ["review"],
+  revision: ["review"],
+  "محاضره": ["lecture"],
+  "محاضرات": ["lecture"],
+  lecture: ["lecture"],
+  lectures: ["lecture"],
+  "كتاب": ["book"],
+  book: ["book"],
+  books: ["book"],
+};
+
+const SUBJECT_SYNONYMS = {
+  "system-analysis": ["تحليل النظم", "تحليل نظم", "system analysis", "systems analysis"],
+  "database-2": [
+    "قواعد بيانات 2",
+    "قواعد البيانات",
+    "قواعد بيانات",
+    "database 2",
+    "database",
+    "db2",
+    "db",
+  ],
+  "information-theory": ["نظرية المعلومات", "نظريه المعلومات", "information theory"],
+  "research-methods": ["اساليب البحث", "مناهج البحث", "طرق البحث", "research methods"],
+  "computer-networks": ["شبكات الحاسب", "شبكات", "computer networks", "networks", "network"],
+  "midterm-revision": ["مراجعة الميد", "مراجعه الميد", "midterm revision"],
+};
+
+const MAX_QUESTIONS_PER_SUBJECT = 12;
+
+function normalizeDigits(value) {
+  return String(value || "").replace(/[٠-٩۰-۹]/g, (digit) => {
+    const code = digit.charCodeAt(0);
+    return String(code >= 0x06f0 ? code - 0x06f0 : code - 0x0660);
+  });
+}
+
+function normalizeChar(char) {
+  if (/[\u064B-\u065F\u0670]/.test(char)) return "";
+  if (/\s/.test(char)) return " ";
+  const lower = char.toLowerCase();
+  const mapped = AR_NORMALIZE_MAP[lower] || lower;
+  if (/[٠-٩۰-۹]/.test(mapped)) return normalizeDigits(mapped);
+  return /[\p{L}\p{N}]/u.test(mapped) ? mapped : " ";
+}
+
+function normalizeWithMap(value) {
+  const source = String(value || "");
+  let text = "";
+  const map = [];
+  for (let index = 0; index < source.length; index += 1) {
+    const normalized = normalizeChar(source[index]);
+    for (const piece of normalized) {
+      if (piece === " " && (!text || text.endsWith(" "))) continue;
+      text += piece;
+      map.push(index);
+    }
+  }
+  while (text.endsWith(" ")) {
+    text = text.slice(0, -1);
+    map.pop();
+  }
+  return { text, map };
+}
+
+function normalizeAr(value) {
+  return normalizeWithMap(value).text;
+}
+
+function highlightText(value, tokens) {
+  const source = String(value || "");
+  const { text, map } = normalizeWithMap(source);
+  if (!text || !tokens || !tokens.length) return esc(source);
+  const ranges = [];
+  for (const token of tokens) {
+    if (!token) continue;
+    let from = 0;
+    while (from <= text.length - token.length) {
+      const at = text.indexOf(token, from);
+      if (at === -1) break;
+      ranges.push([map[at], map[at + token.length - 1] + 1]);
+      from = at + token.length;
+    }
+  }
+  if (!ranges.length) return esc(source);
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged = [];
+  for (const range of ranges) {
+    const last = merged[merged.length - 1];
+    if (last && range[0] <= last[1]) last[1] = Math.max(last[1], range[1]);
+    else merged.push([range[0], range[1]]);
+  }
+  let html = "";
+  let cursor = 0;
+  for (const [start, end] of merged) {
+    html += esc(source.slice(cursor, start));
+    html += `<mark>${esc(source.slice(start, end))}</mark>`;
+    cursor = end;
+  }
+  return html + esc(source.slice(cursor));
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function fileLectures(file) {
+  const lectures = [];
+  if (Number.isInteger(file.lecture)) lectures.push(file.lecture);
+  if (Array.isArray(file.lectureSpan)) {
+    for (const lecture of file.lectureSpan) {
+      if (Number.isInteger(lecture)) lectures.push(lecture);
+    }
+  }
+  return [...new Set(lectures)];
+}
+
+function isReviewFile(file) {
+  return file.kind === "review" || file.kind === "book" || file.lecture === null;
+}
+
+function matchesKind(file, kind) {
+  if (kind === "all") return true;
+  if (kind === "review") return isReviewFile(file);
+  return file.kind === kind;
+}
+
+function midtermScope(subjectId) {
+  return new Set(state.schedule?.coursesMeta?.[subjectId]?.midtermLectures || []);
+}
+
+function facetsActive() {
+  return (
+    state.facets.subject !== "all" ||
+    state.facets.lecture !== "all" ||
+    state.facets.kind !== "all"
+  );
+}
+
+function searchActive() {
+  return Boolean(state.query.trim()) || facetsActive();
+}
+
+function resetFacets() {
+  state.facets = { subject: "all", lecture: "all", kind: "all" };
+}
+
+function resetSearchUI() {
+  state.query = "";
+  state.filtersOpen = false;
+  searchEl.value = "";
+  resetFacets();
+  searchEl.blur();
+  render();
+}
+
+function parseQuery(raw) {
+  const normalized = normalizeAr(raw);
+  const parsed = {
+    raw: String(raw || ""),
+    normalized,
+    tokens: [],
+    lectures: new Set(),
+    kinds: new Set(),
+    subjects: new Set(),
+    midterm: false,
+  };
+  if (!normalized) return parsed;
+
+  let working = ` ${normalized} `;
+  working = working.replace(
+    /(?:^|\s)(?:محاضر(?:ه|ات)?|lec(?:ture)?s?)\s*(\d{1,2})(?=\s|$)/g,
+    (match, lecture) => {
+      parsed.lectures.add(Number(lecture));
+      return " ";
+    },
+  );
+
+  const subjects = Object.entries(SUBJECT_SYNONYMS).sort(
+    (a, b) =>
+      Math.max(...b[1].map((item) => normalizeAr(item).length)) -
+      Math.max(...a[1].map((item) => normalizeAr(item).length)),
+  );
+  for (const [subjectId, synonyms] of subjects) {
+    for (const synonym of synonyms) {
+      const phrase = normalizeAr(synonym);
+      if (!phrase) continue;
+      const pattern = new RegExp(`(^|\\s)${escapeRegExp(phrase)}(?=\\s|$)`, "g");
+      if (pattern.test(working)) {
+        parsed.subjects.add(subjectId);
+        working = working.replace(pattern, " ");
+      }
+    }
+  }
+
+  const tokens = [];
+  for (const token of working.split(/\s+/).filter(Boolean)) {
+    if (token === "ميدترم" || token === "midterm") {
+      parsed.midterm = true;
+      continue;
+    }
+    const key = token.startsWith("ال") && token.length > 2 ? token.slice(2) : token;
+    const kinds = KIND_SYNONYMS[key];
+    if (kinds) {
+      for (const kind of kinds) parsed.kinds.add(kind);
+      continue;
+    }
+    tokens.push(token);
+  }
+  parsed.tokens = [
+    ...new Set(tokens.filter((token) => token.length >= 2 || /^\d+$/.test(token))),
+  ];
+  return parsed;
+}
+
+function buildSearchIndex() {
+  state.searchIndex = state.data.subjects.flatMap((subject) =>
+    subject.sections.flatMap((section) =>
+      section.files.map((file) => ({
+        subject,
+        section,
+        file,
+        hay: normalizeAr(
+          [
+            file.title,
+            file.original,
+            file.id,
+            file.path,
+            subject.name,
+            subject.nameAr,
+            subject.id,
+            file.kind,
+            KIND_LABELS[file.kind] || "",
+            ...(Array.isArray(file.keywords) ? file.keywords : []),
+            ...fileLectures(file),
+          ]
+            .filter((value) => value !== null && value !== undefined)
+            .join(" "),
+        ),
+      })),
+    ),
+  );
+  state.questionIndex = buildQuestionIndex();
+}
+
+function buildQuestionIndex() {
+  const entries = [];
+  const banks = state.questions || {};
+  for (const [subjectKey, bank] of Object.entries(banks)) {
+    const questions = Array.isArray(bank)
+      ? bank
+      : Array.isArray(bank?.questions)
+        ? bank.questions
+        : [];
+    for (const question of questions) {
+      if (!question || typeof question !== "object") continue;
+      const subjectId = question.subjectId || subjectKey;
+      const subject = subjectById(subjectId) || subjectById(subjectKey) || null;
+      const options = Array.isArray(question.options) ? question.options : [];
+      entries.push({
+        question,
+        subjectId,
+        subject,
+        lecture: Number.isInteger(question.lecture) ? question.lecture : null,
+        hay: normalizeAr(
+          [
+            question.qAr,
+            question.q,
+            question.id,
+            question.explanation,
+            question.difficulty,
+            question.type,
+            ...options,
+          ]
+            .filter((value) => typeof value === "string")
+            .join(" "),
+        ),
+      });
+    }
+  }
+  return entries;
+}
+
+function fileMatchesFacetsAndQuery(entry, parsed) {
+  const { file, subject, hay } = entry;
+  if (state.facets.subject !== "all" && subject.id !== state.facets.subject) return false;
+  if (parsed.subjects.size && !parsed.subjects.has(subject.id)) return false;
+
+  const lectures = fileLectures(file);
+
+  if (parsed.lectures.size) {
+    const wanted = [...parsed.lectures];
+    if (!wanted.some((lecture) => lectures.includes(lecture))) return false;
+  }
+
+  if (state.facets.lecture === "reviews") {
+    if (!isReviewFile(file)) return false;
+  } else if (state.facets.lecture !== "all") {
+    if (!lectures.includes(Number(state.facets.lecture))) return false;
+  }
+
+  if (state.facets.kind !== "all" && !matchesKind(file, state.facets.kind)) return false;
+  if (parsed.kinds.size && ![...parsed.kinds].some((kind) => matchesKind(file, kind))) {
+    return false;
+  }
+
+  if (parsed.midterm) {
+    const scope = midtermScope(subject.id);
+    if (!isReviewFile(file) && !lectures.some((lecture) => scope.has(lecture))) return false;
+  }
+
+  return parsed.tokens.every((token) => hay.includes(token));
+}
+
+function questionMatchesFacetsAndQuery(entry, parsed) {
+  if (state.facets.subject !== "all" && entry.subjectId !== state.facets.subject) return false;
+  if (parsed.subjects.size && !parsed.subjects.has(entry.subjectId)) return false;
+
+  if (parsed.lectures.size) {
+    if (entry.lecture === null || !parsed.lectures.has(entry.lecture)) return false;
+  }
+
+  if (state.facets.lecture === "reviews") return false;
+  if (
+    state.facets.lecture !== "all" &&
+    entry.lecture !== Number(state.facets.lecture)
+  ) {
+    return false;
+  }
+
+  if (state.facets.kind !== "all" && state.facets.kind !== "questions") return false;
+  if (parsed.kinds.size && !parsed.kinds.has("questions")) return false;
+
+  if (parsed.midterm) {
+    const scope = midtermScope(entry.subjectId);
+    if (entry.lecture === null || !scope.has(entry.lecture)) return false;
+  }
+
+  return parsed.tokens.every((token) => entry.hay.includes(token));
+}
+
+function searchFileCard(entry, tokens) {
+  const { file, subject, section } = entry;
+  const lectures = fileLectures(file);
+  const lectureLabel = file.lecture === null
+    ? isReviewFile(file)
+      ? "مراجعة شاملة"
+      : "ملف عام"
+    : lectures.length > 1
+      ? `محاضرات ${lectures[0]}–${lectures[lectures.length - 1]}`
+      : `محاضرة ${file.lecture}`;
+  const kindLabel = KIND_LABELS[file.kind] || file.kind || "ملف";
+  const meta = `${subject.nameAr} · ${lectureLabel} · ${kindLabel}`;
+  const originalMatches =
+    Boolean(file.original) &&
+    tokens.some((token) => normalizeAr(file.original).includes(token)) &&
+    !tokens.some((token) => normalizeAr(file.title).includes(token));
+  return fileRow(file, subject, section?.id || "", "file-search", {
+    tokens,
+    meta,
+    showOriginal: originalMatches,
+  });
+}
+
+function searchQuestionCard(entry, tokens) {
+  const { question, subjectId, subject, lecture } = entry;
+  const accent = subject?.accent || "#64748b";
+  const subjectName = subject?.nameAr || subjectId;
+  const primary = question.qAr || question.q || "";
+  const secondary = question.qAr && question.q ? question.q : "";
+  const badges = [];
+  if (lecture !== null) badges.push(`<span class="q-chip">محاضرة ${lecture}</span>`);
+  if (question.difficulty) {
+    badges.push(`<span class="q-chip">${esc(question.difficulty)}</span>`);
+  }
+  return `<article class="question-hit" style="--accent:${esc(accent)}">
+    <div class="qh-head">
+      <span class="qh-subject"><span class="dot" style="background:${esc(accent)}"></span>${esc(subjectName)}</span>
+      ${badges.join("")}
+      ${question.id ? `<span class="qh-id" dir="ltr">${esc(question.id)}</span>` : ""}
+    </div>
+    ${primary ? `<p class="qh-text">${highlightText(primary, tokens)}</p>` : ""}
+    ${secondary ? `<p class="qh-text qh-secondary" dir="ltr">${highlightText(secondary, tokens)}</p>` : ""}
+    <div class="qh-actions">
+      <a class="btn btn-sm btn-primary" href="#practice/${esc(subjectId)}">${ICONS.question}<span>افتح في الاختبار</span></a>
+    </div>
+  </article>`;
+}
+
+function renderFacets() {
+  if (!facetsEl || !state.data) return;
+  const open = state.filtersOpen || searchActive();
+  facetsEl.hidden = !open;
+  if (filterToggleEl) {
+    filterToggleEl.setAttribute("aria-expanded", String(open));
+    filterToggleEl.classList.toggle("is-active", open);
+  }
+  if (!open) {
+    facetsEl.innerHTML = "";
+    return;
+  }
+
+  const subjectRow = [
+    { value: "all", label: "الكل" },
+    ...state.data.subjects
+      .filter((subject) => subject.id !== "midterm-revision")
+      .map((subject) => ({
+        value: subject.id,
+        label: subject.nameAr,
+        accent: subject.accent,
+      })),
+  ];
+  const lectureRow = [
+    { value: "all", label: "كل المحاضرات" },
+    ...Array.from({ length: 7 }, (_, index) => ({
+      value: String(index + 1),
+      label: `محاضرة ${index + 1}`,
+    })),
+    { value: "reviews", label: "مراجعات شاملة" },
+  ];
+  const kindRow = [
+    { value: "all", label: "الكل" },
+    { value: "lecture", label: "المحاضرة" },
+    { value: "summary", label: "الملخص" },
+    { value: "questions", label: "الأسئلة" },
+    { value: "solution", label: "الحل" },
+    { value: "review", label: "مراجعة ميدترم" },
+  ];
+
+  const row = (facet, label, items) => `<div class="facet-row">
+    <span class="facet-label">${esc(label)}</span>
+    <div class="facet-chips">${items
+      .map(
+        (item) => `<button class="facet-chip${state.facets[facet] === item.value ? " is-active" : ""}" type="button" data-facet="${facet}" data-value="${esc(item.value)}" aria-pressed="${state.facets[facet] === item.value}"${item.accent ? ` style="--chip-accent:${esc(item.accent)}"` : ""}>${item.accent ? '<span class="facet-dot"></span>' : ""}${esc(item.label)}</button>`,
+      )
+      .join("")}</div>
+  </div>`;
+
+  const actions = `<div class="facet-actions">
+    ${searchActive() ? '<button class="facet-reset" type="button" data-facet="reset">مسح البحث والفلاتر</button>' : ""}
+    <button class="facet-close" type="button" data-facet="close">إخفاء الفلاتر</button>
+  </div>`;
+
+  facetsEl.innerHTML = `${row("subject", "المادة", subjectRow)}${row("lecture", "المحاضرة", lectureRow)}${row("kind", "النوع", kindRow)}${actions}`;
+}
+
+const fmtSize = (bytes) => {  if (!bytes) return "0 KB";
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+};
+
+const subjectFiles = (subject) => subject.sections.flatMap((section) => section.files);
+const subjectSize = (subject) => subjectFiles(subject).reduce((sum, file) => sum + (file.size || 0), 0);
+const totalFiles = () => state.data.subjects.reduce((sum, subject) => sum + subjectFiles(subject).length, 0);
+const sectionIconKey = (section) => SECTION_ICONS[section.id] || "folder";
+const subjectById = (id) => state.data?.subjects?.find((subject) => subject.id === id) || null;
+
+function themeInit() {
+  const forced = new URLSearchParams(location.search).get("theme");
+  if (forced === "light" || forced === "dark") {
+    document.documentElement.dataset.theme = forced;
+    applyThemeMeta();
+    return;
+  }
+  const saved = store.get("theme");
+  const dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  applyThemeMeta();
+}
+
+function applyThemeMeta() {
+  const dark = document.documentElement.dataset.theme === "dark";
+  $('meta[name="theme-color"]').setAttribute("content", dark ? "#0b0e13" : "#f4f6f9");
+}
+
+$("#theme-toggle").addEventListener("click", () => {
+  const root = document.documentElement;
+  root.classList.add("theme-switching");
+  const next = root.dataset.theme === "dark" ? "light" : "dark";
+  root.dataset.theme = next;
+  store.set("theme", next);
+  applyThemeMeta();
+  void root.offsetHeight;
+  requestAnimationFrame(() => root.classList.remove("theme-switching"));
+});
+
+function initSection() {
+  const queryValue = Number(new URLSearchParams(location.search).get("sec"));
+  const querySection =
+    Number.isInteger(queryValue) && queryValue >= 1 && queryValue <= 11 ? String(queryValue) : null;
+  const savedValue = Number(store.get("hub:mySection"));
+  const savedSection =
+    Number.isInteger(savedValue) && savedValue >= 1 && savedValue <= 11 ? String(savedValue) : null;
+  state.section = querySection || savedSection || "1";
+  if (querySection) store.set("hub:mySection", querySection);
+  else if (!savedSection) store.set("hub:mySection", state.section);
+  state.viewMode = store.get("hub:viewMode") === "classic" ? "classic" : "matrix";
+}
+
+function renderSectionPicker() {
+  if (!sectionPickerEl) return;
+  sectionPickerEl.innerHTML = SECTION_VALUES.map(
+    (value) => `<option value="${value}">سكشن ${value}</option>`,
+  ).join("");
+  sectionPickerEl.value = state.section;
+}
+
+function sectionInstructors(subjectId) {
+  const entries = (state.schedule?.sectionsTimetable?.[String(state.section)] || []).filter(
+    (entry) => entry.subjectId === subjectId,
+  );
+  return [...new Set(entries.map((entry) => entry.instructor).filter(Boolean))].join("، ");
+}
+
+function periodById(id) {
+  return state.schedule?.periods?.find((period) => period.id === Number(id)) || null;
+}
+
+function parseDateParts(value) {
+  const [year, month, day] = String(value || "").split("-").map(Number);
+  if (!year || !month || !day) return new Date(NaN);
+  return new Date(year, month - 1, day);
+}
+
+function parseDateTime(dateStr, timeStr) {
+  const date = parseDateParts(dateStr);
+  const [hours, minutes] = String(timeStr || "00:00").split(":").map(Number);
+  date.setHours(hours || 0, minutes || 0, 0, 0);
+  return date;
+}
+
+function formatDate(value) {
+  const date = value instanceof Date ? value : parseDateParts(value);
+  if (Number.isNaN(date.getTime())) return String(value || "");
+  try {
+    return new Intl.DateTimeFormat("ar-EG", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(date);
+  } catch (error) {
+    return date.toLocaleDateString("ar-EG");
+  }
+}
+
+function formatDateShort(value) {
+  const date = value instanceof Date ? value : parseDateParts(value);
+  if (Number.isNaN(date.getTime())) return String(value || "");
+  try {
+    return new Intl.DateTimeFormat("ar-EG", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(date);
+  } catch (error) {
+    return date.toLocaleDateString("ar-EG");
+  }
+}
+
+function formatRange(start, end) {
+  const from = formatDateShort(start);
+  if (!end || end === start) return from;
+  return `${from} — ${formatDateShort(end)}`;
+}
+
+function withLtrYears(value) {
+  return esc(String(value || "")).replace(
+    /(\d{4})\s*[-–]\s*(\d{4})/g,
+    '<bdi dir="ltr">$1-$2</bdi>',
+  );
+}
+
+function eventPeriodRange(entry) {
+  const periods = Array.isArray(entry.periods) ? entry.periods : [];
+  const start = periodById(periods[0]);
+  const end = periodById(periods[periods.length - 1]);
+  return {
+    start,
+    end,
+    label: start && end ? `${start.start} – ${end.end}` : "غير محدد",
+  };
+}
+
+function getDayEntries(day, section) {
+  if (!state.schedule) return [];
+  const sectionNumber = Number(section);
+  const shared = (state.schedule.sharedLectures || [])
+    .filter((entry) => (entry.sections || []).map(Number).includes(sectionNumber))
+    .map((entry) => ({ ...entry, shared: true }));
+  const own = (state.schedule.sectionsTimetable?.[String(section)] || []).map((entry) => ({
+    ...entry,
+    shared: false,
+  }));
+  return [...shared, ...own]
+    .filter((entry) => entry.day === day)
+    .sort((a, b) => (a.periods?.[0] || 0) - (b.periods?.[0] || 0));
+}
+
+function resolveToday() {
+  const now = new Date();
+  const todayName = AR_DAYS[now.getDay()];
+  const todayEntries = getDayEntries(todayName, state.section);
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  const lastEntry = todayEntries[todayEntries.length - 1];
+  const lastPeriodId = lastEntry?.periods?.length ? lastEntry.periods[lastEntry.periods.length - 1] : null;
+  const lastPeriod = periodById(lastPeriodId);
+  let lastEnd = 0;
+  if (lastPeriod) {
+    const [hours, minutes] = lastPeriod.end.split(":").map(Number);
+    lastEnd = hours * 60 + minutes;
+  }
+  const done = todayEntries.length > 0 && nowMinutes > lastEnd;
+  if (todayEntries.length && !done) {
+    return { label: "اليوم", dayName: todayName, entries: todayEntries, date: now };
+  }
+  for (let offset = 1; offset <= 7; offset += 1) {
+    const date = new Date(now);
+    date.setDate(date.getDate() + offset);
+    const dayName = AR_DAYS[date.getDay()];
+    const entries = getDayEntries(dayName, state.section);
+    if (entries.length) {
+      return { label: offset === 1 ? "غداً" : `يوم ${dayName}`, dayName, entries, date };
+    }
+  }
+  return { label: "قريباً", dayName: "", entries: [], date: now };
+}
+
+function nextMidterm() {
+  const now = new Date();
+  return (
+    (state.schedule?.midterms || [])
+      .map((midterm) => ({
+        ...midterm,
+        endAt: parseDateTime(midterm.date, midterm.endTime || midterm.startTime),
+      }))
+      .filter((midterm) => midterm.endAt >= now)
+      .sort((a, b) => a.endAt - b.endAt)[0] || null
+  );
+}
+
+function todayMidterm() {
+  const now = new Date();
+  const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  return (state.schedule?.midterms || []).find((midterm) => midterm.date === date) || null;
+}
+
+function defaultSubjectId() {
+  const current = todayMidterm() || nextMidterm();
+  if (current?.subjectId && subjectById(current.subjectId)) return current.subjectId;
+  return subjectById("system-analysis")?.id || state.data?.subjects?.[0]?.id || null;
+}
+
+function countdownLabel(date) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const days = Math.round((target - today) / 86400000);
+  if (days <= 0) return "اليوم";
+  if (days === 1) return "غداً";
+  return `بعد ${days} يوم`;
+}
+
+function midtermStatus(midterm) {
+  const start = parseDateTime(midterm.date, midterm.startTime);
+  const end = parseDateTime(midterm.date, midterm.endTime);
+  const now = new Date();
+  if (now >= start && now <= end) return { label: "جارٍ الآن", active: true };
+  if (now > end) return { label: "انتهى", active: false };
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const target = parseDateParts(midterm.date);
+  const days = Math.round((target - today) / 86400000);
+  if (days <= 0) return { label: "اليوم", active: false };
+  if (days === 1) return { label: "غداً", active: false };
+  return { label: `بعد ${days} يوم`, active: false };
+}
+
+function renderSmartStrip() {
+  if (!smartStripEl) return;
+  if (!state.schedule || state.feature !== "schedule" || searchActive() || state.filtersOpen) {
+    smartStripEl.hidden = true;
+    smartStripEl.innerHTML = "";
+    return;
+  }
+  smartStripEl.hidden = false;
+  const today = resolveToday();
+  const midterm = nextMidterm();
+  const events = today.entries.length
+    ? today.entries
+        .map((entry) => {
+          const range = eventPeriodRange(entry);
+          const subject = subjectById(entry.subjectId);
+          return `<div class="today-event">
+            <span class="today-dot" style="background:${esc(subject?.accent || "#2563eb")}"></span>
+            <span class="today-time" dir="ltr">${esc(range.label)}</span>
+            <div class="today-main">
+              <span class="today-title">${esc(entry.title)}</span>
+              <span class="today-meta">${esc(entry.room || "")}${entry.instructor ? ` · ${esc(entry.instructor)}` : ""}</span>
+            </div>
+            <span class="mini-badge${entry.type === "section" ? " section" : ""}">${entry.type === "section" ? "سكشن" : "محاضرة"}</span>
+          </div>`;
+        })
+        .join("")
+    : `<p class="smart-empty">لا توجد محاضرات أو سكاشن ${today.label === "اليوم" ? "اليوم" : today.label} لسكشن ${esc(state.section)}.</p>`;
+  const midtermCard = midterm
+    ? `<div class="smart-card midterm-card">
+        <div class="smart-head">
+          <div>
+            <span class="smart-kicker">أقرب ميدترم</span>
+            <strong class="midterm-subject">${esc(midterm.subjectName)}</strong>
+          </div>
+          <span class="countdown-pill">${esc(countdownLabel(midterm.endAt))}</span>
+        </div>
+        <div class="midterm-facts">
+          <span>${ICONS.calendar} ${esc(formatDateShort(midterm.date))}</span>
+          <span>${ICONS.clock} <span dir="ltr">${esc(midterm.startTime)}–${esc(midterm.endTime)}</span></span>
+          <span>${ICONS.pin} ${esc(midterm.venue)}</span>
+          <span>${ICONS.lecture} ${(midterm.lecturesInScope || []).length} محاضرات</span>
+          <span>${esc(String(midterm.marks))} درجة</span>
+        </div>
+        <div class="smart-actions">
+          <a class="smart-action" href="#${esc(midterm.subjectId)}/midterm-revision">${ICONS.revision}<span>مراجعة الميدترم</span></a>
+          <a class="smart-action" href="#practice/${esc(midterm.subjectId)}">${ICONS.question}<span>اختبر نفسك</span></a>
+        </div>
+      </div>`
+    : `<div class="smart-card midterm-card">
+        <div class="smart-head"><span class="smart-kicker">أقرب ميدترم</span></div>
+        <p class="smart-empty">لا يوجد ميدترم قادم في الجدول.</p>
+      </div>`;
+  smartStripEl.innerHTML = `<div class="smart-card today-card">
+      <div class="smart-head">
+        <div>
+          <span class="smart-kicker">جدولك ${today.label === "اليوم" ? "اليوم" : "القادم"}</span>
+          <strong class="smart-day">${esc(today.dayName || today.label)} · سكشن ${esc(state.section)}</strong>
+        </div>
+        <span class="smart-date">${esc(formatDateShort(today.date))}</span>
+      </div>
+      ${events}
+    </div>
+    ${midtermCard}`;
+}
+
+function renderTabs() {
+  const searching = searchActive();
+  const featureActive = Boolean(state.feature) && !searching;
+  const subjectTabs = state.data.subjects
+    .map((subject) => {
+      const count = subjectFiles(subject).length;
+      const active = !featureActive && !searching && subject.id === state.subjectId ? "true" : "false";
+      return `<button class="tab" type="button" role="tab" aria-selected="${active}"
+        data-subject="${subject.id}" style="--tab-accent:${subject.accent}">
+        <span class="dot"></span>
+        <span>${esc(subject.nameAr)}</span>
+        <span class="count">${count}</span>
+      </button>`;
+    })
+    .join("");
+  tabsEl.innerHTML = subjectTabs;
+  requestAnimationFrame(updateTabsScrollButtons);
+}
+
+function updateTabsScrollButtons() {
+  if (!tabsEl || !tabsPrevEl || !tabsNextEl) return;
+  const canScroll = tabsEl.scrollWidth > tabsEl.clientWidth + 4;
+  tabsPrevEl.hidden = !canScroll;
+  tabsNextEl.hidden = !canScroll;
+}
+
+function fileRow(file, subject, sectionId, variant = "", options = {}) {
+  const tokens = Array.isArray(options.tokens) ? options.tokens : [];
+  const meta = options.meta || "";
+  const badge = esc(file.ext || "file");
+  const yt = file.youtube
+    ? `<a class="act yt" href="${esc(file.youtube)}" target="_blank" rel="noopener" title="مشاهدة الشرح" aria-label="مشاهدة الشرح">${ICONS.play}</a>`
+    : "";
+  const run =
+    (file.ext || "").toLowerCase() === "html"
+      ? `<a class="act run" href="${esc(file.path)}" target="_blank" rel="noopener" title="تشغيل الملف التفاعلي" aria-label="تشغيل">${ICONS.play}</a>`
+      : "";
+  const className = `file${variant ? ` ${variant}` : ""}`;
+  return `<div class="${className}" tabindex="0" data-file="${esc(file.path)}" data-subject="${subject.id}" data-section="${esc(sectionId)}" title="اضغط لتحميل الملف">
+    <span class="file-badge ${badge}">${badge}</span>
+    <div class="file-main">
+      <span class="file-title" title="${esc(file.original || file.title)}">${highlightText(file.title, tokens)}</span>
+      ${options.showOriginal && file.original ? `<span class="file-original" dir="ltr">${highlightText(file.original, tokens)}</span>` : ""}
+      <span class="file-sub">
+        ${meta ? `<span class="file-meta">${esc(meta)}</span><span class="sep">·</span>` : ""}
+        <span dir="ltr">${fmtSize(file.size)}</span>
+        <span class="sep">·</span>
+        <span dir="ltr">${badge.toUpperCase()}</span>
+        <span class="sep hint-sep">·</span>
+        <span class="file-hint">اضغط للتحميل</span>
+      </span>
+    </div>
+    <div class="file-actions">
+      ${yt}
+      ${run}
+      <button class="act preview" type="button" title="معاينة داخل الموقع" aria-label="معاينة">${ICONS.eye}</button>
+      <span class="dl-pill">${ICONS.download}<span>تحميل</span></span>
+    </div>
+  </div>`;
+}
+
+function downloadRow(row) {
+  const subject = state.data.subjects.find((entry) => entry.id === row.dataset.subject);
+  const file = subject && subjectFiles(subject).find((entry) => entry.path === row.dataset.file);
+  if (!file) return;
+  const anchor = document.createElement("a");
+  anchor.href = file.path;
+  anchor.download = file.path.split("/").pop();
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  row.classList.add("is-downloading");
+  setTimeout(() => row.classList.remove("is-downloading"), 800);
+}
+
+function sectionIdOf(subject, file) {
+  const section = subject.sections.find((entry) =>
+    entry.files.some((item) => item.path === file.path),
+  );
+  return section ? section.id : "";
+}
+
+function maxLecture(subject) {
+  let max = 0;
+  for (const file of subjectFiles(subject)) {
+    if (Number.isInteger(file.lecture)) max = Math.max(max, file.lecture);
+    if (Array.isArray(file.lectureSpan)) {
+      for (const lecture of file.lectureSpan) {
+        if (Number.isInteger(lecture)) max = Math.max(max, lecture);
+      }
+    }
+  }
+  return max;
+}
+
+function lectureTotal(subject) {
+  const midterm = state.schedule?.coursesMeta?.[subject.id]?.midtermLectures || [];
+  return midterm.reduce(
+    (max, lecture) => (Number.isInteger(lecture) ? Math.max(max, lecture) : max),
+    maxLecture(subject),
+  );
+}
+
+function lectureNoun(count) {
+  return count >= 3 && count <= 10 ? "محاضرات" : "محاضرة";
+}
+
+function fileAppliesToLecture(file, lecture) {
+  return file.lecture === lecture || (Array.isArray(file.lectureSpan) && file.lectureSpan.includes(lecture));
+}
+
+function getStudied() {
+  const value = store.getJson("hub:studied", {});
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function updateStudyProgress(subjectId) {
+  const subject = subjectById(subjectId);
+  if (!subject) return;
+  const lectureCount = lectureTotal(subject);
+  const boxes = viewEl.querySelectorAll(`[data-study^="${CSS.escape(subjectId)}:"]`);
+  let studied = 0;
+  boxes.forEach((box) => {
+    if (box.checked) studied += 1;
+  });
+  const percent = lectureCount ? Math.round((studied / lectureCount) * 100) : 0;
+  const progress = viewEl.querySelector(`[data-progress="${CSS.escape(subjectId)}"]`);
+  if (!progress) return;
+  const label = progress.querySelector(".progress-head span");
+  const value = progress.querySelector(".progress-head strong");
+  const bar = progress.querySelector(".progress span");
+  if (label) label.textContent = `تمت مذاكرة ${studied} من ${lectureCount} ${lectureNoun(lectureCount)}`;
+  if (value) value.textContent = `${percent}%`;
+  if (bar) bar.style.width = `${percent}%`;
+}
+
+function renderCourseInfo(subject) {
+  const meta = state.schedule?.coursesMeta?.[subject.id];
+  if (!meta) return "";
+  const instructors = sectionInstructors(subject.id);
+  return `<div class="course-info" id="sec-course-info" data-spy-section="course-info" data-spy-label="معلومات المادة" style="--accent:${subject.accent}">
+    <div class="ci-item"><span class="ci-label">الدكتور</span><strong>${esc((meta.doctors || []).join("، ") || "غير محدد")}</strong></div>
+    <div class="ci-item"><span class="ci-label">معيد سكشنك (${esc(state.section)})</span><strong>${esc(instructors || "غير محدد")}</strong></div>
+    <div class="ci-item"><span class="ci-label">درجة الميدترم</span><strong>${esc(meta.midtermMarks || "غير محدد")}</strong></div>
+    <div class="ci-item"><span class="ci-label">نطاق الميدترم</span><strong>${esc(meta.midtermScopeText || "غير محدد")}</strong></div>
+    <a class="btn btn-sm ci-action" href="#practice/${esc(subject.id)}">${ICONS.question}<span>اختبر نفسك في المادة</span></a>
+  </div>`;
+}
+
+function renderReviewBlock(subject, files) {
+  const practiceHref = `#practice/${esc(subject.id)}`;
+  const midtermSection = subject.sections?.find((section) => section.id === "midterm-revision");
+  const important = Boolean(midtermSection?.important);
+  return `<section class="review-block" id="sec-review" data-spy-section="review" data-spy-label="مراجعات الميدترم">
+    <div class="review-head">
+      <div>
+        <div class="review-title-row">
+          <h3>مراجعات الميدترم والملفات الشاملة</h3>
+          ${important ? '<span class="important-badge">★ مهمة</span>' : ""}
+        </div>
+        ${important && midtermSection?.nameEn ? `<span class="review-folder" dir="ltr">${esc(midtermSection.nameEn)}</span>` : ""}
+        <p>${files.length} ملف · تشغيل مباشر للملفات التفاعلية أو اختبار سريع</p>
+      </div>
+      <a class="btn btn-sm" href="${practiceHref}">${ICONS.question}<span>اختبر نفسك</span></a>
+    </div>
+    ${
+      files.length
+        ? `<div class="review-grid">${files
+            .map((file) => fileRow(file, subject, sectionIdOf(subject, file)))
+            .join("")}</div>`
+        : `<p class="review-empty">لا توجد ملفات مراجعة لهذه المادة بعد.</p>`
+    }
+  </section>`;
+}
+
+function renderMatrixSlot(files, subject) {
+  if (!files.length) return `<span class="cell-empty">غير متاح حالياً</span>`;
+  return `<div class="cell-files">${files
+    .map((file) => fileRow(file, subject, sectionIdOf(subject, file), "file-compact"))
+    .join("")}</div>`;
+}
+
+function renderMatrix(subject) {
+  const meta = state.schedule?.coursesMeta?.[subject.id];
+  const midtermLectures = new Set(meta?.midtermLectures || []);
+  const files = subjectFiles(subject);
+  const lectureCount = lectureTotal(subject);
+  const reviewFiles = files.filter(
+    (file) =>
+      file.midtermReview === true ||
+      (file.midtermReview !== false &&
+        (file.kind === "review" || file.kind === "book" || file.lecture === null)),
+  );
+  const studiedMap = getStudied();
+  let studiedCount = 0;
+  const rows = [];
+
+  for (let lecture = 1; lecture <= lectureCount; lecture += 1) {
+    const lectureFiles = files.filter((file) => fileAppliesToLecture(file, lecture));
+    const slots = {
+      lecture: lectureFiles.filter((file) => file.kind === "lecture"),
+      summary: lectureFiles.filter((file) => file.kind === "summary"),
+      questions: lectureFiles.filter((file) => file.kind === "questions"),
+      solution: lectureFiles.filter((file) => file.kind === "solution"),
+    };
+    const key = `${subject.id}:${lecture}`;
+    const studied = Boolean(studiedMap[key]);
+    if (studied) studiedCount += 1;
+    rows.push(`<div class="matrix-row${studied ? " is-studied" : ""}" data-lecture="${lecture}">
+      <div class="matrix-lecture">
+        <div class="matrix-lec-top">
+          <span class="lec-number">${lecture}</span>
+          <div>
+            <strong>محاضرة ${lecture}</strong>
+            ${midtermLectures.has(lecture) ? '<span class="midterm-badge">في الميدترم</span>' : ""}
+          </div>
+        </div>
+        <label class="study-check"><input type="checkbox" data-study="${esc(key)}"${studied ? " checked" : ""}><span>تمت المذاكرة</span></label>
+      </div>
+      ${["lecture", "summary", "questions", "solution"]
+        .map(
+          (slot) =>
+            `<div class="matrix-cell" data-slot="${slot}">${renderMatrixSlot(slots[slot], subject)}</div>`,
+        )
+        .join("")}
+    </div>`);
+  }
+
+  const percent = lectureCount ? Math.round((studiedCount / lectureCount) * 100) : 0;
+  const table = lectureCount
+    ? `<div class="matrix-wrap" id="sec-matrix" data-spy-section="matrix" data-spy-label="جدول المحاضرات"><div class="matrix">
+        <div class="matrix-head">
+          <div>المحاضرة</div>
+          <div>${ICONS.lecture}<span>المحاضرة</span></div>
+          <div>${ICONS.summary}<span>الملخص</span></div>
+          <div>${ICONS.question}<span>الأسئلة</span></div>
+          <div>${ICONS.check}<span>الحل</span></div>
+        </div>
+        ${rows.join("")}
+      </div></div>`
+    : `<div class="empty">${ICONS.lecture}<strong>لا توجد محاضرات مفهرسة</strong><span>لم يتم العثور على ملفات محاضرات مرقمة لهذه المادة.</span></div>`;
+
+  return `${renderReviewBlock(subject, reviewFiles)}
+    <div class="matrix-toolbar" data-progress="${esc(subject.id)}">
+      <div class="progress-head"><span>تمت مذاكرة ${studiedCount} من ${lectureCount} ${lectureNoun(lectureCount)}</span><strong>${percent}%</strong></div>
+      <div class="progress"><span style="width:${percent}%"></span></div>
+    </div>
+    ${table}`;
+}
+
+function renderClassicSections(subject) {
+  return subject.sections
+    .map((section) => {
+      const open = store.get(`section:${section.id}`) !== "closed";
+      return `<section class="section" data-section="${section.id}" data-open="${open}">
+        <button class="section-head" type="button" aria-expanded="${open}">
+          <span class="section-icon">${ICONS[sectionIconKey(section)]}</span>
+          <span class="section-titles">
+            <h3>${esc(section.name)}${section.important ? ' <span class="important-badge">★ مهمة</span>' : ""}</h3>
+            <span class="en">${esc(section.nameEn)}</span>
+          </span>
+          <span class="section-badge">${section.files.length}</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="section-body">
+          ${section.files.map((file) => fileRow(file, subject, section.id)).join("")}
+        </div>
+      </section>`;
+    })
+    .join("");
+}
+
+function renderSubject(subject) {
+  const files = subjectFiles(subject);
+  const isTodayMidterm = todayMidterm()?.subjectId === subject.id;
+  const yt = subject.youtube
+    ? `<a class="btn yt-btn" href="${esc(subject.youtube)}" target="_blank" rel="noopener">
+        ${ICONS.play}<span>قائمة المحاضرات</span></a>`
+    : "";
+  const supportsMatrix = subject.id !== "midterm-revision";
+  const useMatrix = supportsMatrix && state.viewMode !== "classic";
+  const toggle = supportsMatrix
+    ? `<div class="subject-toolbar">
+        <button class="btn btn-sm" type="button" data-view-toggle="1">
+          ${useMatrix ? ICONS.folder : ICONS.grid}
+          <span>${useMatrix ? "عرض كأقسام كلاسيكية (القديم)" : "عرض كجدول محاضرات (الجديد)"}</span>
+        </button>
+      </div>`
+    : "";
+  const body = useMatrix ? renderMatrix(subject) : renderClassicSections(subject);
+
+  viewEl.innerHTML = `<div class="subject-wrap" style="--accent:${subject.accent}">
+    <div class="subject-head">
+      <div class="subject-titles">
+        <span class="eyebrow"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:${subject.accent};display:inline-block"></span>${esc(subject.name)}</span>
+        <h2>${esc(subject.nameAr)}</h2>
+      </div>
+      <div class="subject-actions">
+        ${yt}
+        <a class="btn" href="downloads/${subject.id}.zip" download>${ICONS.download}<span>تحميل المادة</span></a>
+      </div>
+    </div>
+    ${toggle}
+    ${body}
+    <div class="subject-info">
+      <div class="subject-meta">
+        <span class="chip">${ICONS.file}<span>${files.length} ملف</span></span>
+        <span class="chip">${ICONS.folder}<span dir="ltr">${fmtSize(subjectSize(subject))}</span></span>
+        <span class="chip">${ICONS.folder}<span>${subject.sections.length} أقسام</span></span>
+        ${isTodayMidterm ? `<span class="chip today-chip">${ICONS.calendar}<span>ميدترم اليوم</span></span>` : ""}
+      </div>
+      ${renderCourseInfo(subject)}
+    </div>
+  </div>`;
+}
+
+function renderSearch(query) {
+  const parsed = parseQuery(query);
+  const fileEntries = (state.searchIndex || []).filter((entry) =>
+    fileMatchesFacetsAndQuery(entry, parsed),
+  );
+  const questionEntries = parsed.tokens.length
+    ? (state.questionIndex || []).filter((entry) =>
+        questionMatchesFacetsAndQuery(entry, parsed),
+      )
+    : [];
+
+  const subjectOrder = new Map(
+    state.data.subjects.map((subject, index) => [subject.id, index]),
+  );
+  fileEntries.sort(
+    (a, b) =>
+      (subjectOrder.get(a.subject.id) ?? 99) - (subjectOrder.get(b.subject.id) ?? 99) ||
+      (a.file.lecture ?? 99) - (b.file.lecture ?? 99) ||
+      String(a.file.title).localeCompare(String(b.file.title), "ar"),
+  );
+
+  const fileGroups = [];
+  const fileGroupMap = new Map();
+  for (const entry of fileEntries) {
+    let group = fileGroupMap.get(entry.subject.id);
+    if (!group) {
+      group = { subject: entry.subject, entries: [] };
+      fileGroupMap.set(entry.subject.id, group);
+      fileGroups.push(group);
+    }
+    group.entries.push(entry);
+  }
+
+  const questionGroups = [];
+  const questionGroupMap = new Map();
+  for (const entry of questionEntries) {
+    const key = entry.subjectId;
+    let group = questionGroupMap.get(key);
+    if (!group) {
+      group = {
+        subject:
+          entry.subject || { id: key, nameAr: key, accent: "#64748b" },
+        entries: [],
+      };
+      questionGroupMap.set(key, group);
+      questionGroups.push(group);
+    }
+    group.entries.push(entry);
+  }
+
+  const fileCount = fileEntries.length;
+  const questionCount = questionEntries.length;
+  const label = parsed.raw.trim() ? `«${esc(parsed.raw.trim())}»` : "كل الملفات";
+  const head = `<div class="search-head">
+    <h2>نتائج البحث</h2>
+    <span class="muted">${fileCount} ملف · ${questionCount} سؤال · ${label}</span>
+  </div>`;
+
+  if (!fileCount && !questionCount) {
+    viewEl.innerHTML = `<div class="search-results">
+      ${head}
+      <div class="empty">
+        ${ICONS.search}
+        <strong>لا توجد نتائج</strong>
+        <span>جرّب كلمة أخرى مثل «محاضرة 3» أو «Database» أو «DFD»، أو امسح الفلاتر.</span>
+        ${searchActive() ? '<button class="btn btn-sm" type="button" data-facet="reset" style="margin-top:12px">مسح البحث والفلاتر</button>' : ""}
+      </div>
+    </div>`;
+    return;
+  }
+
+  const filesHtml = fileGroups
+    .map(
+      ({ subject, entries }) => `<div class="result-group" style="--accent:${subject.accent}">
+        <div class="result-subject">
+          <span class="dot" style="background:${subject.accent}"></span>
+          <span>${esc(subject.nameAr)}</span>
+          <span class="muted">${entries.length}</span>
+        </div>
+        <section class="section" data-open="true"><div class="section-body">
+          ${entries.map((entry) => searchFileCard(entry, parsed.tokens)).join("")}
+        </div></section>
+      </div>`,
+    )
+    .join("");
+
+  const questionsHtml = questionGroups
+    .map(({ subject, entries }) => {
+      const shown = entries.slice(0, MAX_QUESTIONS_PER_SUBJECT);
+      const hidden = entries.length - shown.length;
+      return `<div class="result-group" style="--accent:${subject.accent}">
+        <div class="result-subject">
+          <span class="dot" style="background:${subject.accent}"></span>
+          <span>${esc(subject.nameAr)} — أسئلة</span>
+          <span class="muted">${entries.length}</span>
+        </div>
+        <div class="question-list">
+          ${shown.map((entry) => searchQuestionCard(entry, parsed.tokens)).join("")}
+        </div>
+        ${hidden > 0 ? `<p class="q-more">+${hidden} سؤال آخر مطابق — ضيّق البحث أو استخدم الفلاتر.</p>` : ""}
+      </div>`;
+    })
+    .join("");
+
+  const questionsSection = questionsHtml
+    ? `<div class="search-section">
+        <h3 class="search-section-title">${ICONS.question}<span>الأسئلة المطابقة من بنك الامتحانات</span><span class="muted">${questionCount}</span></h3>
+        ${questionsHtml}
+      </div>`
+    : "";
+
+  viewEl.innerHTML = `<div class="search-results">
+    ${head}
+    ${filesHtml}
+    ${questionsSection}
+  </div>`;
+}
+
+function scheduleEventCard(entry, showSectionLabel) {
+  const subject = subjectById(entry.subjectId);
+  const range = eventPeriodRange(entry);
+  const typeLabel = entry.type === "section" ? "سكشن" : "محاضرة";
+  const badges = [];
+  badges.push(`<span class="tt-badge">${typeLabel}</span>`);
+  if (entry.sectionBadge === "مشترك") badges.push('<span class="tt-badge shared">مشترك</span>');
+  else if (showSectionLabel && entry.sectionBadge)
+    badges.push(`<span class="tt-badge">${esc(entry.sectionBadge)}</span>`);
+  return `<div class="tt-event" style="--accent:${esc(subject?.accent || "#2563eb")}">
+    <span class="tt-time" dir="ltr">${esc(range.label)}</span>
+    <span class="tt-title">${esc(entry.title)}</span>
+    <span class="tt-meta">${esc(entry.room || "")}${entry.instructor ? ` · ${esc(entry.instructor)}` : ""}</span>
+    <span class="tt-badges">${badges.join("")}</span>
+  </div>`;
+}
+
+function renderSchedule() {
+  const schedule = state.schedule;
+  if (!schedule) {
+    viewEl.innerHTML = `<div class="empty">${ICONS.calendar}<strong>الجدول غير متاح</strong><span>لم يتم تحميل بيانات الجدول.</span></div>`;
+    return;
+  }
+  const all = state.scheduleAll;
+  const entriesByDay = new Map(WEEK_DAYS.map((day) => [day, []]));
+  const addEntry = (entry, sectionBadge) => {
+    if (!entriesByDay.has(entry.day)) return;
+    entriesByDay.get(entry.day).push({ ...entry, sectionBadge });
+  };
+
+  if (all) {
+    for (const entry of schedule.sharedLectures || []) addEntry(entry, "مشترك");
+    for (const [sectionNumber, entries] of Object.entries(schedule.sectionsTimetable || {})) {
+      for (const entry of entries) addEntry(entry, `سكشن ${sectionNumber}`);
+    }
+  } else {
+    for (const entry of schedule.sharedLectures || []) {
+      if ((entry.sections || []).map(Number).includes(Number(state.section))) {
+        addEntry(entry, "مشترك");
+      }
+    }
+    for (const entry of schedule.sectionsTimetable?.[String(state.section)] || []) {
+      addEntry(entry, "");
+    }
+  }
+
+  for (const entries of entriesByDay.values()) {
+    entries.sort(
+      (a, b) =>
+        (a.periods?.[0] || 0) - (b.periods?.[0] || 0) ||
+        String(a.subjectId).localeCompare(String(b.subjectId)),
+    );
+  }
+
+  const week = WEEK_DAYS.map((day) => {
+    const entries = entriesByDay.get(day);
+    return `<div class="day-col">
+      <div class="day-col-head"><strong>${day}</strong><span>${entries.length} حدث</span></div>
+      <div class="day-events">${
+        entries.length
+          ? entries.map((entry) => scheduleEventCard(entry, all)).join("")
+          : '<span class="day-empty">لا توجد محاضرات</span>'
+      }</div>
+    </div>`;
+  }).join("");
+
+  const midtermRows = (schedule.midterms || [])
+    .map((midterm) => {
+      const status = midtermStatus(midterm);
+      const meta = schedule.coursesMeta?.[midterm.subjectId];
+      return `<tr class="${status.active ? "now-row" : ""}">
+        <td><strong>${esc(midterm.subjectName)}</strong>${meta?.code ? `<div class="muted" dir="ltr">${esc(meta.code)}</div>` : ""}</td>
+        <td>${esc(midterm.dayAr)}</td>
+        <td>${esc(formatDateShort(midterm.date))}</td>
+        <td dir="ltr">${esc(midterm.startTime)}–${esc(midterm.endTime)}</td>
+        <td>${esc(midterm.venue)}</td>
+        <td>${(midterm.lecturesInScope || []).length} محاضرة${midterm.scopeNote ? `<div class="muted">${esc(midterm.scopeNote)}</div>` : ""}</td>
+        <td>${esc(String(midterm.marks))} درجة${midterm.marksNote ? `<div class="muted">${esc(midterm.marksNote)}</div>` : ""}</td>
+        <td><span class="status-pill${status.active ? " active" : ""}">${esc(status.label)}</span></td>
+      </tr>`;
+    })
+    .join("");
+
+  const calendar = (schedule.calendar || [])
+    .map(
+      (item) => `<div class="cal-card">
+        <strong>${esc(item.title)}</strong>
+        <span class="cal-dates">${esc(formatRange(item.startDate, item.endDate))}</span>
+        ${item.note ? `<span class="cal-note">${esc(item.note)}</span>` : ""}
+      </div>`,
+    )
+    .join("");
+
+  const periods = (schedule.periods || [])
+    .map(
+      (period) => `<div class="period-card">
+        <span class="period-num">${period.id}</span>
+        <div>
+          <strong>${esc(period.label)}</strong>
+          <span class="period-time" dir="ltr">${esc(period.start)} – ${esc(period.end)}</span>
+        </div>
+      </div>`,
+    )
+    .join("");
+
+  viewEl.innerHTML = `<div class="feature-page schedule-page">
+    <div class="schedule-toolbar">
+      <div class="segment">
+        <button class="btn btn-sm${!all ? " is-active" : ""}" type="button" data-schedule-all="0">سكشنك فقط</button>
+        <button class="btn btn-sm${all ? " is-active" : ""}" type="button" data-schedule-all="1">كل السكاشن</button>
+      </div>
+      <span class="muted">${all ? "كل السكاشن مع تمييز رقم كل سكشن" : `عرض محاضرات وسكاشن سكشن ${esc(state.section)}`}</span>
+    </div>
+    <section class="schedule-block" id="sec-week" data-spy-section="week" data-spy-label="جدول الأسبوع">
+      <h2>جدول الأسبوع</h2>
+      <p>المحاضرات المشتركة تظهر تلقائيًا حسب السكشن المختار.</p>
+      <div class="week-grid">${week}</div>
+    </section>
+    <div class="feature-hero schedule-hero" style="--accent:#0f766e">
+      <span class="eyebrow">${ICONS.calendar} الجدول الدراسي والميدترم</span>
+      <h2>${withLtrYears(schedule.term)}</h2>
+      <p class="feature-sub">${esc(schedule.faculty)} · ${esc(schedule.department)}</p>
+      <div class="feature-meta">
+        <span class="chip">${ICONS.calendar}<span>سكشنك: ${esc(state.section)}</span></span>
+        <span class="chip">${ICONS.clock}<span>بداية الدراسة: ${esc(formatDateShort(schedule.studyStartDate))}</span></span>
+      </div>
+    </div>
+    <section class="schedule-block" id="sec-midterms" data-spy-section="midterms" data-spy-label="امتحانات الميدترم">
+      <h2>امتحانات الميدترم</h2>
+      <p>5 امتحانات إلكترونية — 11:00 إلى 11:30 صباحًا.</p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>المادة</th><th>اليوم</th><th>التاريخ</th><th>الوقت</th><th>المكان</th><th>المحاضرات</th><th>الدرجة</th><th>الحالة</th></tr></thead>
+          <tbody>${midtermRows}</tbody>
+        </table>
+      </div>
+    </section>
+    <section class="schedule-block" id="sec-calendar" data-spy-section="calendar" data-spy-label="الخريطة الزمنية">
+      <h2>الخريطة الزمنية للترم</h2>
+      <div class="calendar-grid">${calendar}</div>
+    </section>
+    <section class="schedule-block" id="sec-periods" data-spy-section="periods" data-spy-label="مواعيد الفترات">
+      <h2>مواعيد الفترات</h2>
+      <p>${withLtrYears(schedule.term)}</p>
+      <div class="period-grid">${periods}</div>
+    </section>
+  </div>`;
+}
+
+function examSubtabsHtml(activeTab) {
+  const mistakesObj = store.getJson("hub:mistakes", {});
+  const mistakesCount =
+    mistakesObj && typeof mistakesObj === "object" ? Object.keys(mistakesObj).length : 0;
+  return `<div class="exam-subtabs" role="tablist" aria-label="أقسام الامتحانات">
+    <a class="exam-subtab${activeTab === "practice" ? " is-active" : ""}" href="#practice" role="tab" aria-selected="${activeTab === "practice"}">
+      ${ICONS.question}<span>بنك الأسئلة</span>
+    </a>
+    <a class="exam-subtab${activeTab === "mistakes" ? " is-active" : ""}" href="#mistakes" role="tab" aria-selected="${activeTab === "mistakes"}">
+      ${ICONS.bolt}<span>أخطائي</span>${mistakesCount > 0 ? `<span class="exam-subtab-badge">${mistakesCount}</span>` : ""}
+    </a>
+  </div><div id="quiz-mount"></div>`;
+}
+
+function renderPractice() {
+  if (window.HubQuiz) {
+    viewEl.innerHTML = examSubtabsHtml("practice");
+    window.HubQuiz.renderPractice($("#quiz-mount", viewEl), {
+      subjectId: state.practiceSubject || "all",
+    });
+    return;
+  }
+  const subject = state.practiceSubject ? subjectById(state.practiceSubject) : null;
+  const title = subject ? subject.nameAr : "كل المواد";
+  const backId = subject ? subject.id : state.subjectId || defaultSubjectId();
+  const chips = state.data.subjects
+    .filter((entry) => entry.id !== "midterm-revision")
+    .map(
+      (entry) =>
+        `<a class="chip" href="#practice/${entry.id}" style="--accent:${entry.accent}"><span class="dot" style="background:${entry.accent}"></span>${esc(entry.nameAr)}</a>`,
+    )
+    .join("");
+  viewEl.innerHTML = `<div class="feature-page">
+    <div class="feature-hero" style="--accent:${subject?.accent || "#2563eb"}">
+      <span class="eyebrow">${ICONS.question} بنك الأسئلة والامتحانات التفاعلية</span>
+      <h2>اختبر نفسك — ${esc(title)}</h2>
+      <p class="feature-sub">محرك الامتحانات التفاعلي قيد التجهيز. سيتم تفعيل وضع التدريب الفوري ومحاكاة الميدترم وبنك الأخطاء قريبًا.</p>
+      <div class="feature-actions">
+        <a class="btn btn-primary" href="#${esc(backId)}">${ICONS.lecture}<span>العودة للمادة</span></a>
+      </div>
+      <div class="feature-chips">${chips}</div>
+    </div>
+    <div class="empty">${ICONS.question}<strong>بنك الأسئلة قيد التجهيز</strong><span>هذه الصفحة ستحتوي على الأسئلة التفاعلية لكل مادة.</span></div>
+  </div>`;
+}
+
+function renderMistakes() {
+  if (window.HubQuiz) {
+    viewEl.innerHTML = examSubtabsHtml("mistakes");
+    window.HubQuiz.renderMistakes($("#quiz-mount", viewEl), {});
+    return;
+  }
+  viewEl.innerHTML = `<div class="feature-page">
+    <div class="feature-hero" style="--accent:#dc2626">
+      <span class="eyebrow">${ICONS.question} بنك أخطائي</span>
+      <h2>امتحن في أخطائك فقط</h2>
+      <p class="feature-sub">سيتم تسجيل كل سؤال تخطئ فيه هنا مع تكرار الخطأ، ثم يُستبعد بعد الإجابة الصحيحة مرتين.</p>
+    </div>
+    <div class="empty">${ICONS.bolt}<strong>بنك الأخطاء قيد التجهيز</strong><span>سيتوفر مع محرك الامتحانات التفاعلي.</span></div>
+  </div>`;
+}
+
+let spyObserver = null;
+
+function setActiveSpy(id) {
+  if (!sidebarEl) return;
+  sidebarEl.querySelectorAll("[data-spy-target]").forEach((link) => {
+    link.classList.toggle("is-active", link.dataset.spyTarget === id);
+  });
+}
+
+function setupScrollSpy() {
+  if (spyObserver) {
+    spyObserver.disconnect();
+    spyObserver = null;
+  }
+  const sections = [...viewEl.querySelectorAll("[data-spy-section]")];
+  if (!sections.length) return;
+  setActiveSpy(sections[0].dataset.spySection);
+  if (typeof IntersectionObserver !== "function") return;
+  spyObserver = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible.length) {
+        setActiveSpy(visible[0].target.dataset.spySection);
+      }
+    },
+    { rootMargin: "-120px 0px -55% 0px", threshold: 0.01 },
+  );
+  sections.forEach((section) => spyObserver.observe(section));
+}
+
+function renderSidebar() {
+  if (!sidebarEl || !state.data) return;
+  const searching = searchActive() || state.filtersOpen;
+  const featureActive = Boolean(state.feature) && !searching;
+
+  const spySections = [...viewEl.querySelectorAll("[data-spy-section]")];
+  const currentSubject = !featureActive && !searching ? subjectById(state.subjectId) : null;
+  const contextLabel = searching
+    ? "البحث والفلاتر"
+    : state.feature === "schedule"
+      ? "الجدول الدراسي"
+      : state.feature === "practice"
+        ? "بنك الأسئلة"
+        : state.feature === "mistakes"
+          ? "بنك أخطائي"
+          : currentSubject
+            ? currentSubject.nameAr
+            : "الصفحة الحالية";
+
+  const tocHtml = spySections.length
+    ? `<nav class="sidebar-toc" aria-label="أقسام الصفحة">
+        ${spySections
+          .map(
+            (sec, idx) =>
+              `<button type="button" class="sidebar-toc-link${idx === 0 ? " is-active" : ""}" data-spy-target="${esc(sec.dataset.spySection)}">
+                <span class="toc-indicator"></span>
+                <span>${esc(sec.dataset.spyLabel || sec.dataset.spySection)}</span>
+              </button>`,
+          )
+          .join("")}
+      </nav>`
+    : `<div class="sidebar-context">${esc(contextLabel)}</div>`;
+
+  sidebarEl.innerHTML = `
+    <div class="sidebar-top">
+      <div class="sidebar-top-brand">
+        <img src="assets/logo.png" alt="" width="34" height="34">
+        <div class="sidebar-top-text">
+          <strong>محتويات الصفحة</strong>
+          <span>${esc(contextLabel)}</span>
+        </div>
+      </div>
+      <button class="icon-btn sidebar-close" type="button" data-sidebar-close aria-label="إغلاق المحتويات">
+        <svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-heading">${spySections.length ? "في هذه الصفحة" : "الصفحة الحالية"}</div>
+      ${tocHtml}
+    </div>`;
+}
+
+const sidebarQuery = window.matchMedia("(min-width: 961px)");
+
+function setSidebarOpen(open, { focus = false } = {}) {
+  const persistent = sidebarQuery.matches;
+  state.sidebarOpen = persistent ? false : Boolean(open);
+  if (sidebarEl) sidebarEl.hidden = persistent ? false : !state.sidebarOpen;
+  if (sidebarBackdropEl) sidebarBackdropEl.hidden = persistent ? true : !state.sidebarOpen;
+  sidebarToggleEl?.setAttribute("aria-expanded", String(persistent || state.sidebarOpen));
+  document.documentElement.classList.toggle("sidebar-open", !persistent && state.sidebarOpen);
+  if (!focus || persistent) return;
+  if (state.sidebarOpen) sidebarEl?.querySelector("[data-sidebar-close]")?.focus();
+  else sidebarToggleEl?.focus();
+}
+
+function activeTopMode() {
+  const searching = searchActive() || state.filtersOpen;
+  if (!searching && state.feature === "schedule") return "schedule";
+  if (!searching && (state.feature === "practice" || state.feature === "mistakes")) return "exam";
+  return "lectures";
+}
+
+function renderModeSwitcher() {
+  const mode = activeTopMode();
+  if (tabsBarEl) tabsBarEl.hidden = mode !== "lectures";
+  if (!modeSwitcherEl) return;
+  modeSwitcherEl.querySelectorAll("[data-mode]").forEach((btn) => {
+    const active = btn.dataset.mode === mode;
+    btn.classList.toggle("is-active", active);
+    btn.setAttribute("aria-selected", String(active));
+  });
+}
+
+function render() {
+  renderModeSwitcher();
+  renderSmartStrip();
+  renderFacets();
+  if (searchActive()) {
+    renderTabs();
+    renderSearch(state.query);
+    document.title = `نتائج البحث — ${state.data.title}`;
+    renderSidebar();
+    setupScrollSpy();
+    return;
+  }
+  if (state.feature === "schedule") {
+    renderTabs();
+    renderSchedule();
+    document.title = `الجدول الدراسي — ${state.data.title}`;
+    renderSidebar();
+    setupScrollSpy();
+    return;
+  }
+  if (state.feature === "practice") {
+    renderTabs();
+    renderPractice();
+    document.title = `بنك الأسئلة — ${state.data.title}`;
+    renderSidebar();
+    setupScrollSpy();
+    return;
+  }
+  if (state.feature === "mistakes") {
+    renderTabs();
+    renderMistakes();
+    document.title = `بنك أخطائي — ${state.data.title}`;
+    renderSidebar();
+    setupScrollSpy();
+    return;
+  }
+
+  const subject = subjectById(state.subjectId) || subjectById(defaultSubjectId());
+  if (!subject) return;
+  state.subjectId = subject.id;
+  renderTabs();
+
+  if (state.renderedSubject !== subject.id) {
+    state.renderedSubject = subject.id;
+    tabsEl
+      .querySelector('[aria-selected="true"]')
+      ?.scrollIntoView({ block: "nearest", inline: "center" });
+  }
+
+  renderSubject(subject);
+  document.title = `${subject.nameAr} — ${state.data.title}`;
+  renderSidebar();
+  setupScrollSpy();
+}
+
+function parseHash() {
+  const rawHash = location.hash.replace(/^#/, "");
+  let raw = rawHash;
+  try {
+    raw = decodeURIComponent(rawHash);
+  } catch (error) {
+    raw = rawHash;
+  }
+  if (!raw) return null;
+  const [subjectId, sectionId, fileId] = raw.split("/");
+  return { subjectId, sectionId, fileId, raw };
+}
+
+function clearSearch() {
+  resetFacets();
+  if (state.query || searchEl.value) {
+    searchEl.value = "";
+    state.query = "";
+  }
+}
+
+function route() {
+  setSidebarOpen(false);
+  const parsed = parseHash();
+  if (!parsed) {
+    state.feature = null;
+    state.subjectId = defaultSubjectId();
+    render();
+    return;
+  }
+
+  if (parsed.raw === "upload") {
+    openUpload();
+    return;
+  }
+
+  if (parsed.subjectId === "schedule") {
+    state.feature = "schedule";
+    clearSearch();
+    if (!modalEl.hidden) closePreview(false);
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+  if (parsed.subjectId === "practice") {
+    state.feature = "practice";
+    state.practiceSubject = parsed.sectionId || null;
+    window.HubQuiz?.reset();
+    clearSearch();
+    if (!modalEl.hidden) closePreview(false);
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+  if (parsed.subjectId === "mistakes") {
+    state.feature = "mistakes";
+    window.HubQuiz?.reset();
+    clearSearch();
+    if (!modalEl.hidden) closePreview(false);
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+  const subject = state.data.subjects.find((entry) => entry.id === parsed.subjectId);
+  if (!subject) {
+    state.feature = null;
+    state.subjectId = defaultSubjectId();
+    render();
+    return;
+  }
+
+  clearSearch();
+  state.feature = null;
+  state.subjectId = subject.id;
+  state.lastSubject = subject.id;
+  render();
+
+  if (!parsed.fileId && !modalEl.hidden) closePreview(false);
+
+  if (parsed.sectionId) {
+    const sectionEl = viewEl.querySelector(
+      `.section[data-section="${CSS.escape(parsed.sectionId)}"]`,
+    );
+    if (sectionEl) {
+      sectionEl.dataset.open = "true";
+      sectionEl.querySelector(".section-head")?.setAttribute("aria-expanded", "true");
+      if (!parsed.fileId) sectionEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (!parsed.fileId) {
+      const fallback =
+        parsed.sectionId === "midterm-revision"
+          ? viewEl.querySelector(".review-block")
+          : parsed.sectionId === "lectures"
+            ? viewEl.querySelector(".matrix-wrap")
+            : null;
+      fallback?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  if (parsed.fileId) {
+    const file = subjectFiles(subject).find(
+      (entry) => entry.id === parsed.fileId || entry.path.endsWith(`/${parsed.fileId}`),
+    );
+    if (file) openPreview(file);
+  }
+}
+
+function navigate(hash) {
+  const next = `#${hash}`;
+  if (location.hash === next) route();
+  else location.hash = next;
+}
+
+tabsEl.addEventListener("click", (event) => {
+  const tab = event.target.closest(".tab");
+  if (!tab) return;
+  state.filtersOpen = false;
+  clearSearch();
+  if (tab.dataset.route) navigate(tab.dataset.route);
+  else navigate(tab.dataset.subject);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+viewEl.addEventListener("click", (event) => {
+  const resetButton = event.target.closest('[data-facet="reset"]');
+  if (resetButton) {
+    resetSearchUI();
+    return;
+  }
+
+  const viewToggle = event.target.closest("[data-view-toggle]");
+  if (viewToggle) {
+    state.viewMode = state.viewMode === "matrix" ? "classic" : "matrix";
+    store.set("hub:viewMode", state.viewMode);
+    render();
+    return;
+  }
+
+  const scheduleToggle = event.target.closest("[data-schedule-all]");
+  if (scheduleToggle) {
+    state.scheduleAll = scheduleToggle.dataset.scheduleAll === "1";
+    render();
+    return;
+  }
+
+  const head = event.target.closest(".section-head");
+  if (head && !event.target.closest("a")) {
+    const section = head.closest(".section");
+    const open = section.dataset.open !== "true";
+    section.dataset.open = String(open);
+    head.setAttribute("aria-expanded", String(open));
+    store.set(`section:${section.dataset.section}`, open ? "open" : "closed");
+    return;
+  }
+
+  const previewBtn = event.target.closest(".preview");
+  if (previewBtn) {
+    const row = previewBtn.closest(".file");
+    const subject = state.data.subjects.find((entry) => entry.id === row.dataset.subject);
+    const file = subject && subjectFiles(subject).find((entry) => entry.path === row.dataset.file);
+    if (file) openPreview(file);
+    return;
+  }
+
+  const row = event.target.closest(".file");
+  if (row && !event.target.closest("a")) downloadRow(row);
+});
+
+viewEl.addEventListener("change", (event) => {
+  const checkbox = event.target.closest("[data-study]");
+  if (!checkbox) return;
+  const key = checkbox.dataset.study;
+  const subjectId = key.split(":")[0];
+  const studied = getStudied();
+  if (checkbox.checked) studied[key] = true;
+  else delete studied[key];
+  store.setJson("hub:studied", studied);
+  const row = checkbox.closest(".matrix-row");
+  if (row) row.classList.toggle("is-studied", checkbox.checked);
+  updateStudyProgress(subjectId);
+});
+
+viewEl.addEventListener("keydown", (event) => {
+  const row = event.target.closest?.(".file");
+  if (!row || event.target !== row) return;
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    downloadRow(row);
+  }
+});
+
+let searchTimer;
+searchEl.addEventListener("input", () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    state.query = searchEl.value;
+    render();
+  }, 90);
+});
+
+searchEl.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    resetSearchUI();
+  }
+});
+
+facetsEl?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-facet]");
+  if (!button) return;
+  if (button.dataset.facet === "reset") {
+    resetSearchUI();
+    return;
+  }
+  if (button.dataset.facet === "close") {
+    state.filtersOpen = false;
+    render();
+    return;
+  }
+  state.facets[button.dataset.facet] = button.dataset.value;
+  render();
+});
+
+filterToggleEl?.addEventListener("click", () => {
+  state.filtersOpen = !state.filtersOpen;
+  render();
+  if (state.filtersOpen) searchEl.focus();
+});
+
+sidebarToggleEl?.addEventListener("click", () => {
+  setSidebarOpen(!state.sidebarOpen, { focus: true });
+});
+
+sidebarBackdropEl?.addEventListener("click", () => {
+  setSidebarOpen(false, { focus: true });
+});
+
+sidebarEl?.addEventListener("click", (event) => {
+  if (event.target.closest("[data-sidebar-close]")) {
+    setSidebarOpen(false, { focus: true });
+    return;
+  }
+  const spyBtn = event.target.closest("[data-spy-target]");
+  if (spyBtn) {
+    setSidebarOpen(false);
+    const el = viewEl.querySelector(`[data-spy-section="${CSS.escape(spyBtn.dataset.spyTarget)}"]`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveSpy(spyBtn.dataset.spyTarget);
+    }
+  }
+});
+
+modeSwitcherEl?.addEventListener("click", (event) => {
+  const btn = event.target.closest("[data-mode]");
+  if (!btn) return;
+  const mode = btn.dataset.mode;
+  state.filtersOpen = false;
+  clearSearch();
+  if (mode === "lectures") {
+    navigate(state.lastSubject || defaultSubjectId());
+  } else if (mode === "schedule") {
+    navigate("schedule");
+  } else if (mode === "exam") {
+    navigate("practice");
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+tabsPrevEl?.addEventListener("click", () => {
+  tabsEl?.scrollBy({ left: 220, behavior: "smooth" });
+});
+
+tabsNextEl?.addEventListener("click", () => {
+  tabsEl?.scrollBy({ left: -220, behavior: "smooth" });
+});
+
+window.addEventListener("resize", updateTabsScrollButtons);
+
+sidebarQuery.addEventListener("change", () => {
+  setSidebarOpen(false);
+  updateTabsScrollButtons();
+});
+
+sectionPickerEl?.addEventListener("change", (event) => {
+  const value = String(event.target.value);
+  if (!SECTION_VALUES.includes(value)) return;
+  state.section = value;
+  store.set("hub:mySection", value);
+  render();
+});
+
+document.addEventListener("keydown", (event) => {
+  const typing = /^(input|textarea)$/i.test(document.activeElement?.tagName || "");
+  if (event.key === "/" && !typing) {
+    event.preventDefault();
+    searchEl.focus();
+  }
+  if (event.key === "Escape" && state.sidebarOpen) setSidebarOpen(false, { focus: true });
+  if (event.key === "Escape" && !modalEl.hidden) closePreview();
+  if (event.key === "Escape" && !uploadEl.hidden) closeUpload();
+});
+
+function openPreview(file) {
+  $("#modal-title").textContent = file.title;
+  $("#modal-badge").textContent = (file.ext || "file").toUpperCase();
+  $("#modal-badge").className = `file-badge ${file.ext || ""}`;
+  $("#modal-download").href = file.path;
+  $("#modal-download").setAttribute("download", "");
+  $("#modal-open").href = file.path;
+
+  const body = $("#modal-body");
+  const ext = (file.ext || "").toLowerCase();
+
+  if (ext === "pdf") {
+    body.innerHTML = `<iframe src="${esc(file.path)}#view=FitH" title="${esc(file.title)}"></iframe>`;
+  } else if (["jpg", "jpeg", "png", "webp", "gif"].includes(ext)) {
+    body.innerHTML = `<img src="${esc(file.path)}" alt="${esc(file.title)}" style="height:100%;width:100%;object-fit:contain">`;
+  } else if (ext === "txt") {
+    body.innerHTML = `<pre>جارٍ التحميل…</pre>`;
+    fetch(file.path)
+      .then((response) => response.text())
+      .then((text) => {
+        body.innerHTML = `<pre>${esc(text)}</pre>`;
+      })
+      .catch(() => {
+        body.innerHTML = note("تعذّر قراءة الملف", "يمكنك تحميله بدلًا من ذلك.", "file");
+      });
+  } else {
+    body.innerHTML = note(
+      "لا تتوفّر معاينة لهذا النوع",
+      "نزّل الملف لفتحه في Office أو أي تطبيق مناسب.",
+      "file",
+    );
+  }
+
+  modalEl.hidden = false;
+  document.documentElement.style.overflow = "hidden";
+}
+
+function note(title, message, icon) {
+  return `<div class="modal-note">${ICONS[icon] || ICONS.file}<strong>${esc(title)}</strong><span>${esc(message)}</span></div>`;
+}
+
+function closePreview(navigateBack = true) {
+  modalEl.hidden = true;
+  $("#modal-body").innerHTML = "";
+  document.documentElement.style.overflow = "";
+  if (navigateBack && parseHash()?.fileId) navigate(state.subjectId || defaultSubjectId());
+}
+
+modalEl.addEventListener("click", (event) => {
+  if (event.target.closest("[data-close]")) closePreview();
+});
+
+function openUpload() {
+  uploadEl.hidden = false;
+  document.documentElement.style.overflow = "hidden";
+}
+
+function closeUpload() {
+  uploadEl.hidden = true;
+  document.documentElement.style.overflow = "";
+  if (location.hash === "#upload") navigate(state.subjectId || defaultSubjectId());
+}
+
+uploadEl.addEventListener("click", (event) => {
+  if (event.target.closest("[data-close-upload]")) closeUpload();
+});
+
+function setFooter() {
+  const total = totalFiles();
+  const size = state.data.subjects.reduce((sum, subject) => sum + subjectSize(subject), 0);
+  $("#site-title").textContent = state.data.title;
+  $("#site-subtitle").textContent = state.data.subtitle;
+  $("#footer-note").textContent = `${total} ملف · ${fmtSize(size)} · آخر تحديث ${state.data.updated}`;
+}
+
+window.addEventListener("hashchange", route);
+
+async function loadData() {
+  if (location.protocol !== "file:") {
+    try {
+      const response = await fetch("data/subjects.json", { cache: "no-store" });
+      if (response.ok) return await response.json();
+    } catch (error) {
+      console.warn("manifest fetch failed, using embedded copy", error);
+    }
+  }
+  if (window.__SITE_DATA__) return window.__SITE_DATA__;
+  throw new Error("no manifest available");
+}
+
+(async function boot() {
+  themeInit();
+  initSection();
+  renderSectionPicker();
+
+  try {
+    state.data = await loadData();
+  } catch (error) {
+    viewEl.innerHTML = `<div class="empty">
+      ${ICONS.file}
+      <strong>تعذّر تحميل قائمة الملفات</strong>
+      <span>شغّل الموقع من سيرفر محلي: <code>python -m http.server 8080</code></span>
+    </div>`;
+    return;
+  }
+
+  state.schedule = window.__SITE_SCHEDULE__ || null;
+  state.questions = window.__SITE_QUESTIONS__ || {};
+  window.HubQuiz?.init({ banks: state.questions, subjects: state.data.subjects });
+  buildSearchIndex();
+  setFooter();
+  route();
+
+  const topbar = document.querySelector(".topbar");
+  const onScroll = () => topbar.classList.toggle("is-stuck", window.scrollY > 4);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+})();

@@ -1,0 +1,1298 @@
+[
+  {
+    "id": "rm-l1-001",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Research is a ___.",
+    "options": [
+      "Searching again and again",
+      "Finding solution to any problem",
+      "Working in a scientific way to search for truth of any problem",
+      "None of the above"
+    ],
+    "answer": 2,
+    "explanation": "البحث العلمي دائم ًا يرتبط بالعمل بطريقة علمية للوصول إىل الحقيقة وليس مجرد البحث المتكرر العشوائي:"
+  },
+  {
+    "id": "rm-l1-002",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q12] Research is an investigation of finding solutions to scientific and social problems through ___.",
+    "options": [
+      "research problems",
+      "contributions",
+      "objective and systematic analysis",
+      "knowledge"
+    ],
+    "answer": 2,
+    "explanation": "objective and systematic analysis"
+  },
+  {
+    "id": "rm-l1-003",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The main function of research is always (OR: The research is always):",
+    "options": [
+      "verifying the old knowledge",
+      "exploring new knowledge",
+      "filling the gap between knowledge",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l1-004",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Final 2026 Q10] Good research is always ___.",
+    "options": [
+      "Slow",
+      "Fast",
+      "Narrow",
+      "Systematic"
+    ],
+    "answer": 3,
+    "explanation": "Systematic"
+  },
+  {
+    "id": "rm-l1-005",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: MID 2025 Q11] Which one of the following is/are NOT the characteristic of research?",
+    "options": [
+      "Systemic",
+      "Non-systematic",
+      "Logical",
+      "Empirical"
+    ],
+    "answer": 1,
+    "explanation": "Non-systematic"
+  },
+  {
+    "id": "rm-l1-006",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which of the following does NOT correspond to characteristics of research?",
+    "options": [
+      "Research is not passive",
+      "Research is systematic",
+      "Research is not a process",
+      "None of them"
+    ],
+    "answer": 2,
+    "explanation": "Research is not a process"
+  },
+  {
+    "id": "rm-l1-007",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q2] Regarding the context in the DIKW hierarchy, ___ is the joining of wholes.",
+    "options": [
+      "Data",
+      "Information",
+      "Knowledge",
+      "Wisdom (Note: marked Knowledge in some student quiz sheets; Slide 9 pyramid shows Wisdom at top near \"Joining of wholes\" and Knowledge near \"Formation of a whole\")"
+    ],
+    "answer": 2,
+    "explanation": "(c / d — Know both from Slide 9 pyramid) ، ووظيفته تشمل التحقق من القديم)Process( وهو عملية مستمرة)Systematic( البحث الجيد دائم ًا منظم:.ًواستكشاف الجديد وسد الفجوة مع"
+  },
+  {
+    "id": "rm-l1-008",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: MID 2025 Q14] The method that consists of collection of data through observation and experimentation, formulation and testing of hypothesis is called ___ method.",
+    "options": [
+      "Empirical",
+      "Practical knowledge",
+      "Scientific",
+      "None of them"
+    ],
+    "answer": 2,
+    "explanation": "Scientific"
+  },
+  {
+    "id": "rm-l1-009",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "[Source: MID 2025 Q5] The main characteristic of scientific research is:",
+    "options": [
+      "Empirical",
+      "All of them correct",
+      "Experimental",
+      "Theoretical"
+    ],
+    "answer": 1,
+    "explanation": "All of them correct"
+  },
+  {
+    "id": "rm-l1-010",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "To review the available scientific literature on the topic so that the current study will draw on the heritage of past research means science is ___.",
+    "options": [
+      "Systematic and cumulative",
+      "empirical",
+      "heuristic",
+      "public"
+    ],
+    "answer": 0,
+    "explanation": "Systematic and cumulative"
+  },
+  {
+    "id": "rm-l1-011",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "No single research study stands alone, nor does it rise or fall by itself. This means science is ___.",
+    "options": [
+      "Systematic and cumulative",
+      "empirical",
+      "heuristic",
+      "public"
+    ],
+    "answer": 0,
+    "explanation": "Systematic and cumulative"
+  },
+  {
+    "id": "rm-l1-012",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Researchers are concerned with a world that is knowable and potentially measurable. This means science is ___.",
+    "options": [
+      "empirical",
+      "heuristic",
+      "public",
+      "objective"
+    ],
+    "answer": 0,
+    "explanation": "empirical"
+  },
+  {
+    "id": "rm-l1-013",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Researchers must be able to perceive and classify what they study and to reject metaphysical and nonsensical explanations of events. This means science is ___.",
+    "options": [
+      "Systematic and cumulative",
+      "empirical",
+      "heuristic",
+      "public"
+    ],
+    "answer": 1,
+    "explanation": "empirical"
+  },
+  {
+    "id": "rm-l1-014",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Scientific advancement depends on freely available information. This means science is ___.",
+    "options": [
+      "Systematic and cumulative",
+      "empirical",
+      "heuristic",
+      "public"
+    ],
+    "answer": 3,
+    "explanation": "public"
+  },
+  {
+    "id": "rm-l1-015",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The study should be repeated to be sure from the result. This is called ___.",
+    "options": [
+      "Replication",
+      "data collection",
+      "Review the literature",
+      "data analysis and interpretation"
+    ],
+    "answer": 0,
+    "explanation": "تراكمي= احفظ الربط الفوري لخصائص المنهج العلمي: تراث األبحاث السابقة أو ال دراسة تقف وحدها:علني= ، معلومات متاحة بحرية)Empirical( تجريبي= ، قابل للقياس ويرفض الغيبيات)Systematic and cumulative( .)Replication( تكرار= ، تكرار الدراسة للتأكد من النتيجة)Public("
+  },
+  {
+    "id": "rm-l1-016",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "[Source: Final 2026 Q8] What is the purpose of doing research?",
+    "options": [
+      "To identify problems",
+      "To find solution for problem",
+      "All of them",
+      "None of them"
+    ],
+    "answer": 2,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l1-017",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How to judge the depth of any research?",
+    "options": [
+      "By research title",
+      "By research duration",
+      "By research objectives",
+      "By total expenditure / overall experience"
+    ],
+    "answer": 2,
+    "explanation": "By research objectives"
+  },
+  {
+    "id": "rm-l1-018",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How can we enhance the research objective?",
+    "options": [
+      "By making it more valid",
+      "By making it more reliable",
+      "By making it more impartial",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l1-019",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the main role of research in education?",
+    "options": [
+      "To increase one's social status",
+      "To increase one's job prospects",
+      "To help an applicant in becoming a renowned educationalist",
+      "None of them"
+    ],
+    "answer": 3,
+    "explanation": "None of them"
+  },
+  {
+    "id": "rm-l1-020",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which of the following options are the main tasks of research in modern society?",
+    "options": [
+      "To learn new things",
+      "To keep pace with the advancement in knowledge",
+      "To systematically examine and critically analyze the investigations/sources with objectivity",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l1-021",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Research can be divided into three categories based on three separate perspectives that can be:",
+    "options": [
+      "Field",
+      "Approach",
+      "Nature",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l1-022",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "___ indicate the different types of research methodologies that were used as part of the research process for example, case studies, experiments, and surveys.",
+    "options": [
+      "Approach",
+      "Field",
+      "Nature",
+      "None of them"
+    ],
+    "answer": 0,
+    "explanation": "Approach"
+  },
+  {
+    "id": "rm-l1-023",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "___ is the type of contribution that research contributes to knowledge is determined by the nature of the investigation.",
+    "options": [
+      "Approach",
+      "Field",
+      "Nature",
+      "None of them"
+    ],
+    "answer": 2,
+    "explanation": "، وتصنيف البحث ينقسم إىل المجال والمدخل والطبيعة؛ فإذا)Objectives( نحكم عىل عمق أي بحث من أهدافه:.)Nature( ، وإذا ذكر نوع المساهمة للمعرفة نختار الطبيعة)Approach( ذكر دراسات الحالة والتجارب و الستبيانات نختار المدخل"
+  },
+  {
+    "id": "rm-l1-024",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "All the methods used by a researcher during a research study are termed as research methods. They include theoretical procedures, experimental studies, numerical schemes, statistical approaches, etc. This is known as ___.",
+    "options": [
+      "Research Methods",
+      "Research Methodology",
+      "Research",
+      "None of them"
+    ],
+    "answer": 0,
+    "explanation": "Research Methods"
+  },
+  {
+    "id": "rm-l1-025",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q18] Research ___ help us collect samples and data and find a solution to a problem.",
+    "options": [
+      "methodologies",
+      "approaches",
+      "schemes",
+      "methods"
+    ],
+    "answer": 3,
+    "explanation": "methods"
+  },
+  {
+    "id": "rm-l1-026",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: MCQ Bank Q80] It is a systematic way to solve a problem. It is a science of studying how research is to be carried out. It is also defined as the study of methods by which knowledge is gained. Its aim is to give the work plan of research. This is known as ___.",
+    "options": [
+      "Research Methods",
+      "Research Methodology",
+      "All of Them",
+      "None of Them"
+    ],
+    "answer": 1,
+    "explanation": "Research Methodology"
+  },
+  {
+    "id": "rm-l1-027",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Final 2026 Q11] Research method is a part of ___.",
+    "options": [
+      "Problem",
+      "Experiment",
+      "Research techniques",
+      "Research methodology"
+    ],
+    "answer": 3,
+    "explanation": "Research methodology"
+  },
+  {
+    "id": "rm-l1-028",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: MID 2025 Q17] ___ seeks to answer how did the researcher complete his study.",
+    "options": [
+      "Research Methods",
+      "All of them",
+      "Research Methodology",
+      "None of them"
+    ],
+    "answer": 2,
+    "explanation": "Research Methodology"
+  },
+  {
+    "id": "rm-l1-029",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q5] The study of research ___ provides us with the necessary training in choosing methods, materials, scientific tools, and techniques relevant to the problem chosen.",
+    "options": [
+      "method",
+      "methodology",
+      "scheme",
+      "approach"
+    ],
+    "answer": 1,
+    "explanation": "methodology"
+  },
+  {
+    "id": "rm-l1-030",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Basic research is known as:",
+    "options": [
+      "Applied research",
+      "Fundamental research",
+      "Descriptive research",
+      "Analytical research"
+    ],
+    "answer": 1,
+    "explanation": "Fundamental research"
+  },
+  {
+    "id": "rm-l1-031",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "___ is an investigation on basic principles and reasons for occurrence of a particular event or process or phenomenon.",
+    "options": [
+      "Basic research",
+      "Applied research",
+      "Revolutionary research",
+      "None of them"
+    ],
+    "answer": 0,
+    "explanation": "Basic research"
+  },
+  {
+    "id": "rm-l1-032",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which research is NOT concerned with solving any practical problems?",
+    "options": [
+      "Basic research",
+      "Applied Research",
+      "Quantitative research",
+      "Qualitative research"
+    ],
+    "answer": 0,
+    "explanation": "Basic research"
+  },
+  {
+    "id": "rm-l1-033",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Type of research that seeks generalization:",
+    "options": [
+      "Applied",
+      "Basic",
+      "Quantitative",
+      "Primary"
+    ],
+    "answer": 1,
+    "explanation": "Basic"
+  },
+  {
+    "id": "rm-l1-034",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: MID 2025 Q20] The research that applies the laws at the time of field study to draw more and more clear ideas about the problem is:",
+    "options": [
+      "Action research",
+      "Basic research",
+      "None of these",
+      "Applied research"
+    ],
+    "answer": 3,
+    "explanation": "Applied research"
+  },
+  {
+    "id": "rm-l1-035",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q15] Most of the experimental research, case studies, and interdisciplinary research are essentially ___ research.",
+    "options": [
+      "applied (exact slide 40 text!)",
+      "revolutionary",
+      "fundamental",
+      "exploratory"
+    ],
+    "answer": 0,
+    "explanation": "Section 1B: True / False & Essay Questions — Lecture 1"
+  },
+  {
+    "id": "rm-l2-036",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q9] ___ research is performed by a set of rules, concepts, and procedures called a paradigm, which is well accepted by scientists in that field.",
+    "options": [
+      "Revolutionary",
+      "Normal",
+      "Quantitative",
+      "Fundamental"
+    ],
+    "answer": 1,
+    "explanation": "Normal"
+  },
+  {
+    "id": "rm-l2-037",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Research used to describe a change in basic ideas within the ruling theory of science:",
+    "options": [
+      "Revolutionary",
+      "Normal research",
+      "Quantitative",
+      "Qualitative"
+    ],
+    "answer": 0,
+    "explanation": "Revolutionary"
+  },
+  {
+    "id": "rm-l2-038",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "___ is numerical, non-descriptive, applies statistics or mathematics and uses numbers.",
+    "options": [
+      "Qualitative research",
+      "Quantitative research",
+      "All of them",
+      "None"
+    ],
+    "answer": 1,
+    "explanation": "Quantitative research"
+  },
+  {
+    "id": "rm-l2-039",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which research paradigm is most concerned about generalizing its findings?",
+    "options": [
+      "Quantitative research",
+      "Qualitative research",
+      "Comparative research",
+      "All of them"
+    ],
+    "answer": 0,
+    "explanation": "Quantitative research"
+  },
+  {
+    "id": "rm-l2-040",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "___ is non-numerical, descriptive, applies reasoning and uses words.",
+    "options": [
+      "Qualitative research",
+      "Quantitative research",
+      "All of them",
+      "None of them"
+    ],
+    "answer": 0,
+    "explanation": "Qualitative research"
+  },
+  {
+    "id": "rm-l2-041",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Exam 2025 Q38] In all the following situations qualitative research is used, EXCEPT:",
+    "options": [
+      "It is based on a collection of non-numerical data such as words and pictures",
+      "It often uses small samples",
+      "It uses the inductive method",
+      "It is typically used when a great deal is already known about the topic of interest"
+    ],
+    "answer": 3,
+    "explanation": "interest يرتبط بالوصف)Qualitative( يرتبط باألرقام واإلحصاء وتعميم النتائج، بينما الكيفي)Quantitative( الكمي:.ًوالكلمات و الستكشاف وال يستخدم عندما يكون الموضوع معروف ًا بالكامل مسبق"
+  },
+  {
+    "id": "rm-l2-042",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "___ is obtaining similarities and differences between events, methods, techniques, etc.",
+    "options": [
+      "Comparative research",
+      "Explanatory Research",
+      "Action research",
+      "Exploratory research"
+    ],
+    "answer": 0,
+    "explanation": "Comparative research"
+  },
+  {
+    "id": "rm-l2-043",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Type of research fact findings to improve the quality of action in the social world:",
+    "options": [
+      "Exploratory",
+      "Explanatory",
+      "Action",
+      "Comparative"
+    ],
+    "answer": 2,
+    "explanation": "Action"
+  },
+  {
+    "id": "rm-l2-044",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the final (last) stage in the Research Process?",
+    "options": [
+      "Problem formulation / Review of literature",
+      "Data collection / Research design",
+      "Data Analysis",
+      "Report Writing"
+    ],
+    "answer": 3,
+    "explanation": "Report Writing"
+  },
+  {
+    "id": "rm-l2-045",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q11] If a student wishes to do research with ___, then he cannot have the freedom to choose a topic since he has to work on a project, the goal of which is already defined by the project investigator.",
+    "options": [
+      "Ph.D. dissertation",
+      "fellowship",
+      "journal publications",
+      "Master thesis"
+    ],
+    "answer": 1,
+    "explanation": "fellowship"
+  },
+  {
+    "id": "rm-l2-046",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q7] The sources of research topics and problems include the following EXCEPT:",
+    "options": [
+      "daily problems",
+      "discussion with experts and the research supervisor",
+      "recent trends",
+      "difficult challenges"
+    ],
+    "answer": 3,
+    "explanation": "difficult challenges"
+  },
+  {
+    "id": "rm-l2-047",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q13] The ___ are working in one or few fields over a long time, and they are specialists in the field considered and well versed with the development and current status of the field.",
+    "options": [
+      "supervisors",
+      "Ph.D. students",
+      "managers",
+      "graduate students"
+    ],
+    "answer": 0,
+    "explanation": "supervisors"
+  },
+  {
+    "id": "rm-l3-048",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "___ are used when you need to find articles by a topic or subject.",
+    "options": [
+      "Data",
+      "database",
+      "journal",
+      "publisher"
+    ],
+    "answer": 1,
+    "explanation": "database"
+  },
+  {
+    "id": "rm-l3-049",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Exam 2025 Q39] ___ is a scientometric index calculated by Clarivate that reflects the yearly mean number of citations of articles published in the last two years in a given journal.",
+    "options": [
+      "IF",
+      "JIF",
+      "a&b",
+      "None of them"
+    ],
+    "answer": 2,
+    "explanation": "a&b (Impact Factor / Journal Impact Factor)"
+  },
+  {
+    "id": "rm-l3-050",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Secondary Research can be ___.",
+    "options": [
+      "Narrative",
+      "Systematic",
+      "Meta-analysis",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l3-051",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A systematic review can be ___. (Also asked as True/False)",
+    "options": [
+      "None of them",
+      "Qualitative",
+      "Quantitative",
+      "Qualitative and Quantitative (or All of them / a combination of the two) — [True in T/F]"
+    ],
+    "answer": 3,
+    "explanation": "Qualitative and Quantitative (and TRUE in True/False)"
+  },
+  {
+    "id": "rm-l3-052",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "\"Brain Image Segmentation in Recent Years\" belongs to which type of research?",
+    "options": [
+      "A systematic review",
+      "A Narrative Review",
+      "A Primary research",
+      "None of them"
+    ],
+    "answer": 1,
+    "explanation": "A Narrative Review"
+  },
+  {
+    "id": "rm-l3-053",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Exam 2025 Q2] The title of this paper \"Performance of machine learning algorithms for glioma segmentation of brain MRI: a systematic literature review and meta-analysis\" which type of research that belongs to?",
+    "options": [
+      "A systematic review",
+      "A Narrative Review",
+      "A Primary research",
+      "None of them"
+    ],
+    "answer": 0,
+    "explanation": "A systematic review"
+  },
+  {
+    "id": "rm-l3-054",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q27] ___ projects review existing studies by collating data and conclusions to create a consensus dataset and conclusion.",
+    "options": [
+      "Literature",
+      "Meta-analysis",
+      "Laboratory",
+      "Questionnaire"
+    ],
+    "answer": 1,
+    "explanation": "Meta-analysis"
+  },
+  {
+    "id": "rm-l3-055",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When reading a research article, what is the most important part you need to read in the first few minutes (first to read)?",
+    "options": [
+      "Abstract",
+      "Introduction",
+      "Discussion",
+      "Conclusion / All of them"
+    ],
+    "answer": 0,
+    "explanation": "المراجعة المنهجية تجمع بين)All of them( األبحاث الثانوية تشمل المراجعة السردية والمنهجية والتحليل البعدي:.)Abstract( الكمي والكيفي، وأول جزء يقرأ في أي ورقة بحثية هو الملخص"
+  },
+  {
+    "id": "rm-l3-056",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "___ is a collection (or group) of research publications, books and other documents related to the defined problem.",
+    "options": [
+      "Literature survey",
+      "Basic research",
+      "Applied Research",
+      "None of them"
+    ],
+    "answer": 0,
+    "explanation": "Literature survey"
+  },
+  {
+    "id": "rm-l3-057",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q20] ___ is essential to know whether the defined problem has already been solved, the status of the problem, techniques that are useful to investigate the problem and other related details.",
+    "options": [
+      "Advanced level book",
+      "Research article",
+      "Proceedings of conference",
+      "Literature survey"
+    ],
+    "answer": 3,
+    "explanation": "Literature survey"
+  },
+  {
+    "id": "rm-l3-058",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Final 2026 Q2] Why do you need to review the existing literature?",
+    "options": [
+      "To make sure you have a long list of references",
+      "Because without it, you could never reach the required word-count",
+      "To find out what is already known about your area of interest",
+      "To help in your general studying"
+    ],
+    "answer": 2,
+    "explanation": "To find out what is already known about your area of interest"
+  },
+  {
+    "id": "rm-l3-059",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A review of the literature before formulating research questions allows the researcher to:",
+    "options": [
+      "Provide an up-to-date understanding of the subject, its significance, and structure",
+      "Guide the development of research questions",
+      "Present the kinds of research methodologies used in previous studies",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l3-060",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: MID 2025 Q6] The purposes of Literature review are all, EXCEPT?",
+    "options": [
+      "Identifying",
+      "Copy pasting",
+      "Discovering",
+      "Establishing"
+    ],
+    "answer": 1,
+    "explanation": "Copy pasting"
+  },
+  {
+    "id": "rm-l3-061",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Literature survey resources can come from:",
+    "options": [
+      "Journals",
+      "Proceedings of conferences",
+      "Advanced level books",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l3-062",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The benefits of literature survey are:",
+    "options": [
+      "Sharpen the problem",
+      "Get proper understanding of the problem",
+      "Acquire proper theoretical and practical knowledge",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l3-063",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q3] All of the following are the potential advantages of an online questionnaire EXCEPT:",
+    "options": [
+      "Low-cost delivery and return",
+      "Appropriateness to research aims (Listed under Potential Difficulties on Slide 41!)",
+      "Appropriateness to particular populations",
+      "Ease of completion"
+    ],
+    "answer": 1,
+    "explanation": "Appropriateness to research aims"
+  },
+  {
+    "id": "rm-l4-064",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The current status of the chosen topic can be identified by:",
+    "options": [
+      "reading the relevant recent papers",
+      "discussions in conferences",
+      "discussions in seminars",
+      "All"
+    ],
+    "answer": 3,
+    "explanation": "All"
+  },
+  {
+    "id": "rm-l4-065",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q10] The current status of the chosen topic can be identified by reading all of the following EXCEPT:",
+    "options": [
+      "discussions in conferences",
+      "seminars",
+      "state-of-the-art papers",
+      "workshops"
+    ],
+    "answer": 2,
+    "explanation": "state-of-the-art papers"
+  },
+  {
+    "id": "rm-l4-066",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "___ is an intelligent guess or for inspiration which is to be tested in the research work rigorously through appropriate methodology.",
+    "options": [
+      "Hypothesis",
+      "Literature survey / Abstract",
+      "Research Methodology",
+      "Research Methods"
+    ],
+    "answer": 0,
+    "explanation": "Hypothesis"
+  },
+  {
+    "id": "rm-l4-067",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q4] ___ are scientifically reasonable predictions.",
+    "options": [
+      "Motivations",
+      "Objectives",
+      "Contributions",
+      "Hypotheses"
+    ],
+    "answer": 3,
+    "explanation": "Hypotheses"
+  },
+  {
+    "id": "rm-l4-068",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "if-then sentences in certain logical forms:",
+    "options": [
+      "Hypothesis",
+      "Abstract",
+      "Introduction",
+      "Literature review"
+    ],
+    "answer": 0,
+    "explanation": "Hypothesis"
+  },
+  {
+    "id": "rm-l4-069",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Research hypotheses are:",
+    "options": [
+      "Formulated before a review of the literature",
+      "Statements of predicted relationships between variables",
+      "All of them",
+      "None of them"
+    ],
+    "answer": 1,
+    "explanation": "Statements of predicted relationships between variables"
+  },
+  {
+    "id": "rm-l4-070",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Final 2026 Q9] A good hypothesis must be ___.",
+    "options": [
+      "Formulated in such a way that can be tested by the data",
+      "Precise, specific, and consistent with most known facts",
+      "Should be limited scope and must not have global significance",
+      "All of them"
+    ],
+    "answer": 0,
+    "explanation": "Formulated in such a way that can be tested by the data"
+  },
+  {
+    "id": "rm-l4-071",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q17] The criteria of a reasonable hypothesis are the following EXCEPT:",
+    "options": [
+      "testable",
+      "formulated in a mathematical form",
+      "stated in a suitable way",
+      "conceptual clarity and a theoretical orientation"
+    ],
+    "answer": 1,
+    "explanation": "formulated in a mathematical form"
+  },
+  {
+    "id": "rm-l4-072",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The scientific thinking must be more ___.",
+    "options": [
+      "formal and strict",
+      "specific and moreover goal-oriented",
+      "empirical",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l4-073",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: MID 2025 Q15] Research design should indicate the various approaches to be used in solving the research problem as ___.",
+    "options": [
+      "All of Them",
+      "Sources and information related to the problem",
+      "Time frame",
+      "The cost budget"
+    ],
+    "answer": 0,
+    "explanation": "All of Them"
+  },
+  {
+    "id": "rm-l4-074",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What are the Possible Approaches to be Followed by a Researcher?",
+    "options": [
+      "Discussing",
+      "Reading",
+      "Reviewing",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l4-075",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The attributes or skills of a good research scholar can be:",
+    "options": [
+      "Self-confidence",
+      "Presentation skills and writing skills",
+      "Analytical mind",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l4-076",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "We can evaluate a good research work in many ways (OR: When we make the actual investigation of the good research work we can see):",
+    "options": [
+      "Published in international journals",
+      "Cited by other researchers",
+      "Added new information / Originality of this work",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l4-077",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Exam 2025 Q31] ___ should lead to original contribution and not involve objectionable duplication. Originality is the basic credit point of any research.",
+    "options": [
+      "Maintaining Ties",
+      "Over-generalization",
+      "Actual investigation",
+      "None of them"
+    ],
+    "answer": 2,
+    "explanation": "Actual investigation"
+  },
+  {
+    "id": "rm-l4-078",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Exam 2025 Q18] Some Common Errors Made in Research can be:",
+    "options": [
+      "Over-generalization",
+      "Inaccurate observation",
+      "Illogical reasoning",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them"
+  },
+  {
+    "id": "rm-l4-079",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q19] The following are the common errors made in the research EXCEPT:",
+    "options": [
+      "premature closure of inquiry",
+      "logical reasoning",
+      "mystification",
+      "ego involvement in understanding"
+    ],
+    "answer": 1,
+    "explanation": "logical reasoning"
+  },
+  {
+    "id": "rm-l4-080",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q6] All of the following are the ultimate goals of the research performed EXCEPT:",
+    "options": [
+      "methods",
+      "results",
+      "predictions",
+      "conclusion"
+    ],
+    "answer": 0,
+    "explanation": "methods"
+  },
+  {
+    "id": "rm-l4-081",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "[Source: Quizzes Q16] ___ is copying data or findings from others' reports without acknowledging the source will make you in trouble.",
+    "options": [
+      "Plagiarism",
+      "Citation",
+      "Conclusion",
+      "Interpretation"
+    ],
+    "answer": 0,
+    "explanation": "Plagiarism"
+  }
+]
