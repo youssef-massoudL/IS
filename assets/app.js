@@ -2724,23 +2724,371 @@ function isMobileView() {
   );
 }
 
-function shouldOpenPdfInNewTab() {
+const PDFJS_MODULE_URL = new URL("assets/pdfjs/pdf.min.js", document.baseURI).href;
+const PDFJS_WORKER_URL = new URL("assets/pdfjs/pdf.worker.min.js", document.baseURI).href;
+const PDF_ZOOM_MIN = 0.5;
+const PDF_ZOOM_MAX = 4;
+const PDF_ZOOM_STEP = 1.25;
+const PDF_LAZY_MARGIN = 600;
+
+let pdfjsPromise = null;
+let pdfViewer = null;
+
+function loadPdfJs() {
+  if (!pdfjsPromise) {
+    pdfjsPromise = import(PDFJS_MODULE_URL).then((pdfjs) => {
+      pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_URL;
+      return pdfjs;
+    });
+    pdfjsPromise.catch(() => {
+      pdfjsPromise = null;
+    });
+  }
+  return pdfjsPromise;
+}
+
+function shouldUsePdfJsViewer() {
   return isMobileView() || navigator.pdfViewerEnabled === false;
+}
+
+function pdfViewerMarkup() {
+  return `<div class="pdf-viewer" data-pdf-viewer>
+    <div class="pdf-toolbar">
+      <div class="pdf-zoom-group" role="group" aria-label="تكبير وتصغير">
+        <button class="pdf-tool-btn" type="button" data-pdf-zoom="out" aria-label="تصغير">−</button>
+        <button class="pdf-zoom-label" type="button" data-pdf-zoom="fit" aria-label="ملاءمة العرض">ملاءمة العرض</button>
+        <button class="pdf-tool-btn" type="button" data-pdf-zoom="in" aria-label="تكبير">+</button>
+      </div>
+      <span class="pdf-page-indicator" data-pdf-page>صفحة 1 / 1</span>
+      <span class="pdf-loading" data-pdf-loading>جارٍ تحميل الملف…</span>
+    </div>
+    <div class="pdf-scroll" data-pdf-scroll>
+      <div class="pdf-pages" data-pdf-pages></div>
+    </div>
+  </div>`;
+}
+
+function pdfFallbackMarkup(file, message) {
+  return `<div class="pdf-fallback">
+    <span class="pdf-fallback-badge">PDF</span>
+    <strong>${esc(file.title)}</strong>
+    <span>${esc(message)}</span>
+    <div class="pdf-fallback-actions">
+      <a class="btn btn-primary" href="${esc(file.path)}" target="_blank" rel="noopener">فتح في تبويب جديد</a>
+      <a class="btn" href="${esc(file.path)}" download>تحميل الملف</a>
+    </div>
+  </div>`;
+}
+
+function teardownPdfViewer() {
+  if (!pdfViewer) return;
+  const viewer = pdfViewer;
+  pdfViewer = null;
+  try {
+    viewer.observer?.disconnect();
+  } catch (error) {
+    void error;
+  }
+  try {
+    viewer.resizeObserver?.disconnect();
+  } catch (error) {
+    void error;
+  }
+  for (const task of viewer.renderTasks || []) {
+    try {
+      task.cancel();
+    } catch (error) {
+      void error;
+    }
+  }
+  viewer.renderTasks?.clear();
+  try {
+    viewer.task?.destroy();
+  } catch (error) {
+    void error;
+  }
+  try {
+    viewer.doc?.destroy();
+  } catch (error) {
+    void error;
+  }
+  window.clearTimeout(viewer.resizeTimer);
+  window.cancelAnimationFrame(viewer.scrollFrame);
+}
+
+function pdfFitScale(session, index) {
+  const available = Math.max(120, session.scrollEl.clientWidth - 28);
+  const width = session.dims[index]?.width || 612;
+  return available / width;
+}
+
+function pdfScaleKey(session, index) {
+  return (pdfFitScale(session, index) * session.zoom).toFixed(4);
+}
+
+function updatePdfZoomLabel(session) {
+  if (!session.zoomLabelEl) return;
+  session.zoomLabelEl.textContent =
+    session.zoom === 1 ? "ملاءمة العرض" : `${Math.round(session.zoom * 100)}%`;
+}
+
+function layoutPdfPages(session) {
+  session.slots.forEach((slot, index) => {
+    const dim = session.dims[index];
+    slot.style.width = `${Math.round(dim.width * pdfFitScale(session, index) * session.zoom)}px`;
+    slot.style.height = `${Math.round(dim.height * pdfFitScale(session, index) * session.zoom)}px`;
+  });
+  updatePdfZoomLabel(session);
+}
+
+function clearPdfCanvases(session) {
+  for (const task of session.renderTasks) {
+    try {
+      task.cancel();
+    } catch (error) {
+      void error;
+    }
+  }
+  session.renderTasks.clear();
+  for (const slot of session.slots) {
+    slot.querySelector("canvas")?.remove();
+    slot.dataset.renderedScale = "";
+    slot.dataset.rendering = "";
+    slot.classList.remove("is-rendered", "is-error");
+  }
+}
+
+function pdfAnchor(session) {
+  const rootTop = session.scrollEl.getBoundingClientRect().top;
+  for (let index = 0; index < session.slots.length; index += 1) {
+    const rect = session.slots[index].getBoundingClientRect();
+    if (rect.bottom > rootTop + 1) {
+      const ratio = Math.min(1, Math.max(0, (rootTop - rect.top) / Math.max(1, rect.height)));
+      return { index, ratio };
+    }
+  }
+  return { index: 0, ratio: 0 };
+}
+
+function restorePdfAnchor(session, anchor) {
+  const slot = session.slots[anchor.index];
+  if (!slot) return;
+  const rootTop = session.scrollEl.getBoundingClientRect().top;
+  const slotTop = slot.getBoundingClientRect().top;
+  session.scrollEl.scrollTop += slotTop - rootTop + anchor.ratio * slot.offsetHeight;
+}
+
+function relayoutPdfPages(session) {
+  if (!session.slots.length) return;
+  const anchor = pdfAnchor(session);
+  clearPdfCanvases(session);
+  layoutPdfPages(session);
+  renderPdfVisible(session);
+  restorePdfAnchor(session, anchor);
+  updatePdfPageIndicator(session);
+}
+
+function changePdfZoom(session, action) {
+  let next = session.zoom;
+  if (action === "in") next *= PDF_ZOOM_STEP;
+  else if (action === "out") next /= PDF_ZOOM_STEP;
+  else next = 1;
+  next = Math.min(PDF_ZOOM_MAX, Math.max(PDF_ZOOM_MIN, Math.round(next * 100) / 100));
+  if (next === session.zoom) return;
+  session.zoom = next;
+  relayoutPdfPages(session);
+}
+
+async function renderPdfPage(session, index) {
+  if (pdfViewer !== session) return;
+  const slot = session.slots[index];
+  if (!slot || slot.dataset.rendering === "1") return;
+  const scaleKey = pdfScaleKey(session, index);
+  if (slot.dataset.renderedScale === scaleKey) return;
+  slot.dataset.rendering = "1";
+  try {
+    const page = await session.doc.getPage(index + 1);
+    if (pdfViewer !== session) return;
+    const scale = pdfFitScale(session, index) * session.zoom;
+    const viewport = page.getViewport({ scale });
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.floor(viewport.width * dpr));
+    canvas.height = Math.max(1, Math.floor(viewport.height * dpr));
+    canvas.setAttribute("aria-label", `صفحة ${index + 1}`);
+    const context = canvas.getContext("2d", { alpha: false });
+    const renderTask = page.render({
+      canvasContext: context,
+      viewport,
+      transform: dpr === 1 ? null : [dpr, 0, 0, dpr, 0, 0],
+    });
+    session.renderTasks.add(renderTask);
+    try {
+      await renderTask.promise;
+    } finally {
+      session.renderTasks.delete(renderTask);
+    }
+    if (pdfViewer !== session) return;
+    if (scaleKey !== pdfScaleKey(session, index)) return;
+    slot.querySelector("canvas")?.remove();
+    slot.replaceChildren(canvas);
+    slot.dataset.renderedScale = scaleKey;
+    slot.classList.add("is-rendered");
+    slot.classList.remove("is-error");
+  } catch (error) {
+    if (error?.name !== "RenderingCancelledException" && pdfViewer === session) {
+      slot.classList.add("is-error");
+    }
+  } finally {
+    slot.dataset.rendering = "";
+  }
+}
+
+function renderPdfVisible(session) {
+  const rootRect = session.scrollEl.getBoundingClientRect();
+  session.slots.forEach((slot, index) => {
+    const rect = slot.getBoundingClientRect();
+    if (rect.bottom >= rootRect.top - PDF_LAZY_MARGIN && rect.top <= rootRect.bottom + PDF_LAZY_MARGIN) {
+      renderPdfPage(session, index);
+    }
+  });
+}
+
+function buildPdfPages(session) {
+  const fragment = document.createDocumentFragment();
+  session.slots = session.dims.map((dim, index) => {
+    const slot = document.createElement("div");
+    slot.className = "pdf-page-slot";
+    slot.dataset.pageIndex = String(index);
+    slot.dataset.pageLabel = `صفحة ${index + 1}`;
+    slot.setAttribute("aria-label", `صفحة ${index + 1}`);
+    slot.style.setProperty("--pdf-aspect", `${dim.width} / ${dim.height}`);
+    fragment.appendChild(slot);
+    return slot;
+  });
+  session.pagesEl.replaceChildren(fragment);
+  layoutPdfPages(session);
+}
+
+function updatePdfPageIndicator(session) {
+  if (!session.pageEl || !session.slots.length) return;
+  const rootRect = session.scrollEl.getBoundingClientRect();
+  const target = rootRect.top + rootRect.height * 0.35;
+  let current = 0;
+  for (let index = 0; index < session.slots.length; index += 1) {
+    const rect = session.slots[index].getBoundingClientRect();
+    if (rect.bottom >= target) {
+      current = index;
+      break;
+    }
+    current = index;
+  }
+  session.pageEl.textContent = `صفحة ${current + 1} / ${session.slots.length}`;
+}
+
+function observePdfPages(session) {
+  session.observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        renderPdfPage(session, Number(entry.target.dataset.pageIndex));
+      }
+    },
+    { root: session.scrollEl, rootMargin: `${PDF_LAZY_MARGIN}px 0px`, threshold: 0.01 },
+  );
+  session.slots.forEach((slot) => session.observer.observe(slot));
+  session.scrollEl.addEventListener(
+    "scroll",
+    () => {
+      if (session.scrollFrame) return;
+      session.scrollFrame = window.requestAnimationFrame(() => {
+        session.scrollFrame = 0;
+        updatePdfPageIndicator(session);
+      });
+    },
+    { passive: true },
+  );
+  if ("ResizeObserver" in window) {
+    session.resizeObserver = new ResizeObserver(() => {
+      window.clearTimeout(session.resizeTimer);
+      session.resizeTimer = window.setTimeout(() => {
+        if (pdfViewer === session) relayoutPdfPages(session);
+      }, 180);
+    });
+    session.resizeObserver.observe(session.scrollEl);
+  }
+}
+
+async function openPdfViewer(file, body) {
+  const session = {
+    token: Symbol("pdf-viewer"),
+    task: null,
+    doc: null,
+    observer: null,
+    resizeObserver: null,
+    renderTasks: new Set(),
+    scrollEl: body.querySelector("[data-pdf-scroll]"),
+    pagesEl: body.querySelector("[data-pdf-pages]"),
+    pageEl: body.querySelector("[data-pdf-page]"),
+    loadingEl: body.querySelector("[data-pdf-loading]"),
+    zoomLabelEl: body.querySelector("[data-pdf-zoom='fit']"),
+    zoom: 1,
+    dims: [],
+    slots: [],
+    scrollFrame: 0,
+    resizeTimer: 0,
+  };
+  if (!session.scrollEl || !session.pagesEl) return;
+  pdfViewer = session;
+
+  body.querySelector("[data-pdf-viewer]")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-pdf-zoom]");
+    if (!button || pdfViewer !== session) return;
+    changePdfZoom(session, button.dataset.pdfZoom);
+  });
+
+  const fail = (message) => {
+    if (pdfViewer !== session) return;
+    teardownPdfViewer();
+    body.innerHTML = pdfFallbackMarkup(file, message);
+  };
+
+  try {
+    const pdfjs = await loadPdfJs();
+    if (pdfViewer !== session) return;
+    const loadingTask = pdfjs.getDocument({ url: file.path });
+    session.task = loadingTask;
+    const doc = await loadingTask.promise;
+    if (pdfViewer !== session) {
+      doc.destroy();
+      return;
+    }
+    session.doc = doc;
+
+    const dims = [];
+    for (let index = 0; index < doc.numPages; index += 1) {
+      const page = await doc.getPage(index + 1);
+      if (pdfViewer !== session) return;
+      const viewport = page.getViewport({ scale: 1 });
+      dims.push({ width: viewport.width, height: viewport.height });
+    }
+    if (pdfViewer !== session) return;
+    session.dims = dims;
+    buildPdfPages(session);
+    if (session.loadingEl) session.loadingEl.hidden = true;
+    observePdfPages(session);
+    renderPdfVisible(session);
+    updatePdfPageIndicator(session);
+  } catch (error) {
+    if (error?.name === "AbortException" || error?.name === "RenderingCancelledException") return;
+    console.warn("PDF.js viewer failed", error);
+    fail("تعذّر عرض الملف داخل الموقع. يمكنك فتحه في تبويب جديد أو تحميله.");
+  }
 }
 
 function openPreview(file, options = {}) {
   const ext = (file.ext || "").toLowerCase();
-  if (ext === "pdf" && shouldOpenPdfInNewTab() && !options.fromDeepLink) {
-    const win = window.open(file.path, "_blank");
-    if (win) {
-      try {
-        win.opener = null;
-      } catch (error) {
-        void error;
-      }
-      return;
-    }
-  }
+  teardownPdfViewer();
 
   $("#modal-title").textContent = file.title;
   $("#modal-badge").textContent = (file.ext || "file").toUpperCase();
@@ -2750,21 +3098,12 @@ function openPreview(file, options = {}) {
   $("#modal-open").href = file.path;
 
   const body = $("#modal-body");
+  const usePdfJs = ext === "pdf" && shouldUsePdfJsViewer();
 
   if (ext === "pdf") {
-    if (shouldOpenPdfInNewTab()) {
-      body.innerHTML = `<div class="pdf-fallback">
-        <span class="pdf-fallback-badge">PDF</span>
-        <strong>${esc(file.title)}</strong>
-        <span>${fmtSize(file.size)} · يمكنك فتح الملف في تبويب جديد أو تحميله.</span>
-        <div class="pdf-fallback-actions">
-          <a class="btn btn-primary" href="${esc(file.path)}" target="_blank" rel="noopener">فتح الـ PDF في تبويب جديد</a>
-          <a class="btn" href="${esc(file.path)}" download>تحميل الملف</a>
-        </div>
-      </div>`;
-    } else {
-      body.innerHTML = `<iframe src="${esc(file.path)}#view=FitH" title="${esc(file.title)}"></iframe>`;
-    }
+    body.innerHTML = usePdfJs
+      ? pdfViewerMarkup()
+      : `<iframe src="${esc(file.path)}#view=FitH" title="${esc(file.title)}"></iframe>`;
   } else if (["jpg", "jpeg", "png", "webp", "gif"].includes(ext)) {
     body.innerHTML = `<img src="${esc(file.path)}" alt="${esc(file.title)}" style="height:100%;width:100%;object-fit:contain">`;
   } else if (ext === "txt") {
@@ -2787,6 +3126,7 @@ function openPreview(file, options = {}) {
 
   modalEl.hidden = false;
   document.documentElement.style.overflow = "hidden";
+  if (usePdfJs) openPdfViewer(file, body);
 }
 
 function note(title, message, icon) {
@@ -2794,6 +3134,7 @@ function note(title, message, icon) {
 }
 
 function closePreview(navigateBack = true) {
+  teardownPdfViewer();
   modalEl.hidden = true;
   $("#modal-body").innerHTML = "";
   document.documentElement.style.overflow = "";
