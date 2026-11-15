@@ -2,6 +2,7 @@ downloads/*.zip
 _site/
 node_modules/
 Skills/
+.env
 .DS_Store
 Thumbs.db
 desktop.ini
