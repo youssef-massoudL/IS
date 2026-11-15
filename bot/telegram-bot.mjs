@@ -53,6 +53,13 @@ function sanitizeError(msg) {
   return text;
 }
 
+function escapeHtml(text) {
+  return String(text || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 function runGit(cwd, args) {
   return execFileSync("git", args, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 }
@@ -323,8 +330,8 @@ async function handleMessage(msg) {
 
     await tg("sendMessage", {
       chat_id: chatId,
-      text: `📄 Received: *${fileName}*\n\nWhich subject is this for?`,
-      parse_mode: "Markdown",
+      text: `📄 Received: <b>${escapeHtml(fileName)}</b>\n\nWhich subject is this for?`,
+      parse_mode: "HTML",
       reply_markup: subjectKeyboard(manifest.subjects),
     });
     return;
@@ -388,8 +395,8 @@ async function handleCallback(cb) {
     job.step = "dest";
     await tg("sendMessage", {
       chat_id: chatId,
-      text: `Subject: *${subject.nameAr}*\n\nWhere should I add it?`,
-      parse_mode: "Markdown",
+      text: `Subject: <b>${escapeHtml(subject.nameAr)}</b>\n\nWhere should I add it?`,
+      parse_mode: "HTML",
       reply_markup: destinationKeyboard(subject),
     });
     return;
@@ -457,8 +464,21 @@ async function poll() {
       const updates = await tg("getUpdates", { offset, timeout: 25 });
       for (const upd of updates) {
         offset = upd.update_id + 1;
-        if (upd.message) await handleMessage(upd.message);
-        else if (upd.callback_query) await handleCallback(upd.callback_query);
+        const chatId = upd.message?.chat?.id ?? upd.callback_query?.message?.chat?.id;
+        const userId = String(upd.message?.from?.id ?? upd.callback_query?.from?.id ?? "");
+        try {
+          if (upd.message) await handleMessage(upd.message);
+          else if (upd.callback_query) await handleCallback(upd.callback_query);
+        } catch (err) {
+          const safeMsg = sanitizeError(err.message);
+          console.error("Update error:", safeMsg);
+          if (chatId && userId === ADMIN_ID) {
+            await tg("sendMessage", {
+              chat_id: chatId,
+              text: `❌ Error:\n${safeMsg}`,
+            }).catch(() => {});
+          }
+        }
       }
     } catch (err) {
       console.error("Poll error:", sanitizeError(err.message));
