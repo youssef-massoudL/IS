@@ -58,6 +58,7 @@ const state = {
   searchOpen: false,
   sidebarOpen: false,
   tabsExpanded: false,
+  notifOpen: false,
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -67,6 +68,11 @@ const searchEl = $("#search");
 const modalEl = $("#modal");
 const uploadEl = $("#upload");
 const smartStripEl = $("#smart-strip");
+const notifBannerEl = $("#notif-banner");
+const notifWrapEl = $("#notif-wrap");
+const notifToggleEl = $("#notif-toggle");
+const notifBadgeEl = $("#notif-badge");
+const notifPanelEl = $("#notif-panel");
 const sectionPickerEl = $("#section-picker");
 const facetsEl = $("#search-facets");
 const sidebarEl = $("#sidebar");
@@ -895,6 +901,288 @@ function midtermStatus(midterm) {
   return { label: `بعد ${days} يوم`, active: false };
 }
 
+const RECENT_FILE_WINDOW_MS = 24 * 60 * 60 * 1000;
+const NOTIF_FILE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+const NOTIF_SEEN_KEY = "hub:notif:seen";
+const NOTIF_DISMISSED_KEY = "hub:notif:banner-dismissed";
+const NOTIF_BROWSER_KEY = "hub:notif:browser";
+
+function isRecentFile(file) {
+  if (!file?.addedAt) return false;
+  const addedMs = Date.parse(file.addedAt);
+  if (Number.isNaN(addedMs)) return false;
+  const diff = Date.now() - addedMs;
+  return diff >= -60000 && diff <= RECENT_FILE_WINDOW_MS;
+}
+
+function formatRelativeTimeAr(isoString) {
+  const ms = Date.parse(isoString);
+  if (Number.isNaN(ms)) return "";
+  const diffSec = Math.max(0, Math.floor((Date.now() - ms) / 1000));
+  if (diffSec < 60) return "الآن";
+  const mins = Math.floor(diffSec / 60);
+  if (mins < 60) return `منذ ${mins} دقيقة`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return hours === 1 ? "منذ ساعة" : `منذ ${hours} ساعة`;
+  const days = Math.floor(hours / 24);
+  if (days === 1) return "أمس";
+  return `منذ ${days} أيام`;
+}
+
+function getSeenNotifIds() {
+  return new Set(store.getJson(NOTIF_SEEN_KEY, []));
+}
+
+function markNotifSeen(id) {
+  if (!id) return;
+  const seen = getSeenNotifIds();
+  if (!seen.has(id)) {
+    seen.add(id);
+    store.setJson(NOTIF_SEEN_KEY, Array.from(seen).slice(-120));
+  }
+}
+
+function markAllNotifsSeen(items) {
+  const seen = getSeenNotifIds();
+  for (const item of items) seen.add(item.id);
+  store.setJson(NOTIF_SEEN_KEY, Array.from(seen).slice(-120));
+}
+
+function buildNotifications() {
+  const items = [];
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  for (const midterm of state.schedule?.midterms || []) {
+    const startAt = parseDateTime(midterm.date, midterm.startTime);
+    const endAt = parseDateTime(midterm.date, midterm.endTime || midterm.startTime);
+    if (Number.isNaN(startAt.getTime())) continue;
+    const targetDay = new Date(startAt.getFullYear(), startAt.getMonth(), startAt.getDate());
+    const days = Math.round((targetDay - today) / 86400000);
+    const subject = subjectById(midterm.subjectId);
+    const accent = subject?.accent || "#2563eb";
+    const revisionHref = `#${midterm.subjectId}/midterm-revision`;
+
+    if (days === 0 && endAt >= now) {
+      const ongoing = now >= startAt && now <= endAt;
+      items.push({
+        id: `exam-today-${midterm.subjectId}-${midterm.date}`,
+        kind: "exam-today",
+        priority: 1,
+        title: ongoing
+          ? `امتحان ${midterm.subjectName} جارٍ الآن`
+          : `اليوم امتحان ${midterm.subjectName}`,
+        meta: `${midterm.startTime}–${midterm.endTime} · ${midterm.venue}`,
+        href: revisionHref,
+        ctaLabel: "مراجعة الميدترم ★",
+        accent,
+        midterm,
+      });
+    } else if (days === 1) {
+      items.push({
+        id: `exam-tomorrow-${midterm.subjectId}-${midterm.date}`,
+        kind: "exam-soon",
+        priority: 2,
+        title: `غداً امتحان ${midterm.subjectName}`,
+        meta: `${formatDateShort(midterm.date)} · ${midterm.startTime}–${midterm.endTime}`,
+        href: revisionHref,
+        ctaLabel: "مراجعة الميدترم",
+        accent,
+        midterm,
+      });
+    } else if (days >= 2 && days <= 7) {
+      items.push({
+        id: `exam-soon-${midterm.subjectId}-${midterm.date}`,
+        kind: "exam-soon",
+        priority: 3,
+        title: `بعد ${days} أيام: امتحان ${midterm.subjectName}`,
+        meta: `${formatDateShort(midterm.date)} · ${midterm.startTime}–${midterm.endTime}`,
+        href: revisionHref,
+        ctaLabel: "مراجعة الميدترم",
+        accent,
+        midterm,
+      });
+    }
+  }
+
+  const fileCandidates = new Map();
+  for (const subject of state.data?.subjects || []) {
+    for (const section of subject.sections || []) {
+      for (const file of section.files || []) {
+        if (!file.addedAt) continue;
+        const addedMs = Date.parse(file.addedAt);
+        if (Number.isNaN(addedMs)) continue;
+        const diff = Date.now() - addedMs;
+        if (diff < -60000 || diff > NOTIF_FILE_WINDOW_MS) continue;
+
+        const key = file.path || `${subject.id}/${section.id}/${file.id}`;
+        const existing = fileCandidates.get(key);
+        const candidate = {
+          subject,
+          section,
+          file,
+          addedMs,
+          isPrimary: subject.id !== "midterm-revision",
+        };
+        if (!existing || (candidate.isPrimary && !existing.isPrimary)) {
+          fileCandidates.set(key, candidate);
+        }
+      }
+    }
+  }
+
+  const recentFiles = Array.from(fileCandidates.values()).sort((a, b) => b.addedMs - a.addedMs);
+  for (const entry of recentFiles) {
+    const recent24h = isRecentFile(entry.file);
+    items.push({
+      id: `file-${entry.file.path}-${entry.file.addedAt}`,
+      kind: "new-file",
+      priority: recent24h ? 2 : 4,
+      recent24h,
+      title: entry.file.title,
+      meta: `${entry.subject.nameAr} · ${entry.section.name} · ${formatRelativeTimeAr(entry.file.addedAt)}`,
+      href: `#${entry.subject.id}/${entry.section.id}/${entry.file.id}`,
+      ctaLabel: "فتح الملف",
+      accent: entry.subject.accent || "#2563eb",
+    });
+  }
+
+  return items.sort((a, b) => a.priority - b.priority);
+}
+
+function setNotifOpen(open) {
+  state.notifOpen = Boolean(open);
+  if (notifToggleEl) notifToggleEl.setAttribute("aria-expanded", state.notifOpen ? "true" : "false");
+  if (notifPanelEl) notifPanelEl.hidden = !state.notifOpen;
+  if (state.notifOpen) renderNotifications();
+}
+
+function renderNotifications() {
+  const items = buildNotifications();
+  const seen = getSeenNotifIds();
+  const unreadCount = items.filter((item) => !seen.has(item.id)).length;
+
+  if (notifBadgeEl) {
+    notifBadgeEl.hidden = unreadCount === 0;
+    notifBadgeEl.textContent = unreadCount > 9 ? "9+" : String(unreadCount);
+  }
+
+  if (!notifPanelEl) return;
+  const canBrowserNotif = "Notification" in window && Notification.permission !== "granted";
+  const browserBtn = canBrowserNotif
+    ? `<button class="notif-action-link" type="button" data-notif-browser="1">تفعيل إشعارات المتصفح</button>`
+    : "";
+
+  const listHtml = items.length
+    ? items
+        .map((item) => {
+          const unread = !seen.has(item.id);
+          const badge =
+            item.kind === "exam-today"
+              ? `<span class="notif-tag is-exam">اليوم</span>`
+              : item.kind === "exam-soon"
+                ? `<span class="notif-tag is-soon">امتحان قريب</span>`
+                : item.recent24h
+                  ? `<span class="notif-tag is-star">★ جديد</span>`
+                  : `<span class="notif-tag">ملف جديد</span>`;
+          return `<a class="notif-item${unread ? " is-unread" : ""}" href="${esc(item.href)}" data-notif-id="${esc(item.id)}">
+            <span class="notif-dot" style="background:${esc(item.accent)}"></span>
+            <div class="notif-item-body">
+              <div class="notif-item-top">
+                <strong class="notif-item-title">${esc(item.title)}</strong>
+                ${badge}
+              </div>
+              <span class="notif-item-meta">${esc(item.meta)}</span>
+            </div>
+            <span class="notif-item-cta">${esc(item.ctaLabel)}</span>
+          </a>`;
+        })
+        .join("")
+    : `<div class="notif-empty">لا توجد إشعارات جديدة حالياً.</div>`;
+
+  notifPanelEl.innerHTML = `<div class="notif-panel-head">
+      <strong>الإشعارات</strong>
+      <div class="notif-panel-actions">
+        ${browserBtn}
+        ${items.length ? `<button class="notif-action-link" type="button" data-notif-read-all="1">تحديد الكل كمقروء</button>` : ""}
+      </div>
+    </div>
+    <div class="notif-list">${listHtml}</div>`;
+}
+
+function renderNotifBanner() {
+  if (!notifBannerEl) return;
+  if (searchActive() || state.filtersOpen) {
+    notifBannerEl.hidden = true;
+    notifBannerEl.innerHTML = "";
+    return;
+  }
+
+  const items = buildNotifications();
+  const dismissed = new Set(store.getJson(NOTIF_DISMISSED_KEY, []));
+  const seen = getSeenNotifIds();
+
+  const examToday = items.find((item) => item.kind === "exam-today" && !dismissed.has(item.id));
+  const recentFile = !examToday
+    ? items.find(
+        (item) =>
+          item.kind === "new-file" &&
+          item.recent24h &&
+          !seen.has(item.id) &&
+          !dismissed.has(item.id),
+      )
+    : null;
+
+  const target = examToday || recentFile;
+  if (!target) {
+    notifBannerEl.hidden = true;
+    notifBannerEl.innerHTML = "";
+    return;
+  }
+
+  const isExam = target.kind === "exam-today";
+  notifBannerEl.hidden = false;
+  notifBannerEl.className = `notif-banner${isExam ? " is-exam" : " is-file"}`;
+  notifBannerEl.style.setProperty("--notif-accent", target.accent);
+  notifBannerEl.innerHTML = `<div class="notif-banner-main">
+      <span class="notif-banner-pill">${isExam ? "⏰ تنبيه امتحان اليوم" : "★ ملف مضاف حديثاً"}</span>
+      <div class="notif-banner-text">
+        <strong>${esc(target.title)}</strong>
+        <span>${esc(target.meta)}</span>
+      </div>
+    </div>
+    <div class="notif-banner-actions">
+      <a class="notif-banner-cta" href="${esc(target.href)}" data-notif-banner-link="${esc(target.id)}">${esc(target.ctaLabel)}</a>
+      <button class="icon-btn notif-banner-close" type="button" data-notif-dismiss="${esc(target.id)}" aria-label="إخفاء التنبيه" title="إخفاء">
+        <svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>`;
+}
+
+function maybeSendBrowserNotifications() {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+  if (store.get(NOTIF_BROWSER_KEY) !== "1") return;
+  const items = buildNotifications();
+  const browserSentKey = "hub:notif:browser-sent";
+  const sent = new Set(store.getJson(browserSentKey, []));
+  for (const item of items) {
+    if (item.kind !== "exam-today" && !(item.kind === "new-file" && item.recent24h)) continue;
+    if (sent.has(item.id)) continue;
+    sent.add(item.id);
+    try {
+      const n = new Notification(item.title, { body: item.meta, icon: "assets/logo.png" });
+      n.onclick = () => {
+        window.focus();
+        location.hash = item.href;
+        n.close();
+      };
+    } catch {
+      // Ignore browser notification errors
+    }
+  }
+  store.setJson(browserSentKey, Array.from(sent).slice(-60));
+}
+
 function renderSmartStrip() {
   if (!smartStripEl) return;
   if (!state.schedule || state.feature !== "schedule" || searchActive() || state.filtersOpen) {
@@ -1067,11 +1355,13 @@ function fileRow(file, subject, sectionId, variant = "", options = {}) {
     (file.ext || "").toLowerCase() === "html"
       ? `<a class="act run" href="${esc(file.path)}" target="_blank" rel="noopener" title="تشغيل الملف التفاعلي" aria-label="تشغيل">${ICONS.play}</a>`
       : "";
-  const className = `file${variant ? ` ${variant}` : ""}`;
+  const recent = isRecentFile(file);
+  const className = `file${variant ? ` ${variant}` : ""}${recent ? " is-recent" : ""}`;
   return `<div class="${className}" tabindex="0" data-file="${esc(file.path)}" data-subject="${subject.id}" data-section="${esc(sectionId)}" title="معاينة أو تحميل الملف">
     <span class="file-badge ${badge}">${badge}</span>
     <div class="file-main">
       <span class="file-title" title="${esc(file.original || file.title)}">${highlightText(file.title, tokens)}</span>
+      ${recent ? `<span class="new-file-star" title="تمت إضافته خلال آخر 24 ساعة">★ جديد</span>` : ""}
       ${file.docTag ? `<span class="doc-tag ${file.docTag === "ملخص" ? "is-summary" : "is-questions"}">${esc(file.docTag)}</span>` : ""}
       ${options.showOriginal && file.original ? `<span class="file-original" dir="ltr">${highlightText(file.original, tokens)}</span>` : ""}
       <span class="file-sub">
@@ -1247,7 +1537,7 @@ function renderMatrix(subject) {
         const file = files.find(
           (entry) => entry.id === curated.id || entry.path === curated.path,
         );
-        return file ? { ...file, docTag: curated.docTag || file.docTag } : curated;
+        return file ? { ...file, docTag: curated.docTag || file.docTag, addedAt: file.addedAt || curated.addedAt } : curated;
       })
       .filter(Boolean);
   } else {
@@ -1898,6 +2188,8 @@ function renderModeSwitcher() {
 
 function render() {
   renderModeSwitcher();
+  renderNotifBanner();
+  renderNotifications();
   renderSmartStrip();
   renderFacets();
   updateSearchPanel();
@@ -2437,6 +2729,65 @@ function setFooter() {
 
 window.addEventListener("hub:mistakes-updated", syncMistakesBadge);
 window.addEventListener("hashchange", route);
+
+notifToggleEl?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  setNotifOpen(!state.notifOpen);
+});
+
+notifPanelEl?.addEventListener("click", async (event) => {
+  const readAllBtn = event.target.closest("[data-notif-read-all]");
+  if (readAllBtn) {
+    markAllNotifsSeen(buildNotifications());
+    renderNotifications();
+    renderNotifBanner();
+    return;
+  }
+
+  const browserBtn = event.target.closest("[data-notif-browser]");
+  if (browserBtn && "Notification" in window) {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      store.set(NOTIF_BROWSER_KEY, "1");
+      maybeSendBrowserNotifications();
+    }
+    renderNotifications();
+    return;
+  }
+
+  const itemLink = event.target.closest(".notif-item[data-notif-id]");
+  if (itemLink) {
+    markNotifSeen(itemLink.dataset.notifId);
+    setNotifOpen(false);
+    renderNotifications();
+  }
+});
+
+notifBannerEl?.addEventListener("click", (event) => {
+  const dismissBtn = event.target.closest("[data-notif-dismiss]");
+  if (dismissBtn) {
+    const id = dismissBtn.dataset.notifDismiss;
+    const dismissed = new Set(store.getJson(NOTIF_DISMISSED_KEY, []));
+    dismissed.add(id);
+    store.setJson(NOTIF_DISMISSED_KEY, Array.from(dismissed).slice(-60));
+    markNotifSeen(id);
+    renderNotifBanner();
+    renderNotifications();
+    return;
+  }
+
+  const ctaLink = event.target.closest("[data-notif-banner-link]");
+  if (ctaLink) {
+    markNotifSeen(ctaLink.dataset.notifBannerLink);
+    renderNotifications();
+  }
+});
+
+document.addEventListener("click", (event) => {
+  if (state.notifOpen && notifWrapEl && !notifWrapEl.contains(event.target)) {
+    setNotifOpen(false);
+  }
+});
 
 async function loadData() {
   if (location.protocol !== "file:") {

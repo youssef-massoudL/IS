@@ -1802,6 +1802,7 @@ window.__SITE_DATA__ = {
               "youtube": "",
               "lecture": null,
               "kind": "review",
+              "docTag": "ملخص",
               "keywords": [
                 "مراجعة",
                 "مراجعات",
@@ -1871,6 +1872,7 @@ window.__SITE_DATA__ = {
               "youtube": "",
               "lecture": null,
               "kind": "review",
+              "docTag": "أسئلة",
               "keywords": [
                 "مراجعة",
                 "مراجعات",
@@ -1901,6 +1903,7 @@ window.__SITE_DATA__ = {
               "youtube": "",
               "lecture": null,
               "kind": "review",
+              "docTag": "أسئلة",
               "keywords": [
                 "مراجعة",
                 "مراجعات",
@@ -3640,6 +3643,7 @@ window.__SITE_DATA__ = {
               "youtube": "",
               "lecture": null,
               "kind": "review",
+              "docTag": "ملخص",
               "keywords": [
                 "مراجعة",
                 "مراجعات",
@@ -3707,6 +3711,7 @@ window.__SITE_DATA__ = {
               "youtube": "",
               "lecture": null,
               "kind": "review",
+              "docTag": "أسئلة",
               "keywords": [
                 "مراجعة",
                 "مراجعات",

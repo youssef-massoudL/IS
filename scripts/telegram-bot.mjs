@@ -132,6 +132,72 @@ function firstNumber(value) {
   return match ? Number.parseInt(match[0], 10) : 9999;
 }
 
+function normalizeCompare(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[\s_-]+/g, " ")
+    .trim();
+}
+
+function formatBytes(bytes) {
+  if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1048576).toFixed(1)} MB`;
+}
+
+function findExistingMatches(manifest, fileName, fileSize) {
+  const ext = path.extname(fileName).toLowerCase() || ".pdf";
+  const slug = slugify(path.basename(fileName, ext));
+  const defaultTitle = cleanTitleFromFilename(fileName);
+  const normOriginal = normalizeCompare(fileName);
+  const normTitle = normalizeCompare(defaultTitle);
+
+  const byPath = new Map();
+
+  for (const subject of manifest.subjects || []) {
+    for (const section of subject.sections || []) {
+      for (const file of section.files || []) {
+        const reasons = [];
+        if (file.original && normalizeCompare(file.original) === normOriginal) {
+          reasons.push("same filename");
+        }
+        const baseNoExt = path.basename(file.path || "", path.extname(file.path || ""));
+        if (file.id === slug || baseNoExt === slug) {
+          reasons.push("same file ID/slug");
+        }
+        if (file.title && normTitle && normalizeCompare(file.title) === normTitle) {
+          reasons.push("same title");
+        }
+        const fileExt = `.${String(file.ext || path.extname(file.path || "").slice(1)).toLowerCase()}`;
+        if (Number.isFinite(fileSize) && fileSize > 0 && file.size === fileSize && fileExt === ext) {
+          reasons.push("same size & type");
+        }
+        if (!reasons.length) continue;
+
+        const key = file.path || `${subject.id}/${section.id}/${file.id}`;
+        const existing = byPath.get(key);
+        const candidate = {
+          subjectId: subject.id,
+          subjectNameAr: subject.nameAr || subject.name || subject.id,
+          sectionId: section.id,
+          sectionName: section.name || section.id,
+          file,
+          reasons,
+          score: reasons.length + (subject.id !== "midterm-revision" ? 0.5 : 0),
+        };
+        if (!existing || candidate.score > existing.score) {
+          byPath.set(key, candidate);
+        }
+      }
+    }
+  }
+
+  return Array.from(byPath.values())
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
+}
+
 function sortFiles(files) {
   files.sort(
     (a, b) =>
@@ -178,66 +244,98 @@ async function publishUpload(job) {
   const subject = manifest.subjects.find((s) => s.id === job.subjectId);
   if (!subject) throw new Error(`Unknown subject: ${job.subjectId}`);
 
-  const ext = path.extname(job.fileName).toLowerCase() || ".pdf";
-  const slug = slugify(path.basename(job.fileName, ext));
-
-  // Primary storage folder: chosen section, or midterm-revision if Hero-only
-  const primarySectionId = job.mode === "hero" ? "midterm-revision" : job.sectionId;
-  const outDir = path.join(repoDir, "files", subject.id, primarySectionId);
-  fs.mkdirSync(outDir, { recursive: true });
-
-  let dest = path.join(outDir, `${slug}${ext}`);
-  let counter = 2;
-  while (fs.existsSync(dest)) {
-    dest = path.join(outDir, `${slug}-${counter++}${ext}`);
-  }
-
-  const size = await downloadTelegramFile(job.fileId, dest);
-  const relPath = path.posix.join("files", subject.id, primarySectionId, path.basename(dest));
-  const entryId = path.basename(dest, ext);
-
-  const baseEntry = {
-    id: entryId,
-    title: job.title,
-    original: job.fileName,
-    path: relPath,
-    ext: ext.slice(1),
-    size,
-    youtube: "",
-  };
-  if (job.docTag) baseEntry.docTag = job.docTag;
-
+  const nowIso = new Date().toISOString();
   const addedTo = [];
+  let relPath = "";
+  let commitAction = "Add";
 
-  if (job.mode === "section" || job.mode === "both") {
-    let sec = subject.sections.find((s) => s.id === job.sectionId);
-    if (!sec) {
-      sec = { id: job.sectionId, name: job.sectionId, nameEn: job.sectionId, files: [] };
-      subject.sections.push(sec);
+  if (job.mode === "replace" && job.replaceTarget) {
+    relPath = job.replaceTarget.file.path;
+    const dest = path.join(repoDir, relPath.replace(/\//g, path.sep));
+    const size = await downloadTelegramFile(job.fileId, dest);
+    const ext = path.extname(relPath).slice(1).toLowerCase() || "pdf";
+
+    for (const s of manifest.subjects) {
+      for (const sec of s.sections || []) {
+        let updatedInSec = false;
+        for (const f of sec.files || []) {
+          if (f.path === relPath) {
+            f.title = job.title;
+            f.original = job.fileName;
+            f.size = size;
+            f.ext = ext;
+            f.addedAt = nowIso;
+            updatedInSec = true;
+          }
+        }
+        if (updatedInSec) {
+          sortFiles(sec.files);
+          addedTo.push(`${s.id}/${sec.id} (replaced)`);
+        }
+      }
     }
-    addEntryToSection(sec, baseEntry);
-    addedTo.push(`${subject.id}/${sec.id}`);
+    commitAction = "Update";
+  } else {
+    const ext = path.extname(job.fileName).toLowerCase() || ".pdf";
+    const slug = slugify(path.basename(job.fileName, ext));
+
+    // Primary storage folder: chosen section, or midterm-revision if Hero-only
+    const primarySectionId = job.mode === "hero" ? "midterm-revision" : job.sectionId;
+    const outDir = path.join(repoDir, "files", subject.id, primarySectionId);
+    fs.mkdirSync(outDir, { recursive: true });
+
+    let dest = path.join(outDir, `${slug}${ext}`);
+    let counter = 2;
+    while (fs.existsSync(dest)) {
+      dest = path.join(outDir, `${slug}-${counter++}${ext}`);
+    }
+
+    const size = await downloadTelegramFile(job.fileId, dest);
+    relPath = path.posix.join("files", subject.id, primarySectionId, path.basename(dest));
+    const entryId = path.basename(dest, ext);
+
+    const baseEntry = {
+      id: entryId,
+      title: job.title,
+      original: job.fileName,
+      path: relPath,
+      ext: ext.slice(1),
+      size,
+      youtube: "",
+      addedAt: nowIso,
+    };
+    if (job.docTag) baseEntry.docTag = job.docTag;
+
+    if (job.mode === "section" || job.mode === "both") {
+      let sec = subject.sections.find((s) => s.id === job.sectionId);
+      if (!sec) {
+        sec = { id: job.sectionId, name: job.sectionId, nameEn: job.sectionId, files: [] };
+        subject.sections.push(sec);
+      }
+      addEntryToSection(sec, baseEntry);
+      addedTo.push(`${subject.id}/${sec.id}`);
+    }
+
+    if (job.mode === "hero" || job.mode === "both") {
+      let subjMid = subject.sections.find((s) => s.id === "midterm-revision");
+      if (!subjMid) {
+        subjMid = { id: "midterm-revision", name: "مراجعة الميدترم", nameEn: "Midterm Revision", files: [] };
+        subject.sections.push(subjMid);
+      }
+      addEntryToSection(subjMid, baseEntry);
+      addedTo.push(`${subject.id}/midterm-revision`);
+
+      const midtermSubject = manifest.subjects.find((s) => s.id === "midterm-revision");
+      const mappedSectionId = MIDTERM_SECTION_MAP[subject.id];
+      const midtermSec = midtermSubject?.sections.find((s) => s.id === mappedSectionId);
+      if (midtermSec) {
+        addEntryToSection(midtermSec, baseEntry);
+        addedTo.push(`midterm-revision/${mappedSectionId}`);
+      }
+    }
   }
 
-  if (job.mode === "hero" || job.mode === "both") {
-    let subjMid = subject.sections.find((s) => s.id === "midterm-revision");
-    if (!subjMid) {
-      subjMid = { id: "midterm-revision", name: "مراجعة الميدترم", nameEn: "Midterm Revision", files: [] };
-      subject.sections.push(subjMid);
-    }
-    addEntryToSection(subjMid, baseEntry);
-    addedTo.push(`${subject.id}/midterm-revision`);
-
-    const midtermSubject = manifest.subjects.find((s) => s.id === "midterm-revision");
-    const mappedSectionId = MIDTERM_SECTION_MAP[subject.id];
-    const midtermSec = midtermSubject?.sections.find((s) => s.id === mappedSectionId);
-    if (midtermSec) {
-      addEntryToSection(midtermSec, baseEntry);
-      addedTo.push(`midterm-revision/${mappedSectionId}`);
-    }
-  }
-
-  manifest.updated = new Date().toISOString().slice(0, 10);
+  manifest.updated = nowIso.slice(0, 10);
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
 
   runNode(repoDir, [path.join("scripts", "build.mjs"), "--fix"]);
@@ -249,7 +347,7 @@ async function publishUpload(job) {
     return { relPath, addedTo, commit: "no-changes" };
   }
 
-  runGit(repoDir, ["commit", "-m", `Add ${job.title} (${subject.id})`]);
+  runGit(repoDir, ["commit", "-m", `${commitAction} ${job.title} (${subject.id})`]);
   runGit(repoDir, ["push", "origin", GITHUB_BRANCH]);
   const commit = runGit(repoDir, ["rev-parse", "--short", "HEAD"]);
   return { relPath, addedTo, commit };
@@ -305,6 +403,30 @@ function titleKeyboard(defaultTitle) {
   };
 }
 
+function duplicateKeyboard(matches) {
+  const rows = matches.map((m, idx) => {
+    const label = `${m.file.title} (${m.subjectNameAr})`;
+    const shortLabel = label.length > 34 ? label.slice(0, 31) + "..." : label;
+    return [{ text: `🔄 Replace #${idx + 1}: ${shortLabel}`, callback_data: `dup:replace:${idx}` }];
+  });
+  rows.push([{ text: "➕ Add as New File Anyway", callback_data: "dup:add_new" }]);
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+function replaceTitleKeyboard(existingTitle, defaultTitle) {
+  const shortExisting = existingTitle.length > 30 ? existingTitle.slice(0, 27) + "..." : existingTitle;
+  const rows = [
+    [{ text: `✅ Keep "${shortExisting}"`, callback_data: "title:keep" }],
+  ];
+  if (defaultTitle && defaultTitle !== existingTitle) {
+    const shortDefault = defaultTitle.length > 30 ? defaultTitle.slice(0, 27) + "..." : defaultTitle;
+    rows.push([{ text: `📝 Use "${shortDefault}"`, callback_data: "title:default" }]);
+  }
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
 async function handleMessage(msg) {
   const chatId = msg.chat.id;
   const userId = String(msg.from?.id || "");
@@ -314,7 +436,7 @@ async function handleMessage(msg) {
   if (text === "/start" || text === "/help") {
     await tg("sendMessage", {
       chat_id: chatId,
-      text: "Send or forward any PDF here, and I will ask which subject and section to add it to, then push it to GitHub Pages.",
+      text: "Send or forward any PDF here, and I will check if it already exists, ask which subject and section to add it to, and push it to GitHub Pages.",
     });
     return;
   }
@@ -327,14 +449,51 @@ async function handleMessage(msg) {
 
   if (msg.document) {
     const fileName = msg.document.file_name || "document.pdf";
+    const fileSize = msg.document.file_size || 0;
     const repoDir = ensureRepo();
     const manifest = readManifest(repoDir);
     const defaultTitle = cleanTitleFromFilename(fileName);
+    const matches = findExistingMatches(manifest, fileName, fileSize);
+
+    if (matches.length > 0) {
+      pending.set(chatId, {
+        step: "duplicate",
+        fileId: msg.document.file_id,
+        fileName,
+        fileSize,
+        defaultTitle,
+        title: defaultTitle,
+        subjects: manifest.subjects,
+        matches,
+      });
+
+      const listText = matches
+        .map(
+          (m, idx) =>
+            `<b>#${idx + 1}</b> ${escapeHtml(m.file.title)}\n` +
+            `   • Subject: ${escapeHtml(m.subjectNameAr)} / ${escapeHtml(m.sectionName)}\n` +
+            `   • Existing: <code>${escapeHtml(m.file.original || m.file.path)}</code> (${formatBytes(m.file.size)})\n` +
+            `   • Match: ${escapeHtml(m.reasons.join(", "))}`,
+        )
+        .join("\n\n");
+
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `⚠️ <b>Similar file already exists!</b>\n` +
+          `Received: <code>${escapeHtml(fileName)}</code> (${formatBytes(fileSize)})\n\n` +
+          `${listText}\n\nWhat would you like to do?`,
+        parse_mode: "HTML",
+        reply_markup: duplicateKeyboard(matches),
+      });
+      return;
+    }
 
     pending.set(chatId, {
       step: "subject",
       fileId: msg.document.file_id,
       fileName,
+      fileSize,
       defaultTitle,
       title: defaultTitle,
       subjects: manifest.subjects,
@@ -350,7 +509,7 @@ async function handleMessage(msg) {
   }
 
   const job = pending.get(chatId);
-  if (job && job.step === "title" && text) {
+  if (job && (job.step === "title" || job.step === "replace_title") && text) {
     job.title = text;
     await runPublishFlow(chatId, job);
   }
@@ -396,6 +555,43 @@ async function handleCallback(cb) {
   const job = pending.get(chatId);
   if (!job) {
     await tg("sendMessage", { chat_id: chatId, text: "Session expired. Please send the PDF again." });
+    return;
+  }
+
+  if (data === "dup:add_new") {
+    job.mode = null;
+    job.replaceTarget = null;
+    job.step = "subject";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `📄 Adding as a new file: <b>${escapeHtml(job.fileName)}</b>\n\nWhich subject is this for?`,
+      parse_mode: "HTML",
+      reply_markup: subjectKeyboard(job.subjects),
+    });
+    return;
+  }
+
+  if (data.startsWith("dup:replace:")) {
+    const idx = Number.parseInt(data.slice("dup:replace:".length), 10);
+    const match = Array.isArray(job.matches) ? job.matches[idx] : null;
+    if (!match) {
+      await tg("sendMessage", { chat_id: chatId, text: "Selected file not found. Please send the PDF again." });
+      pending.delete(chatId);
+      return;
+    }
+    job.mode = "replace";
+    job.replaceTarget = match;
+    job.subjectId = match.subjectId;
+    job.sectionId = match.sectionId;
+    job.step = "replace_title";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `🔄 Replacing <b>${escapeHtml(match.file.title)}</b> in ${escapeHtml(match.subjectNameAr)} / ${escapeHtml(match.sectionName)}.\n\n` +
+        `Send a custom title, or choose one below:`,
+      parse_mode: "HTML",
+      reply_markup: replaceTitleKeyboard(match.file.title, job.defaultTitle),
+    });
     return;
   }
 
@@ -459,6 +655,12 @@ async function handleCallback(cb) {
       text: `Send a custom Arabic title as a text message, or tap below to use:\n"${job.defaultTitle}"`,
       reply_markup: titleKeyboard(job.defaultTitle),
     });
+    return;
+  }
+
+  if (data === "title:keep" && job.replaceTarget) {
+    job.title = job.replaceTarget.file.title;
+    await runPublishFlow(chatId, job);
     return;
   }
 

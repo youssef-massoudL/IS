@@ -80,6 +80,7 @@ section.files.push({
   ext: ext.slice(1),
   size: fs.statSync(dest).size,
   youtube: opt.youtube || "",
+  addedAt: new Date().toISOString(),
 });
 
 const firstNumber = (value) => {
