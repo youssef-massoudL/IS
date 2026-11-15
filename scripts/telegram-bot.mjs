@@ -24,10 +24,20 @@ function loadDotEnv(envPath) {
 
 loadDotEnv(path.join(LOCAL_ROOT, ".env"));
 
+function normalizeGitHubRepo(raw) {
+  return (
+    String(raw || "youssef-massoudL/IS")
+      .trim()
+      .replace(/^https?:\/\/github\.com\//i, "")
+      .replace(/\.git$/i, "")
+      .replace(/^\/+|\/+$/g, "") || "youssef-massoudL/IS"
+  );
+}
+
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const ADMIN_ID = String(process.env.TELEGRAM_ADMIN_ID || "").trim();
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || "";
-const GITHUB_REPO = process.env.GITHUB_REPO || "youssef-massoudL/IS";
+const GITHUB_REPO = normalizeGitHubRepo(process.env.GITHUB_REPO);
 const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main";
 
 if (!BOT_TOKEN || !ADMIN_ID) {
