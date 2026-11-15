@@ -1057,7 +1057,11 @@ function setNotifOpen(open) {
   state.notifOpen = Boolean(open);
   if (notifToggleEl) notifToggleEl.setAttribute("aria-expanded", state.notifOpen ? "true" : "false");
   if (notifPanelEl) notifPanelEl.hidden = !state.notifOpen;
-  if (state.notifOpen) renderNotifications();
+  if (state.notifOpen) {
+    const rect = notifToggleEl?.getBoundingClientRect();
+    if (rect) notifPanelEl?.style.setProperty("--notif-top", `${Math.round(rect.bottom + 8)}px`);
+    renderNotifications();
+  }
 }
 
 function renderNotifications() {
@@ -1085,9 +1089,7 @@ function renderNotifications() {
               ? `<span class="notif-tag is-exam">اليوم</span>`
               : item.kind === "exam-soon"
                 ? `<span class="notif-tag is-soon">امتحان قريب</span>`
-                : item.recent24h
-                  ? `<span class="notif-tag is-star">★ جديد</span>`
-                  : `<span class="notif-tag">ملف جديد</span>`;
+                : `<span class="notif-tag">ملف جديد</span>`;
           return `<a class="notif-item${unread ? " is-unread" : ""}" href="${esc(item.href)}" data-notif-id="${esc(item.id)}">
             <span class="notif-dot" style="background:${esc(item.accent)}"></span>
             <div class="notif-item-body">
@@ -1424,13 +1426,13 @@ function fileRow(file, subject, sectionId, variant = "", options = {}) {
     (file.ext || "").toLowerCase() === "html"
       ? `<a class="act run" href="${esc(file.path)}" target="_blank" rel="noopener" title="تشغيل الملف التفاعلي" aria-label="تشغيل">${ICONS.play}</a>`
       : "";
-  const recent = isRecentFile(file);
-  const className = `file${variant ? ` ${variant}` : ""}${recent ? " is-recent" : ""}`;
+  const bookmarked = isBookmarked(file.path);
+  const bookmarkLabel = bookmarked ? "إزالة من المحفوظات" : "حفظ في المفضلة";
+  const className = `file${variant ? ` ${variant}` : ""}${options.studyChecked ? " is-studied" : ""}`;
   return `<div class="${className}" tabindex="0" data-file="${esc(file.path)}" data-subject="${subject.id}" data-section="${esc(sectionId)}" title="معاينة أو تحميل الملف">
     <span class="file-badge ${badge}">${badge}</span>
     <div class="file-main">
       <span class="file-title" title="${esc(file.original || file.title)}">${highlightText(file.title, tokens)}</span>
-      ${recent ? `<span class="new-file-star" title="تمت إضافته خلال آخر 24 ساعة">★ جديد</span>` : ""}
       ${file.docTag ? `<span class="doc-tag ${file.docTag === "ملخص" ? "is-summary" : "is-questions"}">${esc(file.docTag)}</span>` : ""}
       ${options.showOriginal && file.original ? `<span class="file-original" dir="ltr">${highlightText(file.original, tokens)}</span>` : ""}
       <span class="file-sub">
@@ -1442,8 +1444,10 @@ function fileRow(file, subject, sectionId, variant = "", options = {}) {
         <span class="file-hint hint-desktop">اضغط للتحميل</span>
         <span class="file-hint hint-mobile">اضغط للمعاينة</span>
       </span>
+      ${options.studyKey ? `<label class="study-check file-study"><input type="checkbox" data-study="${esc(options.studyKey)}"${options.studyChecked ? " checked" : ""}><span>تمت المذاكرة</span></label>` : ""}
     </div>
     <div class="file-actions">
+      <button class="act bookmark${bookmarked ? " is-bookmarked" : ""}" type="button" data-bookmark-toggle="${esc(file.path)}" aria-pressed="${bookmarked ? "true" : "false"}" title="${bookmarkLabel}" aria-label="${bookmarkLabel}">★</button>
       ${yt}
       ${run}
       <button class="act preview" type="button" title="معاينة داخل الموقع" aria-label="معاينة">${ICONS.eye}</button>
@@ -1507,6 +1511,49 @@ function getStudied() {
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
+const BOOKMARKS_KEY = "hub:bookmarks";
+
+function getBookmarks() {
+  const value = store.getJson(BOOKMARKS_KEY, {});
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function isBookmarked(filePath) {
+  return Boolean(getBookmarks()[filePath]);
+}
+
+function toggleBookmark(filePath) {
+  if (!filePath) return false;
+  const bookmarks = getBookmarks();
+  const bookmarked = !bookmarks[filePath];
+  if (bookmarked) bookmarks[filePath] = true;
+  else delete bookmarks[filePath];
+  store.setJson(BOOKMARKS_KEY, bookmarks);
+  window.dispatchEvent(
+    new CustomEvent("hub:bookmarks-updated", {
+      detail: { source: "ui", path: filePath, bookmarked },
+    }),
+  );
+  return bookmarked;
+}
+
+function bookmarkedFiles(subject) {
+  const bookmarks = getBookmarks();
+  const seen = new Set();
+  return subjectFiles(subject).filter((file) => {
+    if (!bookmarks[file.path] || seen.has(file.path)) return false;
+    seen.add(file.path);
+    return true;
+  });
+}
+
+function sectionNameOf(subject, file) {
+  const section = subject.sections.find((entry) =>
+    entry.files.some((item) => item.path === file.path),
+  );
+  return section ? section.name : "";
+}
+
 function updateStudyProgress(subjectId) {
   const subject = subjectById(subjectId);
   if (!subject) return;
@@ -1525,6 +1572,65 @@ function updateStudyProgress(subjectId) {
   if (label) label.textContent = `تمت مذاكرة ${studied} من ${lectureCount} ${lectureNoun(lectureCount)}`;
   if (value) value.textContent = `${percent}%`;
   if (bar) bar.style.width = `${percent}%`;
+}
+
+function studyProgressMarkup(subject, studiedCount) {
+  const lectureCount = lectureTotal(subject);
+  const percent = lectureCount ? Math.round((studiedCount / lectureCount) * 100) : 0;
+  return `<div class="matrix-toolbar" data-progress="${esc(subject.id)}">
+      <div class="progress-head"><span>تمت مذاكرة ${studiedCount} من ${lectureCount} ${lectureNoun(lectureCount)}</span><strong>${percent}%</strong></div>
+      <div class="progress"><span style="width:${percent}%"></span></div>
+    </div>`;
+}
+
+function bookmarkStripMarkup(subject, files) {
+  const open = store.get("section:__bookmarks") !== "closed";
+  return `<section class="section bookmarks-section" data-section="__bookmarks" data-open="${open}">
+    <button class="section-head" type="button" aria-expanded="${open}">
+      <span class="section-icon">${ICONS.simple}</span>
+      <span class="section-titles">
+        <h3>المحفوظات السريعة (${files.length})</h3>
+        <span class="en">Quick Bookmarks</span>
+      </span>
+      <span class="section-badge">${files.length}</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="section-body">
+      ${files
+        .map((file) =>
+          fileRow(file, subject, sectionIdOf(subject, file), "file-compact", {
+            meta: sectionNameOf(subject, file),
+          }),
+        )
+        .join("")}
+    </div>
+  </section>`;
+}
+
+function bookmarksSlotMarkup(subject) {
+  const files = bookmarkedFiles(subject);
+  return `<div class="bookmarks-slot" data-bookmarks-slot${files.length ? "" : " hidden"}>${
+    files.length ? bookmarkStripMarkup(subject, files) : ""
+  }</div>`;
+}
+
+function refreshBookmarkUI(filePath) {
+  const bookmarked = isBookmarked(filePath);
+  const label = bookmarked ? "إزالة من المحفوظات" : "حفظ في المفضلة";
+  viewEl.querySelectorAll("[data-bookmark-toggle]").forEach((button) => {
+    if (button.dataset.bookmarkToggle !== filePath) return;
+    button.classList.toggle("is-bookmarked", bookmarked);
+    button.setAttribute("aria-pressed", bookmarked ? "true" : "false");
+    button.title = label;
+    button.setAttribute("aria-label", label);
+  });
+  const slot = viewEl.querySelector("[data-bookmarks-slot]");
+  const subject = subjectById(state.subjectId);
+  if (slot && subject) {
+    const files = bookmarkedFiles(subject);
+    slot.hidden = files.length === 0;
+    slot.innerHTML = files.length ? bookmarkStripMarkup(subject, files) : "";
+  }
 }
 
 function renderCourseInfo(subject) {
@@ -1661,7 +1767,6 @@ function renderMatrix(subject) {
     </div>`);
   }
 
-  const percent = lectureCount ? Math.round((studiedCount / lectureCount) * 100) : 0;
   const table = lectureCount
     ? `<div class="matrix-wrap" id="sec-matrix" data-spy-section="matrix" data-spy-label="جدول المحاضرات"><div class="matrix">
         <div class="matrix-head">
@@ -1688,18 +1793,32 @@ function renderMatrix(subject) {
     : "";
 
   return `${renderReviewBlock(subject, reviewFiles)}
-    <div class="matrix-toolbar" data-progress="${esc(subject.id)}">
-      <div class="progress-head"><span>تمت مذاكرة ${studiedCount} من ${lectureCount} ${lectureNoun(lectureCount)}</span><strong>${percent}%</strong></div>
-      <div class="progress"><span style="width:${percent}%"></span></div>
-    </div>
+    ${studyProgressMarkup(subject, studiedCount)}
     ${table}
     ${extraSection}`;
 }
 
 function renderClassicSections(subject) {
-  return subject.sections
+  const studiedMap = getStudied();
+  const seenLectures = new Set();
+  let studiedCount = 0;
+  const sections = subject.sections
     .map((section) => {
       const open = store.get(`section:${section.id}`) !== "closed";
+      const rows = section.files
+        .map((file) => {
+          const options = {};
+          if (Number.isInteger(file.lecture) && !seenLectures.has(file.lecture)) {
+            seenLectures.add(file.lecture);
+            const key = `${subject.id}:${file.lecture}`;
+            const checked = Boolean(studiedMap[key]);
+            if (checked) studiedCount += 1;
+            options.studyKey = key;
+            options.studyChecked = checked;
+          }
+          return fileRow(file, subject, section.id, "", options);
+        })
+        .join("");
       return `<section class="section" data-section="${section.id}" data-open="${open}">
         <button class="section-head" type="button" aria-expanded="${open}">
           <span class="section-icon">${ICONS[sectionIconKey(section)]}</span>
@@ -1711,11 +1830,12 @@ function renderClassicSections(subject) {
           <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="section-body">
-          ${section.files.map((file) => fileRow(file, subject, section.id)).join("")}
+          ${rows}
         </div>
       </section>`;
     })
     .join("");
+  return `${studyProgressMarkup(subject, studiedCount)}${sections}`;
 }
 
 function renderMidtermKanban(subject) {
@@ -1787,6 +1907,7 @@ function renderSubject(subject) {
     </div>
     ${renderCourseInfo(subject)}
     ${toggle}
+    ${bookmarksSlotMarkup(subject)}
     ${body}
   </div>`;
 }
@@ -2497,6 +2618,21 @@ tabsBarEl.addEventListener("click", (event) => {
 });
 
 viewEl.addEventListener("click", (event) => {
+  const bookmarkBtn = event.target.closest("[data-bookmark-toggle]");
+  if (bookmarkBtn) {
+    event.preventDefault();
+    event.stopPropagation();
+    const filePath = bookmarkBtn.dataset.bookmarkToggle;
+    toggleBookmark(filePath);
+    refreshBookmarkUI(filePath);
+    return;
+  }
+
+  if (event.target.closest(".study-check, [data-study]")) {
+    event.stopPropagation();
+    return;
+  }
+
   const resetButton = event.target.closest('[data-facet="reset"]');
   if (resetButton) {
     resetSearchUI();
@@ -2560,7 +2696,7 @@ viewEl.addEventListener("change", (event) => {
   if (checkbox.checked) studied[key] = true;
   else delete studied[key];
   store.setJson("hub:studied", studied);
-  const row = checkbox.closest(".matrix-row");
+  const row = checkbox.closest(".matrix-row, .file");
   if (row) row.classList.toggle("is-studied", checkbox.checked);
   updateStudyProgress(subjectId);
 });
@@ -3166,6 +3302,10 @@ function setFooter() {
 }
 
 window.addEventListener("hub:mistakes-updated", syncMistakesBadge);
+window.addEventListener("hub:bookmarks-updated", (event) => {
+  if (event.detail?.source === "ui") return;
+  render();
+});
 window.addEventListener("hashchange", route);
 
 notifToggleEl?.addEventListener("click", (event) => {
@@ -3253,7 +3393,12 @@ examNewsEl?.addEventListener("click", (event) => {
 
 examNewsCloseEl?.addEventListener("click", hideExamNews);
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && examNewsEl && !examNewsEl.hidden) hideExamNews();
+  if (event.key !== "Escape") return;
+  if (state.notifOpen) {
+    setNotifOpen(false);
+    return;
+  }
+  if (examNewsEl && !examNewsEl.hidden) hideExamNews();
 });
 
 async function loadData() {
@@ -3291,6 +3436,7 @@ async function loadData() {
   buildSearchIndex();
   setFooter();
   route();
+  maybeSendBrowserNotifications();
 
   const topbar = document.querySelector(".topbar");
   const onScroll = () => topbar.classList.toggle("is-stuck", window.scrollY > 4);
