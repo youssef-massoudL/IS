@@ -1961,6 +1961,42 @@ window.__SITE_DATA__ = {
                 "Amr",
                 "Hesham"
               ]
+            },
+            {
+              "id": "information-theory-solved-mcq-question-bank-youssef-nageh",
+              "title": "Information Theory Solved MCQ Question Bank - Youssef Nageh",
+              "original": "Information Theory Solved MCQ Question Bank - Youssef Nageh.pdf",
+              "path": "files/information-theory/midterm-revision/information-theory-solved-mcq-question-bank-youssef-nageh.pdf",
+              "ext": "pdf",
+              "size": 498624,
+              "youtube": "",
+              "addedAt": "2026-11-15T19:55:10.053Z",
+              "docTag": "أسئلة",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "نظرية المعلومات",
+                "Information Theory",
+                "information-theory",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "pdf",
+                "Information",
+                "Theory",
+                "Solved",
+                "MCQ",
+                "Question",
+                "Bank",
+                "Youssef",
+                "Nageh"
+              ]
             }
           ]
         }
@@ -3800,6 +3836,41 @@ window.__SITE_DATA__ = {
                 "Solutions",
                 "Amr",
                 "Hesham"
+              ]
+            },
+            {
+              "id": "information-theory-solved-mcq-question-bank-youssef-nageh",
+              "title": "Information Theory Solved MCQ Question Bank - Youssef Nageh",
+              "original": "Information Theory Solved MCQ Question Bank - Youssef Nageh.pdf",
+              "path": "files/information-theory/midterm-revision/information-theory-solved-mcq-question-bank-youssef-nageh.pdf",
+              "ext": "pdf",
+              "size": 498624,
+              "youtube": "",
+              "addedAt": "2026-11-15T19:55:10.053Z",
+              "docTag": "أسئلة",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "Information Theory",
+                "information-theory",
+                "pdf",
+                "Information",
+                "Theory",
+                "Solved",
+                "MCQ",
+                "Question",
+                "Bank",
+                "Youssef",
+                "Nageh"
               ]
             }
           ]
