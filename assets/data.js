@@ -4056,7 +4056,30 @@ window.__SITE_SCHEDULE__ = {
         6,
         7
       ],
-      "scopeNote": "أول 6 أو 7 محاضرات"
+      "scopeNote": "أول 6 أو 7 محاضرات",
+      "halls": [
+        {
+          "name": "صالة 3",
+          "location": "مدرج أ.د عبدالفتاح حسن",
+          "pcFrom": 556,
+          "pcTo": 706,
+          "count": 151
+        },
+        {
+          "name": "صالة 4",
+          "location": "أسفل المبنى الجديد",
+          "pcFrom": 879,
+          "pcTo": 1152,
+          "count": 274
+        },
+        {
+          "name": "صالة 5",
+          "location": "أسفل المبنى الجديد",
+          "pcFrom": 1153,
+          "pcTo": 1154,
+          "count": 2
+        }
+      ]
     },
     {
       "subjectId": "database-2",
@@ -4076,7 +4099,30 @@ window.__SITE_SCHEDULE__ = {
         5,
         6
       ],
-      "scopeNote": "أول 6 محاضرات"
+      "scopeNote": "أول 6 محاضرات",
+      "halls": [
+        {
+          "name": "صالة 3",
+          "location": "مدرج أ.د عبدالفتاح حسن",
+          "pcFrom": 722,
+          "pcTo": 878,
+          "count": 157
+        },
+        {
+          "name": "صالة 4",
+          "location": "أسفل المبنى الجديد",
+          "pcFrom": 879,
+          "pcTo": 1152,
+          "count": 274
+        },
+        {
+          "name": "صالة 5",
+          "location": "أسفل المبنى الجديد",
+          "pcFrom": 1526,
+          "pcTo": 1527,
+          "count": 2
+        }
+      ]
     },
     {
       "subjectId": "computer-networks",

@@ -1649,6 +1649,135 @@ kbd {
   color: var(--muted);
 }
 
+.midterm-halls {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+}
+
+.midterm-halls-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+  flex-wrap: wrap;
+}
+
+.midterm-halls-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.midterm-halls-title svg {
+  width: 13px;
+  height: 13px;
+  color: var(--accent);
+}
+
+.pc-lookup-input {
+  width: 145px;
+  height: 26px;
+  padding: 0 9px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 11px;
+  outline: none;
+  transition: border-color 0.14s, background 0.14s;
+}
+
+.pc-lookup-input:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.midterm-halls-status {
+  margin-bottom: 6px;
+  padding: 5px 9px;
+  border-radius: 7px;
+  border: 1px solid color-mix(in srgb, var(--success) 35%, var(--border));
+  background: var(--success-soft);
+  color: var(--success);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.midterm-halls-status.is-error {
+  border-color: color-mix(in srgb, var(--warn) 35%, var(--border));
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.midterm-halls-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.midterm-hall-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-2);
+  transition: border-color 0.14s, background 0.14s, opacity 0.14s;
+}
+
+.midterm-hall-item.is-match {
+  border-color: color-mix(in srgb, var(--success) 55%, var(--border));
+  background: var(--success-soft);
+}
+
+.midterm-hall-item.is-dim {
+  opacity: 0.48;
+}
+
+.hall-info {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 3px 6px;
+  min-width: 0;
+}
+
+.hall-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.hall-loc {
+  font-size: 10.5px;
+  color: var(--muted);
+}
+
+.hall-range {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  white-space: nowrap;
+}
+
+.midterm-hall-item.is-match .hall-range {
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 14%, var(--surface));
+}
+
 .smart-actions {
   display: flex;
   flex-wrap: wrap;
@@ -5947,5 +6076,167 @@ h3 {
 
   .notif-banner-actions {
     justify-content: space-between;
+  }
+}
+
+
+.exam-news {
+  grid-column: 1 / -1;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(560px, 100%);
+  margin-top: 2px;
+  padding: 8px 12px;
+  border: 1px solid #facc15;
+  border-radius: 12px;
+  background: #fef9c3;
+  color: #854d0e;
+  box-shadow: 0 1px 2px rgba(161, 98, 7, 0.14);
+  animation: exam-news-in 300ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.exam-news[hidden] {
+  display: none;
+}
+
+.exam-news.is-leaving {
+  animation: exam-news-out 200ms ease forwards;
+  pointer-events: none;
+}
+
+.exam-news-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 2px 0;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.exam-news-link:hover .exam-news-text {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.exam-news-link:focus-visible {
+  outline: 2px solid #a16207;
+  outline-offset: 3px;
+}
+
+.exam-news-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #fde047;
+  color: #a16207;
+}
+
+.exam-news-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.exam-news-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: inherit;
+}
+
+.exam-news-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  margin-inline-start: 2px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #a16207;
+  cursor: pointer;
+}
+
+.exam-news-close:hover {
+  background: rgba(161, 98, 7, 0.14);
+}
+
+.exam-news-close svg {
+  width: 15px;
+  height: 15px;
+}
+
+[data-theme="dark"] .exam-news {
+  border-color: rgba(250, 204, 21, 0.4);
+  background: rgba(234, 179, 8, 0.16);
+  color: #fde047;
+  box-shadow: none;
+}
+
+[data-theme="dark"] .exam-news-icon {
+  background: rgba(250, 204, 21, 0.2);
+  color: #fde047;
+}
+
+[data-theme="dark"] .exam-news-close {
+  color: #fde047;
+}
+
+[data-theme="dark"] .exam-news-close:hover {
+  background: rgba(250, 204, 21, 0.16);
+}
+
+@keyframes exam-news-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes exam-news-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 620px) {
+  .exam-news {
+    justify-self: stretch;
+    max-width: none;
+  }
+}
+
+.midterm-card.is-highlighted {
+  outline: 3px solid #facc15;
+  outline-offset: 2px;
+  animation: midterm-card-flash 1.4s ease-in-out 2;
+}
+
+@keyframes midterm-card-flash {
+  0%,
+  100% {
+    box-shadow: var(--shadow-sm);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.45), 0 0 30px rgba(250, 204, 21, 0.4);
   }
 }

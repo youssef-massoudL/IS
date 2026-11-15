@@ -86,6 +86,9 @@ const tabsNextEl = $("#tabs-next");
 const modeSwitcherEl = $("#mode-switcher");
 const tabsBarEl = $("#tabs-bar");
 const midtermPinEl = $("#midterm-pin");
+const examNewsEl = $("#exam-news");
+const examNewsLinkEl = $("#exam-news-link");
+const examNewsCloseEl = $("#exam-news-close");
 
 const SECTION_VALUES = Array.from({ length: 11 }, (_, index) => String(index + 1));
 const AR_DAYS = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
@@ -1210,6 +1213,28 @@ function renderSmartStrip() {
         })
         .join("")
     : `<p class="smart-empty">لا توجد محاضرات أو سكاشن ${today.label === "اليوم" ? "اليوم" : today.label} لسكشن ${esc(state.section)}.</p>`;
+  const hallsGuide = midterm?.halls?.length
+    ? `<div class="midterm-halls">
+        <div class="midterm-halls-head">
+          <span class="midterm-halls-title">${ICONS.pin} دليل اللجان والأجهزة</span>
+          <input class="pc-lookup-input" type="search" inputmode="numeric" placeholder="رقم جهازك (مثلاً 940)" aria-label="ابحث برقم جهازك" autocomplete="off">
+        </div>
+        <div class="midterm-halls-status" aria-live="polite" hidden></div>
+        <div class="midterm-halls-list">
+          ${midterm.halls
+            .map(
+              (hall) => `<div class="midterm-hall-item" data-pc-from="${hall.pcFrom}" data-pc-to="${hall.pcTo}" data-hall-name="${esc(hall.name)}" data-hall-loc="${esc(hall.location)}">
+                <div class="hall-info">
+                  <strong class="hall-name">${esc(hall.name)}</strong>
+                  <span class="hall-loc">${esc(hall.location)}</span>
+                </div>
+                <span class="hall-range" dir="ltr">PC ${hall.pcFrom} – ${hall.pcTo}</span>
+              </div>`,
+            )
+            .join("")}
+        </div>
+      </div>`
+    : "";
   const midtermCard = midterm
     ? `<div class="smart-card midterm-card">
         <div class="smart-head">
@@ -1226,6 +1251,7 @@ function renderSmartStrip() {
           <span>${ICONS.lecture} ${(midterm.lecturesInScope || []).length} محاضرات</span>
           <span>${esc(String(midterm.marks))} درجة</span>
         </div>
+        ${hallsGuide}
         <div class="smart-actions">
           <a class="smart-action" href="#${esc(midterm.subjectId)}/midterm-revision">${ICONS.revision}<span>مراجعة الميدترم</span></a>
           <a class="smart-action" href="#practice/${esc(midterm.subjectId)}">${ICONS.question}<span>اختبر نفسك</span></a>
@@ -1246,6 +1272,49 @@ function renderSmartStrip() {
       ${events}
     </div>
     ${midtermCard}`;
+}
+
+if (smartStripEl) {
+  smartStripEl.addEventListener("input", (event) => {
+    const input = event.target.closest(".pc-lookup-input");
+    if (!input) return;
+    const container = input.closest(".midterm-halls");
+    if (!container) return;
+    const digits = input.value.replace(/\D+/g, "");
+    const items = container.querySelectorAll(".midterm-hall-item");
+    const statusEl = container.querySelector(".midterm-halls-status");
+    if (!digits) {
+      items.forEach((item) => {
+        item.classList.remove("is-match", "is-dim");
+      });
+      if (statusEl) {
+        statusEl.hidden = true;
+        statusEl.textContent = "";
+        statusEl.classList.remove("is-error");
+      }
+      return;
+    }
+    const pcNum = Number(digits);
+    let matched = null;
+    items.forEach((item) => {
+      const from = Number(item.dataset.pcFrom);
+      const to = Number(item.dataset.pcTo);
+      const hit = pcNum >= from && pcNum <= to;
+      item.classList.toggle("is-match", hit);
+      item.classList.toggle("is-dim", !hit);
+      if (hit) matched = item;
+    });
+    if (statusEl) {
+      statusEl.hidden = false;
+      if (matched) {
+        statusEl.classList.remove("is-error");
+        statusEl.textContent = `جهاز PC_${pcNum} في ${matched.dataset.hallName} — ${matched.dataset.hallLoc}`;
+      } else {
+        statusEl.classList.add("is-error");
+        statusEl.textContent = `رقم PC_${pcNum} مش ضمن لجان الامتحان ده`;
+      }
+    }
+  });
 }
 
 function renderTabs() {
@@ -1915,7 +1984,13 @@ function renderSchedule() {
         <td>${esc(midterm.dayAr)}</td>
         <td>${esc(formatDateShort(midterm.date))}</td>
         <td dir="ltr">${esc(midterm.startTime)}–${esc(midterm.endTime)}</td>
-        <td>${esc(midterm.venue)}</td>
+        <td>${esc(midterm.venue)}${
+          midterm.halls?.length
+            ? `<div class="muted">${midterm.halls
+                .map((h) => `${esc(h.name)}: <span dir="ltr">${h.pcFrom}–${h.pcTo}</span>`)
+                .join(" · ")}</div>`
+            : ""
+        }</td>
         <td>${(midterm.lecturesInScope || []).length} محاضرة${midterm.scopeNote ? `<div class="muted">${esc(midterm.scopeNote)}</div>` : ""}</td>
         <td>${esc(String(midterm.marks))} درجة${midterm.marksNote ? `<div class="muted">${esc(midterm.marksNote)}</div>` : ""}</td>
         <td><span class="status-pill${status.active ? " active" : ""}">${esc(status.label)}</span></td>
@@ -2186,6 +2261,23 @@ function renderModeSwitcher() {
   });
 }
 
+let pendingMidtermHighlight = false;
+let midtermHighlightTimer = 0;
+
+function highlightNearestMidterm() {
+  const card = smartStripEl?.querySelector(".midterm-card");
+  if (!card || smartStripEl.hidden) return;
+  card.scrollIntoView({ behavior: "smooth", block: "center" });
+  card.classList.remove("is-highlighted");
+  void card.offsetWidth;
+  card.classList.add("is-highlighted");
+  window.clearTimeout(midtermHighlightTimer);
+  midtermHighlightTimer = window.setTimeout(
+    () => card.classList.remove("is-highlighted"),
+    2800,
+  );
+}
+
 function render() {
   renderModeSwitcher();
   renderNotifBanner();
@@ -2207,6 +2299,10 @@ function render() {
     document.title = `الجدول الدراسي — ${state.data.title}`;
     renderSidebar();
     setupScrollSpy();
+    if (pendingMidtermHighlight) {
+      pendingMidtermHighlight = false;
+      window.setTimeout(highlightNearestMidterm, 80);
+    }
     return;
   }
   if (state.feature === "practice") {
@@ -2299,8 +2395,9 @@ function route() {
     state.feature = "schedule";
     clearSearch();
     if (!modalEl.hidden) closePreview(false);
+    const highlightMidterm = pendingMidtermHighlight;
     render();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!highlightMidterm) window.scrollTo({ top: 0, behavior: "smooth" });
     return;
   }
 
@@ -2787,6 +2884,35 @@ document.addEventListener("click", (event) => {
   if (state.notifOpen && notifWrapEl && !notifWrapEl.contains(event.target)) {
     setNotifOpen(false);
   }
+});
+
+function hideExamNews() {
+  if (!examNewsEl || examNewsEl.hidden) return;
+  examNewsEl.classList.add("is-leaving");
+  window.setTimeout(() => {
+    examNewsEl.hidden = true;
+    examNewsEl.classList.remove("is-leaving");
+  }, 200);
+}
+
+function navigateToMidterm() {
+  pendingMidtermHighlight = true;
+  navigate("schedule");
+}
+
+examNewsLinkEl?.addEventListener("click", (event) => {
+  event.preventDefault();
+  navigateToMidterm();
+});
+
+examNewsEl?.addEventListener("click", (event) => {
+  if (event.target.closest(".exam-news-close") || event.target.closest("a")) return;
+  navigateToMidterm();
+});
+
+examNewsCloseEl?.addEventListener("click", hideExamNews);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && examNewsEl && !examNewsEl.hidden) hideExamNews();
 });
 
 async function loadData() {
