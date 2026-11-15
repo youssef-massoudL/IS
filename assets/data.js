@@ -1,7 +1,7 @@
 window.__SITE_DATA__ = {
   "title": "سنة تالتة — الترم الأول",
   "subtitle": "نظم المعلومات · ملازم ومحاضرات ومراجعات",
-  "updated": "2026-11-14",
+  "updated": "2026-11-15",
   "subjects": [
     {
       "id": "computer-networks",
@@ -1401,6 +1401,50 @@ window.__SITE_DATA__ = {
                 "First",
                 "Lectures",
                 "Youssef"
+              ]
+            },
+            {
+              "id": "الاسئلة-اللي-جات-ف-امتحانات-السنين-اللي-فاتت-على-الجزء-المقرر-علينا",
+              "title": "Past years exams questions for midterms lectures",
+              "original": "الاسئلة_اللي_جات_ف_امتحانات_السنين_اللي_فاتت_على_الجزء_المقرر_علينا.pdf",
+              "path": "files/database-2/midterm-revision/الاسئلة-اللي-جات-ف-امتحانات-السنين-اللي-فاتت-على-الجزء-المقرر-علينا.pdf",
+              "ext": "pdf",
+              "size": 64216,
+              "youtube": "",
+              "docTag": "أسئلة",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "قواعد البيانات",
+                "Database II",
+                "database-2",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "pdf",
+                "Past",
+                "years",
+                "exams",
+                "questions",
+                "for",
+                "midterms",
+                "lectures",
+                "الاسئلة",
+                "اللي",
+                "جات",
+                "امتحانات",
+                "السنين",
+                "فاتت",
+                "على",
+                "الجزء",
+                "المقرر",
+                "علينا"
               ]
             }
           ]
@@ -3500,6 +3544,48 @@ window.__SITE_DATA__ = {
                 "Lectures",
                 "Youssef",
                 "Nageh"
+              ]
+            },
+            {
+              "id": "الاسئلة-اللي-جات-ف-امتحانات-السنين-اللي-فاتت-على-الجزء-المقرر-علينا",
+              "title": "Past years exams questions for midterms lectures",
+              "original": "الاسئلة_اللي_جات_ف_امتحانات_السنين_اللي_فاتت_على_الجزء_المقرر_علينا.pdf",
+              "path": "files/database-2/midterm-revision/الاسئلة-اللي-جات-ف-امتحانات-السنين-اللي-فاتت-على-الجزء-المقرر-علينا.pdf",
+              "ext": "pdf",
+              "size": 64216,
+              "youtube": "",
+              "docTag": "أسئلة",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "Database",
+                "pdf",
+                "Past",
+                "years",
+                "exams",
+                "questions",
+                "for",
+                "midterms",
+                "lectures",
+                "الاسئلة",
+                "اللي",
+                "جات",
+                "امتحانات",
+                "السنين",
+                "فاتت",
+                "على",
+                "الجزء",
+                "المقرر",
+                "علينا"
               ]
             }
           ]
