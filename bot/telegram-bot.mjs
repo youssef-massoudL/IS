@@ -34,9 +34,11 @@ function normalizeGitHubRepo(raw) {
   );
 }
 
-const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const BOT_TOKEN = String(process.env.TELEGRAM_BOT_TOKEN || "").trim();
 const ADMIN_ID = String(process.env.TELEGRAM_ADMIN_ID || "").trim();
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN || "";
+const GITHUB_TOKEN = String(process.env.GITHUB_TOKEN || "")
+  .trim()
+  .replace(/^["']|["']$/g, "");
 const GITHUB_REPO = normalizeGitHubRepo(process.env.GITHUB_REPO);
 const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main";
 
