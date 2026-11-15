@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0f172a">
 <title>سنة تالتة — الترم الأول</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/styles.css?v=20261115k">
+<link rel="stylesheet" href="assets/styles.css?v=20261115t">
 </head>
 <body>
 <div class="app">
@@ -33,6 +33,13 @@
         <button id="search-toggle" class="icon-btn search-toggle" type="button" title="بحث" aria-label="بحث" aria-controls="search-panel" aria-expanded="false">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
         </button>
+        <div class="notif-wrap" id="notif-wrap">
+          <button id="notif-toggle" class="icon-btn notif-toggle" type="button" title="الإشعارات" aria-label="الإشعارات" aria-controls="notif-panel" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 9a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M10 19a2.2 2.2 0 0 0 4 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            <span class="notif-badge" id="notif-badge" hidden aria-hidden="true">0</span>
+          </button>
+          <div class="notif-panel" id="notif-panel" role="dialog" aria-label="الإشعارات" hidden></div>
+        </div>
         <button id="sidebar-toggle" class="btn sidebar-toggle" type="button" title="محتويات الموقع" aria-label="محتويات الموقع" aria-controls="sidebar" aria-expanded="false">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           <span>المحتويات</span>
@@ -63,18 +70,6 @@
       </nav>
     </div>
 
-    <div class="exam-news" id="exam-news" role="status" aria-live="polite">
-      <a class="exam-news-link" id="exam-news-link" href="#schedule" title="اذهب إلى الجداول">
-        <span class="exam-news-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9.5h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </span>
-        <span class="exam-news-text">افتكر شوف مكان امتحانك</span>
-      </a>
-      <button class="exam-news-close" id="exam-news-close" type="button" aria-label="إغلاق">
-        <svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-
     <div class="search-panel" id="search-panel" hidden>
       <div class="search-wrap">
         <label class="search" for="search">
@@ -89,6 +84,18 @@
       </div>
     </div>
   </header>
+
+  <div class="exam-news" id="exam-news" role="status" aria-live="polite">
+    <a class="exam-news-link" id="exam-news-link" href="#schedule" title="اذهب إلى الجداول">
+      <span class="exam-news-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9.5h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      <span class="exam-news-text">افتكر شوف مكان امتحانك</span>
+    </a>
+    <button class="exam-news-close" id="exam-news-close" type="button" aria-label="إغلاق">
+      <svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
 
   <div class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="التنقل وموقعك في الصفحة" hidden></aside>
@@ -106,6 +113,8 @@
       </div>
 
       <div class="search-facets" id="search-facets" aria-label="فلاتر البحث" hidden></div>
+
+      <div class="notif-banner" id="notif-banner" hidden></div>
 
       <section class="smart-strip" id="smart-strip" aria-label="اليوم وأقرب ميدترم"></section>
 
@@ -158,8 +167,8 @@
 
   <script src="assets/data.js?v=20261115j"></script>
   <script src="assets/qr.js?v=20261115h"></script>
-  <script src="assets/quiz.js?v=20261115h"></script>
-<script src="assets/app.js?v=20261115k"></script>
+  <script src="assets/quiz.js?v=20261115l"></script>
+<script src="assets/app.js?v=20261115r"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "09d19c8711a04a43bc2b8cf273860abc"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

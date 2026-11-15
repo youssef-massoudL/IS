@@ -41,6 +41,8 @@ const GITHUB_TOKEN = String(process.env.GITHUB_TOKEN || "")
   .replace(/^["']|["']$/g, "");
 const GITHUB_REPO = normalizeGitHubRepo(process.env.GITHUB_REPO);
 const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main";
+const GEMINI_API_KEY = String(process.env.GEMINI_API_KEY || "").trim();
+const GEMINI_MODEL = String(process.env.GEMINI_MODEL || "gemini-2.5-flash").trim();
 
 if (!BOT_TOKEN || !ADMIN_ID) {
   console.error("Missing TELEGRAM_BOT_TOKEN or TELEGRAM_ADMIN_ID in environment / .env");
@@ -62,6 +64,7 @@ function sanitizeError(msg) {
   let text = String(msg || "");
   if (GITHUB_TOKEN) text = text.replaceAll(GITHUB_TOKEN, "***");
   if (BOT_TOKEN) text = text.replaceAll(BOT_TOKEN, "***");
+  if (GEMINI_API_KEY) text = text.replaceAll(GEMINI_API_KEY, "***");
   return text;
 }
 
@@ -184,9 +187,14 @@ function findExistingMatches(manifest, fileName, fileSize) {
           sectionName: section.name || section.id,
           file,
           reasons,
+          isPrimary: subject.id !== "midterm-revision",
           score: reasons.length + (subject.id !== "midterm-revision" ? 0.5 : 0),
         };
-        if (!existing || candidate.score > existing.score) {
+        if (!existing) {
+          byPath.set(key, candidate);
+        } else if (candidate.isPrimary !== existing.isPrimary) {
+          if (candidate.isPrimary) byPath.set(key, candidate);
+        } else if (candidate.score > existing.score) {
           byPath.set(key, candidate);
         }
       }
@@ -237,6 +245,161 @@ function addEntryToSection(section, entry) {
   }
 }
 
+function normalizeQuestionText(q) {
+  return String(q || "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+async function extractQuestionsWithGemini(filePath, subjectId, title) {
+  const ext = path.extname(filePath).toLowerCase();
+  const mimeMap = {
+    ".pdf": "application/pdf",
+    ".txt": "text/plain",
+    ".md": "text/plain",
+  };
+  const mimeType = mimeMap[ext];
+  if (!mimeType) {
+    return { items: [], skipped: `unsupported file type (${ext})` };
+  }
+
+  const prompt = [
+    `Extract all multiple-choice (mcq) and true/false (tf) questions from this document ("${title}") for subject "${subjectId}".`,
+    `Return ONLY a JSON array of objects matching this exact schema:`,
+    `[`,
+    `  {`,
+    `    "lecture": <integer lecture number if clear from document, otherwise null>,`,
+    `    "difficulty": "easy" | "medium" | "hard",`,
+    `    "type": "mcq" | "tf",`,
+    `    "q": "<question text>",`,
+    `    "options": ["<choice 0>", "<choice 1>", ...],`,
+    `    "answer": <0-based integer index of the correct option>,`,
+    `    "explanation": "<short English explanation>. <short Arabic explanation>"`,
+    `  }`,
+    `]`,
+    `Rules:`,
+    `- For True/False questions, use "type": "tf" and "options": ["True", "False"].`,
+    `- Keep original question wording accurate; do not invent questions not in the document.`,
+    `- Ensure "answer" is a valid 0-based index into "options".`,
+    `- If no questions are found in the document, return [].`,
+  ].join("\n");
+
+  const fileBytes = fs.readFileSync(filePath);
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
+  const res = await fetch(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [
+        {
+          parts: [
+            { inlineData: { mimeType, data: fileBytes.toString("base64") } },
+            { text: prompt },
+          ],
+        },
+      ],
+      generationConfig: {
+        responseMimeType: "application/json",
+        temperature: 0.1,
+      },
+    }),
+  });
+
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    throw new Error(`Gemini API HTTP ${res.status}: ${errText.slice(0, 200)}`);
+  }
+
+  const data = await res.json();
+  const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "[]";
+  const parsed = JSON.parse(rawText);
+  if (!Array.isArray(parsed)) {
+    throw new Error("Gemini response was not a JSON array");
+  }
+  return { items: parsed };
+}
+
+async function updateQuestionBankFromUpload(repoDir, filePath, subjectId, title) {
+  const questionsDir = path.join(repoDir, "data", "questions");
+  const bankPath = path.join(questionsDir, `${subjectId}.json`);
+  const existing = fs.existsSync(bankPath) ? JSON.parse(fs.readFileSync(bankPath, "utf8")) : [];
+  if (!Array.isArray(existing)) {
+    return { added: 0, total: 0, note: "question bank file is not an array" };
+  }
+
+  const ext = path.extname(filePath).toLowerCase();
+  let rawItems = [];
+  if (ext === ".json") {
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    rawItems = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.questions) ? parsed.questions : [];
+  } else {
+    if (!GEMINI_API_KEY) {
+      return { added: 0, total: existing.length, note: "skipped (GEMINI_API_KEY not set)" };
+    }
+    const extracted = await extractQuestionsWithGemini(filePath, subjectId, title);
+    if (extracted.skipped) {
+      return { added: 0, total: existing.length, note: extracted.skipped };
+    }
+    rawItems = extracted.items;
+  }
+
+  const seenQ = new Set(existing.map((item) => normalizeQuestionText(item.q)));
+  const seenIds = new Set(existing.map((item) => String(item.id || "")));
+  const prefix = subjectId.split("-").map((p) => p[0]).join("") || "q";
+  let nextNum = existing.length + 1;
+  let added = 0;
+
+  for (const raw of rawItems) {
+    if (!raw || typeof raw.q !== "string" || !raw.q.trim()) continue;
+    const normQ = normalizeQuestionText(raw.q);
+    if (seenQ.has(normQ)) continue;
+    const options = Array.isArray(raw.options) ? raw.options.map((o) => String(o).trim()).filter(Boolean) : [];
+    const answer = Number(raw.answer);
+    if (options.length < 2 || !Number.isInteger(answer) || answer < 0 || answer >= options.length) continue;
+
+    let id = typeof raw.id === "string" && raw.id.trim() && !seenIds.has(raw.id.trim()) ? raw.id.trim() : "";
+    while (!id || seenIds.has(id)) {
+      id = `${prefix}-tg-${String(nextNum++).padStart(3, "0")}`;
+    }
+
+    const difficulty = ["easy", "medium", "hard"].includes(raw.difficulty) ? raw.difficulty : "medium";
+    const type = ["mcq", "tf"].includes(raw.type) ? raw.type : options.length === 2 ? "tf" : "mcq";
+    const lecture = Number.isInteger(raw.lecture) && raw.lecture > 0 ? raw.lecture : null;
+    const explanation = typeof raw.explanation === "string" ? raw.explanation.trim() : "";
+
+    existing.push({
+      id,
+      subjectId,
+      lecture,
+      difficulty,
+      type,
+      q: raw.q.trim(),
+      options,
+      answer,
+      explanation,
+    });
+    seenQ.add(normQ);
+    seenIds.add(id);
+    added++;
+  }
+
+  if (added > 0) {
+    fs.mkdirSync(questionsDir, { recursive: true });
+    fs.writeFileSync(bankPath, JSON.stringify(existing, null, 2) + "\n", "utf8");
+
+    const indexPath = path.join(repoDir, "index.html");
+    if (fs.existsSync(indexPath)) {
+      const stamp = new Date().toISOString().replace(/[-:T]/g, "").slice(0, 12);
+      const html = fs.readFileSync(indexPath, "utf8");
+      const updatedHtml = html.replace(/assets\/data\.js\?v=[^"'\s>]+/, `assets/data.js?v=${stamp}`);
+      if (updatedHtml !== html) fs.writeFileSync(indexPath, updatedHtml, "utf8");
+    }
+  }
+
+  return { added, total: existing.length };
+}
+
 async function publishUpload(job) {
   const repoDir = ensureRepo();
   const manifestPath = path.join(repoDir, "data", "subjects.json");
@@ -247,11 +410,13 @@ async function publishUpload(job) {
   const nowIso = new Date().toISOString();
   const addedTo = [];
   let relPath = "";
+  let savedFilePath = "";
   let commitAction = "Add";
 
   if (job.mode === "replace" && job.replaceTarget) {
     relPath = job.replaceTarget.file.path;
     const dest = path.join(repoDir, relPath.replace(/\//g, path.sep));
+    savedFilePath = dest;
     const size = await downloadTelegramFile(job.fileId, dest);
     const ext = path.extname(relPath).slice(1).toLowerCase() || "pdf";
 
@@ -291,6 +456,7 @@ async function publishUpload(job) {
     }
 
     const size = await downloadTelegramFile(job.fileId, dest);
+    savedFilePath = dest;
     relPath = path.posix.join("files", subject.id, primarySectionId, path.basename(dest));
     const entryId = path.basename(dest, ext);
 
@@ -338,19 +504,32 @@ async function publishUpload(job) {
   manifest.updated = nowIso.slice(0, 10);
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
 
+  let questionBank = null;
+  const isQuestionsUpload =
+    job.sectionId === "questions" ||
+    job.docTag === "أسئلة" ||
+    relPath.toLowerCase().includes("/questions/");
+  if (isQuestionsUpload && savedFilePath) {
+    try {
+      questionBank = await updateQuestionBankFromUpload(repoDir, savedFilePath, subject.id, job.title);
+    } catch (err) {
+      questionBank = { added: 0, total: 0, note: `failed (${sanitizeError(err.message)})` };
+    }
+  }
+
   runNode(repoDir, [path.join("scripts", "build.mjs"), "--fix"]);
   runNode(repoDir, [path.join("scripts", "build.mjs"), "--check"]);
 
   runGit(repoDir, ["add", "-A"]);
   const status = runGit(repoDir, ["status", "--porcelain"]);
   if (!status) {
-    return { relPath, addedTo, commit: "no-changes" };
+    return { relPath, addedTo, commit: "no-changes", questionBank };
   }
 
   runGit(repoDir, ["commit", "-m", `${commitAction} ${job.title} (${subject.id})`]);
   runGit(repoDir, ["push", "origin", GITHUB_BRANCH]);
   const commit = runGit(repoDir, ["rev-parse", "--short", "HEAD"]);
-  return { relPath, addedTo, commit };
+  return { relPath, addedTo, commit, questionBank };
 }
 
 function subjectKeyboard(subjects) {
@@ -427,23 +606,35 @@ function replaceTitleKeyboard(existingTitle, defaultTitle) {
   return { inline_keyboard: rows };
 }
 
+const START_KEYBOARD = {
+  keyboard: [[{ text: "🚀 Start" }, { text: "❌ Cancel" }]],
+  resize_keyboard: true,
+  is_persistent: true,
+};
+
 async function handleMessage(msg) {
   const chatId = msg.chat.id;
   const userId = String(msg.from?.id || "");
   if (userId !== ADMIN_ID) return;
 
   const text = (msg.text || "").trim();
-  if (text === "/start" || text === "/help") {
+  if (text === "/start" || text === "/help" || text === "🚀 Start") {
+    pending.delete(chatId);
     await tg("sendMessage", {
       chat_id: chatId,
       text: "Send or forward any PDF here, and I will check if it already exists, ask which subject and section to add it to, and push it to GitHub Pages.",
+      reply_markup: START_KEYBOARD,
     });
     return;
   }
 
-  if (text === "/cancel") {
+  if (text === "/cancel" || text === "❌ Cancel") {
     pending.delete(chatId);
-    await tg("sendMessage", { chat_id: chatId, text: "Cancelled." });
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: "Cancelled.",
+      reply_markup: START_KEYBOARD,
+    });
     return;
   }
 
@@ -520,6 +711,11 @@ async function runPublishFlow(chatId, job) {
   await tg("sendMessage", { chat_id: chatId, text: `⏳ Adding "${job.title}" and pushing to GitHub...` });
   try {
     const result = await publishUpload(job);
+    const qbLine = result.questionBank
+      ? result.questionBank.note
+        ? `• Question Bank: ${result.questionBank.note}\n`
+        : `• Question Bank: +${result.questionBank.added} questions (total: ${result.questionBank.total})\n`
+      : "";
     await tg("sendMessage", {
       chat_id: chatId,
       text:
@@ -527,8 +723,10 @@ async function runPublishFlow(chatId, job) {
         `• Title: ${job.title}\n` +
         `• File: ${result.relPath}\n` +
         `• Sections: ${result.addedTo.join(", ")}\n` +
+        qbLine +
         `• Commit: ${result.commit}\n\n` +
         `GitHub Pages will be live in ~1 minute.`,
+      reply_markup: START_KEYBOARD,
     });
   } catch (err) {
     await tg("sendMessage", {
@@ -672,6 +870,17 @@ async function handleCallback(cb) {
 
 async function poll() {
   let offset = 0;
+  try {
+    await tg("setMyCommands", {
+      commands: [
+        { command: "start", description: "Show start instructions" },
+        { command: "help", description: "How to upload files" },
+        { command: "cancel", description: "Cancel current upload" },
+      ],
+    });
+  } catch (err) {
+    console.warn("setMyCommands failed:", sanitizeError(err.message));
+  }
   console.log("Telegram uploader bot started (polling)...");
   while (true) {
     try {

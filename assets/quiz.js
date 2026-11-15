@@ -1542,12 +1542,13 @@
 
   function buildSyncPayload() {
     return {
-      v: 2,
+      v: 3,
       ts: Date.now(),
       mistakes: getMistakes(),
       corrected: getCorrected(),
       config: Object.assign({}, ui.config || defaultConfig()),
       studied: store.getJson("hub:studied", {}),
+      bookmarks: store.getJson("hub:bookmarks", {}),
     };
   }
 
@@ -1687,6 +1688,14 @@
     return result;
   }
 
+  function mergeBookmarks(current, incoming) {
+    var result = Object.assign({}, current || {});
+    Object.keys(incoming || {}).forEach(function (key) {
+      if (incoming[key]) result[key] = true;
+    });
+    return result;
+  }
+
   function reconcileMistakes(mistakes, corrected) {
     Object.keys(corrected || {}).forEach(function (id) {
       if (!mistakes[id]) return;
@@ -1710,22 +1719,38 @@
       data.studied && typeof data.studied === "object" && !Array.isArray(data.studied)
         ? data.studied
         : {};
+    var incomingBookmarks =
+      data.bookmarks && typeof data.bookmarks === "object" && !Array.isArray(data.bookmarks)
+        ? data.bookmarks
+        : {};
+    var hasBookmarks = Boolean(
+      data.bookmarks && typeof data.bookmarks === "object" && !Array.isArray(data.bookmarks),
+    );
     var mistakes;
     var corrected;
     var studied;
+    var bookmarks;
     if (mode === "replace") {
       mistakes = Object.assign({}, incomingMistakes);
       corrected = Object.assign({}, incomingCorrected);
       studied = Object.assign({}, incomingStudied);
+      bookmarks = hasBookmarks
+        ? Object.assign({}, incomingBookmarks)
+        : store.getJson("hub:bookmarks", {});
     } else {
       mistakes = mergeMistakes(getMistakes(), incomingMistakes);
       corrected = mergeCorrected(getCorrected(), incomingCorrected);
       studied = mergeStudied(store.getJson("hub:studied", {}), incomingStudied);
+      bookmarks = mergeBookmarks(store.getJson("hub:bookmarks", {}), incomingBookmarks);
     }
     reconcileMistakes(mistakes, corrected);
     saveMistakes(mistakes);
     saveCorrected(corrected);
     store.setJson("hub:studied", studied);
+    if (hasBookmarks) {
+      store.setJson("hub:bookmarks", bookmarks);
+      window.dispatchEvent(new CustomEvent("hub:bookmarks-updated"));
+    }
     if (data.config && typeof data.config === "object" && !Array.isArray(data.config)) {
       ui.config = Object.assign(defaultConfig(), mode === "replace" ? data.config : ui.config, data.config);
       store.setJson(CONFIG_KEY, ui.config);
@@ -1734,6 +1759,7 @@
       mistakes: Object.keys(mistakes).length,
       corrected: Object.keys(corrected).length,
       studied: Object.keys(studied).length,
+      bookmarks: Object.keys(bookmarks).length,
     };
   }
 
@@ -1741,13 +1767,16 @@
     var mistakes = data && data.mistakes && typeof data.mistakes === "object" ? data.mistakes : {};
     var corrected = data && data.corrected && typeof data.corrected === "object" ? data.corrected : {};
     var studied = data && data.studied && typeof data.studied === "object" ? data.studied : {};
+    var bookmarks = data && data.bookmarks && typeof data.bookmarks === "object" ? data.bookmarks : {};
     return (
       Object.keys(mistakes).length +
       " خطأ · " +
       Object.keys(corrected).length +
       " مصحح · " +
       Object.keys(studied).length +
-      " عنصر مذاكرة"
+      " عنصر مذاكرة · " +
+      Object.keys(bookmarks).length +
+      " في المفضلة"
     );
   }
 
@@ -1791,7 +1820,7 @@
       '<div><span class="eyebrow">' +
       ICONS.sync +
       " نقل التقدم</span><h2 id=\"sync-title\">نقل تقدمي للموبايل</h2>" +
-      "<p>انقل بنك أخطائك وقائمة التصحيح وإعدادات الاختبار وعناصر المذاكرة بين الأجهزة. البيانات تبقى داخل متصفحك.</p></div>" +
+      "<p>انقل بنك أخطائك وقائمة التصحيح وإعدادات الاختبار وعناصر المذاكرة والملفات المحفوظة بين الأجهزة. البيانات تبقى داخل متصفحك.</p></div>" +
       '<button type="button" class="sync-close" data-sync-close aria-label="إغلاق">' +
       ICONS.close +
       "</button></header>" +
@@ -1920,7 +1949,7 @@
     }
     if (
       mode === "replace" &&
-      !window.confirm("سيتم استبدال بنك الأخطاء وقائمة التصحيح وعناصر المذاكرة وإعدادات الاختبار بالبيانات المستلمة. هل تريد المتابعة؟")
+      !window.confirm("سيتم استبدال بنك الأخطاء وقائمة التصحيح وعناصر المذاكرة والملفات المحفوظة وإعدادات الاختبار بالبيانات المستلمة. هل تريد المتابعة؟")
     ) {
       return;
     }
@@ -1931,8 +1960,10 @@
       counts.mistakes +
       " خطأ، " +
       counts.corrected +
-      " مصحح.";
-    syncStatus(overlay, "تم تطبيق النقل بنجاح. سيُحدَّث بنك الأخطاء الآن.", false);
+      " مصحح، " +
+      counts.bookmarks +
+      " في المفضلة.";
+    syncStatus(overlay, "تم تطبيق النقل بنجاح. سيُحدَّث بنك الأخطاء والمفضلة الآن.", false);
     setTimeout(function () {
       closeSync();
       ui.screen = "builder";
@@ -1998,6 +2029,7 @@
         }
       }
       data.studied = store.getJson("hub:studied", {});
+      data.bookmarks = store.getJson("hub:bookmarks", {});
     } catch (error) {
       ui.message = "تعذّر الوصول إلى التخزين المحلي في هذا المتصفح.";
       rerender();
@@ -2027,10 +2059,14 @@
         if (!data || typeof data !== "object") throw new Error("invalid");
         var mistakes = data.mistakes && typeof data.mistakes === "object" ? data.mistakes : null;
         var corrected = data.corrected && typeof data.corrected === "object" ? data.corrected : null;
-        if (!mistakes && !corrected && !data.exams) throw new Error("invalid");
+        var bookmarks =
+          data.bookmarks && typeof data.bookmarks === "object" ? data.bookmarks : null;
+        if (!mistakes && !corrected && !data.exams && !data.studied && !bookmarks) {
+          throw new Error("invalid");
+        }
         if (
           !window.confirm(
-            "سيتم استبدال بنك الأخطاء وقائمة التصحيح وجلسات الاختبار المحفوظة بالبيانات الموجودة في الملف. هل تريد المتابعة؟",
+            "سيتم استبدال بنك الأخطاء وقائمة التصحيح وجلسات الاختبار المحفوظة وعناصر المذاكرة والملفات المحفوظة بالبيانات الموجودة في الملف. هل تريد المتابعة؟",
           )
         ) {
           return;
@@ -2044,6 +2080,8 @@
           });
         }
         if (data.studied && typeof data.studied === "object") store.setJson("hub:studied", data.studied);
+        if (bookmarks) store.setJson("hub:bookmarks", bookmarks);
+        window.dispatchEvent(new CustomEvent("hub:bookmarks-updated"));
         ui.message = "تم استيراد التقدم بنجاح.";
         ui.screen = "builder";
         ui.session = null;
