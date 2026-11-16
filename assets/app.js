@@ -60,6 +60,7 @@ const state = {
   sidebarOpen: false,
   tabsExpanded: false,
   notifOpen: false,
+  kanbanExpanded: null,
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -852,6 +853,10 @@ function nextMidterm() {
       .filter((midterm) => midterm.endAt >= now)
       .sort((a, b) => a.endAt - b.endAt)[0] || null
   );
+}
+
+function defaultMidtermKanbanSectionId() {
+  return SUBJECT_TO_MIDTERM_SEC[defaultSubjectId()] || null;
 }
 
 function defaultSubjectId() {
@@ -1671,6 +1676,23 @@ function youtubeBlockMarkup(meta, subject) {
     </div>`;
 }
 
+function externalLinksBlockMarkup(meta) {
+  const links = Array.isArray(meta?.links)
+    ? meta.links.filter((l) => l && /^https?:\/\//i.test(String(l.url || "").trim()))
+    : [];
+  if (!links.length) return "";
+  const items = links
+    .map(
+      (link) =>
+        `<a class="btn btn-sm ext-link-btn" href="${esc(String(link.url).trim())}" target="_blank" rel="noopener">${ICONS.external}<span>${esc(String(link.title || "").trim() || "فتح الرابط")}</span></a>`,
+    )
+    .join("");
+  return `<div class="ci-item ci-youtube ci-links">
+      <span class="ci-label">روابط المادة</span>
+      <div class="ci-links-list">${items}</div>
+    </div>`;
+}
+
 function renderCourseInfo(subject) {
   const meta = state.schedule?.coursesMeta?.[subject.id];
   if (!meta) return "";
@@ -1682,6 +1704,7 @@ function renderCourseInfo(subject) {
     <div class="ci-item"><span class="ci-label">نطاق الميدترم</span><strong>${esc(meta.midtermScopeText || "غير محدد")}</strong></div>
     <a class="btn btn-sm ci-action" href="#practice/${esc(subject.id)}">${ICONS.question}<span>اختبر نفسك في المادة</span></a>
     ${youtubeBlockMarkup(meta, subject)}
+    ${externalLinksBlockMarkup(meta)}
   </div>`;
 }
 
@@ -1885,22 +1908,31 @@ function renderClassicSections(subject) {
 
 function renderMidtermKanban(subject) {
   const columns = subject.sections.filter((section) => section.id !== "general");
+  if (!(state.kanbanExpanded instanceof Set)) {
+    const defId = defaultMidtermKanbanSectionId() || columns[0]?.id;
+    state.kanbanExpanded = new Set(defId ? [defId] : []);
+  }
   return `<div class="kanban-board">
     ${columns
       .map((section) => {
         const targetId = MIDTERM_TO_SUBJECT_ID[section.id] || section.id;
         const targetSubject = subjectById(targetId);
-        return `<section class="kanban-col" id="sec-${esc(section.id)}"
+        const isOpen = state.kanbanExpanded.has(section.id);
+        const bodyId = `kanban-body-${section.id}`;
+        return `<section class="kanban-col${isOpen ? "" : " is-collapsed"}" id="sec-${esc(section.id)}"
           data-spy-section="${esc(section.id)}" data-spy-label="${esc(section.name)}"
           style="--col-accent:${esc(targetSubject?.accent || subject.accent)}">
           <header class="kanban-col-head">
-            <div class="kanban-col-title">
+            <button class="kanban-col-toggle" type="button" data-kanban-toggle="${esc(section.id)}"
+              aria-expanded="${isOpen}" aria-controls="${esc(bodyId)}">
               <span class="dot" style="background:var(--col-accent)"></span>
-              <h3>${esc(section.name)}</h3>
-            </div>
+              <span class="kanban-col-name">${esc(section.name)}</span>
+              <span class="kanban-col-count">${section.files.length}</span>
+              <svg class="kanban-col-chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
             <a class="kanban-col-link" href="#${esc(targetId)}">المادة ↗</a>
           </header>
-          <div class="kanban-col-body">
+          <div class="kanban-col-body" id="${esc(bodyId)}"${isOpen ? "" : " hidden"}>
             ${
               section.files.length
                 ? section.files
@@ -2099,6 +2131,8 @@ function renderSchedule() {
     return;
   }
   const all = state.scheduleAll;
+  const now = new Date();
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const entriesByDay = new Map(WEEK_DAYS.map((day) => [day, []]));
   const addEntry = (entry, sectionBadge) => {
     if (!entriesByDay.has(entry.day)) return;
@@ -2165,13 +2199,32 @@ function renderSchedule() {
     .join("");
 
   const calendar = (schedule.calendar || [])
-    .map(
-      (item) => `<div class="cal-card">
-        <strong>${esc(item.title)}</strong>
+    .map((item) => {
+      const start = parseDateParts(item.startDate);
+      const end = parseDateParts(item.endDate || item.startDate);
+      let statusClass = "is-upcoming";
+      let statusLabel = "قادم";
+      if (!Number.isNaN(end.getTime()) && end < todayMid) {
+        statusClass = "is-past";
+        statusLabel = "انتهى";
+      } else if (
+        !Number.isNaN(start.getTime()) &&
+        !Number.isNaN(end.getTime()) &&
+        start <= todayMid &&
+        todayMid <= end
+      ) {
+        statusClass = "is-current";
+        statusLabel = "الآن";
+      }
+      return `<div class="cal-card ${statusClass}">
+        <div class="cal-card-top">
+          <strong>${esc(item.title)}</strong>
+          <span class="cal-status">${statusLabel}</span>
+        </div>
         <span class="cal-dates">${esc(formatRange(item.startDate, item.endDate))}</span>
         ${item.note ? `<span class="cal-note">${esc(item.note)}</span>` : ""}
-      </div>`,
-    )
+      </div>`;
+    })
     .join("");
 
   const periods = (schedule.periods || [])
@@ -2199,15 +2252,6 @@ function renderSchedule() {
       <p>المحاضرات المشتركة تظهر تلقائيًا حسب السكشن المختار.</p>
       <div class="week-grid">${week}</div>
     </section>
-    <div class="feature-hero schedule-hero" style="--accent:#4e8d9c">
-      <span class="eyebrow">${ICONS.calendar} الجدول الدراسي والميدترم</span>
-      <h2>${withLtrYears(schedule.term)}</h2>
-      <p class="feature-sub">${esc(schedule.faculty)} · ${esc(schedule.department)}</p>
-      <div class="feature-meta">
-        <span class="chip">${ICONS.calendar}<span>سكشنك: ${esc(state.section)}</span></span>
-        <span class="chip">${ICONS.clock}<span>بداية الدراسة: ${esc(formatDateShort(schedule.studyStartDate))}</span></span>
-      </div>
-    </div>
     <section class="schedule-block" id="sec-midterms" data-spy-section="midterms" data-spy-label="امتحانات الميدترم">
       <h2>امتحانات الميدترم</h2>
       <p>5 امتحانات إلكترونية — 11:00 إلى 11:30 صباحًا.</p>
@@ -3418,6 +3462,21 @@ function openYouTubeEmbed(videoId, startSeconds = 0, title = "") {
   modalEl.hidden = false;
   document.documentElement.style.overflow = "hidden";
 }
+
+viewEl.addEventListener("click", (event) => {
+  const toggle = event.target.closest("[data-kanban-toggle]");
+  if (!toggle) return;
+  const secId = toggle.dataset.kanbanToggle;
+  if (!(state.kanbanExpanded instanceof Set)) state.kanbanExpanded = new Set();
+  const isOpen = !state.kanbanExpanded.has(secId);
+  if (isOpen) state.kanbanExpanded.add(secId);
+  else state.kanbanExpanded.delete(secId);
+  const col = toggle.closest(".kanban-col");
+  const body = col?.querySelector(".kanban-col-body");
+  col?.classList.toggle("is-collapsed", !isOpen);
+  toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  if (body) body.hidden = !isOpen;
+});
 
 viewEl.addEventListener("click", (event) => {
   const ytBtn = event.target.closest("[data-yt-embed]");

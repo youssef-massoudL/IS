@@ -293,6 +293,15 @@ function isValidYouTubeUrl(value) {
   }
 }
 
+function isValidHttpUrl(value) {
+  try {
+    const u = new URL(value);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 function removeEmptyParents(dirPath, stopDir) {
   let current = path.resolve(dirPath);
   const stop = path.resolve(stopDir);
@@ -692,6 +701,68 @@ function setSubjectYouTubeInRepo(subjectId, youtubeUrl, linkTitle = "شرح ال
   const action = youtubeUrl ? `Add YouTube link to ${subject.nameAr || subject.id}` : `Clear YouTube links for ${subject.nameAr || subject.id}`;
   const { commit } = commitAndPush(repoDir, manifest, action);
   return { subjectName: subject.nameAr || subject.name, youtubeUrl, linkTitle, commit };
+}
+
+function getSubjectExternalLinks(repoDir, subjectId) {
+  const schedulePath = path.join(repoDir, "data", "schedule.json");
+  if (!fs.existsSync(schedulePath)) return [];
+  const schedule = JSON.parse(fs.readFileSync(schedulePath, "utf8"));
+  const links = schedule?.coursesMeta?.[subjectId]?.links;
+  return Array.isArray(links) ? links.filter((l) => l && l.url) : [];
+}
+
+function addSubjectLinkInRepo(subjectId, url, title = "فتح الرابط") {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const subject = manifest.subjects.find((s) => s.id === subjectId);
+  if (!subject) throw new Error(`Unknown subject: ${subjectId}`);
+
+  const schedulePath = path.join(repoDir, "data", "schedule.json");
+  if (!fs.existsSync(schedulePath)) throw new Error("data/schedule.json not found");
+  const schedule = JSON.parse(fs.readFileSync(schedulePath, "utf8"));
+  if (!schedule.coursesMeta) schedule.coursesMeta = {};
+  if (!schedule.coursesMeta[subjectId]) schedule.coursesMeta[subjectId] = {};
+  const meta = schedule.coursesMeta[subjectId];
+  if (!Array.isArray(meta.links)) meta.links = [];
+
+  const cleanTitle = String(title || "").trim() || "فتح الرابط";
+  const existingIdx = meta.links.findIndex((l) => l && l.url === url);
+  if (existingIdx >= 0) {
+    meta.links[existingIdx].title = cleanTitle;
+  } else {
+    meta.links.push({ title: cleanTitle, url });
+  }
+  fs.writeFileSync(schedulePath, JSON.stringify(schedule, null, 2) + "\n", "utf8");
+
+  const { commit } = commitAndPush(repoDir, manifest, `Add link "${cleanTitle}" to ${subject.nameAr || subjectId}`);
+  return { subjectName: subject.nameAr || subject.name, url, title: cleanTitle, total: meta.links.length, commit };
+}
+
+function removeSubjectLinkInRepo(subjectId, removeIdx) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const subject = manifest.subjects.find((s) => s.id === subjectId);
+  if (!subject) throw new Error(`Unknown subject: ${subjectId}`);
+
+  const schedulePath = path.join(repoDir, "data", "schedule.json");
+  if (!fs.existsSync(schedulePath)) throw new Error("data/schedule.json not found");
+  const schedule = JSON.parse(fs.readFileSync(schedulePath, "utf8"));
+  const meta = schedule?.coursesMeta?.[subjectId];
+  if (!meta || !Array.isArray(meta.links) || meta.links.length === 0) {
+    throw new Error("No links to remove for this subject.");
+  }
+
+  let removedLabel = "all links";
+  if (removeIdx === -1) {
+    meta.links = [];
+  } else {
+    const removed = meta.links.splice(removeIdx, 1)[0];
+    removedLabel = removed?.title || removed?.url || "link";
+  }
+  fs.writeFileSync(schedulePath, JSON.stringify(schedule, null, 2) + "\n", "utf8");
+
+  const { commit } = commitAndPush(repoDir, manifest, `Remove link (${removedLabel}) from ${subject.nameAr || subjectId}`);
+  return { subjectName: subject.nameAr || subject.name, removedLabel, remaining: meta.links.length, commit };
 }
 
 function setInfoInRepo(relPath, infoText) {
@@ -1281,7 +1352,8 @@ async function handleMessage(msg) {
         `/rename [query] — Rename a file title\n` +
         `/label [query] — Edit or clear file label\n` +
         `/info [query] — Edit or clear info icon (ⓘ)\n` +
-        `/youtube [query] — Attach or clear YouTube link\n` +
+        `/link — Add or remove subject links\n` +
+        `/youtube — Add or clear subject YouTube links\n` +
         `/move [query] — Move a file to another section\n` +
         `/delete [query] — Delete a file\n\n` +
         `<b>Repo &amp; Safety:</b>\n` +
@@ -1337,6 +1409,24 @@ async function handleMessage(msg) {
       text: `↩️ <b>Rollback</b>\nSelect a commit to revert:\n\n${summary}`,
       parse_mode: "HTML",
       reply_markup: rollbackKeyboard(commits),
+    });
+    return;
+  }
+
+  if (parsed?.cmd === "link") {
+    const repoDir = ensureRepo();
+    const manifest = readManifest(repoDir);
+    const subjects = (manifest.subjects || []).filter((s) => s.id !== "midterm-revision");
+    pending.set(chatId, {
+      flow: "subj_link",
+      step: "subj_link_pick",
+      subjects,
+    });
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: "🔗 <b>Subject External Links</b>\n\nChoose a subject to manage its links:",
+      parse_mode: "HTML",
+      reply_markup: pickSubjectKeyboard(subjects, "subj_link:subj"),
     });
     return;
   }
@@ -1505,6 +1595,51 @@ async function handleMessage(msg) {
     return;
   }
 
+  if (job.step === "subj_link_url" && job.linkSubject) {
+    if (!isValidHttpUrl(text)) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "⚠️ Please send a valid URL starting with <code>https://</code> or <code>http://</code>.",
+        parse_mode: "HTML",
+      });
+      return;
+    }
+    job.linkUrl = text;
+    job.step = "subj_link_title";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `Send a button title for this link (e.g. "ملفات د. أميرة (SharePoint)"), or tap below to use <b>"فتح الرابط"</b>:`,
+      parse_mode: "HTML",
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '✅ Use "فتح الرابط"', callback_data: "subj_link:default_title" }],
+          [{ text: "❌ Cancel", callback_data: "cancel" }],
+        ],
+      },
+    });
+    return;
+  }
+
+  if (job.step === "subj_link_title" && job.linkSubject && job.linkUrl) {
+    const subjectId = job.linkSubject.id;
+    const url = job.linkUrl;
+    pending.delete(chatId);
+    await tg("sendMessage", { chat_id: chatId, text: "⏳ Adding link to subject card and pushing..." });
+    const res = addSubjectLinkInRepo(subjectId, url, text);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>Link Added!</b>\n` +
+        `• Subject: ${escapeHtml(res.subjectName)}\n` +
+        `• Title: ${escapeHtml(res.title)}\n` +
+        `• Total links: ${res.total}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
+  }
+
   if (job.step === "subj_yt_url" && job.ytSubject) {
     const isClear = text.toLowerCase() === "clear";
     if (isClear) {
@@ -1643,6 +1778,102 @@ async function handleCallback(cb) {
   if (!job) {
     await tg("sendMessage", { chat_id: chatId, text: "Session expired. Please start again." });
     return;
+  }
+
+  if (data.startsWith("subj_link:")) {
+    if (data.startsWith("subj_link:subj:")) {
+      const idx = Number.parseInt(data.slice("subj_link:subj:".length), 10);
+      const subj = job.subjects?.[idx];
+      if (!subj) return;
+      const repoDir = ensureRepo();
+      const links = getSubjectExternalLinks(repoDir, subj.id);
+      job.linkSubject = subj;
+      job.currentLinks = links;
+      const currentText = links.length
+        ? links.map((l, i) => `${i + 1}. <b>${escapeHtml(l.title)}</b>\n   <code>${escapeHtml(l.url)}</code>`).join("\n")
+        : "<i>none</i>";
+      const rows = [[{ text: "➕ Add Link", callback_data: "subj_link:add" }]];
+      if (links.length > 0) {
+        rows.push([{ text: "🗑 Remove a Link", callback_data: "subj_link:rm_menu" }]);
+      }
+      rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: `🔗 <b>${escapeHtml(subj.nameAr || subj.name)}</b>\n\nCurrent links:\n${currentText}`,
+        parse_mode: "HTML",
+        reply_markup: { inline_keyboard: rows },
+      });
+      return;
+    }
+
+    if (data === "subj_link:add" && job.linkSubject) {
+      job.step = "subj_link_url";
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: `Send the URL (SharePoint, Drive, etc.) to add to <b>${escapeHtml(job.linkSubject.nameAr || job.linkSubject.name)}</b>:`,
+        parse_mode: "HTML",
+        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+      });
+      return;
+    }
+
+    if (data === "subj_link:default_title" && job.linkSubject && job.linkUrl) {
+      const subjectId = job.linkSubject.id;
+      const url = job.linkUrl;
+      pending.delete(chatId);
+      await tg("sendMessage", { chat_id: chatId, text: "⏳ Adding link to subject card and pushing..." });
+      const res = addSubjectLinkInRepo(subjectId, url, "فتح الرابط");
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `✅ <b>Link Added!</b>\n` +
+          `• Subject: ${escapeHtml(res.subjectName)}\n` +
+          `• Title: ${escapeHtml(res.title)}\n` +
+          `• Total links: ${res.total}\n` +
+          `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+        parse_mode: "HTML",
+        reply_markup: START_KEYBOARD,
+      });
+      return;
+    }
+
+    if (data === "subj_link:rm_menu" && job.linkSubject && Array.isArray(job.currentLinks)) {
+      const rows = job.currentLinks.map((l, idx) => {
+        const label = `🗑 ${l.title || l.url}`;
+        const short = label.length > 42 ? label.slice(0, 39) + "..." : label;
+        return [{ text: short, callback_data: `subj_link:rm:${idx}` }];
+      });
+      rows.push([{ text: "🗑 Clear ALL links", callback_data: "subj_link:rm:all" }]);
+      rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: `Select a link to remove from <b>${escapeHtml(job.linkSubject.nameAr || job.linkSubject.name)}</b>:`,
+        parse_mode: "HTML",
+        reply_markup: { inline_keyboard: rows },
+      });
+      return;
+    }
+
+    if (data.startsWith("subj_link:rm:") && job.linkSubject) {
+      const arg = data.slice("subj_link:rm:".length);
+      const idx = arg === "all" ? -1 : Number.parseInt(arg, 10);
+      const subjectId = job.linkSubject.id;
+      pending.delete(chatId);
+      await tg("sendMessage", { chat_id: chatId, text: "⏳ Removing link and pushing..." });
+      const res = removeSubjectLinkInRepo(subjectId, idx);
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `✅ <b>Link Removed!</b>\n` +
+          `• Subject: ${escapeHtml(res.subjectName)}\n` +
+          `• Removed: ${escapeHtml(res.removedLabel)}\n` +
+          `• Remaining links: ${res.remaining}\n` +
+          `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+        parse_mode: "HTML",
+        reply_markup: START_KEYBOARD,
+      });
+      return;
+    }
   }
 
   if (data.startsWith("subj_yt:")) {
@@ -2022,7 +2253,8 @@ async function poll() {
         { command: "rename", description: "Rename a file title" },
         { command: "label", description: "Edit or clear file label" },
         { command: "info", description: "Edit or clear file info icon" },
-        { command: "youtube", description: "Attach or clear YouTube link" },
+        { command: "link", description: "Add or remove subject links" },
+        { command: "youtube", description: "Add or clear subject YouTube link" },
         { command: "move", description: "Move a file to another section" },
         { command: "delete", description: "Delete a file" },
         { command: "status", description: "Repo & site status" },

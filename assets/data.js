@@ -4497,6 +4497,12 @@ window.__SITE_SCHEDULE__ = {
           "url": "https://youtu.be/c-uDHzjmqyQ?si=qAu_olRr8GkKlrM1",
           "title": "شرح المادة"
         }
+      ],
+      "links": [
+        {
+          "title": "ملفات د. أميرة رزق (SharePoint)",
+          "url": "https://medmansedu-my.sharepoint.com/:f:/g/personal/amira_rezk_mans_edu_eg/EgR9-6dgmeNFkvujraO8kCUB9SggzQ4cVkbP28hl9K04oQ?e=LntrKR"
+        }
       ]
     },
     "information-theory": {
