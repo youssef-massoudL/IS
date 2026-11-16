@@ -41,8 +41,19 @@ const GITHUB_TOKEN = String(process.env.GITHUB_TOKEN || "")
   .replace(/^["']|["']$/g, "");
 const GITHUB_REPO = normalizeGitHubRepo(process.env.GITHUB_REPO);
 const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main";
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const GEMINI_API_KEY = String(process.env.GEMINI_API_KEY || "").trim();
-const GEMINI_MODEL = String(process.env.GEMINI_MODEL || "gemini-2.5-flash").trim();
+const GEMINI_MODEL = String(process.env.GEMINI_MODEL || "gemini-3.8-flash").trim();
+const GEMINI_FALLBACK_MODELS = [
+  ...new Set([
+    GEMINI_MODEL,
+    ...String(process.env.GEMINI_FALLBACK_MODELS || "gemini-3.8-flash,gemini-3.8-flash-lite,gemini-2.5-flash")
+      .split(",")
+      .map((m) => m.trim())
+      .filter(Boolean),
+  ]),
+];
 
 if (!BOT_TOKEN || !ADMIN_ID) {
   console.error("Missing TELEGRAM_BOT_TOKEN or TELEGRAM_ADMIN_ID in environment / .env");
@@ -378,32 +389,72 @@ async function extractQuestionsWithGemini(filePath, subjectId, title) {
   ].join("\n");
 
   const fileBytes = fs.readFileSync(filePath);
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
-  const res = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [
-        {
-          parts: [
-            { inlineData: { mimeType, data: fileBytes.toString("base64") } },
-            { text: prompt },
-          ],
-        },
-      ],
-      generationConfig: {
-        responseMimeType: "application/json",
-        temperature: 0.1,
+  const payload = JSON.stringify({
+    contents: [
+      {
+        parts: [
+          { inlineData: { mimeType, data: fileBytes.toString("base64") } },
+          { text: prompt },
+        ],
       },
-    }),
+    ],
+    generationConfig: {
+      responseMimeType: "application/json",
+      temperature: 0.1,
+    },
   });
 
-  if (!res.ok) {
-    const errText = await res.text().catch(() => "");
-    throw new Error(`Gemini API HTTP ${res.status}: ${errText.slice(0, 200)}`);
+  const retryableStatuses = new Set([429, 500, 502, 503, 504]);
+  const maxAttemptsPerModel = 3;
+  let lastError = null;
+  let data = null;
+
+  for (const model of GEMINI_FALLBACK_MODELS) {
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
+    for (let attempt = 1; attempt <= maxAttemptsPerModel; attempt += 1) {
+      try {
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: payload,
+        });
+
+        if (res.ok) {
+          data = await res.json();
+          break;
+        }
+
+        const errText = await res.text().catch(() => "");
+        lastError = new Error(`Gemini API (${model}) HTTP ${res.status}: ${errText.slice(0, 200)}`);
+
+        if (retryableStatuses.has(res.status) && attempt < maxAttemptsPerModel) {
+          const delayMs = 1500 * Math.pow(2, attempt - 1) + Math.floor(Math.random() * 500);
+          await sleep(delayMs);
+          continue;
+        }
+
+        // Fall through to next fallback model on 404 or exhausted retries
+        if (res.status === 404 || retryableStatuses.has(res.status)) {
+          break;
+        }
+        throw lastError;
+      } catch (err) {
+        lastError = err;
+        if (attempt < maxAttemptsPerModel && !String(err.message || "").includes("HTTP 400") && !String(err.message || "").includes("HTTP 401") && !String(err.message || "").includes("HTTP 403")) {
+          const delayMs = 1500 * Math.pow(2, attempt - 1) + Math.floor(Math.random() * 500);
+          await sleep(delayMs);
+          continue;
+        }
+        break;
+      }
+    }
+    if (data) break;
   }
 
-  const data = await res.json();
+  if (!data) {
+    throw lastError || new Error("Gemini API request failed");
+  }
+
   const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "[]";
   const parsed = JSON.parse(rawText);
   if (!Array.isArray(parsed)) {

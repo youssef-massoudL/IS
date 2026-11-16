@@ -3727,7 +3727,7 @@ mark {
   color: var(--accent);
 }
 
-.quiz-summary span {
+.quiz-summary > div:first-child span {
   color: var(--muted);
   font-size: 12.5px;
 }
