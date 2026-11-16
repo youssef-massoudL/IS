@@ -35,7 +35,6 @@ const SECTION_ICONS = {
   questions: "question",
   summaries: "summary",
   "midterm-revision": "revision",
-  committees: "pin",
   "simplified-explanations": "simple",
   general: "folder",
 };
@@ -909,6 +908,7 @@ const RECENT_FILE_WINDOW_MS = 24 * 60 * 60 * 1000;
 const NOTIF_FILE_WINDOW_MS = RECENT_FILE_WINDOW_MS;
 const NOTIF_SEEN_KEY = "hub:notif:seen";
 const NOTIF_BROWSER_KEY = "hub:notif:browser";
+const EXAM_NEWS_SEEN_KEY = "hub:exam-news:seen";
 
 function isRecentFile(file) {
   if (!file?.addedAt) return false;
@@ -1550,6 +1550,127 @@ function refreshBookmarkUI(filePath) {
   }
 }
 
+function parseYouTubeTime(value) {
+  const text = String(value ?? "").trim().toLowerCase();
+  if (!text) return 0;
+  if (/^\d+$/.test(text)) return Number(text);
+  const match = text.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/);
+  if (!match) return 0;
+  return Number(match[1] || 0) * 3600 + Number(match[2] || 0) * 60 + Number(match[3] || 0);
+}
+
+function formatYouTubeTimestamp(value) {
+  const seconds = parseYouTubeTime(value);
+  if (!seconds) return "0:00";
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const rest = String(seconds % 60).padStart(2, "0");
+  return hours
+    ? `${hours}:${String(minutes).padStart(2, "0")}:${rest}`
+    : `${minutes}:${rest}`;
+}
+
+function parseYouTubeUrl(url) {
+  const raw = String(url || "").trim();
+  if (!raw) return null;
+  let parsed;
+  try {
+    parsed = new URL(raw);
+  } catch {
+    return null;
+  }
+  const host = parsed.hostname.replace(/^www\./i, "").toLowerCase();
+  let videoId = "";
+  if (host === "youtu.be") {
+    videoId = parsed.pathname.split("/").filter(Boolean)[0] || "";
+  } else if (
+    host === "youtube.com" ||
+    host === "m.youtube.com" ||
+    host === "music.youtube.com"
+  ) {
+    if (parsed.pathname === "/watch") videoId = parsed.searchParams.get("v") || "";
+    else if (parsed.pathname.startsWith("/shorts/")) videoId = parsed.pathname.split("/")[2] || "";
+    else if (parsed.pathname.startsWith("/embed/")) videoId = parsed.pathname.split("/")[2] || "";
+  }
+  if (!videoId) return null;
+  return {
+    videoId,
+    startSeconds: parseYouTubeTime(parsed.searchParams.get("t") || ""),
+  };
+}
+
+function buildYouTubeTimestampUrl(baseUrl, t) {
+  const raw = String(baseUrl || "");
+  const seconds = parseYouTubeTime(t);
+  try {
+    const parsed = new URL(raw);
+    if (seconds > 0) parsed.searchParams.set("t", `${seconds}s`);
+    else parsed.searchParams.delete("t");
+    return parsed.toString();
+  } catch {
+    return raw;
+  }
+}
+
+function buildYouTubeEmbedUrl(videoId, startSeconds = 0) {
+  const params = new URLSearchParams({ autoplay: "1", rel: "0" });
+  if (startSeconds > 0) params.set("start", String(startSeconds));
+  return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?${params.toString()}`;
+}
+
+function collectYouTubeLinks(meta, subject) {
+  const links = [];
+  const push = (url, title, chapters) => {
+    const clean = String(url || "").trim();
+    if (!clean) return;
+    links.push({
+      url: clean,
+      title: String(title || "").trim() || "شرح المادة",
+      chapters: Array.isArray(chapters)
+        ? chapters.filter((chapter) => chapter && chapter.label && chapter.t)
+        : [],
+    });
+  };
+  if (Array.isArray(meta?.youtubeLinks)) {
+    for (const link of meta.youtubeLinks) push(link?.url, link?.title, link?.chapters);
+  }
+  if (meta?.youtube) push(meta.youtube, meta.youtubeTitle);
+  else if (!links.length && subject?.youtube) push(subject.youtube);
+  return links;
+}
+
+function youtubeBlockMarkup(meta, subject) {
+  const links = collectYouTubeLinks(meta, subject);
+  if (!links.length) return "";
+  const rows = links
+    .map((link) => {
+      const parsed = parseYouTubeUrl(link.url);
+      const chapters = link.chapters
+        .map(
+          (chapter) =>
+            `<a class="yt-chapter-chip" href="${esc(buildYouTubeTimestampUrl(link.url, chapter.t))}" target="_blank" rel="noopener">▶ ${esc(formatYouTubeTimestamp(chapter.t))} · ${esc(chapter.label)}</a>`,
+        )
+        .join("");
+      return `<div class="ci-youtube-row">
+        <span class="yt-link-title">${esc(link.title)}</span>
+        <div class="yt-link-actions">
+          <a class="btn btn-sm yt-btn" href="${esc(link.url)}" target="_blank" rel="noopener">${ICONS.play}<span>مشاهدة على يوتيوب</span></a>
+          ${
+            parsed
+              ? `<button class="btn btn-sm yt-embed-btn" type="button" data-yt-embed="${esc(parsed.videoId)}" data-yt-start="${parsed.startSeconds}" data-yt-title="${esc(link.title)}">${ICONS.play}<span>تشغيل هنا</span></button>`
+              : ""
+          }
+        </div>
+        ${chapters ? `<div class="yt-chapters">${chapters}</div>` : ""}
+      </div>`;
+    })
+    .join("");
+  return `<div class="ci-item ci-youtube">
+      <span class="ci-label">شروحات يوتيوب</span>
+      <div class="ci-youtube-links">${rows}</div>
+    </div>`;
+}
+
 function renderCourseInfo(subject) {
   const meta = state.schedule?.coursesMeta?.[subject.id];
   if (!meta) return "";
@@ -1560,6 +1681,7 @@ function renderCourseInfo(subject) {
     <div class="ci-item"><span class="ci-label">درجة الميدترم</span><strong>${esc(meta.midtermMarks || "غير محدد")}</strong></div>
     <div class="ci-item"><span class="ci-label">نطاق الميدترم</span><strong>${esc(meta.midtermScopeText || "غير محدد")}</strong></div>
     <a class="btn btn-sm ci-action" href="#practice/${esc(subject.id)}">${ICONS.question}<span>اختبر نفسك في المادة</span></a>
+    ${youtubeBlockMarkup(meta, subject)}
   </div>`;
 }
 
@@ -1606,7 +1728,9 @@ function renderMatrix(subject) {
         (section) => section.id === SUBJECT_TO_MIDTERM_SEC[subject.id],
       )
     : null;
-  const curatedFiles = curatedSection?.files || [];
+  const curatedFiles = (curatedSection?.files || []).filter(
+    (file) => !String(file.path || "").startsWith("files/committees/"),
+  );
   const curatedOrder = new Map();
   const curatedTags = new Map();
   curatedFiles.forEach((file, index) => {
@@ -1645,7 +1769,6 @@ function renderMatrix(subject) {
     ? files.filter(
         (file) =>
           !reviewSet.has(file.path) &&
-          !String(file.path || "").startsWith("files/committees/") &&
           !Number.isInteger(file.lecture) &&
           !(Array.isArray(file.lectureSpan) && file.lectureSpan.length),
       )
@@ -1710,7 +1833,7 @@ function renderMatrix(subject) {
       </section>`
     : "";
 
-  return `${renderCommitteeSection(subject)}${renderReviewBlock(subject, reviewFiles)}
+  return `${renderReviewBlock(subject, reviewFiles)}
     ${studyProgressMarkup(subject, studiedCount)}
     ${table}
     ${extraSection}`;
@@ -1731,16 +1854,6 @@ function sectionMarkup(section, rows, open) {
           ${rows}
         </div>
       </section>`;
-}
-
-function renderCommitteeSection(subject) {
-  const section = subject.sections?.find((entry) => entry.id === "committees");
-  if (!section?.files?.length) return "";
-  const open = store.get(`section:${section.id}`) !== "closed";
-  const rows = section.files
-    .map((file) => fileRow(file, subject, section.id))
-    .join("");
-  return sectionMarkup(section, rows, open);
 }
 
 function renderClassicSections(subject) {
@@ -3254,7 +3367,9 @@ function openPreview(file, options = {}) {
   $("#modal-badge").className = `file-badge ${file.ext || ""}`;
   $("#modal-download").href = file.path;
   $("#modal-download").setAttribute("download", "");
+  $("#modal-download").hidden = false;
   $("#modal-open").href = file.path;
+  $("#modal-open").hidden = false;
 
   const body = $("#modal-body");
   const usePdfJs = ext === "pdf" && shouldUsePdfJsViewer();
@@ -3287,6 +3402,32 @@ function openPreview(file, options = {}) {
   document.documentElement.style.overflow = "hidden";
   if (usePdfJs) openPdfViewer(file, body);
 }
+
+function openYouTubeEmbed(videoId, startSeconds = 0, title = "") {
+  if (!videoId) return;
+  teardownPdfViewer();
+  $("#modal-title").textContent = title || "مشاهدة الشرح";
+  $("#modal-badge").textContent = "YouTube";
+  $("#modal-badge").className = "file-badge";
+  $("#modal-download").hidden = true;
+  const openLink = $("#modal-open");
+  openLink.hidden = false;
+  openLink.href = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
+  const body = $("#modal-body");
+  body.innerHTML = `<div class="yt-embed-frame"><iframe src="${esc(buildYouTubeEmbedUrl(videoId, startSeconds))}" title="${esc(title || "YouTube")}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>`;
+  modalEl.hidden = false;
+  document.documentElement.style.overflow = "hidden";
+}
+
+viewEl.addEventListener("click", (event) => {
+  const ytBtn = event.target.closest("[data-yt-embed]");
+  if (!ytBtn) return;
+  openYouTubeEmbed(
+    ytBtn.dataset.ytEmbed,
+    Number(ytBtn.dataset.ytStart || 0),
+    ytBtn.dataset.ytTitle || "",
+  );
+});
 
 function note(title, message, icon) {
   return `<div class="modal-note">${ICONS[icon] || ICONS.file}<strong>${esc(title)}</strong><span>${esc(message)}</span></div>`;
@@ -3378,6 +3519,43 @@ function hideExamNews() {
   }, 200);
 }
 
+function activeExamNewsWindow(now = new Date()) {
+  for (const midterm of state.schedule?.midterms || []) {
+    const examStart = parseDateTime(midterm.date, midterm.startTime);
+    if (Number.isNaN(examStart.getTime())) continue;
+    const windowStart = new Date(
+      examStart.getFullYear(),
+      examStart.getMonth(),
+      examStart.getDate() - 1,
+      20,
+      0,
+      0,
+      0,
+    );
+    if (now >= windowStart && now <= examStart) {
+      return { id: `${midterm.subjectId}-${midterm.date}`, midterm };
+    }
+  }
+  return null;
+}
+
+function syncExamNewsVisibility() {
+  if (!examNewsEl) return;
+  const active = activeExamNewsWindow();
+  if (!active) {
+    examNewsEl.hidden = true;
+    return;
+  }
+  const seen = new Set(store.getJson(EXAM_NEWS_SEEN_KEY, []));
+  if (seen.has(active.id)) {
+    examNewsEl.hidden = true;
+    return;
+  }
+  examNewsEl.hidden = false;
+  seen.add(active.id);
+  store.setJson(EXAM_NEWS_SEEN_KEY, Array.from(seen).slice(-30));
+}
+
 function navigateToMidterm() {
   pendingMidtermHighlight = true;
   navigate("schedule");
@@ -3438,6 +3616,7 @@ async function loadData() {
   buildSearchIndex();
   setFooter();
   route();
+  syncExamNewsVisibility();
   maybeSendBrowserNotifications();
 
   const topbar = document.querySelector(".topbar");

@@ -502,46 +502,6 @@ window.__SITE_DATA__ = {
           ]
         },
         {
-          "id": "committees",
-          "name": "توزيع اللجان",
-          "nameEn": "Exam Committees",
-          "files": [
-            {
-              "id": "computer-networks-committees",
-              "title": "توزيع لجان شبكات الحاسب",
-              "original": "الاربعاء- نظم المعلومات - شبكات.pdf",
-              "path": "files/committees/computer-networks-committees.pdf",
-              "ext": "pdf",
-              "size": 1485429,
-              "youtube": "",
-              "lecture": null,
-              "kind": "summary",
-              "keywords": [
-                "ملخص",
-                "ملخصات",
-                "summary",
-                "خلاصة",
-                "شبكات الحاسب",
-                "Computer Networks",
-                "computer-networks",
-                "توزيع اللجان",
-                "Exam Committees",
-                "committees",
-                "pdf",
-                "توزيع",
-                "لجان",
-                "شبكات",
-                "الحاسب",
-                "الاربعاء",
-                "نظم",
-                "المعلومات",
-                "computer",
-                "networks"
-              ]
-            }
-          ]
-        },
-        {
           "id": "midterm-revision",
           "name": "مراجعة الميد",
           "nameEn": "Midterm Revision",
@@ -1375,46 +1335,6 @@ window.__SITE_DATA__ = {
           ]
         },
         {
-          "id": "committees",
-          "name": "توزيع اللجان",
-          "nameEn": "Exam Committees",
-          "files": [
-            {
-              "id": "database-2-committees",
-              "title": "توزيع لجان قواعد بيانات 2",
-              "original": "الثلاثاء - نظم معلومات - قواعد البيانات 2.pdf",
-              "path": "files/committees/database-2-committees.pdf",
-              "ext": "pdf",
-              "size": 1539657,
-              "youtube": "",
-              "lecture": null,
-              "kind": "summary",
-              "keywords": [
-                "ملخص",
-                "ملخصات",
-                "summary",
-                "خلاصة",
-                "قواعد البيانات",
-                "Database II",
-                "database-2",
-                "توزيع اللجان",
-                "Exam Committees",
-                "committees",
-                "pdf",
-                "توزيع",
-                "لجان",
-                "قواعد",
-                "بيانات",
-                "الثلاثاء",
-                "نظم",
-                "معلومات",
-                "البيانات",
-                "database"
-              ]
-            }
-          ]
-        },
-        {
           "id": "midterm-revision",
           "name": "مراجعة الميد",
           "nameEn": "Midterm Revision",
@@ -1862,46 +1782,6 @@ window.__SITE_DATA__ = {
                 "pptx",
                 "المحاضرة",
                 "06",
-                "information",
-                "theory"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "committees",
-          "name": "توزيع اللجان",
-          "nameEn": "Exam Committees",
-          "files": [
-            {
-              "id": "information-theory-committees",
-              "title": "توزيع لجان نظرية المعلومات",
-              "original": "الاثنين - نظم معلومات - نظرية المعلومات.pdf",
-              "path": "files/committees/information-theory-committees.pdf",
-              "ext": "pdf",
-              "size": 1487470,
-              "youtube": "",
-              "lecture": null,
-              "kind": "summary",
-              "keywords": [
-                "ملخص",
-                "ملخصات",
-                "summary",
-                "خلاصة",
-                "نظرية المعلومات",
-                "Information Theory",
-                "information-theory",
-                "توزيع اللجان",
-                "Exam Committees",
-                "committees",
-                "pdf",
-                "توزيع",
-                "لجان",
-                "نظرية",
-                "المعلومات",
-                "الاثنين",
-                "نظم",
-                "معلومات",
                 "information",
                 "theory"
               ]
@@ -3708,6 +3588,41 @@ window.__SITE_DATA__ = {
                 "Master",
                 "Guide"
               ]
+            },
+            {
+              "id": "computer-networks-committees",
+              "title": "توزيع لجان شبكات الحاسب",
+              "original": "الاربعاء- نظم المعلومات - شبكات.pdf",
+              "path": "files/committees/computer-networks-committees.pdf",
+              "ext": "pdf",
+              "size": 1485429,
+              "youtube": "",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "Computer Networks",
+                "computer-networks",
+                "pdf",
+                "توزيع",
+                "لجان",
+                "شبكات",
+                "الحاسب",
+                "الاربعاء",
+                "نظم",
+                "المعلومات",
+                "computer",
+                "networks",
+                "committees"
+              ]
             }
           ]
         },
@@ -3816,6 +3731,39 @@ window.__SITE_DATA__ = {
                 "الجزء",
                 "المقرر",
                 "علينا"
+              ]
+            },
+            {
+              "id": "database-2-committees",
+              "title": "توزيع لجان قواعد بيانات 2",
+              "original": "الثلاثاء - نظم معلومات - قواعد البيانات 2.pdf",
+              "path": "files/committees/database-2-committees.pdf",
+              "ext": "pdf",
+              "size": 1539657,
+              "youtube": "",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "Database",
+                "pdf",
+                "توزيع",
+                "لجان",
+                "قواعد",
+                "بيانات",
+                "الثلاثاء",
+                "نظم",
+                "معلومات",
+                "البيانات",
+                "committees"
               ]
             }
           ]
@@ -3993,6 +3941,41 @@ window.__SITE_DATA__ = {
                 "Bank",
                 "Youssef",
                 "Nageh"
+              ]
+            },
+            {
+              "id": "information-theory-committees",
+              "title": "توزيع لجان نظرية المعلومات",
+              "original": "الاثنين - نظم معلومات - نظرية المعلومات.pdf",
+              "path": "files/committees/information-theory-committees.pdf",
+              "ext": "pdf",
+              "size": 1487470,
+              "youtube": "",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "Information Theory",
+                "information-theory",
+                "pdf",
+                "توزيع",
+                "لجان",
+                "نظرية",
+                "المعلومات",
+                "الاثنين",
+                "نظم",
+                "معلومات",
+                "information",
+                "theory",
+                "committees"
               ]
             }
           ]
