@@ -642,6 +642,58 @@ function setYouTubeInRepo(relPath, youtubeUrl) {
   return { title, youtubeUrl, touchedSections, commit };
 }
 
+function getSubjectYouTubeLinks(repoDir, subject) {
+  const schedulePath = path.join(repoDir, "data", "schedule.json");
+  let links = [];
+  if (fs.existsSync(schedulePath)) {
+    const schedule = JSON.parse(fs.readFileSync(schedulePath, "utf8"));
+    const meta = schedule?.coursesMeta?.[subject.id];
+    if (Array.isArray(meta?.youtubeLinks)) {
+      links = meta.youtubeLinks.filter((l) => l && l.url);
+    } else if (meta?.youtube) {
+      links = [{ url: meta.youtube, title: meta.youtubeTitle || "شرح المادة" }];
+    }
+  }
+  if (!links.length && subject.youtube) {
+    links = [{ url: subject.youtube, title: "شرح المادة" }];
+  }
+  return links;
+}
+
+function setSubjectYouTubeInRepo(subjectId, youtubeUrl, linkTitle = "شرح المادة") {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const subject = manifest.subjects.find((s) => s.id === subjectId);
+  if (!subject) throw new Error(`Unknown subject: ${subjectId}`);
+
+  const schedulePath = path.join(repoDir, "data", "schedule.json");
+  if (fs.existsSync(schedulePath)) {
+    const schedule = JSON.parse(fs.readFileSync(schedulePath, "utf8"));
+    const meta = schedule?.coursesMeta?.[subjectId];
+    if (meta) {
+      if (!youtubeUrl) {
+        delete meta.youtube;
+        delete meta.youtubeTitle;
+        meta.youtubeLinks = [];
+      } else {
+        if (!Array.isArray(meta.youtubeLinks)) meta.youtubeLinks = [];
+        const existingIdx = meta.youtubeLinks.findIndex((l) => l && l.url === youtubeUrl);
+        if (existingIdx >= 0) {
+          meta.youtubeLinks[existingIdx].title = linkTitle || "شرح المادة";
+        } else {
+          meta.youtubeLinks.push({ url: youtubeUrl, title: linkTitle || "شرح المادة" });
+        }
+      }
+      fs.writeFileSync(schedulePath, JSON.stringify(schedule, null, 2) + "\n", "utf8");
+    }
+  }
+
+  subject.youtube = youtubeUrl || "";
+  const action = youtubeUrl ? `Add YouTube link to ${subject.nameAr || subject.id}` : `Clear YouTube links for ${subject.nameAr || subject.id}`;
+  const { commit } = commitAndPush(repoDir, manifest, action);
+  return { subjectName: subject.nameAr || subject.name, youtubeUrl, linkTitle, commit };
+}
+
 function setInfoInRepo(relPath, infoText) {
   const repoDir = ensureRepo();
   const manifest = readManifest(repoDir);
@@ -1289,7 +1341,25 @@ async function handleMessage(msg) {
     return;
   }
 
-  if (parsed && ["files", "rename", "youtube", "info", "label", "move", "delete"].includes(parsed.cmd)) {
+  if (parsed?.cmd === "youtube") {
+    const repoDir = ensureRepo();
+    const manifest = readManifest(repoDir);
+    const subjects = (manifest.subjects || []).filter((s) => s.id !== "midterm-revision");
+    pending.set(chatId, {
+      flow: "subj_yt",
+      step: "subj_yt_pick",
+      subjects,
+    });
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: "🎥 <b>Subject YouTube Links</b>\n\nChoose a subject to add or clear its YouTube link:",
+      parse_mode: "HTML",
+      reply_markup: pickSubjectKeyboard(subjects, "subj_yt:subj"),
+    });
+    return;
+  }
+
+  if (parsed && ["files", "rename", "info", "label", "move", "delete"].includes(parsed.cmd)) {
     await startPickerOrSearch(chatId, parsed.cmd, parsed.arg);
     return;
   }
@@ -1435,6 +1505,67 @@ async function handleMessage(msg) {
     return;
   }
 
+  if (job.step === "subj_yt_url" && job.ytSubject) {
+    const isClear = text.toLowerCase() === "clear";
+    if (isClear) {
+      pending.delete(chatId);
+      await tg("sendMessage", { chat_id: chatId, text: "⏳ Clearing subject YouTube links and pushing..." });
+      const res = setSubjectYouTubeInRepo(job.ytSubject.id, "", "");
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `✅ <b>YouTube Links Cleared!</b>\n` +
+          `• Subject: ${escapeHtml(res.subjectName)}\n` +
+          `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+        parse_mode: "HTML",
+        reply_markup: START_KEYBOARD,
+      });
+      return;
+    }
+    if (!isValidYouTubeUrl(text)) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "⚠️ Please send a valid YouTube URL (youtube.com or youtu.be), or send <code>clear</code>.",
+        parse_mode: "HTML",
+      });
+      return;
+    }
+    job.ytUrl = text;
+    job.step = "subj_yt_title";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `Send a title for this link (e.g. "مراجعة الميدترم"), or tap below to use <b>"شرح المادة"</b>:`,
+      parse_mode: "HTML",
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '✅ Use "شرح المادة"', callback_data: "subj_yt:default_title" }],
+          [{ text: "❌ Cancel", callback_data: "cancel" }],
+        ],
+      },
+    });
+    return;
+  }
+
+  if (job.step === "subj_yt_title" && job.ytSubject && job.ytUrl) {
+    const subjectId = job.ytSubject.id;
+    const ytUrl = job.ytUrl;
+    pending.delete(chatId);
+    await tg("sendMessage", { chat_id: chatId, text: "⏳ Adding YouTube link to subject card and pushing..." });
+    const res = setSubjectYouTubeInRepo(subjectId, ytUrl, text);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>Subject YouTube Link Added!</b>\n` +
+        `• Subject: ${escapeHtml(res.subjectName)}\n` +
+        `• Title: ${escapeHtml(res.linkTitle)}\n` +
+        `• Link: ${escapeHtml(res.youtubeUrl)}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
+  }
+
   if (job.step === "youtube_input" && job.pickTarget) {
     const isClear = text.toLowerCase() === "clear";
     if (!isClear && !isValidYouTubeUrl(text)) {
@@ -1512,6 +1643,51 @@ async function handleCallback(cb) {
   if (!job) {
     await tg("sendMessage", { chat_id: chatId, text: "Session expired. Please start again." });
     return;
+  }
+
+  if (data.startsWith("subj_yt:")) {
+    if (data === "subj_yt:default_title" && job.ytSubject && job.ytUrl) {
+      const subjectId = job.ytSubject.id;
+      const ytUrl = job.ytUrl;
+      pending.delete(chatId);
+      await tg("sendMessage", { chat_id: chatId, text: "⏳ Adding YouTube link to subject card and pushing..." });
+      const res = setSubjectYouTubeInRepo(subjectId, ytUrl, "شرح المادة");
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `✅ <b>Subject YouTube Link Added!</b>\n` +
+          `• Subject: ${escapeHtml(res.subjectName)}\n` +
+          `• Title: ${escapeHtml(res.linkTitle)}\n` +
+          `• Link: ${escapeHtml(res.youtubeUrl)}\n` +
+          `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+        parse_mode: "HTML",
+        reply_markup: START_KEYBOARD,
+      });
+      return;
+    }
+
+    if (data.startsWith("subj_yt:subj:")) {
+      const idx = Number.parseInt(data.slice("subj_yt:subj:".length), 10);
+      const subj = job.subjects?.[idx];
+      if (!subj) return;
+      const repoDir = ensureRepo();
+      const links = getSubjectYouTubeLinks(repoDir, subj);
+      job.ytSubject = subj;
+      job.step = "subj_yt_url";
+      const currentText = links.length
+        ? links.map((l, i) => `${i + 1}. ${escapeHtml(l.title)}: <code>${escapeHtml(l.url)}</code>`).join("\n")
+        : "<i>none</i>";
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `🎥 <b>${escapeHtml(subj.nameAr || subj.name)}</b>\n` +
+          `Current links:\n${currentText}\n\n` +
+          `Send a YouTube URL to add it to the subject info card, or send <code>clear</code> to remove all:`,
+        parse_mode: "HTML",
+        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+      });
+      return;
+    }
   }
 
   if (data.startsWith("pick:")) {
