@@ -554,7 +554,7 @@
     container.innerHTML =
       '<div class="feature-page quiz-page">' +
       '<div class="feature-hero" style="--accent:' +
-      (subject ? subject.accent : "#2563eb") +
+      (subject ? subject.accent : "#4e8d9c") +
       '">' +
       '<span class="eyebrow">' +
       ICONS.question +
@@ -588,7 +588,7 @@
 
   function subjectAccent(subjectId) {
     var subject = subjectById(subjectId);
-    return subject ? subject.accent : "#dc2626";
+    return subject ? subject.accent : "#c85f6b";
   }
 
   function optionText(question, index) {
@@ -930,7 +930,7 @@
     var isEmpty = !viewEntries.length;
     container.innerHTML =
       '<div class="feature-page quiz-page">' +
-      '<div class="feature-hero" style="--accent:#dc2626">' +
+      '<div class="feature-hero" style="--accent:#b84a42">' +
       '<span class="eyebrow">' +
       ICONS.bolt +
       " بنك أخطائي</span>" +
@@ -1231,7 +1231,7 @@
     container.innerHTML =
       '<div class="feature-page quiz-page">' +
       '<div class="quiz-exam" style="--accent:' +
-      (subject ? subject.accent : "#2563eb") +
+      (subject ? subject.accent : "#4e8d9c") +
       '">' +
       toast +
       examHeader(session, question, total) +

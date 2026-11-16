@@ -7,7 +7,7 @@ window.__SITE_DATA__ = {
       "id": "computer-networks",
       "name": "Computer Networks",
       "nameAr": "شبكات الحاسب",
-      "accent": "#2563eb",
+      "accent": "#4e8d9c",
       "icon": "lan",
       "youtube": "",
       "sections": [
@@ -694,7 +694,7 @@ window.__SITE_DATA__ = {
       "id": "database-2",
       "name": "Database II",
       "nameAr": "قواعد البيانات",
-      "accent": "#7c3aed",
+      "accent": "#5c4d9a",
       "icon": "database",
       "youtube": "",
       "sections": [
@@ -1455,7 +1455,7 @@ window.__SITE_DATA__ = {
       "id": "information-theory",
       "name": "Information Theory",
       "nameAr": "نظرية المعلومات",
-      "accent": "#0891b2",
+      "accent": "#5a8f7b",
       "icon": "insights",
       "youtube": "",
       "sections": [
@@ -2006,7 +2006,7 @@ window.__SITE_DATA__ = {
       "id": "research-methods",
       "name": "Research Methods",
       "nameAr": "مناهج البحث",
-      "accent": "#059669",
+      "accent": "#6f9e7e",
       "icon": "science",
       "youtube": "",
       "sections": [
@@ -2621,7 +2621,7 @@ window.__SITE_DATA__ = {
       "id": "system-analysis",
       "name": "System Analysis",
       "nameAr": "تحليل النظم",
-      "accent": "#d97706",
+      "accent": "#a67c52",
       "icon": "schema",
       "youtube": "",
       "sections": [
@@ -3517,7 +3517,7 @@ window.__SITE_DATA__ = {
       "id": "midterm-revision",
       "name": "Midterm Revision",
       "nameAr": "مراجعة الميد",
-      "accent": "#dc2626",
+      "accent": "#c85f6b",
       "icon": "bolt",
       "youtube": "",
       "sections": [

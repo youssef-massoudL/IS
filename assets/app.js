@@ -685,7 +685,7 @@ function themeInit() {
 
 function applyThemeMeta() {
   const dark = document.documentElement.dataset.theme === "dark";
-  $('meta[name="theme-color"]').setAttribute("content", dark ? "#0b0e13" : "#f4f6f9");
+  $('meta[name="theme-color"]').setAttribute("content", dark ? "#13111c" : "#f5f3ec");
 }
 
 $("#theme-toggle").addEventListener("click", () => {
@@ -963,7 +963,7 @@ function buildNotifications() {
     const targetDay = new Date(startAt.getFullYear(), startAt.getMonth(), startAt.getDate());
     const days = Math.round((targetDay - today) / 86400000);
     const subject = subjectById(midterm.subjectId);
-    const accent = subject?.accent || "#2563eb";
+    const accent = subject?.accent || "#4e8d9c";
     const revisionHref = `#${midterm.subjectId}/midterm-revision`;
 
     if (days === 0 && endAt >= now) {
@@ -1046,7 +1046,7 @@ function buildNotifications() {
       meta: `${entry.subject.nameAr} · ${entry.section.name} · ${formatRelativeTimeAr(entry.file.addedAt)}`,
       href: `#${entry.subject.id}/${entry.section.id}/${entry.file.id}`,
       ctaLabel: "فتح الملف",
-      accent: entry.subject.accent || "#2563eb",
+      accent: entry.subject.accent || "#4e8d9c",
     });
   }
 
@@ -1204,7 +1204,7 @@ function renderSmartStrip() {
           const range = eventPeriodRange(entry);
           const subject = subjectById(entry.subjectId);
           return `<div class="today-event">
-            <span class="today-dot" style="background:${esc(subject?.accent || "#2563eb")}"></span>
+            <span class="today-dot" style="background:${esc(subject?.accent || "#4e8d9c")}"></span>
             <span class="today-time" dir="ltr">${esc(range.label)}</span>
             <div class="today-main">
               <span class="today-title">${esc(entry.title)}</span>
@@ -2039,7 +2039,7 @@ function scheduleEventCard(entry, showSectionLabel) {
   if (entry.sectionBadge === "مشترك") badges.push('<span class="tt-badge shared">مشترك</span>');
   else if (showSectionLabel && entry.sectionBadge)
     badges.push(`<span class="tt-badge">${esc(entry.sectionBadge)}</span>`);
-  return `<div class="tt-event" style="--accent:${esc(subject?.accent || "#2563eb")}">
+  return `<div class="tt-event" style="--accent:${esc(subject?.accent || "#4e8d9c")}">
     <span class="tt-time" dir="ltr">${esc(range.label)}</span>
     <span class="tt-title">${esc(entry.title)}</span>
     <span class="tt-meta">${esc(entry.room || "")}${entry.instructor ? ` · ${esc(entry.instructor)}` : ""}</span>
@@ -2154,7 +2154,7 @@ function renderSchedule() {
       <p>المحاضرات المشتركة تظهر تلقائيًا حسب السكشن المختار.</p>
       <div class="week-grid">${week}</div>
     </section>
-    <div class="feature-hero schedule-hero" style="--accent:#0f766e">
+    <div class="feature-hero schedule-hero" style="--accent:#4e8d9c">
       <span class="eyebrow">${ICONS.calendar} الجدول الدراسي والميدترم</span>
       <h2>${withLtrYears(schedule.term)}</h2>
       <p class="feature-sub">${esc(schedule.faculty)} · ${esc(schedule.department)}</p>
@@ -2237,7 +2237,7 @@ function renderPractice() {
     )
     .join("");
   viewEl.innerHTML = `<div class="feature-page">
-    <div class="feature-hero" style="--accent:${subject?.accent || "#2563eb"}">
+    <div class="feature-hero" style="--accent:${subject?.accent || "#4e8d9c"}">
       <span class="eyebrow">${ICONS.question} بنك الأسئلة والامتحانات التفاعلية</span>
       <h2>اختبر نفسك — ${esc(title)}</h2>
       <p class="feature-sub">محرك الامتحانات التفاعلي قيد التجهيز. سيتم تفعيل وضع التدريب الفوري ومحاكاة الميدترم وبنك الأخطاء قريبًا.</p>
@@ -2257,7 +2257,7 @@ function renderMistakes() {
     return;
   }
   viewEl.innerHTML = `<div class="feature-page">
-    <div class="feature-hero" style="--accent:#dc2626">
+    <div class="feature-hero" style="--accent:#c85f6b">
       <span class="eyebrow">${ICONS.question} بنك أخطائي</span>
       <h2>امتحن في أخطائك فقط</h2>
       <p class="feature-sub">سيتم تسجيل كل سؤال تخطئ فيه هنا مع تكرار الخطأ، ثم يُستبعد بعد الإجابة الصحيحة مرتين.</p>
