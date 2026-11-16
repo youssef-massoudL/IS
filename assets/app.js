@@ -17,6 +17,7 @@ const ICONS = {
   folderDown: '<svg viewBox="0 0 24 24" fill="none"><path d="M3.5 7.5A1.5 1.5 0 0 1 5 6h4l2 2.5h8A1.5 1.5 0 0 1 20.5 10v1" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12.5v5m0 0 2.5-2.5M12 17.5 9.5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.5 18.5V21h-17v-2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
   eye: '<svg viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg>',
   play: '<svg viewBox="0 0 24 24" fill="none"><path d="M9.5 7.6v8.8l7-4.4-7-4.4Z" fill="currentColor"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/></svg>',
+  youtube: '<svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 9.2v5.6l5-2.8-5-2.8Z" fill="currentColor"/></svg>',
   external: '<svg viewBox="0 0 24 24" fill="none"><path d="M14 4h6v6M20 4l-8.5 8.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 14.5V19a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V7.5A1.5 1.5 0 0 1 5 6h4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
   file: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 2.5h8L19 7.5v14H6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 2.5v5h5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
   search: '<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
@@ -1644,68 +1645,86 @@ function collectYouTubeLinks(meta, subject) {
   return links;
 }
 
-function youtubeBlockMarkup(meta, subject) {
-  const links = collectYouTubeLinks(meta, subject);
-  if (!links.length) return "";
-  const rows = links
-    .map((link) => {
-      const parsed = parseYouTubeUrl(link.url);
-      const chapters = link.chapters
-        .map(
-          (chapter) =>
-            `<a class="yt-chapter-chip" href="${esc(buildYouTubeTimestampUrl(link.url, chapter.t))}" target="_blank" rel="noopener">▶ ${esc(formatYouTubeTimestamp(chapter.t))} · ${esc(chapter.label)}</a>`,
-        )
-        .join("");
-      return `<div class="ci-youtube-row">
-        <span class="yt-link-title">${esc(link.title)}</span>
-        <div class="yt-link-actions">
-          <a class="btn btn-sm yt-btn" href="${esc(link.url)}" target="_blank" rel="noopener">${ICONS.play}<span>مشاهدة على يوتيوب</span></a>
-          ${
-            parsed
-              ? `<button class="btn btn-sm yt-embed-btn" type="button" data-yt-embed="${esc(parsed.videoId)}" data-yt-start="${parsed.startSeconds}" data-yt-title="${esc(link.title)}">${ICONS.play}<span>تشغيل هنا</span></button>`
-              : ""
-          }
-        </div>
-        ${chapters ? `<div class="yt-chapters">${chapters}</div>` : ""}
-      </div>`;
-    })
-    .join("");
-  return `<div class="ci-item ci-youtube">
-      <span class="ci-label">شروحات يوتيوب</span>
-      <div class="ci-youtube-links">${rows}</div>
-    </div>`;
-}
-
-function externalLinksBlockMarkup(meta) {
-  const links = Array.isArray(meta?.links)
+function renderSubjectLinksBox(subject) {
+  const meta = state.schedule?.coursesMeta?.[subject.id];
+  const ytLinks = collectYouTubeLinks(meta, subject);
+  const extLinks = Array.isArray(meta?.links)
     ? meta.links.filter((l) => l && /^https?:\/\//i.test(String(l.url || "").trim()))
     : [];
-  if (!links.length) return "";
-  const items = links
-    .map(
-      (link) =>
-        `<a class="btn btn-sm ext-link-btn" href="${esc(String(link.url).trim())}" target="_blank" rel="noopener">${ICONS.external}<span>${esc(String(link.title || "").trim() || "فتح الرابط")}</span></a>`,
-    )
-    .join("");
-  return `<div class="ci-item ci-youtube ci-links">
-      <span class="ci-label">روابط المادة</span>
-      <div class="ci-links-list">${items}</div>
-    </div>`;
+  if (!ytLinks.length && !extLinks.length) return "";
+
+  const ytCol = ytLinks.length
+    ? `<div class="slb-col">
+        <span class="ci-label">شرح المادة</span>
+        <div class="slb-items">
+          ${ytLinks
+            .map((link) => {
+              const parsed = parseYouTubeUrl(link.url);
+              const chapters = link.chapters
+                .map(
+                  (chapter) =>
+                    `<a class="yt-chapter-chip" href="${esc(buildYouTubeTimestampUrl(link.url, chapter.t))}" target="_blank" rel="noopener">▶ ${esc(formatYouTubeTimestamp(chapter.t))} · ${esc(chapter.label)}</a>`,
+                )
+                .join("");
+              return `<div class="slb-row">
+                <span class="slb-title">${esc(link.title)}</span>
+                <div class="slb-btns">
+                  <a class="circle-icon-btn yt-circle" href="${esc(link.url)}" target="_blank" rel="noopener" title="مشاهدة على يوتيوب — ${esc(link.title)}" aria-label="مشاهدة على يوتيوب">${ICONS.youtube}</a>
+                  ${
+                    parsed
+                      ? `<button class="circle-icon-btn play-circle" type="button" data-yt-embed="${esc(parsed.videoId)}" data-yt-start="${parsed.startSeconds}" data-yt-title="${esc(link.title)}" title="تشغيل هنا — ${esc(link.title)}" aria-label="تشغيل هنا">${ICONS.play}</button>`
+                      : ""
+                  }
+                </div>
+                ${chapters ? `<div class="yt-chapters">${chapters}</div>` : ""}
+              </div>`;
+            })
+            .join("")}
+        </div>
+      </div>`
+    : "";
+
+  const extCol = extLinks.length
+    ? `<div class="slb-col">
+        <span class="ci-label">روابط المادة</span>
+        <div class="slb-items">
+          ${extLinks
+            .map((link) => {
+              const title = String(link.title || "").trim() || "فتح الرابط";
+              const url = String(link.url).trim();
+              return `<div class="slb-row">
+                <span class="slb-title">${esc(title)}</span>
+                <div class="slb-btns">
+                  <a class="circle-icon-btn ext-circle" href="${esc(url)}" target="_blank" rel="noopener" title="${esc(title)}" aria-label="${esc(title)}">${ICONS.external}</a>
+                </div>
+              </div>`;
+            })
+            .join("")}
+        </div>
+      </div>`
+    : "";
+
+  return `<div class="subject-links-box" style="--accent:${subject.accent}">${ytCol}${extCol}</div>`;
 }
 
 function renderCourseInfo(subject) {
   const meta = state.schedule?.coursesMeta?.[subject.id];
   if (!meta) return "";
   const instructors = sectionInstructors(subject.id);
-  return `<div class="course-info" id="sec-course-info" data-spy-section="course-info" data-spy-label="معلومات المادة" style="--accent:${subject.accent}">
-    <div class="ci-item"><span class="ci-label">الدكتور</span><strong>${esc((meta.doctors || []).join("، ") || "غير محدد")}</strong></div>
-    <div class="ci-item"><span class="ci-label">معيد سكشنك (${esc(state.section)})</span><strong>${esc(instructors || "غير محدد")}</strong></div>
-    <div class="ci-item"><span class="ci-label">درجة الميدترم</span><strong>${esc(meta.midtermMarks || "غير محدد")}</strong></div>
-    <div class="ci-item"><span class="ci-label">نطاق الميدترم</span><strong>${esc(meta.midtermScopeText || "غير محدد")}</strong></div>
-    <a class="btn btn-sm ci-action" href="#practice/${esc(subject.id)}">${ICONS.question}<span>اختبر نفسك في المادة</span></a>
-    ${youtubeBlockMarkup(meta, subject)}
-    ${externalLinksBlockMarkup(meta)}
-  </div>`;
+  return `<details class="course-info-card" id="sec-course-info" data-spy-section="course-info" data-spy-label="معلومات المادة" style="--accent:${subject.accent}">
+    <summary class="course-info-summary">
+      <span class="ci-summary-title">معلومات المادة — ${esc(subject.nameAr)}</span>
+      <span class="ci-summary-en" dir="ltr">${esc(subject.name)}</span>
+      <span class="ci-summary-chevron" aria-hidden="true">▾</span>
+    </summary>
+    <div class="course-info">
+      <div class="ci-item"><span class="ci-label">الدكتور</span><strong>${esc((meta.doctors || []).join("، ") || "غير محدد")}</strong></div>
+      <div class="ci-item"><span class="ci-label">معيد سكشنك (${esc(state.section)})</span><strong>${esc(instructors || "غير محدد")}</strong></div>
+      <div class="ci-item"><span class="ci-label">درجة الميدترم</span><strong>${esc(meta.midtermMarks || "غير محدد")}</strong></div>
+      <div class="ci-item"><span class="ci-label">نطاق الميدترم</span><strong>${esc(meta.midtermScopeText || "غير محدد")}</strong></div>
+      <a class="btn btn-sm ci-action" href="#practice/${esc(subject.id)}">${ICONS.question}<span>اختبر نفسك في المادة</span></a>
+    </div>
+  </details>`;
 }
 
 function renderReviewBlock(subject, files) {
@@ -1950,10 +1969,6 @@ function renderMidtermKanban(subject) {
 }
 
 function renderSubject(subject) {
-  const yt = subject.youtube
-    ? `<a class="btn yt-btn" href="${esc(subject.youtube)}" target="_blank" rel="noopener">
-        ${ICONS.play}<span>قائمة المحاضرات</span></a>`
-    : "";
   const supportsMatrix = subject.id !== "midterm-revision";
   const useMatrix = supportsMatrix && state.viewMode !== "classic";
   const toggle = supportsMatrix
@@ -1978,11 +1993,11 @@ function renderSubject(subject) {
         <h2>${esc(subject.nameAr)}</h2>
       </div>
       <div class="subject-actions">
-        ${yt}
         <a class="btn" href="downloads/${subject.id}.zip" download>${ICONS.download}<span>تحميل المادة</span></a>
       </div>
     </div>
     ${renderCourseInfo(subject)}
+    ${renderSubjectLinksBox(subject)}
     ${toggle}
     ${bookmarksSlotMarkup(subject)}
     ${body}

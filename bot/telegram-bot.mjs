@@ -738,7 +738,7 @@ function addSubjectLinkInRepo(subjectId, url, title = "فتح الرابط") {
   return { subjectName: subject.nameAr || subject.name, url, title: cleanTitle, total: meta.links.length, commit };
 }
 
-function removeSubjectLinkInRepo(subjectId, removeIdx) {
+function removeSubjectLinkInRepo(subjectId, kind, removeIdx) {
   const repoDir = ensureRepo();
   const manifest = readManifest(repoDir);
   const subject = manifest.subjects.find((s) => s.id === subjectId);
@@ -748,21 +748,34 @@ function removeSubjectLinkInRepo(subjectId, removeIdx) {
   if (!fs.existsSync(schedulePath)) throw new Error("data/schedule.json not found");
   const schedule = JSON.parse(fs.readFileSync(schedulePath, "utf8"));
   const meta = schedule?.coursesMeta?.[subjectId];
-  if (!meta || !Array.isArray(meta.links) || meta.links.length === 0) {
-    throw new Error("No links to remove for this subject.");
-  }
+  if (!meta) throw new Error("Subject metadata not found.");
 
   let removedLabel = "all links";
-  if (removeIdx === -1) {
+  if (kind === "all") {
     meta.links = [];
+    meta.youtubeLinks = [];
+    delete meta.youtube;
+    delete meta.youtubeTitle;
+    subject.youtube = "";
+  } else if (kind === "yt") {
+    if (!Array.isArray(meta.youtubeLinks) || !meta.youtubeLinks[removeIdx]) {
+      throw new Error("YouTube link not found.");
+    }
+    const removed = meta.youtubeLinks.splice(removeIdx, 1)[0];
+    removedLabel = removed?.title || removed?.url || "YouTube link";
+    subject.youtube = meta.youtubeLinks[0]?.url || "";
   } else {
+    if (!Array.isArray(meta.links) || !meta.links[removeIdx]) {
+      throw new Error("Link not found.");
+    }
     const removed = meta.links.splice(removeIdx, 1)[0];
     removedLabel = removed?.title || removed?.url || "link";
   }
   fs.writeFileSync(schedulePath, JSON.stringify(schedule, null, 2) + "\n", "utf8");
 
+  const remaining = (Array.isArray(meta.links) ? meta.links.length : 0) + (Array.isArray(meta.youtubeLinks) ? meta.youtubeLinks.length : 0);
   const { commit } = commitAndPush(repoDir, manifest, `Remove link (${removedLabel}) from ${subject.nameAr || subjectId}`);
-  return { subjectName: subject.nameAr || subject.name, removedLabel, remaining: meta.links.length, commit };
+  return { subjectName: subject.nameAr || subject.name, removedLabel, remaining, commit };
 }
 
 function setInfoInRepo(relPath, infoText) {
@@ -1786,31 +1799,58 @@ async function handleCallback(cb) {
       const subj = job.subjects?.[idx];
       if (!subj) return;
       const repoDir = ensureRepo();
-      const links = getSubjectExternalLinks(repoDir, subj.id);
+      const ytLinks = getSubjectYouTubeLinks(repoDir, subj);
+      const extLinks = getSubjectExternalLinks(repoDir, subj.id);
       job.linkSubject = subj;
-      job.currentLinks = links;
-      const currentText = links.length
-        ? links.map((l, i) => `${i + 1}. <b>${escapeHtml(l.title)}</b>\n   <code>${escapeHtml(l.url)}</code>`).join("\n")
-        : "<i>none</i>";
-      const rows = [[{ text: "➕ Add Link", callback_data: "subj_link:add" }]];
-      if (links.length > 0) {
+      job.currentYtLinks = ytLinks;
+      job.currentLinks = extLinks;
+
+      const ytText = ytLinks.length
+        ? ytLinks.map((l, i) => `  ${i + 1}. 🎥 <b>${escapeHtml(l.title)}</b>\n     <code>${escapeHtml(l.url)}</code>`).join("\n")
+        : "  <i>none</i>";
+      const extText = extLinks.length
+        ? extLinks.map((l, i) => `  ${i + 1}. 🔗 <b>${escapeHtml(l.title)}</b>\n     <code>${escapeHtml(l.url)}</code>`).join("\n")
+        : "  <i>none</i>";
+
+      const rows = [
+        [
+          { text: "🎥 Add YouTube Link", callback_data: "subj_link:add_yt" },
+          { text: "🔗 Add Other Link", callback_data: "subj_link:add_ext" },
+        ],
+      ];
+      if (ytLinks.length + extLinks.length > 0) {
         rows.push([{ text: "🗑 Remove a Link", callback_data: "subj_link:rm_menu" }]);
       }
       rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
       await tg("sendMessage", {
         chat_id: chatId,
-        text: `🔗 <b>${escapeHtml(subj.nameAr || subj.name)}</b>\n\nCurrent links:\n${currentText}`,
+        text:
+          `🔗 <b>${escapeHtml(subj.nameAr || subj.name)}</b>\n\n` +
+          `<b>شرح المادة (YouTube):</b>\n${ytText}\n\n` +
+          `<b>روابط المادة (Other):</b>\n${extText}`,
         parse_mode: "HTML",
         reply_markup: { inline_keyboard: rows },
       });
       return;
     }
 
-    if (data === "subj_link:add" && job.linkSubject) {
+    if (data === "subj_link:add_yt" && job.linkSubject) {
+      job.ytSubject = job.linkSubject;
+      job.step = "subj_yt_url";
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: `🎥 Send the <b>YouTube URL</b> to add to <b>${escapeHtml(job.linkSubject.nameAr || job.linkSubject.name)}</b>:`,
+        parse_mode: "HTML",
+        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+      });
+      return;
+    }
+
+    if (data === "subj_link:add_ext" && job.linkSubject) {
       job.step = "subj_link_url";
       await tg("sendMessage", {
         chat_id: chatId,
-        text: `Send the URL (SharePoint, Drive, etc.) to add to <b>${escapeHtml(job.linkSubject.nameAr || job.linkSubject.name)}</b>:`,
+        text: `🔗 Send the <b>URL</b> (SharePoint, Drive, etc.) to add to <b>${escapeHtml(job.linkSubject.nameAr || job.linkSubject.name)}</b>:`,
         parse_mode: "HTML",
         reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
       });
@@ -1837,11 +1877,19 @@ async function handleCallback(cb) {
       return;
     }
 
-    if (data === "subj_link:rm_menu" && job.linkSubject && Array.isArray(job.currentLinks)) {
-      const rows = job.currentLinks.map((l, idx) => {
-        const label = `🗑 ${l.title || l.url}`;
+    if (data === "subj_link:rm_menu" && job.linkSubject) {
+      const ytList = Array.isArray(job.currentYtLinks) ? job.currentYtLinks : [];
+      const extList = Array.isArray(job.currentLinks) ? job.currentLinks : [];
+      const rows = [];
+      ytList.forEach((l, idx) => {
+        const label = `🎥 ${l.title || l.url}`;
         const short = label.length > 42 ? label.slice(0, 39) + "..." : label;
-        return [{ text: short, callback_data: `subj_link:rm:${idx}` }];
+        rows.push([{ text: short, callback_data: `subj_link:rm:yt:${idx}` }]);
+      });
+      extList.forEach((l, idx) => {
+        const label = `🔗 ${l.title || l.url}`;
+        const short = label.length > 42 ? label.slice(0, 39) + "..." : label;
+        rows.push([{ text: short, callback_data: `subj_link:rm:ext:${idx}` }]);
       });
       rows.push([{ text: "🗑 Clear ALL links", callback_data: "subj_link:rm:all" }]);
       rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
@@ -1855,12 +1903,18 @@ async function handleCallback(cb) {
     }
 
     if (data.startsWith("subj_link:rm:") && job.linkSubject) {
-      const arg = data.slice("subj_link:rm:".length);
-      const idx = arg === "all" ? -1 : Number.parseInt(arg, 10);
+      const rest = data.slice("subj_link:rm:".length);
       const subjectId = job.linkSubject.id;
+      let kind = "all";
+      let idx = -1;
+      if (rest !== "all") {
+        const [k, rawIdx] = rest.split(":");
+        kind = k;
+        idx = Number.parseInt(rawIdx, 10);
+      }
       pending.delete(chatId);
       await tg("sendMessage", { chat_id: chatId, text: "⏳ Removing link and pushing..." });
-      const res = removeSubjectLinkInRepo(subjectId, idx);
+      const res = removeSubjectLinkInRepo(subjectId, kind, idx);
       await tg("sendMessage", {
         chat_id: chatId,
         text:
