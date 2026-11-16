@@ -1198,5 +1198,4371 @@
     ],
     "answer": 1,
     "explanation": "RAD relies on prototypes, user involvement and CASE tools, and it is useful for highly interactive or complex user interfaces while reducing development time and change costs. The false claim reverses the stated trade-off: RAD stresses system mechanics rather than the company's strategic business needs."
+  },
+  {
+    "id": "sa-l1-076",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "“If you don’t know where you are going, it doesn’t matter which way you go.”",
+    "options": [
+      "Albert Einstein",
+      "Steve Jobs",
+      "Lewis Carol",
+      "Charles Dickens"
+    ],
+    "answer": 2,
+    "explanation": "The quote opens the lecture and is attributed to Lewis Carol. .Lewis Carol لـ واتنسبت المحارضة أول في دي الجملة"
+  },
+  {
+    "id": "sa-l1-077",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the key focus of planning in system analysis and design?",
+    "options": [
+      "To evaluate one fixed solution",
+      "To consider alternatives of solutions",
+      "To ignore cost factors",
+      "To focus only on design"
+    ],
+    "answer": 1,
+    "explanation": "Planning means thinking about alternative solutions and picking the best one."
+  },
+  {
+    "id": "sa-l1-078",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which factor is NOT typically considered when evaluating solution alternatives?",
+    "options": [
+      "Cost",
+      "Implementation time",
+      "Quality measures",
+      "Color scheme"
+    ],
+    "answer": 3,
+    "explanation": "Alternatives are judged by cost, timely implementation, viability and quality, not by color scheme."
+  },
+  {
+    "id": "sa-l1-079",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Information Technology is now considered as essential to life as water and air.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "The lecture says IT is now like a source of life, like water and air. .والهوا المية زي بقى IT الـ إن بتقول المحارضة"
+  },
+  {
+    "id": "sa-l1-080",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Information technology has little impact on business success or failure.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. IT can mean the difference between success and failure. .والفشل النجاح بني الفرق هو يكون ممكن IT الـ .غلط"
+  },
+  {
+    "id": "sa-l1-081",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Digital transformation is now for entertainment.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. It is no longer for entertainment; everything needs to be digitized. .ترفيه مش رضورة بقى digital transformation الـ .غلط"
+  },
+  {
+    "id": "sa-l1-082",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does Information Technology (IT) refer to?",
+    "options": [
+      "Hardware only",
+      "Software only",
+      "Hardware, software, and services",
+      "Internet and communication tools"
+    ],
+    "answer": 2,
+    "explanation": "IT covers computers, networks, storage, software and processes together, not just one part. .واحدة حاجة مش ،بعض مع والشبكات والخدمات والربامج األجهزة بيشمل IT الـ"
+  },
+  {
+    "id": "sa-l1-083",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Information technology (IT) includes only hardware used to manage and share information.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. IT includes hardware, software, networks, data management and cybersecurity. .cybersecurity و data management و networks و software و hardware فيه IT الـ .غلط"
+  },
+  {
+    "id": "sa-l1-084",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When the economy slows down, firms tend to invest less in IT, as it does not contribute to reducing operating costs.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False as written: IT helps reduce costs and improve efficiency, so it is not a pure expense. .الكفاءة وزيادة التكاليف تقليل في بيساعد IT الـ .غلط"
+  },
+  {
+    "id": "sa-l1-085",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Why is it important for companies to stay ahead of the IT curve during periods of growth?",
+    "options": [
+      "To reduce operating costs",
+      "To avoid lagging behind competitors",
+      "To increase employee satisfaction",
+      "To improve software performance"
+    ],
+    "answer": 1,
+    "explanation": "Falling behind in IT during growth puts a company behind its competitors. .المنافسني عن هتتأخر النمو وقت IT الـ في اتأخرت الرشكة لو"
+  },
+  {
+    "id": "sa-l1-086",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………. is a step by step process for developing high quality information systems.",
+    "options": [
+      "System planning",
+      "System analysis"
+    ],
+    "answer": 1,
+    "explanation": "“Systems analysis and design” is the step-by-step process; of the two options, System analysis is the answer. .System analysis اإلجابة الختيارين ومن ،systems analysis and design بتاع ده التعريف"
+  },
+  {
+    "id": "sa-l1-087",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following best describes Systems Design?",
+    "options": [
+      "Identifying customer needs",
+      "Planning a new business system or replacing an existing system",
+      "Analyzing financial statements",
+      "Conducting market research"
+    ],
+    "answer": 1,
+    "explanation": "Systems design plans a new system (or replaces one) by defining its components or modules. .مكوناته بتحديد قديم استبدال أو جديد نظام تخطيط هو design الـ"
+  },
+  {
+    "id": "sa-l1-088",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The main focus of System Analysis is to determine how the system should be designed.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. Analysis asks “What?”; Design asks “How?”. .How بيسأل اليل هو Design والـ What بيسأل Analysis الـ .غلط"
+  },
+  {
+    "id": "sa-l1-089",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "System Analysis asks the question “What?” while Systems Design asks the question “How?”.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "Correct: analysis = what is needed, design = how to build it."
+  },
+  {
+    "id": "sa-l1-090",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the primary role of a systems analyst in an IT department?",
+    "options": [
+      "To manage the hardware infrastructure",
+      "To oversee network security",
+      "To plan, develop, and maintain information systems",
+      "To provide technical support to users"
+    ],
+    "answer": 2,
+    "explanation": "A systems analyst helps plan, develop and maintain information systems. .information systems الـ وصيانة وتطوير تخطيط في بيساعد analyst الـ"
+  },
+  {
+    "id": "sa-l1-091",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following skills is essential for a systems analyst?",
+    "options": [
+      "Programming skills only",
+      "Strong analytical and critical thinking skills",
+      "Graphic design skills",
+      "Hardware troubleshooting skills"
+    ],
+    "answer": 1,
+    "explanation": "Analysts must be excellent communicators with strong analytical and critical thinking skills."
+  },
+  {
+    "id": "sa-l1-092",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Why is communication important for a systems analyst?",
+    "options": [
+      "To sell software products",
+      "To effectively work with team members and stakeholders",
+      "To conduct training sessions",
+      "To write code"
+    ],
+    "answer": 1,
+    "explanation": "Analysts work with people at all levels, so communication is essential. .أسايس فالتواصل المستويات كل في ناس مع بيشتغل analyst الـ"
+  },
+  {
+    "id": "sa-l1-093",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is a system?",
+    "options": [
+      "A collection of unrelated components",
+      "A set of related components that produces specific results",
+      "An individual component performing a task",
+      "A random assortment of tools"
+    ],
+    "answer": 1,
+    "explanation": "A system is a set of related components working together to produce specific results."
+  },
+  {
+    "id": "sa-l1-094",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following best describes a mission-critical system?",
+    "options": [
+      "A system that can be easily replaced",
+      "A system that is vital to a company’s operations",
+      "A system that only functions occasionally",
+      "A system that is not important to daily tasks"
+    ],
+    "answer": 1,
+    "explanation": "Mission-critical means vital to the company’s operations. .الرشكة لتشغيل حيوي النظام يعين Mission-critical"
+  },
+  {
+    "id": "sa-l1-095",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A mission-critical system is one that is vital to a company’s operations.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True, that is its definition."
+  },
+  {
+    "id": "sa-l1-096",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which component of an information system includes end-users who interact with the system?",
+    "options": [
+      "Hardware",
+      "Software",
+      "Procedures",
+      "People"
+    ],
+    "answer": 3,
+    "explanation": "The People component includes end users and IT professionals. .IT الـ ومتخصيص النهائيني المستخدمني فيه People الـ مكون"
+  },
+  {
+    "id": "sa-l1-097",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which component of an information system includes: Hardware, Software, Procedures, All?",
+    "options": [
+      "Hardware",
+      "Software",
+      "Procedures",
+      "All"
+    ],
+    "answer": 3,
+    "explanation": "An information system consists of all of them (plus data and people) working together. .)people و data وكمان( بعض مع دول كل من مكون information system الـ"
+  },
+  {
+    "id": "sa-l1-098",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How has the internet influenced consumer behavior?",
+    "options": [
+      "Consumers are less informed about products.",
+      "Consumers rely solely on in-store shopping.",
+      "Increased access to information and comparison shopping.",
+      "Decreased demand for personalized services."
+    ],
+    "answer": 2,
+    "explanation": "The internet gives consumers more information and easy price comparison."
+  },
+  {
+    "id": "sa-l1-099",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The internet has led to a decrease in global competition among businesses.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. Online business increased global competition."
+  },
+  {
+    "id": "sa-l1-100",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does a business profile provide an overview of?",
+    "options": [
+      "Company regulations and policies",
+      "Company mission, functions, and organization",
+      "Financial statements and budgets",
+      "Employee performance and evaluations"
+    ],
+    "answer": 1,
+    "explanation": "A business profile is an overview of a company’s mission, functions and organization. .وتنظيمها ووظائفها الرشكة مهمة عىل عامة نظرة business profile الـ"
+  },
+  {
+    "id": "sa-l1-101",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is a business process defined as?",
+    "options": [
+      "A collection of random tasks performed by employees",
+      "A specific set of transactions, events, and results",
+      "A marketing strategy for new products",
+      "A summary of a company’s history"
+    ],
+    "answer": 1,
+    "explanation": "A business process is a specific set of transactions, events and results (e.g. a bank withdrawal). .البنك من السحب زي ،محددة ونتائج وأحداث معامالت مجموعة business process الـ"
+  },
+  {
+    "id": "sa-l1-102",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is true about BPMN?",
+    "options": [
+      "It uses verbal descriptions to represent processes",
+      "It includes standard shapes and symbols for representation",
+      "It is only applicable to financial processes",
+      "It is primarily used for data analysis"
+    ],
+    "answer": 1,
+    "explanation": "BPMN uses standard shapes and symbols to represent events, processes and workflows. .العمليات لتمثيل قياسية وأشكال رموز بيستخدم BPMN الـ"
+  },
+  {
+    "id": "sa-l1-103",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the main responsibility of top managers?",
+    "options": [
+      "Supervising day-to-day tasks",
+      "Providing performance feedback to employees",
+      "Developing long-range, strategic plans",
+      "Overseeing operational employees"
+    ],
+    "answer": 2,
+    "explanation": "Top managers develop long-range strategic plans defining mission and goals. .المدى طويلة السرتاتيجية الخطط بيحطوا top managers الـ"
+  },
+  {
+    "id": "sa-l1-104",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which group of managers provides direction and resources to supervisors and team leaders?",
+    "options": [
+      "Top managers",
+      "Middle managers",
+      "Supervisors",
+      "Operational employees"
+    ],
+    "answer": 1,
+    "explanation": "Middle managers give direction, resources and performance feedback to supervisors. .supervisors للـ والموارد التوجيه بي ّدوا middle managers الـ"
+  },
+  {
+    "id": "sa-l1-105",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Supervisors, often referred to as team leaders, are primarily responsible for:",
+    "options": [
+      "Defining the company’s overall mission and goals",
+      "Providing resources for strategic planning",
+      "Overseeing operational employees and day-to-day tasks"
+    ],
+    "answer": 2,
+    "explanation": "Supervisors oversee operational employees and carry out day-to-day functions. .اليومي والشغل الموظفني عىل بيرشفوا supervisors الـ"
+  },
+  {
+    "id": "sa-l1-106",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Supervisors, often called team leaders, are responsible for developing the company’s strategic plans.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. Strategic plans are made by top managers. .top managers الـ بتاعة السرتاتيجية الخطط .غلط"
+  },
+  {
+    "id": "sa-l1-107",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the main purpose of modeling in systems development?",
+    "options": [
+      "To gather customer feedback",
+      "To produce a graphical representation of a concept or process",
+      "To create marketing strategies",
+      "To reduce system costs"
+    ],
+    "answer": 1,
+    "explanation": "Modeling produces a graphical representation that developers can analyze, test and modify. .ونعدلها نحللها نقدر العملية أو للفكرة رسم بيط ّلع modeling الـ"
+  },
+  {
+    "id": "sa-l1-108",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The business model mentioned uses how many blocks to present information?",
+    "options": [
+      "5",
+      "7",
+      "9",
+      "12"
+    ],
+    "answer": 2,
+    "explanation": "The business model uses 9 blocks. .blocks 9 بيستخدم business model الـ"
+  },
+  {
+    "id": "sa-l1-109",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is a prototype in the context of system development?",
+    "options": [
+      "A final working version of an information system",
+      "An early working version of an information system",
+      "A theoretical design document",
+      "A testing tool used after system development"
+    ],
+    "answer": 1,
+    "explanation": "A prototype is an early working version of the system. .النظام من شغالة أولية نسخة prototype الـ"
+  },
+  {
+    "id": "sa-l1-110",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is a key benefit of prototyping?",
+    "options": [
+      "It provides the final system without revisions",
+      "It eliminates the need for user feedback",
+      "It allows for early testing of system concepts",
+      "It slows down the development process to ensure accuracy"
+    ],
+    "answer": 2,
+    "explanation": "Prototyping tests system concepts early and speeds up development. .التطوير وبيّرسع بدري األفكار بيخترب prototyping الـ"
+  },
+  {
+    "id": "sa-l1-111",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is NOT typically examined during prototyping?",
+    "options": [
+      "User interfaces",
+      "Output",
+      "Project budget",
+      "Input"
+    ],
+    "answer": 2,
+    "explanation": "Prototyping examines input, output and user interfaces, not the project budget. .المرشوع مزيانية مش ،UI والـ output والـ input الـ بيفحص prototyping الـ"
+  },
+  {
+    "id": "sa-l1-112",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does CASE stand for in the context of system development?",
+    "options": [
+      "Computer Aided Software Engineering",
+      "Computer Automated System Engineering",
+      "Customer Application System Engineering",
+      "Computer Aided System Evaluation"
+    ],
+    "answer": 0,
+    "explanation": "CASE = Computer-Aided Software/Systems Engineering. The slide writes “Systems”, but option A is the closest correct one. .)Systems كاتب الساليد( األقرب هو A الختيار .الربمجيات أو للنظم Computer-Aided Engineering يعين CASE"
+  },
+  {
+    "id": "sa-l1-113",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is a primary use of CASE tools?",
+    "options": [
+      "To assist in hardware development",
+      "To manage project finances",
+      "To help systems analysts develop and maintain information systems",
+      "To design marketing campaigns"
+    ],
+    "answer": 2,
+    "explanation": "CASE tools help analysts develop and maintain information systems. .األنظمة ويصون يط ّو ر analyst الـ بتساعد CASE الـ أدوات"
+  },
+  {
+    "id": "sa-l1-114",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is an example of a popular CASE tool?",
+    "options": [
+      "Adobe Photoshop",
+      "Microsoft Visio",
+      "Google Sheets",
+      "QuickBooks"
+    ],
+    "answer": 1,
+    "explanation": "Visual Paradigm and Microsoft Visio are the CASE tools named in the lecture. .Microsoft Visio و Visual Paradigm :المحارضة في األمثلة"
+  },
+  {
+    "id": "sa-l1-115",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… consists of everything in the physical layer of the information system.",
+    "options": [
+      "Hardware",
+      "Software",
+      "People",
+      "Procedures"
+    ],
+    "answer": 0,
+    "explanation": "Hardware is the physical layer: computers, servers, storage and network equipment. .وشبكات وتخزين وسريفرات أجهزة :الفزييائية الطبقة هو Hardware الـ"
+  },
+  {
+    "id": "sa-l1-116",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… tests system concepts and provides an opportunity to examine input, output, and user interfaces before final decisions are made.",
+    "options": [
+      "Modeling",
+      "CASE Tools",
+      "Prototype",
+      "Low fidelity"
+    ],
+    "answer": 2,
+    "explanation": "That is the lecture’s definition of prototyping. .المحارضة في prototyping الـ تعريف ده"
+  },
+  {
+    "id": "sa-l1-117",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… is many times greater. Industry observers predict that sales will increase sharply as more firms seek to improve efficiency and reduce costs.",
+    "options": [
+      "C2C",
+      "B2B",
+      "B2C",
+      "None of them"
+    ],
+    "answer": 1,
+    "explanation": "B2B (business-to-business) e-commerce is many times greater than B2C; the lecture itself does not name it, this is the standard textbook answer. .)مذكراها مش الساليد ،المقرر الكتاب من اإلجابة( B2C الـ من بكتري أكرب B2B الـ"
+  },
+  {
+    "id": "sa-l1-118",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… provide direction, necessary resources, and performance feedback to supervisors and team leaders.",
+    "options": [
+      "Top Managers",
+      "Operational",
+      "Middle Managers",
+      "Users"
+    ],
+    "answer": 2,
+    "explanation": "Middle managers give direction, resources and feedback to supervisors. .supervisors للـ feedback والـ والموارد التوجيه بي ّدوا middle managers الـ"
+  },
+  {
+    "id": "sa-l1-119",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… include users who rely on transaction processing systems to enter and receive data they need to perform their jobs.",
+    "options": [
+      "Top Managers",
+      "Operational",
+      "Middle Managers",
+      "Knowledge Workers"
+    ],
+    "answer": 1,
+    "explanation": "Operational employees are the users of transaction processing systems. .TPS الـ مستخدمني هما operational employees الـ"
+  },
+  {
+    "id": "sa-l1-120",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… develop long-range plans, called strategic plans, which define the company’s overall mission and goals.",
+    "options": [
+      "Top Managers",
+      "Operational",
+      "Middle Managers",
+      "Knowledge Workers"
+    ],
+    "answer": 0,
+    "explanation": "Top managers develop strategic plans. .السرتاتيجية الخطط بيحطوا اليل هما top managers الـ"
+  },
+  {
+    "id": "sa-l1-121",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Top Managers develop long-range plans, called ………….., which define the company’s overall mission and goals.",
+    "options": [
+      "Current plan",
+      "Business Model Canvas",
+      "Strategic plan",
+      "Routine plan"
+    ],
+    "answer": 2,
+    "explanation": "Long-range plans are called strategic plans. .strategic plans اسمها المدى طويلة الخطط"
+  },
+  {
+    "id": "sa-l2-122",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… is a traditional systems development technique that is time-tested and easy to understand.",
+    "options": [
+      "Structured analysis",
+      "Object-Oriented Analysis"
+    ],
+    "answer": 0,
+    "explanation": "Structured analysis is the traditional, time-tested technique. .المجربة التقليدية الطريقة هو structured analysis الـ"
+  },
+  {
+    "id": "sa-l2-123",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following uses a series of phases, called the systems development life cycle (SDLC), to plan, analyze, design, implement and support an information system?",
+    "options": [
+      "Structured analysis",
+      "Object-Oriented Analysis"
+    ],
+    "answer": 0,
+    "explanation": "Structured analysis uses the SDLC phases. .SDLC الـ مراحل بيستخدم اليل هو structured analysis الـ"
+  },
+  {
+    "id": "sa-l2-124",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Structured analysis is based on an overall plan, similar to a blueprint for constructing a building, so it is called a predictive approach.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. A full plan up front makes it a predictive approach. .predictive فسموه األول من كاملة خطة .صح"
+  },
+  {
+    "id": "sa-l2-125",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Structured analysis uses 2 approaches that do not emphasize interactivity among the phases:",
+    "options": [
+      "Waterfall model",
+      "Parallel model",
+      "Both of them"
+    ],
+    "answer": 2,
+    "explanation": "Both the waterfall and the parallel models lack interactivity between phases. .المراحل بني كبري تفاعل مفيهمش الت ني parallel والـ waterfall الـ"
+  },
+  {
+    "id": "sa-l2-126",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the waterfall model, the result of each phase is called a deliverable, which flows into the previous phase.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. The deliverable flows into the NEXT phase. .قبلها اليل مش بعدها اليل للمرحلة بريوح deliverable الـ .غلط"
+  },
+  {
+    "id": "sa-l2-127",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The SDLC model usually includes four steps.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. It has five: planning, analysis, design, implementation, support & security. .support & security و implementation و design و analysis و planning :مراحل 5 فيه .غلط"
+  },
+  {
+    "id": "sa-l2-128",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… begins with a formal request to the IT department, called a systems request.",
+    "options": [
+      "System Planning",
+      "System Analysis",
+      "System Design",
+      "System Implementation E. System Support & Security"
+    ],
+    "answer": 0,
+    "explanation": "System planning starts with a formal systems request. .systems request بالـ بتبدأ planning الـ مرحلة"
+  },
+  {
+    "id": "sa-l2-129",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The purpose of this phase is to perform a preliminary investigation to evaluate an IT-related business opportunity or problem.",
+    "options": [
+      "System Planning",
+      "System Analysis",
+      "System Design",
+      "System Implementation E. System Support & Security"
+    ],
+    "answer": 0,
+    "explanation": "The preliminary investigation belongs to the planning phase. .planning الـ مرحلة من جزء preliminary investigation الـ"
+  },
+  {
+    "id": "sa-l2-130",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A key part of the preliminary investigation is the “ability study” that reviews costs and benefits.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "As written it is False: the term is the feasibility study. (If your exam says “feasibility study”, the statement is True.) .صح تبقى feasibility كاتب المتحان لو .feasibility study الصح المصطلح ألن ،غلط مكتوبة هي كما"
+  },
+  {
+    "id": "sa-l2-131",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is required for building a logical model of the new system?",
+    "options": [
+      "System Planning",
+      "System Analysis",
+      "System Design",
+      "System Implementation E. System Support & Security"
+    ],
+    "answer": 1,
+    "explanation": "System analysis builds the logical model of the new system. .logical model الـ بتبين اليل هي analysis الـ مرحلة"
+  },
+  {
+    "id": "sa-l2-132",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the system analysis phase, the first step is requirements modeling, where the analyst investigates business processes.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l2-133",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The deliverable for the systems analysis phase is the …………",
+    "options": [
+      "A preliminary investigation",
+      "System requirements document"
+    ],
+    "answer": 1,
+    "explanation": "The analysis deliverable is the system requirements document. .system requirements document هو analysis الـ مخرج"
+  },
+  {
+    "id": "sa-l2-134",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In which phase do we create a physical model that satisfies all documented requirements (user interface, outputs, inputs, processes)?",
+    "options": [
+      "System Planning",
+      "System Analysis",
+      "System Design",
+      "System Implementation E. System Support & Security"
+    ],
+    "answer": 2,
+    "explanation": "System design creates the physical model. .physical model الـ بيعمل اليل هو design الـ"
+  },
+  {
+    "id": "sa-l2-135",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the system design phase, the application architecture is also determined, which programmers use to transform the logical design into program modules and code.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l2-136",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In which phase is the objective to deliver a completely functioning and documented information system (including converting data to the new system files)?",
+    "options": [
+      "System Planning",
+      "System Analysis",
+      "System Design",
+      "System Implementation E. System Support & Security"
+    ],
+    "answer": 3,
+    "explanation": "That is the goal of system implementation. .implementation الـ مرحلة هدف ده"
+  },
+  {
+    "id": "sa-l2-137",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the system implementation phase, we do systems evaluation to determine whether the system operates properly and if costs and benefits are within expectations.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l2-138",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The objective during System Support & Security is to minimize the return on the IT investment (ROI).",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. The objective is to MAXIMIZE ROI. .الستثمار عىل العائد )maximize( نع ّظ م إننا الهدف .غلط"
+  },
+  {
+    "id": "sa-l2-139",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… cuts the project down to subprojects and attempts to address the problem of long delays between the analysis phase and the delivery of the system.",
+    "options": [
+      "Waterfall model",
+      "Parallel model"
+    ],
+    "answer": 1,
+    "explanation": "The parallel model splits the project into subprojects. .subprojects لـ المرشوع بيق ّس م parallel model الـ"
+  },
+  {
+    "id": "sa-l2-140",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the parallel model, the time to deliver a system is reduced.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True, so there is less chance of business changes causing rework."
+  },
+  {
+    "id": "sa-l2-141",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The result is a set of software objects that represent actual people, things, transactions and events; a programmer then writes code that creates the objects.",
+    "options": [
+      "Structured analysis",
+      "Object-Oriented Analysis"
+    ],
+    "answer": 1,
+    "explanation": "This describes object-oriented analysis. .Object-Oriented Analysis الـ وصف ده"
+  },
+  {
+    "id": "sa-l2-142",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The object-oriented model treats processes and data as separate components.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. Structured analysis separates them; O-O combines data and processes into objects. .objects في بيجمعهم O-O والـ ،structured الـ هو بيفصلهم اليل .غلط"
+  },
+  {
+    "id": "sa-l2-143",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Object-oriented analysis combines data and the processes that act on the data into things called sprints.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. They are called objects, not sprints. .sprints مش objects اسمهم .غلط"
+  },
+  {
+    "id": "sa-l2-144",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "This concept is about how to develop with special design patterns, as the class is a blueprint and prototypes.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True, following the slide: a class is a blueprint of objects, and classes are the deliverables (inheritance is an O-O concept). .deliverables الـ هي classes والـ objects للـ blueprint هو class الـ :الساليد حسب صح"
+  },
+  {
+    "id": "sa-l2-145",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Phasing and prototyping approaches (RAD and JAD): to provide a less accurate system, companies manipulate the SDLC to create new versions of methodologies.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. The goal is a MORE accurate system. .)more accurate( أدق نظام الهدف .غلط"
+  },
+  {
+    "id": "sa-l2-146",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Phased development breaks an overall system into a series of versions that are developed concurrently.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. The versions are developed sequentially. .)sequentially( بعض ورا بتتطور النسخ .غلط"
+  },
+  {
+    "id": "sa-l2-147",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In phased development, the most important and fundamental requirements are bundled into the first version; this is a type of ………",
+    "options": [
+      "RAD development",
+      "JAD development"
+    ],
+    "answer": 0,
+    "explanation": "The lecture says it is a type of RAD development. .RAD الـ من نوع ده بتقول المحارضة"
+  },
+  {
+    "id": "sa-l2-148",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………-based methodologies attempt to address both weaknesses of structured design by getting the system developed quickly into the hands of users.",
+    "options": [
+      "RAD",
+      "JAD"
+    ],
+    "answer": 0,
+    "explanation": "RAD-based methodologies do this. .كده بيعمل اليل هو RAD الـ"
+  },
+  {
+    "id": "sa-l2-149",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "RAD-based methodologies recommend that analysts use CASE tools, JAD sessions, and fourth-generation or visual programming languages.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l2-150",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "JAD focuses on team-based fact-finding, which is only one phase of development, whereas RAD is more like a compressed version of the entire process.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l2-151",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which approach performs analysis, design and implementation concurrently and repeatedly in a cycle, starting a system prototype immediately?",
+    "options": [
+      "Phased development",
+      "Prototyping development"
+    ],
+    "answer": 1,
+    "explanation": "That is prototyping development. .prototyping development الـ ده"
+  },
+  {
+    "id": "sa-l2-152",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The result of ………… is a quick-and-dirty program that provides a minimal amount of features.",
+    "options": [
+      "Phased development",
+      "Prototyping development"
+    ],
+    "answer": 1,
+    "explanation": "A quick-and-dirty prototype is the result of prototyping. .prototyping الـ ناتج quick-and-dirty program الـ"
+  },
+  {
+    "id": "sa-l2-153",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The key advantage of a prototyping-based methodology is that it very quickly provides a system with which the users can NOT interact.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. Users CAN interact with it very quickly."
+  },
+  {
+    "id": "sa-l3-154",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does the term “business case” refer to in the context of an IT proposal?",
+    "options": [
+      "The estimated project budget",
+      "The team members involved",
+      "The reasons or justification for a proposal",
+      "The timeline for project completion"
+    ],
+    "answer": 2,
+    "explanation": "A business case is the reasons, or justification, for a proposal. .المقرتح مربرات هو business case الـ"
+  },
+  {
+    "id": "sa-l3-155",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Why must the IT team review a proposal carefully?",
+    "options": [
+      "To understand and support the company’s long-term strategic goals",
+      "To identify errors in the proposal",
+      "To determine the proposal’s timeline",
+      "To allocate resources for the proposal"
+    ],
+    "answer": 0,
+    "explanation": "The IT team must understand and support the firm’s long-term strategic goals. .المدى طويلة السرتاتيجية األهداف ويدعم يفهم الزم IT الـ فريق"
+  },
+  {
+    "id": "sa-l3-156",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the primary goal of the IT team reviewing a proposal?",
+    "options": [
+      "To verify technical specifications",
+      "To determine if it presents a strong business case",
+      "To finalize project deadlines",
+      "To approve team members for the project"
+    ],
+    "answer": 1,
+    "explanation": "The team reviews a proposal to see if it presents a strong business case. .قوي business case عنده هل يشوفوا عشان برياجعوه"
+  },
+  {
+    "id": "sa-l3-157",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the primary purpose of strategic planning?",
+    "options": [
+      "To address daily operational issues",
+      "To identify short-term tasks and goals",
+      "To determine long-term organizational goals and strategies",
+      "To manage employee performance reviews"
+    ],
+    "answer": 2,
+    "explanation": "Strategic planning identifies long-term goals, strategies and resources."
+  },
+  {
+    "id": "sa-l3-158",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does a strategic plan primarily focus on?",
+    "options": [
+      "Immediate daily activities",
+      "Short-term goals for the next month",
+      "Long-term goals, typically three, five, ten, or more years",
+      "One-step-ahead planning"
+    ],
+    "answer": 2,
+    "explanation": "It looks at a horizon of 3, 5, 10 or more years."
+  },
+  {
+    "id": "sa-l3-159",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Thinking about the next 10 moves ahead in a chess game is an analogy for what business concept?",
+    "options": [
+      "Analyzing past performance",
+      "Focusing on long-term goals and outcomes",
+      "Preparing for the immediate next step",
+      "Following daily routine tasks"
+    ],
+    "answer": 1,
+    "explanation": "The chess analogy illustrates long-term strategic thinking."
+  },
+  {
+    "id": "sa-l3-160",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What analogy is drawn between the stonecutters and information technology analysts?",
+    "options": [
+      "Both are focused on details.",
+      "Both have the same job description.",
+      "Perspectives on work can vary",
+      "Both are unaware of their impact."
+    ],
+    "answer": 2,
+    "explanation": "One says “I’m cutting stones”, the other “I’m building a cathedral”: the same job can be seen differently."
+  },
+  {
+    "id": "sa-l3-161",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does a SWOT analysis focus on?",
+    "options": [
+      "Only financial performance",
+      "Specific products, divisions, or the entire company",
+      "Competitor analysis",
+      "Market trends"
+    ],
+    "answer": 1,
+    "explanation": "It can focus on a product, a project, a division, the whole company or the mission statement."
+  },
+  {
+    "id": "sa-l3-162",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the overall aim of a SWOT analysis?",
+    "options": [
+      "To maximize employee satisfaction",
+      "To avoid unrealistic, unprofitable, or unachievable goals"
+    ],
+    "answer": 1,
+    "explanation": "It helps avoid goals that are unrealistic, unprofitable or unachievable."
+  },
+  {
+    "id": "sa-l3-163",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which element is NOT included in a SWOT analysis?",
+    "options": [
+      "Strengths",
+      "Weaknesses",
+      "Strategies",
+      "Opportunities"
+    ],
+    "answer": 2,
+    "explanation": "SWOT = Strengths, Weaknesses, Opportunities, Threats. .Threats و Opportunities و Weaknesses و SWOT = Strengths"
+  },
+  {
+    "id": "sa-l3-164",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Helpful + external:",
+    "options": [
+      "Strengths",
+      "Weaknesses",
+      "Threats",
+      "Opportunities"
+    ],
+    "answer": 3,
+    "explanation": "Strengths/Weaknesses are internal; Opportunities/Threats are external. Helpful external = Opportunities. .والخارجية المفيدة هي Opportunities الـ"
+  },
+  {
+    "id": "sa-l3-165",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Harmful + external:",
+    "options": [
+      "Strengths",
+      "Weaknesses",
+      "Threats",
+      "Opportunities"
+    ],
+    "answer": 2,
+    "explanation": "Harmful external = Threats. .Threats = والخارجية الضارة"
+  },
+  {
+    "id": "sa-l3-166",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Harmful + internal:",
+    "options": [
+      "Strengths",
+      "Weaknesses",
+      "Threats",
+      "Opportunities"
+    ],
+    "answer": 1,
+    "explanation": "Harmful internal = Weaknesses. .Weaknesses = والداخلية الضارة"
+  },
+  {
+    "id": "sa-l3-167",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is considered an internal factor?",
+    "options": [
+      "The Economy",
+      "Customers",
+      "Top Managers",
+      "Technology"
+    ],
+    "answer": 2,
+    "explanation": "Top managers are internal; the economy, customers and technology are external. .خارجي والباقي ،داخيل عامل top managers الـ"
+  },
+  {
+    "id": "sa-l3-168",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term is commonly used to refer to the group responsible for evaluating systems requests?",
+    "options": [
+      "Technical advisory board",
+      "Systems review committee",
+      "IT governance board",
+      "Project management team"
+    ],
+    "answer": 1,
+    "explanation": "It is called the systems review committee (or computer resources committee). .systems review committee اسمها"
+  },
+  {
+    "id": "sa-l3-169",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the main purpose of assessing the feasibility of each systems request?",
+    "options": [
+      "To determine the cost of the request",
+      "To ensure alignment with business strategy",
+      "To answer key questions regarding the request",
+      "To prioritize requests based on urgency"
+    ],
+    "answer": 2,
+    "explanation": "The committee assesses feasibility to answer: which projects, which criteria, how to set priorities. .الطلب عن األساسية األسئلة يجاوبوا عشان feasibility الـ بيق ّيموا"
+  },
+  {
+    "id": "sa-l3-170",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Who typically comprises the systems review committee?",
+    "options": [
+      "Only IT staff members",
+      "A group of key managers and users",
+      "External consultants",
+      "Senior executives only"
+    ],
+    "answer": 1,
+    "explanation": "A group of key managers and users."
+  },
+  {
+    "id": "sa-l3-171",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Systems requests must pass several tests, called a feasibility study.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l3-172",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is NOT one of the four main yardsticks used in a feasibility study?",
+    "options": [
+      "Operational Feasibility",
+      "Economic Feasibility",
+      "Environmental Feasibility",
+      "Technical Feasibility"
+    ],
+    "answer": 2,
+    "explanation": "The four are operational, economic, technical and schedule. .schedule و technical و economic و operational هما األربعة"
+  },
+  {
+    "id": "sa-l3-173",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Intangible benefits are benefits that can be measured in dollars.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. Tangible benefits can be measured in dollars. .tangible الـ هي بالدوالر بتتقاس اليل .غلط"
+  },
+  {
+    "id": "sa-l3-174",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Tangible benefits in a feasibility study are defined as:",
+    "options": [
+      "Benefits that are intangible and difficult to quantify",
+      "Benefits that can be measured in dollars"
+    ],
+    "answer": 1,
+    "explanation": "Tangible benefits can be measured in dollars. .بالفلوس بتتقاس tangible benefits الـ"
+  },
+  {
+    "id": "sa-l3-175",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Schedule feasibility focuses on:",
+    "options": [
+      "The economic impact of the project",
+      "The time required to complete the project",
+      "The organizational capability to execute the project",
+      "The technical specifications needed for the project"
+    ],
+    "answer": 1,
+    "explanation": "Schedule feasibility asks: can we do it in time? الوقت؟ في نخلصه نقدر :schedule feasibility الـ"
+  },
+  {
+    "id": "sa-l3-176",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the primary purpose of evaluating the feasibility of system requests?",
+    "options": [
+      "To understand the benefits of implementing all requests",
+      "To identify and eliminate requests that are not feasible",
+      "To implement the system requests as soon as possible",
+      "To enhance the complexity of system requests"
+    ],
+    "answer": 1,
+    "explanation": "First step: identify and weed out infeasible requests."
+  },
+  {
+    "id": "sa-l3-177",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Why might a system request that is not feasible now be resubmitted later?",
+    "options": [
+      "To change the project objectives",
+      "To improve project team collaboration",
+      "New hardware, software, or expertise may become available",
+      "The organization has excess resources"
+    ],
+    "answer": 2,
+    "explanation": "It may become feasible when new hardware, software or expertise is available."
+  },
+  {
+    "id": "sa-l3-178",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which type of project is implemented based on management’s choice?",
+    "options": [
+      "Nondiscretionary Project",
+      "Discretionary Project"
+    ],
+    "answer": 1,
+    "explanation": "Discretionary projects are those where management has a choice. .اختيار فيها عندها اإلدارة اليل هي discretionary الـ"
+  },
+  {
+    "id": "sa-l3-179",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Projects where no choice exists for implementation are called:",
+    "options": [
+      "Discretionary Projects",
+      "Nondiscretionary Projects"
+    ],
+    "answer": 1,
+    "explanation": "Nondiscretionary projects have no choice. .اختيار مفيهاش nondiscretionary الـ"
+  },
+  {
+    "id": "sa-l3-180",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does the “importance” metric measure in process evaluation?",
+    "options": [
+      "Resource allocation",
+      "Process impact on strategic objectives",
+      "Efficiency of processes",
+      "Cost of implementation"
+    ],
+    "answer": 1,
+    "explanation": "Importance = which processes have the greatest impact on strategic objectives. .السرتاتيجية األهداف عىل أكرب تأثريها عمليات أنهي :importance الـ"
+  },
+  {
+    "id": "sa-l3-181",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The first step in feasibility evaluation is to eliminate unfeasible system requests.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l3-182",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The health metric assesses which of the following?",
+    "options": [
+      "Feasibility of the process",
+      "Which processes are in deepest trouble",
+      "Resources available",
+      "Strategic value of a process"
+    ],
+    "answer": 1,
+    "explanation": "Health (or dysfunction) shows which processes are in the deepest trouble. .حال أسوأ في عمليات أنهي يبيب نّ health الـ"
+  },
+  {
+    "id": "sa-l3-183",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It is possible to find a request that has low health, high feasibility, and is important.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. On a PICK chart that is exactly the kind of request to look for. .PICK chart الـ في عليه بند ّو ر اليل بالظبط وده .صح"
+  },
+  {
+    "id": "sa-l3-184",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the first step a systems analyst should take during a preliminary investigation?",
+    "options": [
+      "Evaluate feasibility",
+      "Understand the problem or opportunity",
+      "Define project scope and constraints",
+      "Conduct user surveys"
+    ],
+    "answer": 1,
+    "explanation": "Step 1 is to understand the problem or opportunity."
+  },
+  {
+    "id": "sa-l3-185",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What should a systems analyst do after completing the preliminary investigation?",
+    "options": [
+      "Implement the solution immediately",
+      "Present recommendations to management",
+      "Begin the detailed design of the system",
+      "Develop a project timeline"
+    ],
+    "answer": 1,
+    "explanation": "The last step is presenting results and recommendations to management."
+  },
+  {
+    "id": "sa-l3-186",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When might a systems analyst need to develop a business profile?",
+    "options": [
+      "When updating a software application",
+      "When the company wants to change its logo",
+      "When there is a new information system or a substantial change in an existing system"
+    ],
+    "answer": 2,
+    "explanation": "A business profile may be needed for a new system or a substantial change."
+  },
+  {
+    "id": "sa-l3-187",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does project scope primarily define?",
+    "options": [
+      "The budget of the project",
+      "The timeline for project completion",
+      "The specific boundaries and extent of the project",
+      "The technology stack to be used"
+    ],
+    "answer": 2,
+    "explanation": "Scope defines the boundaries or extent of the project. .المرشوع حدود بيحدد scope الـ"
+  },
+  {
+    "id": "sa-l3-188",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What type of projects are at risk of experiencing project creep?",
+    "options": [
+      "Projects with well-defined scopes",
+      "Projects with very general scope definitions",
+      "Projects with strict timelines",
+      "Projects with limited resources"
+    ],
+    "answer": 1,
+    "explanation": "Very general scope definitions risk project creep. .project creep لـ المرشوع بيع ّرض ج ًدا العام scope الـ"
+  },
+  {
+    "id": "sa-l3-189",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the term for when a project’s scope gradually expands without specific authorization?",
+    "options": [
+      "Project scope",
+      "Project constraint",
+      "Project creep",
+      "Project deliverable"
+    ],
+    "answer": 2,
+    "explanation": "That is project creep. .project creep ده"
+  },
+  {
+    "id": "sa-l3-190",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A constraint on a system refers to:",
+    "options": [
+      "A feature that the system could potentially have.",
+      "A requirement that the system must satisfy.",
+      "A condition that the system must satisfy",
+      "B & C"
+    ],
+    "answer": 3,
+    "explanation": "A constraint is a requirement or condition the system must satisfy. .)C و B( يحققه النظام الزم متطلب أو رشط هو constraint الـ"
+  },
+  {
+    "id": "sa-l3-191",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a constraint is determined to be “Internal,” it means that it:",
+    "options": [
+      "Originates within the organization",
+      "Is not essential to meet",
+      "Must be postponed until later",
+      "Must be met immediately"
+    ],
+    "answer": 0,
+    "explanation": "Internal means due to a requirement within the organization. .المؤسسة جوه من نابع يعين Internal"
+  },
+  {
+    "id": "sa-l3-192",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the primary objective of fact-finding in systems analysis?",
+    "options": [
+      "To develop coding standards",
+      "To gather data on project usability, costs, benefits and schedules"
+    ],
+    "answer": 1,
+    "explanation": "Fact-finding gathers data about usability, costs, benefits and schedules. .والجدول والفوايد والتكلفة الجدوى عن بيانات بيجمع fact-finding الـ"
+  },
+  {
+    "id": "sa-l3-193",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is NOT typically a fact-finding technique used by analysts?",
+    "options": [
+      "Conducting interviews",
+      "Reviewing current documentation",
+      "Developing software prototypes",
+      "Observing operations"
+    ],
+    "answer": 2,
+    "explanation": "Techniques: org charts, interviews, documentation review, observation, surveys. .واستبيانات ومالحظة توثيق ومراجعة ومقابالت org charts :التقنيات"
+  },
+  {
+    "id": "sa-l3-194",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What type of chart is mentioned as useful for tracking issues arranged in descending order?",
+    "options": [
+      "Gantt Chart",
+      "Flowchart",
+      "Pareto Chart",
+      "Organizational Chart"
+    ],
+    "answer": 2,
+    "explanation": "A Pareto chart arranges issues in descending order with a cumulative curve. .تنازل ًيا المشاكل بريتب Pareto chart الـ"
+  },
+  {
+    "id": "sa-l3-195",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What type of data is gathered to prepare financial analysis and impact statements?",
+    "options": [
+      "Market trends and customer feedback",
+      "Sales and marketing data",
+      "Cost and benefit data",
+      "Only cost data"
+    ],
+    "answer": 2,
+    "explanation": "Cost and benefit data are used for financial analysis."
+  },
+  {
+    "id": "sa-l3-196",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Identify the hardware, software, and network resources required to develop, install, and operate the system:",
+    "options": [
+      "Technical Feasibility",
+      "Operational Feasibility",
+      "Schedule Feasibility"
+    ],
+    "answer": 0,
+    "explanation": "That is technical feasibility. .technical feasibility الـ ده"
+  },
+  {
+    "id": "sa-l3-197",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Financial analysis tools assess feasibility based on cost-benefit data for management decisions:",
+    "options": [
+      "Technical Feasibility",
+      "Operational Feasibility",
+      "Schedule Feasibility",
+      "Economic feasibility"
+    ],
+    "answer": 3,
+    "explanation": "That is economic feasibility. .economic feasibility الـ ده"
+  },
+  {
+    "id": "sa-l3-198",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Preliminary investigation is an important fact-finding tool during the systems analysis phase. ………… is a planned meeting during which the analyst obtains information from another person.",
+    "options": [
+      "Interview",
+      "Questionnaire",
+      "Observation",
+      "Sampling"
+    ],
+    "answer": 0,
+    "explanation": "An interview is a planned meeting to get information from another person. (Options were added by me; the original had none.) فيه مكنش األصل ،عندي من الختيارات( .شخص من معلومات لجمع مخطط اجتماع هي )interview( المقابلة"
+  },
+  {
+    "id": "sa-l3-199",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "SWOT analysis is an abbreviation for:",
+    "options": [
+      "Study, Weakness, Opportunity, Threat",
+      "Strength, Weakness, Opportunity, Threat",
+      "Strength, Weakness, Object, Treat",
+      "Strength, Weakness, Object, Threat"
+    ],
+    "answer": 1,
+    "explanation": "S-W-O-T = Strength, Weakness, Opportunity, Threat. .Threat و Opportunity و Weakness و SWOT = Strength"
+  },
+  {
+    "id": "sa-l4-200",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… is someone who is responsible for overseeing all relevant tasks.",
+    "options": [
+      "System analyst",
+      "Project manager"
+    ],
+    "answer": 1,
+    "explanation": "The project manager oversees all relevant tasks."
+  },
+  {
+    "id": "sa-l4-201",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "To manage a large-scale IT project, specific tools and techniques are needed. A project manager is also needed.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-202",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Project management for IT professionals includes ………… on information system development.",
+    "options": [
+      "Planning, scheduling, monitoring",
+      "Controlling, and reporting",
+      "Both of them"
+    ],
+    "answer": 2,
+    "explanation": "It covers planning, scheduling, monitoring and controlling, and reporting."
+  },
+  {
+    "id": "sa-l4-203",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A successful project must be NOT completed on time, within budget, and deliver a quality product that satisfies users and meets requirements.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. A successful project MUST be completed on time and within budget."
+  },
+  {
+    "id": "sa-l4-204",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What are the characteristics of systems development projects?",
+    "options": [
+      "Dynamic and challenging",
+      "Static and challenging"
+    ],
+    "answer": 0,
+    "explanation": "They tend to be dynamic and challenging. .challenging و dynamic تكون بتميل"
+  },
+  {
+    "id": "sa-l4-205",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "There is always a balance between constraints and interactive elements such as project cost, scope, and time.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. That is the project triangle."
+  },
+  {
+    "id": "sa-l4-206",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a project is fast and good, it won’t be ………",
+    "options": [
+      "Cheap",
+      "Expensive"
+    ],
+    "answer": 0,
+    "explanation": "Fast + good = expensive, so it won’t be cheap."
+  },
+  {
+    "id": "sa-l4-207",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A project triangle, where the two legs are cost, scope, and time.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. The triangle has THREE legs: cost, scope and time. .time و scope و cost :أضالع 3 ليه المثلث .غلط"
+  },
+  {
+    "id": "sa-l4-208",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Project managers typically perform four activities, or functions: planning, scheduling, monitoring, and reporting.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-209",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ………… identifying all project tasks and estimating the completion time and cost of each.",
+    "options": [
+      "Planning",
+      "Scheduling"
+    ],
+    "answer": 0,
+    "explanation": "That is planning. .planning الـ ده"
+  },
+  {
+    "id": "sa-l4-210",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is NOT part of the project triangle?",
+    "options": [
+      "Cost",
+      "Scope",
+      "Time",
+      "Challenge"
+    ],
+    "answer": 3,
+    "explanation": "The triangle is cost, scope and time. .time و scope و cost هو المثلث"
+  },
+  {
+    "id": "sa-l4-211",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Who is responsible for performing four activities: planning, scheduling, monitoring and reporting?",
+    "options": [
+      "Project manager",
+      "System analyst"
+    ],
+    "answer": 0,
+    "explanation": "The project manager."
+  },
+  {
+    "id": "sa-l4-212",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… creation of a specific timetable; project scheduling uses Gantt charts and PERT/CPM charts.",
+    "options": [
+      "Scheduling",
+      "Monitoring"
+    ],
+    "answer": 0,
+    "explanation": "Scheduling creates the timetable. .الزمين الجدول بيعمل Scheduling الـ"
+  },
+  {
+    "id": "sa-l4-213",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… guiding, supervising, and coordinating the project team’s workload, and monitoring progress, evaluating results and taking corrective action.",
+    "options": [
+      "Scheduling",
+      "Monitoring"
+    ],
+    "answer": 1,
+    "explanation": "Monitoring. .Monitoring الـ"
+  },
+  {
+    "id": "sa-l4-214",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… includes regular progress reports to management, users and the project team itself; effective ones need strong communication skills.",
+    "options": [
+      "Reporting",
+      "Monitoring"
+    ],
+    "answer": 0,
+    "explanation": "Reporting. .Reporting الـ"
+  },
+  {
+    "id": "sa-l4-215",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A work breakdown structure (WBS) involves breaking a project down into a series of smaller tasks.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-216",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is a primary goal of a Gantt chart?",
+    "options": [
+      "It can simplify a complex project by combining several activities into a task group that contains subsidiary tasks.",
+      "Monitor the progress, evaluate the results, and take corrective action"
+    ],
+    "answer": 0,
+    "explanation": "contains subsidiary tasks. A Gantt chart simplifies a complex project through task groups with subsidiary tasks. .task groups في األنشطة بتجميع المعقد المرشوع بيب ّس ط Gantt الـ"
+  },
+  {
+    "id": "sa-l4-217",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A Gantt chart is a horizontal bar chart that represents a set of tasks.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-218",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… was developed by private industry to meet similar project management needs.",
+    "options": [
+      "The Program Evaluation Review Technique (PERT)",
+      "The Critical Path Method (CPM)"
+    ],
+    "answer": 1,
+    "explanation": "CPM was developed by private industry. .الخاص القطاع في اتطور CPM الـ"
+  },
+  {
+    "id": "sa-l4-219",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of these was developed by the U.S. Navy to manage very complex projects, such as the construction of nuclear submarines?",
+    "options": [
+      "The Program Evaluation Review Technique (PERT)",
+      "The Critical Path Method (CPM)"
+    ],
+    "answer": 0,
+    "explanation": "PERT was developed by the U.S. Navy. .األمريكية البحرية في اتطور PERT الـ"
+  },
+  {
+    "id": "sa-l4-220",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The PERT/CPM chart is a bottom-up technique because it analyzes a large, complex project as a series of individual tasks.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-221",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Tasks to be performed on the vertical axis, and time intervals on the horizontal axis:",
+    "options": [
+      "PERT",
+      "CPM",
+      "Both of them"
+    ],
+    "answer": 2,
+    "explanation": "The slides describe both charts this way (the distinction between PERT and CPM has disappeared)."
+  },
+  {
+    "id": "sa-l4-222",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Microsoft called the PERT/CPM chart a Network diagram.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-223",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following must clearly identify each task and include an estimated duration?",
+    "options": [
+      "A work breakdown structure (WBS)",
+      "The Critical Path Method (CPM)"
+    ],
+    "answer": 0,
+    "explanation": "A WBS must clearly identify each task and include an estimated duration. .التقديرية مدتها ويكتب مهمة كل يحدد الزم WBS الـ"
+  },
+  {
+    "id": "sa-l4-224",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… is any work that has a beginning and an end and requires the use of company resources such as people, time, or money.",
+    "options": [
+      "Task",
+      "Activity",
+      "Both of them"
+    ],
+    "answer": 2,
+    "explanation": "A task, or activity, is any such work. .ونهاية بداية له شغل أي هي activity الـ أو task الـ"
+  },
+  {
+    "id": "sa-l4-225",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Every project has events, or milestones. An event, or milestone, is a recognizable reference point that can be used to monitor progress.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-226",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is NOT a part of LISTING THE TASKS?",
+    "options": [
+      "First collect the bulk of steps using timing words (First, Then, After, When, Finally).",
+      "Then highlight individual tasks, each starting with a verb.",
+      "After highlighting, make them as bullets.",
+      "After highlighting, make them as tasks in the third version. E. Finally, list them in a table to go to the next step of time estimation."
+    ],
+    "answer": 3,
+    "explanation": "The third version is bullets, not “tasks”. .tasks مش bullets بتبقى التالتة النسخة"
+  },
+  {
+    "id": "sa-l4-227",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term describes the work that one person can complete in one day?",
+    "options": [
+      "Person-day",
+      "Person-week"
+    ],
+    "answer": 0,
+    "explanation": "A person-day. .person-day الـ"
+  },
+  {
+    "id": "sa-l4-228",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If it will take one person 20 days to perform a task, it might not be true that two people could complete it in 10 days.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True. People don’t divide work perfectly (see also Brooks’ Law). .)Brooks قانون وشوف( بالتساوي مبيتقسمش الشغل .صح"
+  },
+  {
+    "id": "sa-l4-229",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Project managers often use a weighted formula for estimating the duration of each task: (B + 4P + W) / 6.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-230",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The manager assigns a weight to each estimate: optimistic (B), probable (P), pessimistic (W).",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-231",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Tasks in a work breakdown structure must be arranged in a ………… sequence called a task pattern.",
+    "options": [
+      "Logical",
+      "Physical"
+    ],
+    "answer": 0,
+    "explanation": "Tasks are arranged in a logical sequence. .)logical( منطقي تسلسل في بترتتب المهام"
+  },
+  {
+    "id": "sa-l4-232",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A complex task pattern is a chain of multiple patterns; if complete for a project it is called a Network Diagram.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-233",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In task patterns, tasks depend on each other and must be performed in a sequence, not unlike the commands in a software program.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-234",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a ………, project tasks are shown as rectangular boxes, arranged in the sequence in which they must be performed.",
+    "options": [
+      "PERT",
+      "CPM",
+      "Both of them"
+    ],
+    "answer": 2,
+    "explanation": "In a PERT/CPM chart, tasks are rectangular boxes in sequence. .بالتسلسل مرتتبة مستطيالت المهام PERT/CPM الـ في"
+  },
+  {
+    "id": "sa-l4-235",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Task patterns can involve dependent tasks, multiple successor tasks, and multiple predecessor tasks.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-236",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following requires the project manager to keep track of tasks and team progress and compare actual progress with the plan?",
+    "options": [
+      "Project scheduling",
+      "Project monitoring and control"
+    ],
+    "answer": 1,
+    "explanation": "Project monitoring and control. .monitoring and control الـ"
+  },
+  {
+    "id": "sa-l4-237",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A structured walk-through is a review of a project team member’s work by other members of the team.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-238",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Structured walk-throughs are called design reviews in the System ………… phase.",
+    "options": [
+      "Code",
+      "Design"
+    ],
+    "answer": 1,
+    "explanation": "Design reviews happen in the system design phase. .design الـ مرحلة في design reviews الـ"
+  },
+  {
+    "id": "sa-l4-239",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Structured walk-throughs are called implementation (code) reviews in the System ………… phase.",
+    "options": [
+      "Code",
+      "Design"
+    ],
+    "answer": 0,
+    "explanation": "Code reviews happen in the implementation phase. .implementation الـ مرحلة في code reviews الـ"
+  },
+  {
+    "id": "sa-l4-240",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In ………… members of the project team regularly report their progress to the project manager, who in turn reports to management and users.",
+    "options": [
+      "Reporting",
+      "Project monitoring and control"
+    ],
+    "answer": 0,
+    "explanation": "Reporting. .Reporting الـ"
+  },
+  {
+    "id": "sa-l4-241",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Project managers schedule regular meetings to update the team and discuss project status, issues, problems and opportunities:",
+    "options": [
+      "Project status meetings",
+      "Project monitoring and control"
+    ],
+    "answer": 0,
+    "explanation": "Project status meetings. .)project status meetings( الحالة اجتماعات"
+  },
+  {
+    "id": "sa-l4-242",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The most important practice of Agile development is the daily SCRUM practice, called the Stand Up meeting.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l4-243",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… among all team members is held roughly for 15 minutes.",
+    "options": [
+      "Daily status meeting",
+      "Weekly status meeting"
+    ],
+    "answer": 0,
+    "explanation": "The daily stand-up lasts about 15 minutes. .دقيقة 15 حوايل daily stand-up الـ"
+  },
+  {
+    "id": "sa-l4-244",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the daily status meeting, every member answers all these questions EXCEPT:",
+    "options": [
+      "What I did yesterday?",
+      "What I’ll do today?",
+      "What I’ll do tomorrow?",
+      "Any impediment I am facing / I am blocked due to…"
+    ],
+    "answer": 2,
+    "explanation": "The three questions: yesterday, today, impediments."
+  },
+  {
+    "id": "sa-l4-245",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which term describes an event that could affect the project negatively?",
+    "options": [
+      "Risk management",
+      "Risk"
+    ],
+    "answer": 1,
+    "explanation": "A risk is an event that could affect the project negatively. .سل ًبا المرشوع عىل يأثر ممكن حدث هو risk الـ"
+  },
+  {
+    "id": "sa-l4-246",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… is the process of identifying, analyzing, anticipating, and monitoring risks to minimize their impact on the project.",
+    "options": [
+      "Risk management",
+      "Risk"
+    ],
+    "answer": 0,
+    "explanation": "Risk management. .Risk management الـ"
+  },
+  {
+    "id": "sa-l4-247",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The first step in risk management is to develop a specific plan, called ………, which reviews the project’s scope, stakeholders, budget, schedule and other factors.",
+    "options": [
+      "A risk management plan",
+      "Risk"
+    ],
+    "answer": 0,
+    "explanation": "A risk management plan. .risk management plan الـ"
+  },
+  {
+    "id": "sa-l4-248",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… the analyst lists each risk and assesses the likelihood that it could affect the project.",
+    "options": [
+      "A risk management plan",
+      "Risk identification"
+    ],
+    "answer": 1,
+    "explanation": "Risk identification. .risk identification الـ"
+  },
+  {
+    "id": "sa-l4-249",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… evaluates each risk by estimating the likelihood that it will occur and the degree of impact, mapping the evaluation to the risk matrix.",
+    "options": [
+      "Qualitative risk analysis",
+      "Quantitative risk analysis"
+    ],
+    "answer": 0,
+    "explanation": "Qualitative risk analysis. .qualitative risk analysis الـ"
+  },
+  {
+    "id": "sa-l4-250",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "………… is to understand the actual impact in terms of dollars, time, project scope, or quality.",
+    "options": [
+      "Qualitative risk analysis",
+      "Quantitative risk analysis"
+    ],
+    "answer": 1,
+    "explanation": "Quantitative risk analysis (e.g. What-if analysis). .)What-if زي( quantitative risk analysis الـ"
+  },
+  {
+    "id": "sa-l4-251",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In some situations, adding more people to a project actually might increase the time necessary to complete the project, because of a principle called Brooks’ Law.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l5-252",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following activities is NOT part of the System Analysis phase?",
+    "options": [
+      "Requirement Modeling",
+      "Data and Process Modeling",
+      "Software Testing",
+      "Object Modeling"
+    ],
+    "answer": 2,
+    "explanation": "The four activities are requirements, data and process, object modeling and development strategy. .development strategy و object modeling و data & process و requirements :األربعة األنشطة"
+  },
+  {
+    "id": "sa-l5-253",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Customers often find it easy to clearly describe what they want the system to do.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. They often find it difficult."
+  },
+  {
+    "id": "sa-l5-254",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When customers list their requirements, they may provide an unprioritized set of conflicting capabilities.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l5-255",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What happens when a systems project does not satisfy business requirements?",
+    "options": [
+      "It automatically succeeds",
+      "It serves no useful purpose"
+    ],
+    "answer": 1,
+    "explanation": "It serves no useful purpose."
+  },
+  {
+    "id": "sa-l5-256",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The objective of systems analysis is to understand the proposed project and build a solid foundation for system development.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l5-257",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Fact-finding primarily focuses on coding and deploying the system.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False."
+  },
+  {
+    "id": "sa-l5-258",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In Agile development, what is used to represent requirements?",
+    "options": [
+      "Use Case Diagrams",
+      "Personas and User Stories",
+      "Software Requirements Specification (SRS)",
+      "Flowcharts"
+    ],
+    "answer": 1,
+    "explanation": "Agile uses personas and user stories. .user stories و personas بيستخدم Agile الـ"
+  },
+  {
+    "id": "sa-l5-259",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which development approach uses Use Case diagrams and other diagrams to represent requirements?",
+    "options": [
+      "Agile development",
+      "Object-Oriented development",
+      "Structured development"
+    ],
+    "answer": 1,
+    "explanation": "Object-oriented development. .Object-Oriented الـ"
+  },
+  {
+    "id": "sa-l5-260",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What document is used to describe the nature of a project in Structured Development?",
+    "options": [
+      "Use Case Diagram",
+      "Software Requirements Specification (SRS)",
+      "User Stories"
+    ],
+    "answer": 1,
+    "explanation": "The SRS. .SRS الـ"
+  },
+  {
+    "id": "sa-l5-261",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The SRS is a document that describes the nature of a project for Object-Oriented development.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. SRS belongs to structured development. .structured للـ SRS الـ .غلط"
+  },
+  {
+    "id": "sa-l5-262",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is the primary purpose of a Data Flow Diagram (DFD) in structured analysis?",
+    "options": [
+      "To represent the flow of data through a system",
+      "To design the system interface"
+    ],
+    "answer": 0,
+    "explanation": "A DFD represents the flow of data. .البيانات تدفق بيمثل DFD الـ"
+  },
+  {
+    "id": "sa-l5-263",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "DFD (Data Flow Diagram) is the best tool for data and process modeling.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l5-264",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Structured analysis primarily identifies which of the following in a system?",
+    "options": [
+      "The network architecture of the system",
+      "The data flowing into a process, business rules"
+    ],
+    "answer": 1,
+    "explanation": "It identifies data flowing in, business rules and output data flow."
+  },
+  {
+    "id": "sa-l5-265",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Structured analysis treats processes and data as separate components.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l5-266",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is a commonly used tool in object modeling?",
+    "options": [
+      "Flowchart",
+      "Entity-Relationship Diagram",
+      "Class Diagram"
+    ],
+    "answer": 2,
+    "explanation": "The Class Diagram. .Class Diagram الـ"
+  },
+  {
+    "id": "sa-l5-267",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Analysts use only data modeling methods to gain information.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False. They often use both approaches."
+  },
+  {
+    "id": "sa-l5-268",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The “Make or Buy” decision is a key factor in determining the development options for a system.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l5-269",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Why are interpersonal skills important for a systems analyst?",
+    "options": [
+      "A systems analyst needs to work with people",
+      "They help in writing code"
+    ],
+    "answer": 0,
+    "explanation": "Analysts work with people at all organizational levels. .المستويات كل في ناس مع بيشتغل analyst الـ"
+  },
+  {
+    "id": "sa-l5-270",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the focus of analytical skills in the context of systems analysis?",
+    "options": [
+      "Gathering data for research purposes",
+      "Identifying problems and providing solutions"
+    ],
+    "answer": 1,
+    "explanation": "Identify a problem, evaluate key elements, develop a solution."
+  },
+  {
+    "id": "sa-l5-271",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A systems analyst needs strong analytical and interpersonal skills to build an accurate model of the new system.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l5-272",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is usually the result of greater user involvement in the development process?",
+    "options": [
+      "Increased development costs",
+      "Poor communication",
+      "Faster development times",
+      "Fewer satisfied users"
+    ],
+    "answer": 2,
+    "explanation": "Better communication, faster development and more satisfied users."
+  },
+  {
+    "id": "sa-l5-273",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does JAD involve?",
+    "options": [
+      "A focus on software testing",
+      "Bringing users into the development process as active participants",
+      "Creating system documentation"
+    ],
+    "answer": 1,
+    "explanation": "JAD brings users in as active participants. .فعليني كمشاركني المستخدمني بيدخل JAD الـ"
+  },
+  {
+    "id": "sa-l5-274",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Why is user involvement important in the development process?",
+    "options": [
+      "Because users are responsible for maintaining the system",
+      "Because users have a vital stake in an information system"
+    ],
+    "answer": 1,
+    "explanation": "Users have a vital stake in the system."
+  },
+  {
+    "id": "sa-l5-275",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is a disadvantage of JAD?",
+    "options": [
+      "It can result in a more accurate statement of system requirements.",
+      "It is more expensive and can be cumbersome if the group is too large"
+    ],
+    "answer": 1,
+    "explanation": "The disadvantage is cost and size problems."
+  },
+  {
+    "id": "sa-l5-276",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What benefit does JAD offer in terms of user participation?",
+    "options": [
+      "It limits user input to technical aspects only.",
+      "It provides a limited view of project goals.",
+      "It allows users to participate in requirements modeling."
+    ],
+    "answer": 2,
+    "explanation": "Key users participate effectively in requirements modeling. .requirements modeling الـ في فعل ًيا بيشاركوا المستخدمني"
+  },
+  {
+    "id": "sa-l5-277",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does JAD help improve in terms of system requirements?",
+    "options": [
+      "It leads to vague and unclear system requirements",
+      "JAD results in a more accurate statement of system requirements"
+    ],
+    "answer": 1,
+    "explanation": "More accurate requirements."
+  },
+  {
+    "id": "sa-l5-278",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the primary focus of Rapid Application Development (RAD)?",
+    "options": [
+      "Strict adherence to timelines",
+      "Prototyping and user involvement",
+      "Minimal documentation"
+    ],
+    "answer": 1,
+    "explanation": "RAD relies heavily on prototyping and user involvement. .المستخدم ومشاركة prototyping الـ عىل بيعتمد RAD الـ"
+  },
+  {
+    "id": "sa-l5-279",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What tool does the RAD project team commonly use to build prototypes and document the development process?",
+    "options": [
+      "Waterfall software",
+      "CASE tools",
+      "Agile frameworks"
+    ],
+    "answer": 1,
+    "explanation": "CASE tools. .CASE الـ أدوات"
+  },
+  {
+    "id": "sa-l5-280",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the main goal of involving users in every phase of systems development?",
+    "options": [
+      "To reduce the complexity of the system",
+      "To cut development time and expense"
+    ],
+    "answer": 1,
+    "explanation": "To cut development time and expense."
+  },
+  {
+    "id": "sa-l5-281",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "RAD also helps a development team design a system that requires a highly interactive or complex user interface.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "sa-l5-282",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is a major benefit of using RAD for system development?",
+    "options": [
+      "It focuses on long-term strategic business needs.",
+      "It requires a larger investment of time and resources.",
+      "It allows systems to be developed quickly with significant cost savings."
+    ],
+    "answer": 2,
+    "explanation": "Faster development with significant cost savings."
+  },
+  {
+    "id": "sa-l5-283",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is a major disadvantage of the RAD methodology?",
+    "options": [
+      "It is highly effective in meeting long-term strategic business needs.",
+      "It emphasizes the mechanics of the system rather than the company’s business goals.",
+      "It requires minimal user input and feedback.",
+      "It is difficult to implement for small projects"
+    ],
+    "answer": 1,
+    "explanation": "RAD stresses system mechanics, not strategic business needs. .السرتاتيجية الرشكة احتياجات عىل مش النظام ميكانيكا عىل بريكز RAD الـ"
+  },
+  {
+    "id": "sa-l4-284",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If quality and speed are priorities, it would be made ..............",
+    "options": [
+      "scaled",
+      "cheap",
+      "expensive",
+      "not scaled"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: expensive"
+  },
+  {
+    "id": "sa-l1-285",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It is a problem-solving technique that improves system performance by ensuring all components operate efficiently to achieve their intended purpose.",
+    "options": [
+      "Implementation",
+      "Design",
+      "Analysis",
+      "Planning"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Analysis"
+  },
+  {
+    "id": "sa-l1-286",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It contains all elements within the physical layer of the information system.",
+    "options": [
+      "Hardware",
+      "Software",
+      "People",
+      "Procedures"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Hardware"
+  },
+  {
+    "id": "sa-l1-287",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A .............. is an individual responsible for overseeing all relevant tasks.",
+    "options": [
+      "Tester",
+      "project manager",
+      "Analyst",
+      "Developer"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: project manager"
+  },
+  {
+    "id": "sa-l4-288",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Project management for IT professionals includes all the following, except ..............",
+    "options": [
+      "Planning",
+      "Scheduling",
+      "Monitoring",
+      "Merging code"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Merging code"
+  },
+  {
+    "id": "sa-l4-289",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The project management phase in which the project manager develops a detailed timetable and utilizes Gantt charts and PERT/CPM charts.",
+    "options": [
+      "Planning",
+      "Scheduling",
+      "Monitoring",
+      "Reporting"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Scheduling"
+  },
+  {
+    "id": "sa-l3-290",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Top managers develop long-range plans, known as .............., that define the organization's overall mission and objectives.",
+    "options": [
+      "Current Plan",
+      "Business Model Canvas",
+      "Strategic Plan",
+      "Routine Plan"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Strategic Plan"
+  },
+  {
+    "id": "sa-l4-291",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If cost efficiency and speed are priorities, it would be made ..............",
+    "options": [
+      "not good",
+      "good",
+      "scaled",
+      "not scaled"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: not good"
+  },
+  {
+    "id": "sa-l4-292",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The project management phase in which the project manager identifies all project tasks and estimates the completion time and cost for each.",
+    "options": [
+      "Planning",
+      "Scheduling",
+      "Monitoring",
+      "Reporting"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Planning"
+  },
+  {
+    "id": "sa-l5-293",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "UML structural diagrams describe:",
+    "options": [
+      "Dynamic behavior",
+      "Message sequences",
+      "Static relationships between components",
+      "User requirements"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Static relationships between components"
+  },
+  {
+    "id": "sa-l5-294",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In a use case diagram, an actor is represented by:",
+    "options": [
+      "Stick figure",
+      "Ellipse",
+      "Rectangle",
+      "Diamond"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Stick figure"
+  },
+  {
+    "id": "sa-l1-295",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Activity diagrams are used to show:",
+    "options": [
+      "Static structure",
+      "Flow of control and parallel activities",
+      "Database design",
+      "System boundaries"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Flow of control and parallel activities"
+  },
+  {
+    "id": "sa-l1-296",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A .............. is a horizontal bar figure that represents a set of tasks.",
+    "options": [
+      "WBS",
+      "Pert/CPM",
+      "Gantt Chart",
+      "Fishbone"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Gantt Chart"
+  },
+  {
+    "id": "sa-l3-297",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Imagine building a house what is the phase of SDLC an considering not a step of creating a house, but it's necessary for the health and to keep the project in a strategic fit.",
+    "options": [
+      "Analysis",
+      "Planning",
+      "Support and Security",
+      "Design"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Support and Security"
+  },
+  {
+    "id": "sa-l1-298",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "DFDs employ four fundamental symbols to represent processes, data flows, data stores, and entities.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l5-299",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Questionnaire, also known as a survey, is a document that contains a set of standardized questions and can be distributed to a large number of individuals.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l1-300",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A logical model describes what the system is required to do, independent of how it is physically implemented.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l5-301",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Fact-finding refers to the process of collecting information through interviews or other data-gathering techniques.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l1-302",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Range of responses questions is to ask the person for evaluating something by providing limited answers to specific responses or on a numeric scale.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l1-303",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Sequence diagrams emphasize:",
+    "options": [
+      "Structure",
+      "Data storage",
+      "Class hierarchy",
+      "Time sequence of messages"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Time sequence of messages"
+  },
+  {
+    "id": "sa-l1-304",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A class diagram shows:",
+    "options": [
+      "Messages",
+      "Activities",
+      "Classes, attributes, operations, and relationships",
+      "Data flows"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Classes, attributes, operations, and relationships"
+  },
+  {
+    "id": "sa-l5-305",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In UML, inheritance is represented by:",
+    "options": [
+      "Diamond",
+      "Circle",
+      "Arrow",
+      "Triangle pointing to superclass"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Triangle pointing to superclass"
+  },
+  {
+    "id": "sa-l1-306",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "An .............. is a recognizable reference point that can be used to monitor progress.",
+    "options": [
+      "task",
+      "milestone",
+      "activity",
+      "user story"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: milestone"
+  },
+  {
+    "id": "sa-l1-307",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Programmers use it to convert the logical design into program modules and source code.",
+    "options": [
+      "UML",
+      "Use Case Diagram",
+      "application architecture",
+      "Sequence diagram"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: application architecture"
+  },
+  {
+    "id": "sa-l1-308",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A DFD shows only external entities that provide data to the system or receive output from it.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l5-309",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The interviewer must avoid the Leading Questions that suggest or favor a particular reply.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l1-310",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When designing a DFD, use unique names within each set of symbols.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l1-311",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Leveling is the process of creating a series of progressively more detailed diagrams until all functional primitives are identified.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l5-312",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In UML visibility notation, \"-\" means:",
+    "options": [
+      "Private",
+      "Protected",
+      "Public",
+      "Package"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Private"
+  },
+  {
+    "id": "sa-l1-313",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In activity diagrams, a fork is used to represent:",
+    "options": [
+      "Decision",
+      "Merge",
+      "Beginning of parallel activities",
+      "End of workflow"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Beginning of parallel activities"
+  },
+  {
+    "id": "sa-l5-314",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The primary deliverable produced during the systems analysis phase is the .............. which outlines system requirements and provides a clear understanding of what the proposed system must do.",
+    "options": [
+      "System requirements document",
+      "System Design Specification",
+      "Functioning system",
+      "Preliminary investigation report"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: System requirements document"
+  },
+  {
+    "id": "sa-l1-315",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A .............. involves breaking a project down into a series of smaller tasks.",
+    "options": [
+      "WBS",
+      "Pert/CPM",
+      "Burn down",
+      "Fishbone"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: WBS"
+  },
+  {
+    "id": "sa-l2-316",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Structured walk-throughs take place throughout the SDLC and is called .............. in implementation phase.",
+    "options": [
+      "code review",
+      "test review",
+      "design-review",
+      "planning phase"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: code review"
+  },
+  {
+    "id": "sa-l1-317",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. is responsible to update the Product Backlog and ensure the user stories are refined.",
+    "options": [
+      "Project manager",
+      "Scrum master",
+      "Development team",
+      "Product owner"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Product owner"
+  },
+  {
+    "id": "sa-l5-318",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The .............. framework is an extremely lightweight framework created by agilest to tackle complex adaptive problems that require rapid iteration or sprints to find a solution.",
+    "options": [
+      "Scrum",
+      "Waterfall",
+      "Sprint",
+      "Agile"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Scrum"
+  },
+  {
+    "id": "sa-l5-319",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The person responsible for ensuring a clear understanding of Scrum is the ..............",
+    "options": [
+      "Scrum master",
+      "Product owner",
+      "Development team",
+      "tester"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Scrum master"
+  },
+  {
+    "id": "sa-l1-320",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. is a simple description of a product feature that is written from end users' point of view.",
+    "options": [
+      "User story",
+      "Product backlog",
+      "Sprint backlog",
+      "Notes"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: User story"
+  },
+  {
+    "id": "sa-l1-321",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. which is a more recent approach that many analysts prefer.",
+    "options": [
+      "object-oriented (O-O) analysis",
+      "agile methods",
+      "structured analysis",
+      "adaptive methods"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: object-oriented (O-O) analysis"
+  },
+  {
+    "id": "sa-l2-322",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. referred to as adaptive methods, which include the most recent trends in software development.",
+    "options": [
+      "object-oriented (O-O) analysis",
+      "agile methods",
+      "structured analysis",
+      "Waterfall model"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: agile methods"
+  },
+  {
+    "id": "sa-l1-323",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. is easy to understand due to its simple linear structure.",
+    "options": [
+      "object-oriented (O-O) analysis",
+      "agile methods",
+      "structured analysis",
+      "Waterfall model"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Waterfall model"
+  },
+  {
+    "id": "sa-l5-324",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A key part of the preliminary investigation is a .............. that reviews anticipated costs and benefits and recommends a course of action based on operational, technical, economic, and time factors.",
+    "options": [
+      "feasibility study",
+      "agile methods",
+      "structured analysis",
+      "Waterfall model"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: feasibility study"
+  },
+  {
+    "id": "sa-l5-325",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "JAD leads to higher costs and can become cumbersome when the group size is too large in relation to the project's scope.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l1-326",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. is the process of identifying long-term organizational goals, strategies, and resources.",
+    "options": [
+      "strategic study",
+      "strategic methods",
+      "strategic analysis",
+      "Strategic planning"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Strategic planning"
+  },
+  {
+    "id": "sa-l1-327",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A/an .............. describes the information that a system must provide and the value that provided to the customers in 9 blocks to show a brief information and viable to know the organization.",
+    "options": [
+      "swot analysis",
+      "business model Canvas",
+      "strategic model",
+      "use case model"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: business model Canvas"
+  },
+  {
+    "id": "sa-l1-328",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. which describe the static relationships between components while .............. which describe the dynamic relationships between components.",
+    "options": [
+      "Structural diagrams, Structural diagrams",
+      "Behavioral diagrams, Structural diagrams",
+      "Behavioral diagrams, Behavioral diagrams",
+      "Structural diagrams, Behavioral diagrams"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Structural diagrams, Behavioral diagrams"
+  },
+  {
+    "id": "sa-l1-329",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Communication between an .............. and a .............. represented by a solid line.",
+    "options": [
+      "use case, use case",
+      "object, object",
+      "actor, use case",
+      "actor, actor"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: actor, use case"
+  },
+  {
+    "id": "sa-l1-330",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. emphasizes on time sequence of messages and .............. emphasizes on the structural organization of the objects that send and receive messages.",
+    "options": [
+      "Sequence diagram, Sequence diagram",
+      "collaboration diagram, collaboration diagram",
+      "collaboration diagram, Sequence diagram",
+      "Sequence diagram, collaboration diagram"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Sequence diagram, collaboration diagram"
+  },
+  {
+    "id": "sa-l5-331",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "RAD emphasizes the technical aspects of the system rather than prioritizing the company's strategic business needs. Although the system may work well in the short term.",
+    "options": [
+      "TRUE",
+      "FALSE"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: TRUE"
+  },
+  {
+    "id": "sa-l2-332",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In which phase does IT staff maintain, enhance and protect the system, with changes that correct errors and adapt to the environment?",
+    "options": [
+      "System Planning",
+      "System Analysis",
+      "System Design",
+      "System Implementation",
+      "System Support & Security"
+    ],
+    "answer": 4,
+    "explanation": "That is system support & security. .support & security الـ ده"
+  },
+  {
+    "id": "sa-l4-333",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When developing duration estimates, project managers consider four factors EXCEPT:",
+    "options": [
+      "Project size",
+      "Human resources",
+      "Experience with similar projects",
+      "Constraints",
+      "Time"
+    ],
+    "answer": 4,
+    "explanation": "The four are project size, human resources, experience with similar projects and constraints."
+  },
+  {
+    "id": "sa-l5-334",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. is a traditional method for system development that is still widely used.",
+    "options": [
+      "Structured analysis",
+      "O-O analysis",
+      "Agile Analysis",
+      "Both 1 and 2"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Structured analysis"
+  },
+  {
+    "id": "sa-l4-335",
+    "subjectId": "system-analysis",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The project management phase that project manager can extract and evaluate reports to management, users, and the project team itself.",
+    "options": [
+      "Planning",
+      "Scheduling",
+      "Monitoring",
+      "Reporting"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Reporting"
+  },
+  {
+    "id": "sa-l2-336",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What are the right words you can use at the analysis phase?",
+    "options": [
+      "Implementation and testing",
+      "Understanding and specifying",
+      "Prototyping and wireframing",
+      "Securing and maintaining"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Understanding and specifying"
+  },
+  {
+    "id": "sa-l2-337",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The deliverable for the system design phase is the ..............",
+    "options": [
+      "System requirements document",
+      "System Design Specification",
+      "Functioning system",
+      "Fully operational system"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: System Design Specification"
+  },
+  {
+    "id": "sa-l1-338",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In activity diagram, black bar with several flows entering it and one leaving it is ..............",
+    "options": [
+      "Fork",
+      "Join",
+      "Basis",
+      "Image"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Join"
+  },
+  {
+    "id": "sa-l1-339",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In activity diagram a black bar (horizontal/vertical) with one flow going into it and several leaving it is ..............",
+    "options": [
+      "Fork",
+      "Join",
+      "Merge",
+      "Avatar"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Fork"
+  },
+  {
+    "id": "sa-l5-340",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In use case .............. indicates the scope of your system. Anything within the box represents functionality that is in scope.",
+    "options": [
+      "Actor",
+      "Activity or action",
+      "System boundary",
+      "Avatar"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: System boundary"
+  },
+  {
+    "id": "sa-l1-341",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Defined as 'a standard language for specifying, constructing, visualizing, and documenting the software system'.",
+    "options": [
+      "Unified Method Language",
+      "Unified Modeling Language",
+      "Unified Member Language",
+      "SWOT Analysis"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Unified Modeling Language"
+  },
+  {
+    "id": "sa-l1-342",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Who plan, develop, and maintain information systems?",
+    "options": [
+      "System designer",
+      "System analyst",
+      "Information system",
+      "Both 1 and 2"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: System analyst"
+  },
+  {
+    "id": "sa-l5-343",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Combines information technology, people and data to support business requirements.",
+    "options": [
+      "Information system",
+      "System analysis",
+      "System analysis & design",
+      "Both 1 and 2"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Information system"
+  },
+  {
+    "id": "sa-l1-344",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Class diagram is type of ..............",
+    "options": [
+      "O-O diagrams",
+      "Behavioral diagrams",
+      "Structural diagrams",
+      "Static diagram"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Structural diagrams"
+  },
+  {
+    "id": "sa-l1-345",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Sequence diagram is type of ..............",
+    "options": [
+      "O-O diagrams",
+      "Behavioral diagrams",
+      "Structural diagrams",
+      "Static diagram"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Behavioral diagrams"
+  },
+  {
+    "id": "sa-l2-346",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A set of DFDs produces a .............. of the system, but the details within those DFDs are documented separately in a data dictionary, which is the second component of structured analysis.",
+    "options": [
+      "physical model",
+      "4 phase model",
+      "2 phase model",
+      "Logical model"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Logical model"
+  },
+  {
+    "id": "sa-l1-347",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. maintains consistency among a set of DFDs by ensuring that input and output data flows align properly.",
+    "options": [
+      "Balancing",
+      "Structuring",
+      "Leveling",
+      "Flowing"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Balancing"
+  },
+  {
+    "id": "sa-l1-348",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When a set of DFDs is created for a system, the processing logic is broken down into smaller units called ..............",
+    "options": [
+      "functional data flow",
+      "functional primitives",
+      "functional work",
+      "data flow"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: functional primitives"
+  },
+  {
+    "id": "sa-l5-349",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. methods attempt to develop a system incrementally, by building a series of prototypes and constantly adjusting them to user requirements.",
+    "options": [
+      "Agile",
+      "JAD",
+      "O-O",
+      "RAD"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Agile"
+  },
+  {
+    "id": "sa-l5-350",
+    "subjectId": "system-analysis",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. is a popular fact-finding technique that brings users into development process as active participants.",
+    "options": [
+      "RAD",
+      "JAD",
+      "Interview",
+      "Observation"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: JAD"
+  },
+  {
+    "id": "sa-l1-351",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. analysis combines data and the processes that act on the data into things called objects.",
+    "options": [
+      "Agile",
+      "Object-Oriented",
+      "Structured",
+      "RAD"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Object-Oriented"
+  },
+  {
+    "id": "sa-l1-352",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. analysis identifies the data flowing into a process, the business rules that transform the data, and the resulting output data flow.",
+    "options": [
+      "Agile",
+      "Object-Oriented",
+      "Structured",
+      "RAD"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Structured"
+  },
+  {
+    "id": "sa-l1-353",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. is a review of a project team member's work by other members of the team.",
+    "options": [
+      "Structured walk-through",
+      "Unstructured-line",
+      "Typical-walk throw",
+      "FDD"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Structured walk-through"
+  },
+  {
+    "id": "sa-l1-354",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Effective .............. requires strong communication skills and a sense of what others want and need to know about the project.",
+    "options": [
+      "Planning",
+      "Scheduling",
+      "Monitoring",
+      "Reporting"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Reporting"
+  },
+  {
+    "id": "sa-l1-355",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Systems development projects tend to be .............. because you can't control every leg of project.",
+    "options": [
+      "Agile",
+      "Obsolete",
+      "Dynamic",
+      "Fast"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Dynamic"
+  },
+  {
+    "id": "sa-l2-356",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. emphasize interactivity among the phases.",
+    "options": [
+      "Spiral model",
+      "Waterfall model",
+      "Parallel model",
+      "All of the above"
+    ],
+    "answer": 0,
+    "explanation": "Past final exam question. Correct answer: Spiral model"
+  },
+  {
+    "id": "sa-l2-357",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Imagine building a house what is the phase of SDLC an consider starting with a basic idea.",
+    "options": [
+      "Analysis",
+      "Planning",
+      "Implementation",
+      "Design"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Planning"
+  },
+  {
+    "id": "sa-l1-358",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "People who have an interest in an information system are called ..............",
+    "options": [
+      "Users",
+      "IT Engineers",
+      "Stakeholders",
+      "Manager"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Stakeholders"
+  },
+  {
+    "id": "sa-l3-359",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The objective during .............. phase is to maximize return on the IT investment (ROI).",
+    "options": [
+      "Analysis",
+      "Planning",
+      "Support and security",
+      "Implementation"
+    ],
+    "answer": 2,
+    "explanation": "Past final exam question. Correct answer: Support and security"
+  },
+  {
+    "id": "sa-l1-360",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. step aims to correct errors and adapt to changes in the environment.",
+    "options": [
+      "Analysis",
+      "Maintenance",
+      "Evaluation",
+      "Implementation"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Maintenance"
+  },
+  {
+    "id": "sa-l2-361",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. one of the most viable models for SDLC uses various symbols and shapes to represent data flow, processing, storage.",
+    "options": [
+      "State Machine diagram",
+      "Class diagram",
+      "Use case",
+      "DFD"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: DFD"
+  },
+  {
+    "id": "sa-l2-362",
+    "subjectId": "system-analysis",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Structured analysis focuses on processes that transform data into useful information, structured analysis is called a ..............",
+    "options": [
+      "Process distribution techniques",
+      "Process-centered technique",
+      "Data driven technique",
+      "Domain-driven design"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: Process-centered technique"
+  },
+  {
+    "id": "sa-l1-363",
+    "subjectId": "system-analysis",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The basic operation to get a clear profile is the ..............",
+    "options": [
+      "Business profile",
+      "BPMN",
+      "BPM",
+      "Fact-finding"
+    ],
+    "answer": 3,
+    "explanation": "Past final exam question. Correct answer: Fact-finding"
+  },
+  {
+    "id": "sa-l3-364",
+    "subjectId": "system-analysis",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": ".............. designed to support decision-making by the people associated with the enterprise in the process of attainment of its objectives.",
+    "options": [
+      "BIS",
+      "MIS",
+      "KMS",
+      "CMS"
+    ],
+    "answer": 1,
+    "explanation": "Past final exam question. Correct answer: MIS"
   }
 ]

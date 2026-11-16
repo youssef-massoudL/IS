@@ -81,6 +81,7 @@ const ARABIC_ORDINALS = [
 
 function isReviewItem(subjectId, sectionId, item, haystack) {
   if (item.midtermReview === false) return false;
+  if (item.midtermReview === true) return true;
   if (subjectId === "midterm-revision" || sectionId === "midterm-revision") return true;
   if (String(item.path || "").toLowerCase().includes("/midterm-revision/")) return true;
   return REVIEW_RANGE_PATTERNS.some((pattern) => pattern.test(haystack));

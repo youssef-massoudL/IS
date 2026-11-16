@@ -36,6 +36,7 @@ const SECTION_ICONS = {
   questions: "question",
   summaries: "summary",
   "midterm-revision": "revision",
+  committees: "pin",
   "simplified-explanations": "simple",
   general: "folder",
 };
@@ -1765,14 +1766,15 @@ function renderMatrix(subject) {
   const files = subjectFiles(subject);
   const lectureCount = lectureTotal(subject);
   const midtermSection = subject.sections.find((section) => section.id === "midterm-revision");
+  const committeesSection = subject.sections.find(
+    (section) => section.id === "committees" && section.files.length,
+  );
   const curatedSection = SUBJECT_TO_MIDTERM_SEC[subject.id]
     ? subjectById("midterm-revision")?.sections.find(
         (section) => section.id === SUBJECT_TO_MIDTERM_SEC[subject.id],
       )
     : null;
-  const curatedFiles = (curatedSection?.files || []).filter(
-    (file) => !String(file.path || "").startsWith("files/committees/"),
-  );
+  const curatedFiles = curatedSection?.files || [];
   const curatedOrder = new Map();
   const curatedTags = new Map();
   curatedFiles.forEach((file, index) => {
@@ -1810,6 +1812,7 @@ function renderMatrix(subject) {
   )
     ? files.filter(
         (file) =>
+          !String(file.path || "").startsWith("files/committees/") &&
           !reviewSet.has(file.path) &&
           !Number.isInteger(file.lecture) &&
           !(Array.isArray(file.lectureSpan) && file.lectureSpan.length),
@@ -1875,7 +1878,18 @@ function renderMatrix(subject) {
       </section>`
     : "";
 
+  const committeesMarkup = committeesSection
+    ? sectionMarkup(
+        committeesSection,
+        committeesSection.files
+          .map((file) => fileRow(file, subject, committeesSection.id))
+          .join(""),
+        store.get(`section:${committeesSection.id}`) !== "closed",
+      )
+    : "";
+
   return `${renderReviewBlock(subject, reviewFiles)}
+    ${committeesMarkup}
     ${studyProgressMarkup(subject, studiedCount)}
     ${table}
     ${extraSection}`;

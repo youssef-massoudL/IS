@@ -848,5 +848,645 @@
     ],
     "answer": 3,
     "explanation": ")80–77 ص ،مسائل 10 الـ حل("
+  },
+  {
+    "id": "it-l2-056",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The entropy of a deterministic random variable is:",
+    "options": [
+      "0",
+      "1",
+      "Maximum",
+      "Infinite"
+    ],
+    "answer": 0,
+    "explanation": "One outcome has p = 1, so H = 1·log21 = 0."
+  },
+  {
+    "id": "it-l1-057",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which equation is correct?",
+    "options": [
+      "I(X;Y) = H(X) + H(Y)",
+      "I(X;Y) = H(X) − H(X | Y)",
+      "I(X;Y) = H(X | Y) − H(X)",
+      "I(X;Y) = H(X)·H(Y)"
+    ],
+    "answer": 1,
+    "explanation": "I(X;Y) = H(X) − H(X|Y): uncertainty before minus uncertainty after. Option C would be negative."
+  },
+  {
+    "id": "it-l3-058",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The Kullback–Leibler divergence between P and Q is:",
+    "options": [
+      "Σ P(x) log2 ( P(x) / Q(x) )",
+      "Σ P(x) log2 ( Q(x) / P(x) )",
+      "Σ P(x)·Q(x)",
+      "Σ | P(x) − Q(x) |"
+    ],
+    "answer": 0,
+    "explanation": "D(P‖Q) = Σ P(x) log₂ (P(x)/Q(x)). It is ≥ 0, equals 0 iff P = Q, and is not symmetric. (Options were cut in the screenshot; rebuilt from the lecture formula.)"
+  },
+  {
+    "id": "it-l1-059",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The self-information of an outcome x with probability P(x) is:",
+    "options": [
+      "P(x)·log2 P(x)",
+      "log2 P(x)",
+      "−log2 P(x)",
+      "1 / P(x)"
+    ],
+    "answer": 2,
+    "explanation": "I(x) = −log₂ P(x) = log₂(1/P(x)). Rarer outcomes carry more information."
+  },
+  {
+    "id": "it-l1-060",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A binary source has P(0) = 0.7 and P(1) = 0.3. Its entropy is approximately:",
+    "options": [
+      "0.881 bits",
+      "1.000 bit",
+      "0.610 bits",
+      "0.469 bits"
+    ],
+    "answer": 0,
+    "explanation": "H = −0.7·log20.7 − 0.3·log20.3 = 0.7×0.515 + 0.3×1.737 = 0.360 + 0.521 = 0.881 bits."
+  },
+  {
+    "id": "it-l3-061",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Joint distribution: p(0,0)=0.4, p(0,1)=0.1, p(1,0)=0.2, p(1,1)=0.3. The joint entropy H(X,Y) is approximately:",
+    "options": [
+      "2.000 bits",
+      "1.846 bits",
+      "1.571 bits",
+      "1.000 bit"
+    ],
+    "answer": 1,
+    "explanation": "0.4×1.322 + 0.1×3.322 + 0.2×2.322 + 0.3×1.737 = 0.529 + 0.332 + 0.464 + 0.521 = 1.846 bits."
+  },
+  {
+    "id": "it-l3-062",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "For the same distribution, H(X | Y) is approximately:",
+    "options": [
+      "0.846 bits",
+      "0.971 bits",
+      "0.875 bits",
+      "1.000 bit"
+    ],
+    "answer": 2,
+    "explanation": "p(y=0) = 0.6, p(y=1) = 0.4 ⇒ H(Y) = 0.971. H(X|Y) = H(X,Y) − H(Y) = 1.846 − 0.971 = 0.875 bits. (0.846 is H(Y|X), 1.000 is H(X).)"
+  },
+  {
+    "id": "it-l6-063",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "For the same distribution, I(X;Y) = H(X) − H(X|Y) equals approximately:",
+    "options": [
+      "0.875 bits",
+      "1.846 bits",
+      "0.000 bits",
+      "0.125 bits"
+    ],
+    "answer": 3,
+    "explanation": "H(X) = 1 (p(x) = 0.5, 0.5). I = 1 − 0.875 = 0.125 bits. Check: H(X)+H(Y)−H(X,Y) = 1 + 0.971 − 1.846 = 0.125."
+  },
+  {
+    "id": "it-l3-064",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "For P = (0.6, 0.4) and Q = (0.5, 0.5), the relative entropy D(P‖Q) is approximately:",
+    "options": [
+      "0.201",
+      "0.029",
+      "0.000",
+      "0.971"
+    ],
+    "answer": 1,
+    "explanation": "0.6×log2(0.6/0.5) + 0.4×log2(0.4/0.5) = 0.6×0.263 + 0.4×(−0.322) = 0.158 − 0.129 = 0.029 bits."
+  },
+  {
+    "id": "it-l6-065",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The capacity of a binary symmetric channel with crossover probability p = 0.1 is approximately:",
+    "options": [
+      "0.469 bits",
+      "0.900 bits",
+      "0.531 bits",
+      "1.000 bit"
+    ],
+    "answer": 2,
+    "explanation": "C = 1 − H(0.1) = 1 − 0.469 = 0.531 bits per use. (0.469 is H(p) itself.)"
+  },
+  {
+    "id": "it-l6-066",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "To prove I(X;Y) ≥ 0, the key idea is to write I(X;Y) as:",
+    "options": [
+      "H(X) − H(Y)",
+      "D( p(x,y) ‖ p(x)p(y) ), a relative entropy, which is ≥ 0",
+      "H(X|Y) − H(X)",
+      "p(x,y) − p(x)p(y)"
+    ],
+    "answer": 1,
+    "explanation": "I(X;Y) = Σ p(x,y) log [ p(x,y) / (p(x)p(y)) ] = D(p(x,y) ‖ p(x)p(y)) ≥ 0, because relative entropy is never negative."
+  },
+  {
+    "id": "it-l6-067",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "I(X;Y) = 0 if and only if:",
+    "options": [
+      "X = Y",
+      "p(x,y) = p(x)p(y) for all x, y",
+      "H(X) = H(Y)",
+      "p(x) = p(y)"
+    ],
+    "answer": 1,
+    "explanation": "D(p‖q) = 0 iff p = q. Here that means p(x,y) = p(x)p(y), which is the definition of independence."
+  },
+  {
+    "id": "it-l3-068",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In the proof of the chain rule H(X,Y) = H(X) + H(Y|X), the first step is to write p(x,y) as:",
+    "options": [
+      "p(x) + p(y|x)",
+      "p(x) · p(y|x)",
+      "p(x) · p(y)",
+      "p(y) / p(x)"
+    ],
+    "answer": 1,
+    "explanation": "p(x,y) = p(x)p(y|x). The log of a product becomes a sum: −ΣΣ p log p(x) − ΣΣ p log p(y|x) = H(X) + H(Y|X)."
+  },
+  {
+    "id": "it-l6-069",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Which argument proves I(X;Y) = H(X) + H(Y) − H(X,Y)?",
+    "options": [
+      "Replace H(X|Y) by H(X,Y) − H(Y) in I = H(X) − H(X|Y)",
+      "Replace H(X|Y) by H(X) + H(Y) in I = H(X) − H(X|Y)",
+      "Use H(X,Y) = H(X)·H(Y)",
+      "Use I = H(X|Y) − H(Y|X)"
+    ],
+    "answer": 0,
+    "explanation": "From the chain rule, H(X|Y) = H(X,Y) − H(Y). Then I = H(X) − [H(X,Y) − H(Y)] = H(X) + H(Y) − H(X,Y)."
+  },
+  {
+    "id": "it-l6-070",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "I(X;Y) = H(X) − H(X|Y) = H(Y) − H(Y|X) holds because:",
+    "options": [
+      "X and Y are always independent",
+      "The chain rule gives H(X) + H(Y|X) = H(Y) + H(X|Y)",
+      "H(X) = H(Y) always",
+      "Conditioning removes all uncertainty"
+    ],
+    "answer": 1,
+    "explanation": "Both H(X)+H(Y|X) and H(Y)+H(X|Y) equal H(X,Y). Rearranging gives H(X) − H(X|Y) = H(Y) − H(Y|X): mutual information is symmetric."
+  },
+  {
+    "id": "it-l3-071",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "In terms of uncertainty, H(X|Y) ≤ H(X) means:",
+    "options": [
+      "Knowing Y can increase the average uncertainty about X",
+      "Knowing Y never increases the average uncertainty about X",
+      "X and Y are always independent",
+      "The uncertainty about X is zero after observing Y"
+    ],
+    "answer": 1,
+    "explanation": "Because I(X;Y) = H(X) − H(X|Y) ≥ 0. Equality holds only when X and Y are independent."
+  },
+  {
+    "id": "it-l2-072",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "For a random variable with n possible outcomes, H(X) ≤ log₂ n, with equality when:",
+    "options": [
+      "One outcome has probability 1",
+      "All n outcomes are equally likely, p = 1/n",
+      "n = 1 only",
+      "The outcomes are impossible"
+    ],
+    "answer": 1,
+    "explanation": "Equality holds exactly for the uniform distribution, where H = Σ (1/n) log₂ n = log₂ n."
+  },
+  {
+    "id": "it-l3-073",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "hard",
+    "type": "mcq",
+    "q": "Gibbs' inequality D(P‖Q) ≥ 0 is proved using:",
+    "options": [
+      "Only the chain rule",
+      "The inequality ln x ≤ x − 1 (the log-sum inequality)",
+      "The central limit theorem",
+      "The fact that probabilities are at most 1"
+    ],
+    "answer": 1,
+    "explanation": "−D(P‖Q) = Σ P ln(Q/P) ≤ Σ P (Q/P − 1) = ΣQ − ΣP = 0, using ln x ≤ x − 1. Hence D ≥ 0."
+  },
+  {
+    "id": "it-l6-074",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Shannon's source coding theorem states that the maximum rate of lossless compression of a source is:",
+    "options": [
+      "Its channel capacity",
+      "Its entropy rate",
+      "Its redundancy",
+      "Its bandwidth"
+    ],
+    "answer": 1,
+    "explanation": "Lossless compression cannot go below the entropy rate of the source."
+  },
+  {
+    "id": "it-l6-075",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Shannon's channel coding theorem states that the maximum rate of reliable transmission over a noisy channel equals:",
+    "options": [
+      "The source entropy",
+      "The bandwidth",
+      "The channel capacity",
+      "The noise power"
+    ],
+    "answer": 2,
+    "explanation": "For a discrete memoryless channel, reliable communication is possible at any rate up to C = max I(X;Y)."
+  },
+  {
+    "id": "it-l6-076",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which statement about the rate R and the capacity C is correct?",
+    "options": [
+      "Reliable communication is possible if R > C",
+      "Reliable communication is possible if R < C, and not possible if R > C",
+      "Reliable communication is possible for any R",
+      "Reliable communication is possible only if R = 0"
+    ],
+    "answer": 1,
+    "explanation": "Below capacity, codes exist with arbitrarily small error; above capacity, errors cannot be made arbitrarily small."
+  },
+  {
+    "id": "it-l1-077",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which description of the four quantities is correct?",
+    "options": [
+      "H(X) = uncertainty left after seeing Y; H(X|Y) = prior uncertainty",
+      "H(X) = prior uncertainty; H(X|Y) = uncertainty left after seeing Y; I(X;Y) = H(X) − H(X|Y); C = max I(X;Y)",
+      "I(X;Y) = H(X) + H(X|Y); C = min I(X;Y)",
+      "H(X) = bandwidth; C = entropy"
+    ],
+    "answer": 1,
+    "explanation": "H(X) is the prior uncertainty, H(X|Y) the remaining uncertainty, I the resolved uncertainty, and C the best I over p(x)."
+  },
+  {
+    "id": "it-l1-078",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Information theory is mainly concerned with:",
+    "options": [
+      "Compressing data and transmitting it reliably",
+      "Encrypting passwords and hashing",
+      "Routing and switching packets",
+      "Sorting and searching"
+    ],
+    "answer": 0,
+    "explanation": "Shannon's two questions: how far can data be compressed, and how fast can it be sent reliably over a noisy channel?"
+  },
+  {
+    "id": "it-l2-079",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which is NOT a property of entropy?",
+    "options": [
+      "H(X) ≥ 0",
+      "H(X) ≤ log₂ n",
+      "It depends only on the probabilities",
+      "H(X) can be negative"
+    ],
+    "answer": 3,
+    "explanation": "Since 0 ≤ p ≤ 1, log(1/p) ≥ 0 and so H(X) ≥ 0 always."
+  },
+  {
+    "id": "it-l3-080",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "For two independent fair bits X and Y, the values of H(X,Y) and H(Y|X) are:",
+    "options": [
+      "2 bits and 1 bit",
+      "1 bit and 1 bit",
+      "2 bits and 2 bits",
+      "1 bit and 0.5 bit"
+    ],
+    "answer": 0,
+    "explanation": "Each of the 4 pairs has p = 1/4, so H(X,Y) = 2. H(X) = 1, so H(Y|X) = 2 − 1 = 1."
+  },
+  {
+    "id": "it-l6-081",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "In a communication system, I(X;Y) between the channel input and output measures:",
+    "options": [
+      "How much information the output gives about the input",
+      "The noise power",
+      "The channel bandwidth",
+      "The number of symbols"
+    ],
+    "answer": 0,
+    "explanation": "I(X;Y) is the information that gets through the channel; maximising it over p(x) gives the capacity."
+  },
+  {
+    "id": "it-l3-082",
+    "subjectId": "information-theory",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Relative entropy D(p‖q) measures:",
+    "options": [
+      "The inefficiency of assuming the distribution is q when the true one is p",
+      "A symmetric true distance",
+      "The channel bandwidth",
+      "The channel capacity"
+    ],
+    "answer": 0,
+    "explanation": "It is not a true distance: it is not symmetric and does not satisfy the triangle inequality."
+  },
+  {
+    "id": "it-l5-083",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Source coding aims to:",
+    "options": [
+      "Add redundancy to correct errors",
+      "Represent the source with the fewest bits on average, removing redundancy",
+      "Increase the noise",
+      "Encrypt the message"
+    ],
+    "answer": 1,
+    "explanation": "Source coding = compression; channel coding = controlled redundancy."
+  },
+  {
+    "id": "it-l5-084",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Source coding versus channel coding:",
+    "options": [
+      "Source coding removes redundancy; channel coding adds controlled redundancy",
+      "Source coding adds redundancy; channel coding removes it",
+      "Both remove redundancy",
+      "Both add redundancy"
+    ],
+    "answer": 0,
+    "explanation": "Compression removes all redundancy; transmission adds redundancy in a controlled fashion to combat channel errors."
+  },
+  {
+    "id": "it-l6-085",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Shannon's two fundamental coding theorems set limits given by, respectively:",
+    "options": [
+      "Entropy (compression) and channel capacity (transmission)",
+      "Bandwidth and power",
+      "Huffman and arithmetic coding",
+      "Parity and checksum"
+    ],
+    "answer": 0,
+    "explanation": "Source coding theorem → entropy; channel coding theorem → capacity."
+  },
+  {
+    "id": "it-l6-086",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Channel capacity is measured in:",
+    "options": [
+      "Bits per channel use",
+      "Hertz",
+      "Watts",
+      "Bytes per file"
+    ],
+    "answer": 0,
+    "explanation": "C is in bits per transmission (bits per channel use)."
+  },
+  {
+    "id": "it-l5-087",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "In lossless compression, the average codeword length L per symbol is bounded below by:",
+    "options": [
+      "The entropy H(X)",
+      "Zero",
+      "1",
+      "The alphabet size"
+    ],
+    "answer": 0,
+    "explanation": "L ≥ H(X). Compression is possible because real sources have redundancy, and the entropy is the limit."
+  },
+  {
+    "id": "it-l1-088",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which of these is NOT an application of information theory?",
+    "options": [
+      "Data compression",
+      "Error-correcting codes",
+      "Image processing and information security",
+      "Sorting algorithms"
+    ],
+    "answer": 3,
+    "explanation": "Applications: compression, error-correcting coding, transmission and modulation, image processing, information security."
+  },
+  {
+    "id": "it-l1-089",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which statement is correct?",
+    "options": [
+      "Entropy measures the uncertainty of a random variable",
+      "Entropy measures channel bandwidth",
+      "Entropy is measured in hertz",
+      "Entropy is always equal to 1"
+    ],
+    "answer": 0,
+    "explanation": "Entropy = average uncertainty. True statement: option A."
+  },
+  {
+    "id": "it-l1-090",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which statement about a deterministic source is correct?",
+    "options": [
+      "Its entropy is zero",
+      "Its entropy is 1 bit",
+      "Its entropy is maximum",
+      "Its entropy is infinite"
+    ],
+    "answer": 0,
+    "explanation": "One outcome with probability 1 gives H = 0."
+  },
+  {
+    "id": "it-l6-091",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which statement about mutual information is correct?",
+    "options": [
+      "It can be negative",
+      "It is always non-negative",
+      "It is always at least 1",
+      "It is not symmetric"
+    ],
+    "answer": 1,
+    "explanation": "I(X;Y) = D(p(x,y)‖p(x)p(y)) ≥ 0, and I(X;Y) = I(Y;X)."
+  },
+  {
+    "id": "it-l1-092",
+    "subjectId": "information-theory",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which statement about KL divergence is correct?",
+    "options": [
+      "It can be negative",
+      "It is always non-negative and equals zero iff P = Q",
+      "It is symmetric",
+      "It is a true distance"
+    ],
+    "answer": 1,
+    "explanation": "D(P‖Q) ≥ 0, zero iff P = Q; not symmetric and no triangle inequality."
+  },
+  {
+    "id": "it-l5-093",
+    "subjectId": "information-theory",
+    "lecture": 5,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which statement about prefix codes is correct?",
+    "options": [
+      "One codeword may be a prefix of another",
+      "No codeword is a prefix of any other codeword",
+      "All codewords have the same length",
+      "They cannot be uniquely decoded"
+    ],
+    "answer": 1,
+    "explanation": "A prefix (instantaneous) code has no codeword that is a prefix of another; all symbols sit at leaf nodes of the tree."
+  },
+  {
+    "id": "it-l6-094",
+    "subjectId": "information-theory",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which statement about channel capacity is correct?",
+    "options": [
+      "It is the maximum reliable information transmission rate",
+      "It is the minimum noise level",
+      "It is the source entropy",
+      "It is always 1 bit"
+    ],
+    "answer": 0,
+    "explanation": "C = max I(X;Y) is the highest reliable rate (bits per channel use)."
+  },
+  {
+    "id": "it-l2-095",
+    "subjectId": "information-theory",
+    "lecture": 2,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which statement about the unit of entropy is correct?",
+    "options": [
+      "With log base 2 it is measured in bits",
+      "With log base 2 it is measured in nats",
+      "It is measured in hertz",
+      "It is measured in bytes only"
+    ],
+    "answer": 0,
+    "explanation": "Base 2 → bits; base e → nats."
   }
 ]

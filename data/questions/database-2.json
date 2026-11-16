@@ -5345,5 +5345,293 @@
     ],
     "answer": 0,
     "explanation": "Physical integrity is about the storage layer. .التخزين طبقة يخص physical integrity الـ W"
+  },
+  {
+    "id": "db-l4-347",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Transaction Ti needs to be ___ if the log contains the records Ti start only.",
+    "options": [
+      "redone",
+      "undone",
+      "wait",
+      "Rollback"
+    ],
+    "answer": 1,
+    "explanation": "Past midterm exam question. Correct answer: undone"
+  },
+  {
+    "id": "db-l4-348",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "if we use NO-UNDOREDO algorithm to recovery the system failure the log must contain",
+    "options": [
+      "AFIM",
+      "BFIM",
+      "AFIM and BFIM",
+      "neither all"
+    ],
+    "answer": 0,
+    "explanation": "Past midterm exam question. Correct answer: AFIM"
+  },
+  {
+    "id": "db-l1-349",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "___ is one of the DBMS functions, which allows shared access of the database.",
+    "options": [
+      "Integrity",
+      "Concurrency control",
+      "Recovery",
+      "Query processing"
+    ],
+    "answer": 1,
+    "explanation": "Past midterm exam question. Correct answer: Concurrency control"
+  },
+  {
+    "id": "db-l2-350",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If a transaction T needs to write an item x that its readTSX TST.",
+    "options": [
+      "T will read the item x",
+      "T will wait",
+      "T will rollback",
+      "x will be locked"
+    ],
+    "answer": 1,
+    "explanation": "Past midterm exam question. Correct answer: T will wait"
+  },
+  {
+    "id": "db-l5-351",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Strict two-phase locking protocol permits releasing locks of transaction.",
+    "options": [
+      "at the beginning",
+      "during execution",
+      "at the end",
+      "Never in the lifetime"
+    ],
+    "answer": 2,
+    "explanation": "Past midterm exam question. Correct answer: at the end"
+  },
+  {
+    "id": "db-l5-352",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "in ........... two phase locking a transaction locks all data items it refers to before it begins execution",
+    "options": [
+      "Basic",
+      "Conservative",
+      "Strict",
+      "rigorous"
+    ],
+    "answer": 1,
+    "explanation": "Past midterm exam question. Correct answer: Conservative"
+  },
+  {
+    "id": "db-l2-353",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "if transaction T needs to write an item x that its writeTSX TST and readTSX TST then",
+    "options": [
+      "T will write the item",
+      "T will wait",
+      "T will rollback",
+      "X will be locked X"
+    ],
+    "answer": 0,
+    "explanation": "Past midterm exam question. Correct answer: T will write the item"
+  },
+  {
+    "id": "db-l1-354",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If the user deletes a tuple contains a PK which referred by FK, then the DBMS can decide to do one of the following EXCEPT ___.",
+    "options": [
+      "execute it",
+      "reject it",
+      "Set Default",
+      "Cascade delete"
+    ],
+    "answer": 0,
+    "explanation": "Past midterm exam question. Correct answer: execute it"
+  },
+  {
+    "id": "db-l2-355",
+    "subjectId": "database-2",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which ACID property ensures that transactions are processed reliably?",
+    "options": [
+      "Atomicity",
+      "Consistency",
+      "Durability",
+      "Isolation"
+    ],
+    "answer": 2,
+    "explanation": "Past midterm exam question. Correct answer: Durability"
+  },
+  {
+    "id": "db-l3-356",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The lost update problem occurs when",
+    "options": [
+      "Two transactions read the same data",
+      "Two transactions update the same data concurrently",
+      "A transaction reads uncommitted data",
+      "A transaction fails to commit"
+    ],
+    "answer": 1,
+    "explanation": "Past midterm exam question. Correct answer: Two transactions update the same data concurrently"
+  },
+  {
+    "id": "db-l5-357",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In timestamp ordering protocol, if read_TS(X) > TS(T) then",
+    "options": [
+      "Transaction T proceeds",
+      "Transaction T is rolled back",
+      "Transaction T waits",
+      "Transaction T is restarted"
+    ],
+    "answer": 1,
+    "explanation": "Past midterm exam question. Correct answer: Transaction T is rolled back"
+  },
+  {
+    "id": "db-l4-358",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which recovery technique uses both undo and redo operations?",
+    "options": [
+      "Deferred update",
+      "Immediate update",
+      "Shadow paging",
+      "Checkpointing"
+    ],
+    "answer": 1,
+    "explanation": "Past midterm exam question. Correct answer: Immediate update"
+  },
+  {
+    "id": "db-l3-359",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A schedule is conflict serializable if",
+    "options": [
+      "It is equivalent to some serial schedule",
+      "It has no conflicting operations",
+      "Its precedence graph is acyclic",
+      "It satisfies two-phase locking"
+    ],
+    "answer": 2,
+    "explanation": "Past midterm exam question. Correct answer: Its precedence graph is acyclic"
+  },
+  {
+    "id": "db-l1-360",
+    "subjectId": "database-2",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The phantom problem occurs when",
+    "options": [
+      "New tuples are inserted by other transactions",
+      "Existing tuples are deleted",
+      "Tuples are updated concurrently",
+      "Deadlock occurs between transactions"
+    ],
+    "answer": 0,
+    "explanation": "Past midterm exam question. Correct answer: New tuples are inserted by other transactions"
+  },
+  {
+    "id": "db-l5-361",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In strict two-phase locking, locks are released",
+    "options": [
+      "Immediately after use",
+      "After transaction commits",
+      "When no longer needed",
+      "At the end of each operation"
+    ],
+    "answer": 1,
+    "explanation": "Past midterm exam question. Correct answer: After transaction commits"
+  },
+  {
+    "id": "db-l5-362",
+    "subjectId": "database-2",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which concurrency control protocol uses timestamps?",
+    "options": [
+      "Two-phase locking",
+      "Timestamp ordering",
+      "Validation based",
+      "Multiple granularity"
+    ],
+    "answer": 1,
+    "explanation": "Past midterm exam question. Correct answer: Timestamp ordering"
+  },
+  {
+    "id": "db-l3-363",
+    "subjectId": "database-2",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A dirty read occurs when",
+    "options": [
+      "A transaction reads data written by uncommitted transaction",
+      "Two transactions read the same data",
+      "A transaction reads outdated data",
+      "Data is lost during transaction"
+    ],
+    "answer": 0,
+    "explanation": "Past midterm exam question. Correct answer: A transaction reads data written by uncommitted transaction"
+  },
+  {
+    "id": "db-l4-364",
+    "subjectId": "database-2",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The system log in recovery contains",
+    "options": [
+      "Transaction operations and states",
+      "Database schema",
+      "User authentication data",
+      "Network configuration"
+    ],
+    "answer": 0,
+    "explanation": "Past midterm exam question. Correct answer: Transaction operations and states"
   }
 ]

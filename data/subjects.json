@@ -687,6 +687,49 @@
               ]
             }
           ]
+        },
+        {
+          "id": "committees",
+          "name": "توزيع اللجان",
+          "nameEn": "Committees Distribution",
+          "files": [
+            {
+              "id": "computer-networks-committees",
+              "title": "توزيع لجان شبكات الحاسب",
+              "original": "الاربعاء- نظم المعلومات - شبكات.pdf",
+              "path": "files/committees/computer-networks-committees.pdf",
+              "ext": "pdf",
+              "size": 1485429,
+              "youtube": "",
+              "lecture": null,
+              "kind": "review",
+              "midtermReview": true,
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "شبكات الحاسب",
+                "Computer Networks",
+                "computer-networks",
+                "توزيع اللجان",
+                "Committees Distribution",
+                "committees",
+                "pdf",
+                "توزيع",
+                "لجان",
+                "شبكات",
+                "الحاسب",
+                "الاربعاء",
+                "نظم",
+                "المعلومات",
+                "computer",
+                "networks"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1449,6 +1492,49 @@
               ]
             }
           ]
+        },
+        {
+          "id": "committees",
+          "name": "توزيع اللجان",
+          "nameEn": "Committees Distribution",
+          "files": [
+            {
+              "id": "database-2-committees",
+              "title": "توزيع لجان قواعد بيانات 2",
+              "original": "الثلاثاء - نظم معلومات - قواعد البيانات 2.pdf",
+              "path": "files/committees/database-2-committees.pdf",
+              "ext": "pdf",
+              "size": 1539657,
+              "youtube": "",
+              "lecture": null,
+              "kind": "review",
+              "midtermReview": true,
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "قواعد البيانات",
+                "Database II",
+                "database-2",
+                "توزيع اللجان",
+                "Committees Distribution",
+                "committees",
+                "pdf",
+                "توزيع",
+                "لجان",
+                "قواعد",
+                "بيانات",
+                "الثلاثاء",
+                "نظم",
+                "معلومات",
+                "البيانات",
+                "database"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1997,6 +2083,49 @@
                 "Bank",
                 "Youssef",
                 "Nageh"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "committees",
+          "name": "توزيع اللجان",
+          "nameEn": "Committees Distribution",
+          "files": [
+            {
+              "id": "information-theory-committees",
+              "title": "توزيع لجان نظرية المعلومات",
+              "original": "الاثنين - نظم معلومات - نظرية المعلومات.pdf",
+              "path": "files/committees/information-theory-committees.pdf",
+              "ext": "pdf",
+              "size": 1487470,
+              "youtube": "",
+              "lecture": null,
+              "kind": "review",
+              "midtermReview": true,
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "نظرية المعلومات",
+                "Information Theory",
+                "information-theory",
+                "توزيع اللجان",
+                "Committees Distribution",
+                "committees",
+                "pdf",
+                "توزيع",
+                "لجان",
+                "نظرية",
+                "المعلومات",
+                "الاثنين",
+                "نظم",
+                "معلومات",
+                "information",
+                "theory"
               ]
             }
           ]
@@ -3588,41 +3717,6 @@
                 "Master",
                 "Guide"
               ]
-            },
-            {
-              "id": "computer-networks-committees",
-              "title": "توزيع لجان شبكات الحاسب",
-              "original": "الاربعاء- نظم المعلومات - شبكات.pdf",
-              "path": "files/committees/computer-networks-committees.pdf",
-              "ext": "pdf",
-              "size": 1485429,
-              "youtube": "",
-              "lecture": null,
-              "kind": "review",
-              "keywords": [
-                "مراجعة",
-                "مراجعات",
-                "ميدترم",
-                "midterm",
-                "revision",
-                "شامل",
-                "مراجعة الميد",
-                "Midterm Revision",
-                "midterm-revision",
-                "Computer Networks",
-                "computer-networks",
-                "pdf",
-                "توزيع",
-                "لجان",
-                "شبكات",
-                "الحاسب",
-                "الاربعاء",
-                "نظم",
-                "المعلومات",
-                "computer",
-                "networks",
-                "committees"
-              ]
             }
           ]
         },
@@ -3731,39 +3825,6 @@
                 "الجزء",
                 "المقرر",
                 "علينا"
-              ]
-            },
-            {
-              "id": "database-2-committees",
-              "title": "توزيع لجان قواعد بيانات 2",
-              "original": "الثلاثاء - نظم معلومات - قواعد البيانات 2.pdf",
-              "path": "files/committees/database-2-committees.pdf",
-              "ext": "pdf",
-              "size": 1539657,
-              "youtube": "",
-              "lecture": null,
-              "kind": "review",
-              "keywords": [
-                "مراجعة",
-                "مراجعات",
-                "ميدترم",
-                "midterm",
-                "revision",
-                "شامل",
-                "مراجعة الميد",
-                "Midterm Revision",
-                "midterm-revision",
-                "Database",
-                "pdf",
-                "توزيع",
-                "لجان",
-                "قواعد",
-                "بيانات",
-                "الثلاثاء",
-                "نظم",
-                "معلومات",
-                "البيانات",
-                "committees"
               ]
             }
           ]
@@ -3941,41 +4002,6 @@
                 "Bank",
                 "Youssef",
                 "Nageh"
-              ]
-            },
-            {
-              "id": "information-theory-committees",
-              "title": "توزيع لجان نظرية المعلومات",
-              "original": "الاثنين - نظم معلومات - نظرية المعلومات.pdf",
-              "path": "files/committees/information-theory-committees.pdf",
-              "ext": "pdf",
-              "size": 1487470,
-              "youtube": "",
-              "lecture": null,
-              "kind": "review",
-              "keywords": [
-                "مراجعة",
-                "مراجعات",
-                "ميدترم",
-                "midterm",
-                "revision",
-                "شامل",
-                "مراجعة الميد",
-                "Midterm Revision",
-                "midterm-revision",
-                "Information Theory",
-                "information-theory",
-                "pdf",
-                "توزيع",
-                "لجان",
-                "نظرية",
-                "المعلومات",
-                "الاثنين",
-                "نظم",
-                "معلومات",
-                "information",
-                "theory",
-                "committees"
               ]
             }
           ]

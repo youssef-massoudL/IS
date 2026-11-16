@@ -1294,5 +1294,735 @@
     ],
     "answer": 0,
     "explanation": "Plagiarism"
+  },
+  {
+    "id": "rm-l1-082",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Research is not a logical and systematic search for new and useful information on a particular topic.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: research IS a logical and systematic search for new and useful information. .ومفيدة جديدة معلومة عن ومنظم منطقي بحث ًفع هو Research الـ :غلط"
+  },
+  {
+    "id": "rm-l1-083",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The main function of research is always ______.",
+    "options": [
+      "verifying the old knowledge",
+      "exploring new knowledge",
+      "filling the gap between knowledge",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "Research verifies old knowledge, explores new knowledge and fills gaps, so all of them. .كلهم يعين ،الفجوات ويسد الجديد ويكتشف القديم من بيتأكد Research الـ"
+  },
+  {
+    "id": "rm-l1-084",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Science is empirical means that researchers must be able to perceive and classify what they study and reject metaphysical explanations.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "rm-l1-085",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Scientific research is public means that it deals with facts rather than interpretations of facts.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: that describes “objective”, not “public”. Public means information is freely available. .للكل متاحة المعلومة يعين public الـ .public الـ مش objective الـ وصف ده :غلط"
+  },
+  {
+    "id": "rm-l1-086",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Replication is the first (or last) step in the research procedure.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: replication is a characteristic (repeating to confirm), not the first/last step. .النتيجة بتأكد صفة هو ،خطوة آخر وال أول مش replication الـ :غلط"
+  },
+  {
+    "id": "rm-l1-087",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "“Research can lead to new contributions to the existing knowledge.” Which characteristic of the scientific method is this closest to?",
+    "options": [
+      "Systematic and cumulative",
+      "Public",
+      "Empirical",
+      "None of them"
+    ],
+    "answer": 0,
+    "explanation": "New results are added on top of the existing knowledge."
+  },
+  {
+    "id": "rm-l1-088",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the DIKW pyramid, which level comes directly above Information?",
+    "options": [
+      "Data",
+      "Information",
+      "Knowledge",
+      "Wisdom"
+    ],
+    "answer": 2,
+    "explanation": "Order from bottom: Data, Information, Knowledge, Wisdom. .Wisdom ثم Knowledge ثم Information ثم Data :تحت من الرتتيب"
+  },
+  {
+    "id": "rm-l1-089",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which is NOT one of the four views of the research process?",
+    "options": [
+      "Sequential",
+      "Generalized",
+      "Circulatory",
+      "Quantitative"
+    ],
+    "answer": 3,
+    "explanation": "The four views: sequential, generalized, circulatory, evolutionary. .evolutionary و circulatory و generalized و sequential :األربعة التصورات"
+  },
+  {
+    "id": "rm-l1-090",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A series of activities are performed one after another as a fixed, linear series of stages.",
+    "options": [
+      "sequential",
+      "generalized",
+      "Circulatory"
+    ],
+    "answer": 0,
+    "explanation": "Fixed linear stages = sequential. .sequential = بعض ورا ثابتة مراحل"
+  },
+  {
+    "id": "rm-l1-091",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A specified series of actions is carried out one after the other in a sequential fashion, with alternate paths.",
+    "options": [
+      "sequential",
+      "generalized",
+      "Circulatory"
+    ],
+    "answer": 1,
+    "explanation": "With alternate paths = generalized. .generalized = بديلة مسارات فيه"
+  },
+  {
+    "id": "rm-l1-092",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The generalized research process is similar to the sequential research process.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: both go step by step; generalized just allows alternate paths. .بديلة مسارات فيه generalized الـ بس ،بعض ورا خطوات الت ني :صح"
+  },
+  {
+    "id": "rm-l1-093",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "All the methods used by a researcher during a research study (theoretical procedures, experimental studies, numerical schemes, statistical approaches…) are termed as ______.",
+    "options": [
+      "Research Methods",
+      "Research Methodology",
+      "Research",
+      "None of them"
+    ],
+    "answer": 0,
+    "explanation": "These are the research methods. (Some student copies wrongly mark Methodology.) .Methodology) وع ّلمت غلطت الطلبة ملفات بعض( .Research Methods الـ دي"
+  },
+  {
+    "id": "rm-l1-094",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It is a systematic way to solve a problem, a science of studying how research is carried out, and its aim is to give the work plan of research. This is known as ______.",
+    "options": [
+      "Research Methods",
+      "Research Methodology",
+      "All of Them",
+      "None of Them"
+    ],
+    "answer": 1,
+    "explanation": "That is Research Methodology. .Research Methodology الـ ده"
+  },
+  {
+    "id": "rm-l1-095",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Research method explains and justifies the techniques and tools by which you proceed with your research.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: this describes research methodology (it explains and justifies the tools). .)األدوات وتربر بترشح اليل هي( methodology الـ وصف ده :غلط"
+  },
+  {
+    "id": "rm-l1-096",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The scope of research methodology is wider than the scope of research methods.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True: methods are part of methodology. .methodology الـ من جزء methods الـ :صح"
+  },
+  {
+    "id": "rm-l1-097",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Basic research attempts to explain why things happen.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "rm-l1-098",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The applied research is similar to the basic research.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: basic builds theory (why?), applied solves practical problems (how?). .)إزاي؟( عملية مشكلة بيحل applied والـ )ليه؟( نظرية بيبين basic الـ :غلط"
+  },
+  {
+    "id": "rm-l1-099",
+    "subjectId": "research-methods",
+    "lecture": 1,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which pair matches correctly?",
+    "options": [
+      "Basic research → theory building",
+      "Basic research → technology building",
+      "Applied research → theory building",
+      "Applied research → explains why"
+    ],
+    "answer": 0,
+    "explanation": "Basic builds theory; applied builds technology. .technology بيبين applied والـ theory بيبين basic الـ"
+  },
+  {
+    "id": "rm-l2-100",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is concerned with qualitative phenomenon involving quality.",
+    "options": [
+      "Qualitative research",
+      "Quantitative research",
+      "All of them"
+    ],
+    "answer": 0,
+    "explanation": "Qualitative research. .Qualitative research الـ"
+  },
+  {
+    "id": "rm-l2-101",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Qualitative research is numerical, non-descriptive, applies statistics or mathematics and uses numbers.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: that describes quantitative research. .quantitative الـ وصف ده :غلط"
+  },
+  {
+    "id": "rm-l2-102",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Qualitative data can be graphed.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: qualitative data cannot be graphed."
+  },
+  {
+    "id": "rm-l2-103",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Basic and applied research can be quantitative, qualitative, or even both.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "rm-l2-104",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Comparative research is obtaining similarities and differences between events, methods, techniques, etc.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "rm-l2-105",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ research obtains more information on a topic.",
+    "options": [
+      "Exploratory",
+      "Explanatory",
+      "Action",
+      "Comparative"
+    ],
+    "answer": 0,
+    "explanation": "Exploratory research = getting more information on a topic. .موضوع عن أكرت معلومات تجميع = Exploratory الـ"
+  },
+  {
+    "id": "rm-l2-106",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Explanatory research searches for ______.",
+    "options": [
+      "explanations for events and phenomena (why?)",
+      "similarities and differences",
+      "more information on a topic",
+      "action in the social world"
+    ],
+    "answer": 0,
+    "explanation": "Explanatory = why are things the way they are? كده؟ الحاجات ليه = Explanatory الـ"
+  },
+  {
+    "id": "rm-l2-107",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is the first step in starting the research process?",
+    "options": [
+      "Identification of the problem (Selection of a research topic)",
+      "Searching sources of information to locate the problem",
+      "Survey of related literature"
+    ],
+    "answer": 0,
+    "explanation": "The first stage is selecting the topic/problem."
+  },
+  {
+    "id": "rm-l2-108",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The planning stage includes all of the following phases EXCEPT:",
+    "options": [
+      "research questions",
+      "measurement",
+      "analysis",
+      "research design"
+    ],
+    "answer": 2,
+    "explanation": "Quiz key: analysis. (Analysis belongs to the implementation stage.) .)التنفيذ مرحلة في بيجي التحليل( analysis :الكويز مفتاح حسب"
+  },
+  {
+    "id": "rm-l2-109",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The choice of a thesis research area and adviser has always been a very ______ process.",
+    "options": [
+      "subjective",
+      "objective",
+      "systematic",
+      "empirical"
+    ],
+    "answer": 0,
+    "explanation": "It depends on personal interests: subjective. (Fill-in-the-blank turned into MCQ.) .MCQ) اتح ّو ل الفراغ امأل سؤال( .subjective :الشخصية الميول عىل بيعتمد"
+  },
+  {
+    "id": "rm-l2-110",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The ______ are working in one or few fields over a long time, and they are specialists in the field and well versed with its current status.",
+    "options": [
+      "supervisors",
+      "Ph.D. students",
+      "managers",
+      "graduate students"
+    ],
+    "answer": 0,
+    "explanation": "Supervisors are the specialists."
+  },
+  {
+    "id": "rm-l2-111",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of the following is a good general guideline when choosing a research problem?",
+    "options": [
+      "Avoid controversial subjects",
+      "Choose a very vague problem",
+      "Ignore cost and time",
+      "Pick any topic regardless of facilities"
+    ],
+    "answer": 0,
+    "explanation": "Avoid controversial, too-narrow or too-vague problems and estimate cost and time first."
+  },
+  {
+    "id": "rm-l2-112",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How many stages are there in the various stages of a research listed in the lecture?",
+    "options": [
+      "5",
+      "8",
+      "10",
+      "12"
+    ],
+    "answer": 2,
+    "explanation": "Ten stages, from selecting a topic to the report."
+  },
+  {
+    "id": "rm-l2-113",
+    "subjectId": "research-methods",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Defining the research problem is ______ solving it.",
+    "options": [
+      "more important than",
+      "less important than",
+      "unrelated to",
+      "the same as"
+    ],
+    "answer": 0,
+    "explanation": "The slides say defining the problem is more important than its solution."
+  },
+  {
+    "id": "rm-l3-114",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A systematic review can be ______.",
+    "options": [
+      "None of them",
+      "Qualitative",
+      "Quantitative",
+      "Qualitative and Quantitative"
+    ],
+    "answer": 3,
+    "explanation": "Can be qualitative, quantitative, or a combination of both. (Some student sheets wrongly mark Meta- analysis.) .Meta-analysis) وع ّلمت غلطت الطلبة شيتات بعض( .الت ني أو كمي أو كيفي يكون ممكن"
+  },
+  {
+    "id": "rm-l3-115",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When reading a research article, what is the most important part to read first?",
+    "options": [
+      "Abstract",
+      "Introduction",
+      "Discussion",
+      "Conclusion"
+    ],
+    "answer": 0,
+    "explanation": "The abstract is a short summary of the whole paper. .بيه فبتبدأ كلها الورقة ملخص abstract الـ"
+  },
+  {
+    "id": "rm-l3-116",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is essential to know whether the defined problem has already been solved, the status of the problem and techniques useful to investigate it.",
+    "options": [
+      "Advanced level book",
+      "Research article",
+      "Proceedings of conference",
+      "Literature survey"
+    ],
+    "answer": 3,
+    "explanation": "Literature survey. .Literature survey الـ"
+  },
+  {
+    "id": "rm-l3-117",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Each ______ should contain name(s) of author(s), title of the paper, journal name, volume number, starting page, end page and year of publication.",
+    "options": [
+      "Appendices",
+      "Reference",
+      "Conclusion",
+      "Abstract"
+    ],
+    "answer": 1,
+    "explanation": "Each reference carries these details. .دي البيانات فيه reference كل"
+  },
+  {
+    "id": "rm-l3-118",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Each reference should contain the author(s), title of the paper, journal name, volume number, pages and year.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "rm-l3-119",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The impact factor of a journal reflects ______.",
+    "options": [
+      "the mean yearly citations of its articles in the last two years",
+      "the number of its pages",
+      "its price",
+      "its number of authors"
+    ],
+    "answer": 0,
+    "explanation": "IF = average citations in the last two years. .سنتني آخر الستشهادات متوسط = IF الـ"
+  },
+  {
+    "id": "rm-l3-120",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which review type follows a defined, reproducible search protocol?",
+    "options": [
+      "Systematic review",
+      "Narrative review",
+      "Abstract",
+      "Editorial"
+    ],
+    "answer": 0,
+    "explanation": "Systematic reviews follow an explicit protocol. .واضح بحث بروتوكول عىل بيميش systematic الـ"
+  },
+  {
+    "id": "rm-l4-121",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "It is not difficult to know the current status of research work in a specific topic.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True, via recent papers, conferences and seminars."
+  },
+  {
+    "id": "rm-l4-122",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is an intelligent guess or inspiration to be tested rigorously in the research work through appropriate methodology.",
+    "options": [
+      "Hypothesis",
+      "Literature survey",
+      "Research Methodology",
+      "Research Methods"
+    ],
+    "answer": 0,
+    "explanation": "Hypothesis. .Hypothesis الـ"
+  },
+  {
+    "id": "rm-l4-123",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The hypotheses can be done after the actual work is done.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False: formulated BEFORE the work."
+  },
+  {
+    "id": "rm-l4-124",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A good relationship with the supervisor is essential: it greatly influences the quality and progress of your work.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True."
+  },
+  {
+    "id": "rm-l4-125",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "We can evaluate a good research work by:",
+    "options": [
+      "Publication in international journals",
+      "Being cited by other researchers",
+      "Adding new information / originality",
+      "All of them"
+    ],
+    "answer": 3,
+    "explanation": "All of them."
+  },
+  {
+    "id": "rm-l4-126",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "______ is copying data or findings from others’ reports without acknowledging the source.",
+    "options": [
+      "Plagiarism",
+      "Citation",
+      "Conclusion",
+      "Interpretation"
+    ],
+    "answer": 0,
+    "explanation": "Plagiarism. .Plagiarism الـ"
+  },
+  {
+    "id": "rm-l4-127",
+    "subjectId": "research-methods",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which of these is a correct way to avoid plagiarism?",
+    "options": [
+      "Cite the source of every borrowed idea",
+      "Copy small parts silently",
+      "Change a few words only",
+      "Translate without credit"
+    ],
+    "answer": 0,
+    "explanation": "Always acknowledge the source."
+  },
+  {
+    "id": "rm-l3-128",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "When calculating the h-index manually, how should the researcher's list of papers be sorted before assigning rank numbers?",
+    "options": [
+      "Alphabetically by title",
+      "Ascending order of citations",
+      "Descending order from highest number of citations to lowest",
+      "By year of publication"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: Descending order from highest number of citations to lowest"
+  },
+  {
+    "id": "rm-l3-129",
+    "subjectId": "research-methods",
+    "lecture": 3,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In the Impact Factor formula, the denominator (D) represents:",
+    "options": [
+      "Total citations in the current year",
+      "Total citable items (articles & reviews) published during the previous two years",
+      "Total papers published in the last 10 years",
+      "The researcher's h-index"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: Total citable items (articles & reviews) published during the previous two years"
   }
 ]
