@@ -696,7 +696,7 @@ window.__SITE_DATA__ = {
       "nameAr": "قواعد البيانات",
       "accent": "#5c4d9a",
       "icon": "database",
-      "youtube": "",
+      "youtube": "https://youtu.be/c-uDHzjmqyQ?si=qAu_olRr8GkKlrM1",
       "sections": [
         {
           "id": "lectures",
@@ -4491,7 +4491,13 @@ window.__SITE_SCHEDULE__ = {
         5,
         6
       ],
-      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 6"
+      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 6",
+      "youtubeLinks": [
+        {
+          "url": "https://youtu.be/c-uDHzjmqyQ?si=qAu_olRr8GkKlrM1",
+          "title": "شرح المادة"
+        }
+      ]
     },
     "information-theory": {
       "code": "IS311T",
