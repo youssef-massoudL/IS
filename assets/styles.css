@@ -4164,9 +4164,7 @@ html.sidebar-open body {
   gap: 8px;
   padding: 8px 0 12px;
   margin-bottom: 8px;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
 }
 
 .tabs-scroll-btn {
