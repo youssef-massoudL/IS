@@ -1568,8 +1568,7 @@ kbd {
   }
 
   .tabs {
-    top: 0;
-    position: sticky;
+    position: static;
   }
 
   .subject-head {
