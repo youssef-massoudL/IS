@@ -24,6 +24,7 @@ const ICONS = {
   clock: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5V12l3 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
   pin: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21s6.2-5.4 6.2-10.2a6.2 6.2 0 1 0-12.4 0C5.8 15.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10.6" r="2.2" stroke="currentColor" stroke-width="1.6"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.4 4.4L19 7.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  info: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5v5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg>',
   grid: '<svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/></svg>',
 };
 
@@ -34,6 +35,7 @@ const SECTION_ICONS = {
   questions: "question",
   summaries: "summary",
   "midterm-revision": "revision",
+  committees: "pin",
   "simplified-explanations": "simple",
   general: "folder",
 };
@@ -68,7 +70,6 @@ const searchEl = $("#search");
 const modalEl = $("#modal");
 const uploadEl = $("#upload");
 const smartStripEl = $("#smart-strip");
-const notifBannerEl = $("#notif-banner");
 const notifWrapEl = $("#notif-wrap");
 const notifToggleEl = $("#notif-toggle");
 const notifBadgeEl = $("#notif-badge");
@@ -905,9 +906,8 @@ function midtermStatus(midterm) {
 }
 
 const RECENT_FILE_WINDOW_MS = 24 * 60 * 60 * 1000;
-const NOTIF_FILE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+const NOTIF_FILE_WINDOW_MS = RECENT_FILE_WINDOW_MS;
 const NOTIF_SEEN_KEY = "hub:notif:seen";
-const NOTIF_DISMISSED_KEY = "hub:notif:banner-dismissed";
 const NOTIF_BROWSER_KEY = "hub:notif:browser";
 
 function isRecentFile(file) {
@@ -993,18 +993,6 @@ function buildNotifications() {
         accent,
         midterm,
       });
-    } else if (days >= 2 && days <= 7) {
-      items.push({
-        id: `exam-soon-${midterm.subjectId}-${midterm.date}`,
-        kind: "exam-soon",
-        priority: 3,
-        title: `بعد ${days} أيام: امتحان ${midterm.subjectName}`,
-        meta: `${formatDateShort(midterm.date)} · ${midterm.startTime}–${midterm.endTime}`,
-        href: revisionHref,
-        ctaLabel: "مراجعة الميدترم",
-        accent,
-        midterm,
-      });
     }
   }
 
@@ -1034,7 +1022,9 @@ function buildNotifications() {
     }
   }
 
-  const recentFiles = Array.from(fileCandidates.values()).sort((a, b) => b.addedMs - a.addedMs);
+  const recentFiles = Array.from(fileCandidates.values())
+    .sort((a, b) => b.addedMs - a.addedMs)
+    .slice(0, 5);
   for (const entry of recentFiles) {
     const recent24h = isRecentFile(entry.file);
     items.push({
@@ -1115,55 +1105,6 @@ function renderNotifications() {
     <div class="notif-list">${listHtml}</div>`;
 }
 
-function renderNotifBanner() {
-  if (!notifBannerEl) return;
-  if (searchActive() || state.filtersOpen) {
-    notifBannerEl.hidden = true;
-    notifBannerEl.innerHTML = "";
-    return;
-  }
-
-  const items = buildNotifications();
-  const dismissed = new Set(store.getJson(NOTIF_DISMISSED_KEY, []));
-  const seen = getSeenNotifIds();
-
-  const examToday = items.find((item) => item.kind === "exam-today" && !dismissed.has(item.id));
-  const recentFile = !examToday
-    ? items.find(
-        (item) =>
-          item.kind === "new-file" &&
-          item.recent24h &&
-          !seen.has(item.id) &&
-          !dismissed.has(item.id),
-      )
-    : null;
-
-  const target = examToday || recentFile;
-  if (!target) {
-    notifBannerEl.hidden = true;
-    notifBannerEl.innerHTML = "";
-    return;
-  }
-
-  const isExam = target.kind === "exam-today";
-  notifBannerEl.hidden = false;
-  notifBannerEl.className = `notif-banner${isExam ? " is-exam" : " is-file"}`;
-  notifBannerEl.style.setProperty("--notif-accent", target.accent);
-  notifBannerEl.innerHTML = `<div class="notif-banner-main">
-      <span class="notif-banner-pill">${isExam ? "⏰ تنبيه امتحان اليوم" : "★ ملف مضاف حديثاً"}</span>
-      <div class="notif-banner-text">
-        <strong>${esc(target.title)}</strong>
-        <span>${esc(target.meta)}</span>
-      </div>
-    </div>
-    <div class="notif-banner-actions">
-      <a class="notif-banner-cta" href="${esc(target.href)}" data-notif-banner-link="${esc(target.id)}">${esc(target.ctaLabel)}</a>
-      <button class="icon-btn notif-banner-close" type="button" data-notif-dismiss="${esc(target.id)}" aria-label="إخفاء التنبيه" title="إخفاء">
-        <svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </button>
-    </div>`;
-}
-
 function maybeSendBrowserNotifications() {
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   if (store.get(NOTIF_BROWSER_KEY) !== "1") return;
@@ -1171,7 +1112,7 @@ function maybeSendBrowserNotifications() {
   const browserSentKey = "hub:notif:browser-sent";
   const sent = new Set(store.getJson(browserSentKey, []));
   for (const item of items) {
-    if (item.kind !== "exam-today" && !(item.kind === "new-file" && item.recent24h)) continue;
+    if (item.kind !== "exam-today") continue;
     if (sent.has(item.id)) continue;
     sent.add(item.id);
     try {
@@ -1215,26 +1156,30 @@ function renderSmartStrip() {
         })
         .join("")
     : `<p class="smart-empty">لا توجد محاضرات أو سكاشن ${today.label === "اليوم" ? "اليوم" : today.label} لسكشن ${esc(state.section)}.</p>`;
-  const hallsGuide = midterm?.halls?.length
+  const hallsFile = midterm?.hallsFile || "";
+  const hallsGuide = midterm?.halls?.length || hallsFile
     ? `<div class="midterm-halls">
         <div class="midterm-halls-head">
           <span class="midterm-halls-title">${ICONS.pin} دليل اللجان والأجهزة</span>
-          <input class="pc-lookup-input" type="search" inputmode="numeric" placeholder="رقم جهازك (مثلاً 940)" aria-label="ابحث برقم جهازك" autocomplete="off">
+          ${hallsFile
+            ? `<button class="btn btn-sm halls-file-btn" type="button" data-halls-pdf="${esc(hallsFile)}" data-halls-title="${esc(`توزيع لجان ${midterm.subjectName}`)}">${ICONS.file}<span>ملف توزيع اللجان (PDF)</span></button>`
+            : ""}
         </div>
-        <div class="midterm-halls-status" aria-live="polite" hidden></div>
-        <div class="midterm-halls-list">
-          ${midterm.halls
-            .map(
-              (hall) => `<div class="midterm-hall-item" data-pc-from="${hall.pcFrom}" data-pc-to="${hall.pcTo}" data-hall-name="${esc(hall.name)}" data-hall-loc="${esc(hall.location)}">
-                <div class="hall-info">
-                  <strong class="hall-name">${esc(hall.name)}</strong>
-                  <span class="hall-loc">${esc(hall.location)}</span>
-                </div>
-                <span class="hall-range" dir="ltr">PC ${hall.pcFrom} – ${hall.pcTo}</span>
-              </div>`,
-            )
-            .join("")}
-        </div>
+        ${midterm.halls?.length
+          ? `<div class="midterm-halls-list">
+              ${midterm.halls
+                .map(
+                  (hall) => `<div class="midterm-hall-item">
+                    <div class="hall-info">
+                      <strong class="hall-name">${esc(hall.name)}</strong>
+                      <span class="hall-loc">${esc(hall.location)}</span>
+                    </div>
+                    <span class="hall-range" dir="ltr">PC ${hall.pcFrom} – ${hall.pcTo}</span>
+                  </div>`,
+                )
+                .join("")}
+            </div>`
+          : ""}
       </div>`
     : "";
   const midtermCard = midterm
@@ -1277,45 +1222,13 @@ function renderSmartStrip() {
 }
 
 if (smartStripEl) {
-  smartStripEl.addEventListener("input", (event) => {
-    const input = event.target.closest(".pc-lookup-input");
-    if (!input) return;
-    const container = input.closest(".midterm-halls");
-    if (!container) return;
-    const digits = input.value.replace(/\D+/g, "");
-    const items = container.querySelectorAll(".midterm-hall-item");
-    const statusEl = container.querySelector(".midterm-halls-status");
-    if (!digits) {
-      items.forEach((item) => {
-        item.classList.remove("is-match", "is-dim");
-      });
-      if (statusEl) {
-        statusEl.hidden = true;
-        statusEl.textContent = "";
-        statusEl.classList.remove("is-error");
-      }
-      return;
-    }
-    const pcNum = Number(digits);
-    let matched = null;
-    items.forEach((item) => {
-      const from = Number(item.dataset.pcFrom);
-      const to = Number(item.dataset.pcTo);
-      const hit = pcNum >= from && pcNum <= to;
-      item.classList.toggle("is-match", hit);
-      item.classList.toggle("is-dim", !hit);
-      if (hit) matched = item;
-    });
-    if (statusEl) {
-      statusEl.hidden = false;
-      if (matched) {
-        statusEl.classList.remove("is-error");
-        statusEl.textContent = `جهاز PC_${pcNum} في ${matched.dataset.hallName} — ${matched.dataset.hallLoc}`;
-      } else {
-        statusEl.classList.add("is-error");
-        statusEl.textContent = `رقم PC_${pcNum} مش ضمن لجان الامتحان ده`;
-      }
-    }
+  smartStripEl.addEventListener("click", (event) => {
+    const btn = event.target.closest("[data-halls-pdf]");
+    if (!btn) return;
+    const path = btn.dataset.hallsPdf;
+    if (!path) return;
+    const title = btn.dataset.hallsTitle || "توزيع اللجان";
+    openPreview({ title, ext: "pdf", path });
   });
 }
 
@@ -1426,6 +1339,9 @@ function fileRow(file, subject, sectionId, variant = "", options = {}) {
     (file.ext || "").toLowerCase() === "html"
       ? `<a class="act run" href="${esc(file.path)}" target="_blank" rel="noopener" title="تشغيل الملف التفاعلي" aria-label="تشغيل">${ICONS.play}</a>`
       : "";
+  const infoBtn = file.info
+    ? `<button class="act info-btn" type="button" data-file-info="${esc(file.info)}" data-file-title="${esc(file.title)}" title="معلومات عن الملف" aria-label="معلومات عن الملف">${ICONS.info}</button>`
+    : "";
   const bookmarked = isBookmarked(file.path);
   const bookmarkLabel = bookmarked ? "إزالة من المحفوظات" : "حفظ في المفضلة";
   const className = `file${variant ? ` ${variant}` : ""}${options.studyChecked ? " is-studied" : ""}`;
@@ -1447,6 +1363,7 @@ function fileRow(file, subject, sectionId, variant = "", options = {}) {
       ${options.studyKey ? `<label class="study-check file-study"><input type="checkbox" data-study="${esc(options.studyKey)}"${options.studyChecked ? " checked" : ""}><span>تمت المذاكرة</span></label>` : ""}
     </div>
     <div class="file-actions">
+      ${infoBtn}
       <button class="act bookmark${bookmarked ? " is-bookmarked" : ""}" type="button" data-bookmark-toggle="${esc(file.path)}" aria-pressed="${bookmarked ? "true" : "false"}" title="${bookmarkLabel}" aria-label="${bookmarkLabel}">★</button>
       ${yt}
       ${run}
@@ -1712,7 +1629,7 @@ function renderMatrix(subject) {
         const file = files.find(
           (entry) => entry.id === curated.id || entry.path === curated.path,
         );
-        return file ? { ...file, docTag: curated.docTag || file.docTag, addedAt: file.addedAt || curated.addedAt } : curated;
+        return file ? { ...file, docTag: curated.docTag || file.docTag, info: curated.info || file.info, addedAt: file.addedAt || curated.addedAt } : curated;
       })
       .filter(Boolean);
   } else {
@@ -1728,6 +1645,7 @@ function renderMatrix(subject) {
     ? files.filter(
         (file) =>
           !reviewSet.has(file.path) &&
+          !String(file.path || "").startsWith("files/committees/") &&
           !Number.isInteger(file.lecture) &&
           !(Array.isArray(file.lectureSpan) && file.lectureSpan.length),
       )
@@ -1792,10 +1710,37 @@ function renderMatrix(subject) {
       </section>`
     : "";
 
-  return `${renderReviewBlock(subject, reviewFiles)}
+  return `${renderCommitteeSection(subject)}${renderReviewBlock(subject, reviewFiles)}
     ${studyProgressMarkup(subject, studiedCount)}
     ${table}
     ${extraSection}`;
+}
+
+function sectionMarkup(section, rows, open) {
+  return `<section class="section" data-section="${section.id}" data-open="${open}">
+        <button class="section-head" type="button" aria-expanded="${open}">
+          <span class="section-icon">${ICONS[sectionIconKey(section)]}</span>
+          <span class="section-titles">
+            <h3>${esc(section.name)}${section.important ? ' <span class="important-badge">★ مهمة</span>' : ""}</h3>
+            <span class="en">${esc(section.nameEn)}</span>
+          </span>
+          <span class="section-badge">${section.files.length}</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="section-body">
+          ${rows}
+        </div>
+      </section>`;
+}
+
+function renderCommitteeSection(subject) {
+  const section = subject.sections?.find((entry) => entry.id === "committees");
+  if (!section?.files?.length) return "";
+  const open = store.get(`section:${section.id}`) !== "closed";
+  const rows = section.files
+    .map((file) => fileRow(file, subject, section.id))
+    .join("");
+  return sectionMarkup(section, rows, open);
 }
 
 function renderClassicSections(subject) {
@@ -1819,20 +1764,7 @@ function renderClassicSections(subject) {
           return fileRow(file, subject, section.id, "", options);
         })
         .join("");
-      return `<section class="section" data-section="${section.id}" data-open="${open}">
-        <button class="section-head" type="button" aria-expanded="${open}">
-          <span class="section-icon">${ICONS[sectionIconKey(section)]}</span>
-          <span class="section-titles">
-            <h3>${esc(section.name)}${section.important ? ' <span class="important-badge">★ مهمة</span>' : ""}</h3>
-            <span class="en">${esc(section.nameEn)}</span>
-          </span>
-          <span class="section-badge">${section.files.length}</span>
-          <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="section-body">
-          ${rows}
-        </div>
-      </section>`;
+      return sectionMarkup(section, rows, open);
     })
     .join("");
   return `${studyProgressMarkup(subject, studiedCount)}${sections}`;
@@ -2401,7 +2333,6 @@ function highlightNearestMidterm() {
 
 function render() {
   renderModeSwitcher();
-  renderNotifBanner();
   renderNotifications();
   renderSmartStrip();
   renderFacets();
@@ -2617,7 +2548,99 @@ tabsBarEl.addEventListener("click", (event) => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+function closeFileInfoBubble() {
+  const existing = document.getElementById("file-info-bubble");
+  if (existing) existing.remove();
+  document.querySelectorAll(".act.info-btn.is-open").forEach((btn) => {
+    btn.classList.remove("is-open");
+    btn.setAttribute("aria-expanded", "false");
+  });
+}
+
+function toggleFileInfoPanel(infoBtn) {
+  const existing = document.getElementById("file-info-bubble");
+  const isSame = existing && infoBtn.classList.contains("is-open");
+  closeFileInfoBubble();
+  if (isSame) return;
+
+  const title = infoBtn.dataset.fileTitle || "معلومات عن الملف";
+  const infoText = infoBtn.dataset.fileInfo || "";
+
+  const bubble = document.createElement("div");
+  bubble.id = "file-info-bubble";
+  bubble.className = "file-info-bubble";
+  bubble.setAttribute("role", "dialog");
+  bubble.setAttribute("aria-label", title);
+  bubble.innerHTML = `<div class="file-info-head">
+    <span class="file-info-icon">${ICONS.info}</span>
+    <strong class="file-info-title">${esc(title)}</strong>
+    <button type="button" class="file-info-close" aria-label="إغلاق">×</button>
+  </div>
+  <p class="file-info-body">${esc(infoText).replace(/\n/g, "<br>")}</p>
+  <span class="file-info-arrow" aria-hidden="true"></span>`;
+
+  document.body.appendChild(bubble);
+  infoBtn.classList.add("is-open");
+  infoBtn.setAttribute("aria-expanded", "true");
+
+  const rect = infoBtn.getBoundingClientRect();
+  const bRect = bubble.getBoundingClientRect();
+  const gap = 10;
+  const pad = 12;
+
+  let top = rect.top - bRect.height - gap;
+  let placedBelow = false;
+  if (top < pad) {
+    top = rect.bottom + gap;
+    placedBelow = true;
+  }
+
+  let left = rect.left + rect.width / 2 - bRect.width / 2;
+  left = Math.max(pad, Math.min(left, window.innerWidth - bRect.width - pad));
+
+  const arrowLeft = Math.max(14, Math.min(rect.left + rect.width / 2 - left, bRect.width - 14));
+  const arrowEl = bubble.querySelector(".file-info-arrow");
+  arrowEl.style.left = `${arrowLeft}px`;
+  if (placedBelow) bubble.classList.add("is-below");
+
+  bubble.style.top = `${Math.round(top)}px`;
+  bubble.style.left = `${Math.round(left)}px`;
+
+  const onDocClick = (e) => {
+    if (bubble.contains(e.target) && !e.target.closest(".file-info-close")) return;
+    if (e.target.closest("[data-file-info]") === infoBtn) return;
+    cleanup();
+  };
+  const onKey = (e) => {
+    if (e.key === "Escape") cleanup();
+  };
+  const onScrollOrResize = () => cleanup();
+
+  const cleanup = () => {
+    closeFileInfoBubble();
+    document.removeEventListener("click", onDocClick);
+    document.removeEventListener("keydown", onKey);
+    window.removeEventListener("scroll", onScrollOrResize, true);
+    window.removeEventListener("resize", onScrollOrResize);
+  };
+
+  setTimeout(() => {
+    document.addEventListener("click", onDocClick);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", onScrollOrResize, true);
+    window.addEventListener("resize", onScrollOrResize);
+  }, 0);
+}
+
 viewEl.addEventListener("click", (event) => {
+  const infoBtn = event.target.closest("[data-file-info]");
+  if (infoBtn) {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleFileInfoPanel(infoBtn);
+    return;
+  }
+
   const bookmarkBtn = event.target.closest("[data-bookmark-toggle]");
   if (bookmarkBtn) {
     event.preventDefault();
@@ -3318,7 +3341,6 @@ notifPanelEl?.addEventListener("click", async (event) => {
   if (readAllBtn) {
     markAllNotifsSeen(buildNotifications());
     renderNotifications();
-    renderNotifBanner();
     return;
   }
 
@@ -3337,26 +3359,6 @@ notifPanelEl?.addEventListener("click", async (event) => {
   if (itemLink) {
     markNotifSeen(itemLink.dataset.notifId);
     setNotifOpen(false);
-    renderNotifications();
-  }
-});
-
-notifBannerEl?.addEventListener("click", (event) => {
-  const dismissBtn = event.target.closest("[data-notif-dismiss]");
-  if (dismissBtn) {
-    const id = dismissBtn.dataset.notifDismiss;
-    const dismissed = new Set(store.getJson(NOTIF_DISMISSED_KEY, []));
-    dismissed.add(id);
-    store.setJson(NOTIF_DISMISSED_KEY, Array.from(dismissed).slice(-60));
-    markNotifSeen(id);
-    renderNotifBanner();
-    renderNotifications();
-    return;
-  }
-
-  const ctaLink = event.target.closest("[data-notif-banner-link]");
-  if (ctaLink) {
-    markNotifSeen(ctaLink.dataset.notifBannerLink);
     renderNotifications();
   }
 });

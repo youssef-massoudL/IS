@@ -1,7 +1,7 @@
 {
   "title": "سنة تالتة — الترم الأول",
   "subtitle": "نظم المعلومات · ملازم ومحاضرات ومراجعات",
-  "updated": "2026-11-15",
+  "updated": "2026-11-16",
   "subjects": [
     {
       "id": "computer-networks",
@@ -497,6 +497,46 @@
                 "05",
                 "Computer",
                 "network"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "committees",
+          "name": "توزيع اللجان",
+          "nameEn": "Exam Committees",
+          "files": [
+            {
+              "id": "computer-networks-committees",
+              "title": "توزيع لجان شبكات الحاسب",
+              "original": "الاربعاء- نظم المعلومات - شبكات.pdf",
+              "path": "files/committees/computer-networks-committees.pdf",
+              "ext": "pdf",
+              "size": 1485429,
+              "youtube": "",
+              "lecture": null,
+              "kind": "summary",
+              "keywords": [
+                "ملخص",
+                "ملخصات",
+                "summary",
+                "خلاصة",
+                "شبكات الحاسب",
+                "Computer Networks",
+                "computer-networks",
+                "توزيع اللجان",
+                "Exam Committees",
+                "committees",
+                "pdf",
+                "توزيع",
+                "لجان",
+                "شبكات",
+                "الحاسب",
+                "الاربعاء",
+                "نظم",
+                "المعلومات",
+                "computer",
+                "networks"
               ]
             }
           ]
@@ -1335,6 +1375,46 @@
           ]
         },
         {
+          "id": "committees",
+          "name": "توزيع اللجان",
+          "nameEn": "Exam Committees",
+          "files": [
+            {
+              "id": "database-2-committees",
+              "title": "توزيع لجان قواعد بيانات 2",
+              "original": "الثلاثاء - نظم معلومات - قواعد البيانات 2.pdf",
+              "path": "files/committees/database-2-committees.pdf",
+              "ext": "pdf",
+              "size": 1539657,
+              "youtube": "",
+              "lecture": null,
+              "kind": "summary",
+              "keywords": [
+                "ملخص",
+                "ملخصات",
+                "summary",
+                "خلاصة",
+                "قواعد البيانات",
+                "Database II",
+                "database-2",
+                "توزيع اللجان",
+                "Exam Committees",
+                "committees",
+                "pdf",
+                "توزيع",
+                "لجان",
+                "قواعد",
+                "بيانات",
+                "الثلاثاء",
+                "نظم",
+                "معلومات",
+                "البيانات",
+                "database"
+              ]
+            }
+          ]
+        },
+        {
           "id": "midterm-revision",
           "name": "مراجعة الميد",
           "nameEn": "Midterm Revision",
@@ -1347,6 +1427,7 @@
               "ext": "pdf",
               "size": 648589,
               "youtube": "",
+              "info": "ملخص شامل لأول 6 محاضرات في قواعد البيانات 2 (مراجعة الميدترم) — إعداد يوسف ناجح.\nيغطي الملف: مفاهيم الـ Transactions و Concurrency Control و Two-Phase Locking و Deadlock Handling بالإضافة لأمثلة محلولة وأسئلة متوقعة للامتحان.\nملاحظة: يُنصح بمراجعة ملف الأسئلة السابقة بعد الانتهاء من هذا الملخص للتأكد من تثبيت جميع النقاط.",
               "lecture": null,
               "kind": "review",
               "keywords": [
@@ -1781,6 +1862,46 @@
                 "pptx",
                 "المحاضرة",
                 "06",
+                "information",
+                "theory"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "committees",
+          "name": "توزيع اللجان",
+          "nameEn": "Exam Committees",
+          "files": [
+            {
+              "id": "information-theory-committees",
+              "title": "توزيع لجان نظرية المعلومات",
+              "original": "الاثنين - نظم معلومات - نظرية المعلومات.pdf",
+              "path": "files/committees/information-theory-committees.pdf",
+              "ext": "pdf",
+              "size": 1487470,
+              "youtube": "",
+              "lecture": null,
+              "kind": "summary",
+              "keywords": [
+                "ملخص",
+                "ملخصات",
+                "summary",
+                "خلاصة",
+                "نظرية المعلومات",
+                "Information Theory",
+                "information-theory",
+                "توزيع اللجان",
+                "Exam Committees",
+                "committees",
+                "pdf",
+                "توزيع",
+                "لجان",
+                "نظرية",
+                "المعلومات",
+                "الاثنين",
+                "نظم",
+                "معلومات",
                 "information",
                 "theory"
               ]
@@ -3603,6 +3724,7 @@
               "ext": "pdf",
               "size": 648589,
               "youtube": "",
+              "info": "ملخص شامل لأول 6 محاضرات في قواعد البيانات 2 (مراجعة الميدترم) — إعداد يوسف ناجح.\nيغطي الملف: مفاهيم الـ Transactions و Concurrency Control و Two-Phase Locking و Deadlock Handling بالإضافة لأمثلة محلولة وأسئلة متوقعة للامتحان.\nملاحظة: يُنصح بمراجعة ملف الأسئلة السابقة بعد الانتهاء من هذا الملخص للتأكد من تثبيت جميع النقاط.",
               "lecture": null,
               "kind": "review",
               "keywords": [

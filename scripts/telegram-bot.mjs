@@ -513,6 +513,10 @@ async function publishUpload(job) {
             f.size = size;
             f.ext = ext;
             f.addedAt = nowIso;
+            if (job.info !== undefined) {
+              if (job.info) f.info = job.info;
+              else delete f.info;
+            }
             updatedInSec = true;
           }
         }
@@ -554,6 +558,7 @@ async function publishUpload(job) {
       addedAt: nowIso,
     };
     if (job.docTag) baseEntry.docTag = job.docTag;
+    if (job.info) baseEntry.info = job.info;
 
     if (job.mode === "section" || job.mode === "both") {
       let sec = subject.sections.find((s) => s.id === job.sectionId);
@@ -635,6 +640,44 @@ function setYouTubeInRepo(relPath, youtubeUrl) {
   const action = youtubeUrl ? "Set YouTube link" : "Clear YouTube link";
   const { commit } = commitAndPush(repoDir, manifest, `${action} for ${title}`);
   return { title, youtubeUrl, touchedSections, commit };
+}
+
+function setInfoInRepo(relPath, infoText) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const matches = findEntriesByPath(manifest, relPath);
+  if (matches.length === 0) throw new Error(`File not found in manifest: ${relPath}`);
+
+  const title = matches[0].file.title;
+  const touchedSections = [];
+  for (const m of matches) {
+    if (infoText) m.file.info = infoText;
+    else delete m.file.info;
+    touchedSections.push(`${m.subject.id}/${m.section.id}`);
+  }
+
+  const action = infoText ? "Set info note" : "Clear info note";
+  const { commit } = commitAndPush(repoDir, manifest, `${action} for ${title}`);
+  return { title, infoText, touchedSections, commit };
+}
+
+function setDocTagInRepo(relPath, docTag) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const matches = findEntriesByPath(manifest, relPath);
+  if (matches.length === 0) throw new Error(`File not found in manifest: ${relPath}`);
+
+  const title = matches[0].file.title;
+  const touchedSections = [];
+  for (const m of matches) {
+    if (docTag) m.file.docTag = docTag;
+    else delete m.file.docTag;
+    touchedSections.push(`${m.subject.id}/${m.section.id}`);
+  }
+
+  const action = docTag ? `Set label "${docTag}"` : "Clear label";
+  const { commit } = commitAndPush(repoDir, manifest, `${action} for ${title}`);
+  return { title, docTag, touchedSections, commit };
 }
 
 function moveFileInRepo(source, destSubjectId, destSectionId) {
@@ -816,17 +859,44 @@ function destinationKeyboard(subject) {
   return { inline_keyboard: rows };
 }
 
-function docTagKeyboard() {
+function docTagKeyboard(prefix = "tag") {
   return {
     inline_keyboard: [
       [
-        { text: "📝 ملخص", callback_data: "tag:ملخص" },
-        { text: "❓ أسئلة", callback_data: "tag:أسئلة" },
+        { text: "📝 ملخص", callback_data: `${prefix}:ملخص` },
+        { text: "❓ أسئلة", callback_data: `${prefix}:أسئلة` },
       ],
-      [{ text: "بدون شارة", callback_data: "tag:none" }],
+      [
+        { text: "📌 مراجعة", callback_data: `${prefix}:مراجعة` },
+        { text: "🚫 بدون شارة", callback_data: `${prefix}:none` },
+      ],
       [{ text: "❌ Cancel", callback_data: "cancel" }],
     ],
   };
+}
+
+function uploadInfoKeyboard(existingInfo) {
+  const rows = [];
+  if (existingInfo) {
+    const preview = existingInfo.length > 28 ? existingInfo.slice(0, 25) + "..." : existingInfo;
+    rows.push([{ text: `✅ Keep "${preview}"`, callback_data: "upload_info:keep" }]);
+  }
+  rows.push([{ text: "⏭ Skip (No Info Icon)", callback_data: "upload_info:skip" }]);
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+async function askInfoStep(chatId, job) {
+  job.step = "upload_info";
+  const existing = job.mode === "replace" ? job.replaceTarget?.file?.info || "" : "";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text:
+      `ℹ️ <b>Optional Info Icon (ⓘ)</b>\n` +
+      `Send a short note so students know what this file covers (e.g. "ملخص أول 4 محاضرات"), or tap <b>Skip</b>:`,
+    parse_mode: "HTML",
+    reply_markup: uploadInfoKeyboard(existing),
+  });
 }
 
 function titleKeyboard(defaultTitle) {
@@ -875,6 +945,8 @@ const ACTION_TITLES = {
   files: "📂 Browse Files",
   rename: "✏️ Rename a File",
   youtube: "🎥 Set YouTube Link",
+  info: "ℹ️ Edit Info Note",
+  label: "🏷 Edit Label",
   move: "📦 Move a File",
   delete: "🗑 Delete a File",
 };
@@ -934,6 +1006,10 @@ function fileActionsKeyboard() {
     inline_keyboard: [
       [
         { text: "✏️ Rename", callback_data: "act:rename" },
+        { text: "🏷 Label", callback_data: "act:label" },
+      ],
+      [
+        { text: "ℹ️ Info", callback_data: "act:info" },
         { text: "🎥 YouTube", callback_data: "act:youtube" },
       ],
       [
@@ -1005,6 +1081,8 @@ async function proceedWithPickedFile(chatId, job, target) {
 
   if (job.action === "files") {
     const ytLine = f.youtube ? `\n• YouTube: ${escapeHtml(f.youtube)}` : "\n• YouTube: <i>none</i>";
+    const labelLine = f.docTag ? `\n• Label: <code>${escapeHtml(f.docTag)}</code>` : "\n• Label: <i>none</i>";
+    const infoLine = f.info ? `\n• Info (ⓘ): ${escapeHtml(f.info)}` : "\n• Info (ⓘ): <i>none</i>";
     await tg("sendMessage", {
       chat_id: chatId,
       text:
@@ -1012,9 +1090,43 @@ async function proceedWithPickedFile(chatId, job, target) {
         `• Subject: ${escapeHtml(target.subjectNameAr)} / ${escapeHtml(target.sectionName)}\n` +
         `• Path: <code>${escapeHtml(f.path)}</code>\n` +
         `• Size: ${formatBytes(f.size)}` +
+        labelLine +
+        infoLine +
         ytLine,
       parse_mode: "HTML",
       reply_markup: fileActionsKeyboard(),
+    });
+    return;
+  }
+
+  if (job.action === "info") {
+    job.step = "info_input";
+    const cur = f.info ? escapeHtml(f.info) : "<i>none</i>";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `ℹ️ <b>Edit Info Icon (ⓘ)</b>\n` +
+        `File: <b>${escapeHtml(f.title)}</b>\n` +
+        `Current: ${cur}\n\n` +
+        `Send the new info text, or send <code>clear</code> to remove the icon:`,
+      parse_mode: "HTML",
+      reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+    });
+    return;
+  }
+
+  if (job.action === "label") {
+    job.step = "label_input";
+    const cur = f.docTag ? `<code>${escapeHtml(f.docTag)}</code>` : "<i>none</i>";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `🏷 <b>Edit Label</b>\n` +
+        `File: <b>${escapeHtml(f.title)}</b>\n` +
+        `Current: ${cur}\n\n` +
+        `Choose a label below, or send any custom label text:`,
+      parse_mode: "HTML",
+      reply_markup: docTagKeyboard("edit_tag"),
     });
     return;
   }
@@ -1115,6 +1227,8 @@ async function handleMessage(msg) {
         `<b>File Management:</b>\n` +
         `/files [query] — Browse or search files\n` +
         `/rename [query] — Rename a file title\n` +
+        `/label [query] — Edit or clear file label\n` +
+        `/info [query] — Edit or clear info icon (ⓘ)\n` +
         `/youtube [query] — Attach or clear YouTube link\n` +
         `/move [query] — Move a file to another section\n` +
         `/delete [query] — Delete a file\n\n` +
@@ -1175,7 +1289,7 @@ async function handleMessage(msg) {
     return;
   }
 
-  if (parsed && ["files", "rename", "youtube", "move", "delete"].includes(parsed.cmd)) {
+  if (parsed && ["files", "rename", "youtube", "info", "label", "move", "delete"].includes(parsed.cmd)) {
     await startPickerOrSearch(chatId, parsed.cmd, parsed.arg);
     return;
   }
@@ -1244,9 +1358,62 @@ async function handleMessage(msg) {
   const job = pending.get(chatId);
   if (!job || !text) return;
 
+  if (job.step === "tag") {
+    job.docTag = text.toLowerCase() === "clear" ? "" : text;
+    job.step = "title";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `Send a custom Arabic title as a text message, or tap below to use:\n"${job.defaultTitle}"`,
+      reply_markup: titleKeyboard(job.defaultTitle),
+    });
+    return;
+  }
+
   if (job.step === "title" || job.step === "replace_title") {
     job.title = text;
+    await askInfoStep(chatId, job);
+    return;
+  }
+
+  if (job.step === "upload_info") {
+    job.info = text.toLowerCase() === "clear" ? "" : text;
     await runPublishFlow(chatId, job);
+    return;
+  }
+
+  if (job.step === "info_input" && job.pickTarget) {
+    pending.delete(chatId);
+    const infoVal = text.toLowerCase() === "clear" ? "" : text;
+    await tg("sendMessage", { chat_id: chatId, text: "⏳ Updating info note and pushing..." });
+    const res = setInfoInRepo(job.pickTarget.file.path, infoVal);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>Info Updated!</b>\n` +
+        `• File: ${escapeHtml(res.title)}\n` +
+        `• Info (ⓘ): ${res.infoText ? escapeHtml(res.infoText) : "<i>cleared</i>"}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
+  }
+
+  if (job.step === "label_input" && job.pickTarget) {
+    pending.delete(chatId);
+    const tagVal = text.toLowerCase() === "clear" ? "" : text;
+    await tg("sendMessage", { chat_id: chatId, text: "⏳ Updating label and pushing..." });
+    const res = setDocTagInRepo(job.pickTarget.file.path, tagVal);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>Label Updated!</b>\n` +
+        `• File: ${escapeHtml(res.title)}\n` +
+        `• Label: ${res.docTag ? `<code>${escapeHtml(res.docTag)}</code>` : "<i>cleared</i>"}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
     return;
   }
 
@@ -1417,11 +1584,31 @@ async function handleCallback(cb) {
 
   if (data.startsWith("act:") && job.pickTarget) {
     const nextAction = data.slice(4);
-    if (["rename", "youtube", "move", "delete"].includes(nextAction)) {
+    if (["rename", "youtube", "info", "label", "move", "delete"].includes(nextAction)) {
       job.action = nextAction;
       await proceedWithPickedFile(chatId, job, job.pickTarget);
       return;
     }
+  }
+
+  if (data.startsWith("edit_tag:") && job.pickTarget) {
+    const tag = data.slice("edit_tag:".length);
+    const tagVal = tag === "none" ? "" : tag;
+    const targetPath = job.pickTarget.file.path;
+    pending.delete(chatId);
+    await tg("sendMessage", { chat_id: chatId, text: "⏳ Updating label and pushing..." });
+    const res = setDocTagInRepo(targetPath, tagVal);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>Label Updated!</b>\n` +
+        `• File: ${escapeHtml(res.title)}\n` +
+        `• Label: ${res.docTag ? `<code>${escapeHtml(res.docTag)}</code>` : "<i>cleared</i>"}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
   }
 
   if (data.startsWith("move:") && job.pickTarget) {
@@ -1627,12 +1814,24 @@ async function handleCallback(cb) {
 
   if (data === "title:keep" && job.replaceTarget) {
     job.title = job.replaceTarget.file.title;
-    await runPublishFlow(chatId, job);
+    await askInfoStep(chatId, job);
     return;
   }
 
   if (data === "title:default") {
     job.title = job.defaultTitle;
+    await askInfoStep(chatId, job);
+    return;
+  }
+
+  if (data === "upload_info:skip") {
+    job.info = "";
+    await runPublishFlow(chatId, job);
+    return;
+  }
+
+  if (data === "upload_info:keep") {
+    job.info = job.replaceTarget?.file?.info || "";
     await runPublishFlow(chatId, job);
   }
 }
@@ -1645,6 +1844,8 @@ async function poll() {
         { command: "start", description: "Show instructions & commands" },
         { command: "files", description: "Browse or search files" },
         { command: "rename", description: "Rename a file title" },
+        { command: "label", description: "Edit or clear file label" },
+        { command: "info", description: "Edit or clear file info icon" },
         { command: "youtube", description: "Attach or clear YouTube link" },
         { command: "move", description: "Move a file to another section" },
         { command: "delete", description: "Delete a file" },
