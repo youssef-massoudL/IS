@@ -245,6 +245,89 @@ function addEntryToSection(section, entry) {
   }
 }
 
+function findEntriesByPath(manifest, relPath) {
+  const matches = [];
+  for (const subject of manifest.subjects || []) {
+    for (const section of subject.sections || []) {
+      const files = section.files || [];
+      for (let i = 0; i < files.length; i++) {
+        if (files[i].path === relPath) {
+          matches.push({ subject, section, file: files[i], index: i });
+        }
+      }
+    }
+  }
+  return matches;
+}
+
+function searchManifestFiles(manifest, query) {
+  const q = normalizeCompare(query);
+  const results = [];
+  for (const subject of manifest.subjects || []) {
+    for (const section of subject.sections || []) {
+      for (const file of section.files || []) {
+        const hay = normalizeCompare(`${file.title} ${file.original || ""} ${file.path} ${file.id}`);
+        if (!q || hay.includes(q)) {
+          results.push({
+            subjectId: subject.id,
+            subjectNameAr: subject.nameAr || subject.name,
+            sectionId: section.id,
+            sectionName: section.name || section.id,
+            file,
+          });
+        }
+      }
+    }
+  }
+  return results;
+}
+
+function isValidYouTubeUrl(value) {
+  try {
+    const u = new URL(value);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return false;
+    const host = u.hostname.toLowerCase();
+    return host === "youtu.be" || host.endsWith("youtube.com");
+  } catch {
+    return false;
+  }
+}
+
+function removeEmptyParents(dirPath, stopDir) {
+  let current = path.resolve(dirPath);
+  const stop = path.resolve(stopDir);
+  while (current.startsWith(stop) && current !== stop) {
+    try {
+      const entries = fs.readdirSync(current);
+      if (entries.length > 0) break;
+      fs.rmdirSync(current);
+      current = path.dirname(current);
+    } catch {
+      break;
+    }
+  }
+}
+
+function commitAndPush(repoDir, manifest, commitMsg) {
+  const manifestPath = path.join(repoDir, "data", "subjects.json");
+  manifest.updated = new Date().toISOString().slice(0, 10);
+  fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
+
+  runNode(repoDir, [path.join("scripts", "build.mjs"), "--fix"]);
+  runNode(repoDir, [path.join("scripts", "build.mjs"), "--check"]);
+
+  runGit(repoDir, ["add", "-A"]);
+  const status = runGit(repoDir, ["status", "--porcelain"]);
+  if (!status) {
+    return { commit: "no-changes", changed: false };
+  }
+
+  runGit(repoDir, ["commit", "-m", commitMsg]);
+  runGit(repoDir, ["push", "origin", GITHUB_BRANCH]);
+  const commit = runGit(repoDir, ["rev-parse", "--short", "HEAD"]);
+  return { commit, changed: true };
+}
+
 function normalizeQuestionText(q) {
   return String(q || "")
     .toLowerCase()
@@ -501,9 +584,6 @@ async function publishUpload(job) {
     }
   }
 
-  manifest.updated = nowIso.slice(0, 10);
-  fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
-
   let questionBank = null;
   const isQuestionsUpload =
     job.sectionId === "questions" ||
@@ -517,19 +597,196 @@ async function publishUpload(job) {
     }
   }
 
-  runNode(repoDir, [path.join("scripts", "build.mjs"), "--fix"]);
-  runNode(repoDir, [path.join("scripts", "build.mjs"), "--check"]);
+  const { commit } = commitAndPush(repoDir, manifest, `${commitAction} ${job.title} (${subject.id})`);
+  return { relPath, addedTo, commit, questionBank };
+}
 
-  runGit(repoDir, ["add", "-A"]);
-  const status = runGit(repoDir, ["status", "--porcelain"]);
-  if (!status) {
-    return { relPath, addedTo, commit: "no-changes", questionBank };
+function renameFileInRepo(relPath, newTitle) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const matches = findEntriesByPath(manifest, relPath);
+  if (matches.length === 0) throw new Error(`File not found in manifest: ${relPath}`);
+
+  const oldTitle = matches[0].file.title;
+  const touchedSections = [];
+  for (const m of matches) {
+    m.file.title = newTitle;
+    sortFiles(m.section.files);
+    touchedSections.push(`${m.subject.id}/${m.section.id}`);
   }
 
-  runGit(repoDir, ["commit", "-m", `${commitAction} ${job.title} (${subject.id})`]);
+  const { commit } = commitAndPush(repoDir, manifest, `Rename "${oldTitle}" to "${newTitle}"`);
+  return { oldTitle, newTitle, relPath, touchedSections, commit };
+}
+
+function setYouTubeInRepo(relPath, youtubeUrl) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const matches = findEntriesByPath(manifest, relPath);
+  if (matches.length === 0) throw new Error(`File not found in manifest: ${relPath}`);
+
+  const title = matches[0].file.title;
+  const touchedSections = [];
+  for (const m of matches) {
+    m.file.youtube = youtubeUrl;
+    touchedSections.push(`${m.subject.id}/${m.section.id}`);
+  }
+
+  const action = youtubeUrl ? "Set YouTube link" : "Clear YouTube link";
+  const { commit } = commitAndPush(repoDir, manifest, `${action} for ${title}`);
+  return { title, youtubeUrl, touchedSections, commit };
+}
+
+function moveFileInRepo(source, destSubjectId, destSectionId) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+
+  const srcSubj = manifest.subjects.find((s) => s.id === source.subjectId);
+  const srcSec = srcSubj?.sections.find((s) => s.id === source.sectionId);
+  const srcIdx = srcSec?.files.findIndex((f) => f.path === source.file.path) ?? -1;
+  if (!srcSubj || !srcSec || srcIdx === -1) {
+    throw new Error("Source file no longer exists in manifest.");
+  }
+  if (source.subjectId === destSubjectId && source.sectionId === destSectionId) {
+    throw new Error("Source and destination are the same.");
+  }
+
+  const dstSubj = manifest.subjects.find((s) => s.id === destSubjectId);
+  if (!dstSubj) throw new Error(`Unknown destination subject: ${destSubjectId}`);
+  let dstSec = dstSubj.sections.find((s) => s.id === destSectionId);
+  if (!dstSec) {
+    dstSec = { id: destSectionId, name: destSectionId, nameEn: destSectionId, files: [] };
+    dstSubj.sections.push(dstSec);
+  }
+
+  const entry = { ...srcSec.files[srcIdx] };
+  const oldRelPath = entry.path;
+  let newRelPath = oldRelPath;
+
+  // Move physical file if moving into a non-virtual subject folder and no other section needs the old path
+  const otherRefs = findEntriesByPath(manifest, oldRelPath).filter(
+    (m) => !(m.subject.id === source.subjectId && m.section.id === source.sectionId),
+  );
+
+  if (destSubjectId !== "midterm-revision" && otherRefs.length === 0) {
+    const oldAbs = path.join(repoDir, oldRelPath.replace(/\//g, path.sep));
+    const ext = path.extname(oldRelPath) || `.${entry.ext || "pdf"}`;
+    const base = path.basename(oldRelPath, ext);
+    const outDir = path.join(repoDir, "files", destSubjectId, destSectionId);
+    fs.mkdirSync(outDir, { recursive: true });
+
+    let destAbs = path.join(outDir, `${base}${ext}`);
+    let counter = 2;
+    while (fs.existsSync(destAbs) && path.resolve(destAbs) !== path.resolve(oldAbs)) {
+      destAbs = path.join(outDir, `${base}-${counter++}${ext}`);
+    }
+
+    if (fs.existsSync(oldAbs) && path.resolve(destAbs) !== path.resolve(oldAbs)) {
+      fs.renameSync(oldAbs, destAbs);
+      removeEmptyParents(path.dirname(oldAbs), path.join(repoDir, "files"));
+    }
+    newRelPath = path.posix.join("files", destSubjectId, destSectionId, path.basename(destAbs));
+    entry.path = newRelPath;
+    entry.id = path.basename(destAbs, ext);
+  }
+
+  srcSec.files.splice(srcIdx, 1);
+  addEntryToSection(dstSec, entry);
+
+  const { commit } = commitAndPush(
+    repoDir,
+    manifest,
+    `Move ${entry.title} from ${source.subjectId}/${source.sectionId} to ${destSubjectId}/${destSectionId}`,
+  );
+  return { title: entry.title, oldRelPath, newRelPath, dest: `${destSubjectId}/${destSectionId}`, commit };
+}
+
+function deleteFileInRepo(relPath, subjectId, sectionId, deleteAll) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const matches = findEntriesByPath(manifest, relPath);
+  if (matches.length === 0) throw new Error(`File not found in manifest: ${relPath}`);
+
+  const title = matches[0].file.title;
+  const removedFrom = [];
+
+  for (const subject of manifest.subjects || []) {
+    for (const section of subject.sections || []) {
+      const shouldRemove = deleteAll || (subject.id === subjectId && section.id === sectionId);
+      if (!shouldRemove) continue;
+      const before = section.files.length;
+      section.files = section.files.filter((f) => f.path !== relPath);
+      if (section.files.length < before) {
+        removedFrom.push(`${subject.id}/${section.id}`);
+      }
+    }
+  }
+
+  const remaining = findEntriesByPath(manifest, relPath);
+  let deletedFromDisk = false;
+  if (remaining.length === 0) {
+    const absPath = path.join(repoDir, relPath.replace(/\//g, path.sep));
+    if (fs.existsSync(absPath)) {
+      fs.unlinkSync(absPath);
+      removeEmptyParents(path.dirname(absPath), path.join(repoDir, "files"));
+      deletedFromDisk = true;
+    }
+  }
+
+  const { commit } = commitAndPush(repoDir, manifest, `Delete ${title} (${removedFrom.join(", ")})`);
+  return { title, relPath, removedFrom, deletedFromDisk, commit };
+}
+
+function getRepoStatus() {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const logLine = runGit(repoDir, ["log", "-1", "--format=%h|%s|%cr|%ci"]);
+  const [sha, message, relTime, isoTime] = logLine.split("|");
+
+  const uniquePaths = new Set();
+  let totalEntries = 0;
+  for (const s of manifest.subjects || []) {
+    for (const sec of s.sections || []) {
+      for (const f of sec.files || []) {
+        totalEntries++;
+        if (f.path) uniquePaths.add(f.path);
+      }
+    }
+  }
+
+  return {
+    repo: GITHUB_REPO,
+    branch: GITHUB_BRANCH,
+    sha,
+    message,
+    relTime,
+    isoTime,
+    updated: manifest.updated,
+    subjectsCount: (manifest.subjects || []).length,
+    uniqueFiles: uniquePaths.size,
+    totalEntries,
+  };
+}
+
+function getRecentCommits(limit = 5) {
+  const repoDir = ensureRepo();
+  const raw = runGit(repoDir, ["log", `-n`, String(limit), "--format=%h|%s|%cr"]);
+  return raw
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .map((line) => {
+      const [sha, message, relTime] = line.split("|");
+      return { sha, message, relTime };
+    });
+}
+
+function revertCommitInRepo(sha) {
+  const repoDir = ensureRepo();
+  runGit(repoDir, ["revert", "--no-edit", sha]);
+  runNode(repoDir, [path.join("scripts", "build.mjs"), "--check"]);
   runGit(repoDir, ["push", "origin", GITHUB_BRANCH]);
-  const commit = runGit(repoDir, ["rev-parse", "--short", "HEAD"]);
-  return { relPath, addedTo, commit, questionBank };
+  const newSha = runGit(repoDir, ["rev-parse", "--short", "HEAD"]);
+  return { revertedSha: sha, newSha };
 }
 
 function subjectKeyboard(subjects) {
@@ -612,29 +869,314 @@ const START_KEYBOARD = {
   is_persistent: true,
 };
 
+const PAGE_SIZE = 8;
+
+const ACTION_TITLES = {
+  files: "📂 Browse Files",
+  rename: "✏️ Rename a File",
+  youtube: "🎥 Set YouTube Link",
+  move: "📦 Move a File",
+  delete: "🗑 Delete a File",
+};
+
+function pickSubjectKeyboard(subjects, prefix = "pick:subj") {
+  const rows = subjects.map((s, idx) => [
+    { text: `${s.nameAr || s.name} (${s.sections.reduce((n, sec) => n + sec.files.length, 0)})`, callback_data: `${prefix}:${idx}` },
+  ]);
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+function pickSectionKeyboard(subject, prefix = "pick:sec") {
+  const rows = (subject.sections || []).map((sec, idx) => [
+    { text: `📁 ${sec.name || sec.id} (${(sec.files || []).length})`, callback_data: `${prefix}:${idx}` },
+  ]);
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+function pickFilesKeyboard(files, page = 0) {
+  const totalPages = Math.max(1, Math.ceil(files.length / PAGE_SIZE));
+  const safePage = Math.min(Math.max(0, page), totalPages - 1);
+  const start = safePage * PAGE_SIZE;
+  const slice = files.slice(start, start + PAGE_SIZE);
+
+  const rows = slice.map((f, idx) => {
+    const yt = f.youtube ? "🎥 " : "";
+    const label = `${yt}${f.title}`;
+    const shortLabel = label.length > 42 ? label.slice(0, 39) + "..." : label;
+    return [{ text: shortLabel, callback_data: `pick:file:${start + idx}` }];
+  });
+
+  if (totalPages > 1) {
+    const nav = [];
+    if (safePage > 0) nav.push({ text: "⬅️ Prev", callback_data: `pick:page:${safePage - 1}` });
+    nav.push({ text: `${safePage + 1}/${totalPages}`, callback_data: "noop" });
+    if (safePage < totalPages - 1) nav.push({ text: "Next ➡️", callback_data: `pick:page:${safePage + 1}` });
+    rows.push(nav);
+  }
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+function searchResultsKeyboard(results) {
+  const rows = results.slice(0, 15).map((r, idx) => {
+    const label = `${r.file.title} — ${r.subjectNameAr}`;
+    const shortLabel = label.length > 42 ? label.slice(0, 39) + "..." : label;
+    return [{ text: shortLabel, callback_data: `pick:search:${idx}` }];
+  });
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+function fileActionsKeyboard() {
+  return {
+    inline_keyboard: [
+      [
+        { text: "✏️ Rename", callback_data: "act:rename" },
+        { text: "🎥 YouTube", callback_data: "act:youtube" },
+      ],
+      [
+        { text: "📦 Move", callback_data: "act:move" },
+        { text: "🗑 Delete", callback_data: "act:delete" },
+      ],
+      [{ text: "❌ Close", callback_data: "cancel" }],
+    ],
+  };
+}
+
+function rollbackKeyboard(commits) {
+  const rows = commits.map((c, idx) => {
+    const label = `↩️ ${c.sha} — ${c.message}`;
+    const shortLabel = label.length > 44 ? label.slice(0, 41) + "..." : label;
+    return [{ text: shortLabel, callback_data: `rb:pick:${idx}` }];
+  });
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+async function startPickerOrSearch(chatId, action, query) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+
+  if (query) {
+    const results = searchManifestFiles(manifest, query);
+    if (results.length === 0) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: `No files matched <code>${escapeHtml(query)}</code>.`,
+        parse_mode: "HTML",
+      });
+      return;
+    }
+    pending.set(chatId, {
+      flow: "pick",
+      action,
+      step: "pick_search",
+      subjects: manifest.subjects,
+      searchResults: results.slice(0, 15),
+    });
+    const extra = results.length > 15 ? `\n<i>Showing first 15 of ${results.length} matches.</i>` : "";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `${ACTION_TITLES[action]}\nSelect a file:${extra}`,
+      parse_mode: "HTML",
+      reply_markup: searchResultsKeyboard(results),
+    });
+    return;
+  }
+
+  pending.set(chatId, {
+    flow: "pick",
+    action,
+    step: "pick_subj",
+    subjects: manifest.subjects,
+  });
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: `${ACTION_TITLES[action]}\n\nChoose a subject:`,
+    reply_markup: pickSubjectKeyboard(manifest.subjects),
+  });
+}
+
+async function proceedWithPickedFile(chatId, job, target) {
+  job.pickTarget = target;
+  const f = target.file;
+
+  if (job.action === "files") {
+    const ytLine = f.youtube ? `\n• YouTube: ${escapeHtml(f.youtube)}` : "\n• YouTube: <i>none</i>";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `📄 <b>${escapeHtml(f.title)}</b>\n` +
+        `• Subject: ${escapeHtml(target.subjectNameAr)} / ${escapeHtml(target.sectionName)}\n` +
+        `• Path: <code>${escapeHtml(f.path)}</code>\n` +
+        `• Size: ${formatBytes(f.size)}` +
+        ytLine,
+      parse_mode: "HTML",
+      reply_markup: fileActionsKeyboard(),
+    });
+    return;
+  }
+
+  if (job.action === "rename") {
+    job.step = "rename_input";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✏️ <b>Rename File</b>\n` +
+        `Current title: <b>${escapeHtml(f.title)}</b>\n\n` +
+        `Send the new title:`,
+      parse_mode: "HTML",
+      reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+    });
+    return;
+  }
+
+  if (job.action === "youtube") {
+    job.step = "youtube_input";
+    const cur = f.youtube ? `<code>${escapeHtml(f.youtube)}</code>` : "<i>none</i>";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `🎥 <b>Set YouTube Link</b>\n` +
+        `File: <b>${escapeHtml(f.title)}</b>\n` +
+        `Current: ${cur}\n\n` +
+        `Send a YouTube URL, or send <code>clear</code> to remove it:`,
+      parse_mode: "HTML",
+      reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+    });
+    return;
+  }
+
+  if (job.action === "move") {
+    job.step = "move_dest_subj";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `📦 <b>Move File</b>\n` +
+        `File: <b>${escapeHtml(f.title)}</b>\n` +
+        `From: ${escapeHtml(target.subjectNameAr)} / ${escapeHtml(target.sectionName)}\n\n` +
+        `Choose destination subject:`,
+      parse_mode: "HTML",
+      reply_markup: pickSubjectKeyboard(job.subjects, "move:subj"),
+    });
+    return;
+  }
+
+  if (job.action === "delete") {
+    const repoDir = ensureRepo();
+    const manifest = readManifest(repoDir);
+    const refs = findEntriesByPath(manifest, f.path);
+    const buttons = [];
+    if (refs.length > 1) {
+      buttons.push([{ text: `Remove from ${target.sectionName} only`, callback_data: "del:one" }]);
+      buttons.push([{ text: `🗑 Delete from ALL (${refs.length}) & disk`, callback_data: "del:all" }]);
+    } else {
+      buttons.push([{ text: "🗑 Confirm Delete", callback_data: "del:all" }]);
+    }
+    buttons.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+    job.step = "delete_confirm";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `🗑 <b>Delete File?</b>\n` +
+        `• Title: <b>${escapeHtml(f.title)}</b>\n` +
+        `• Section: ${escapeHtml(target.subjectNameAr)} / ${escapeHtml(target.sectionName)}\n` +
+        `• Path: <code>${escapeHtml(f.path)}</code>\n` +
+        (refs.length > 1 ? `• Linked in ${refs.length} sections.` : ""),
+      parse_mode: "HTML",
+      reply_markup: { inline_keyboard: buttons },
+    });
+  }
+}
+
+function parseCommand(text) {
+  const match = String(text || "").match(/^\/([a-z0-9_]+)(?:@\w+)?(?:\s+([\s\S]+))?$/i);
+  if (!match) return null;
+  return { cmd: match[1].toLowerCase(), arg: (match[2] || "").trim() };
+}
+
 async function handleMessage(msg) {
   const chatId = msg.chat.id;
   const userId = String(msg.from?.id || "");
   if (userId !== ADMIN_ID) return;
 
   const text = (msg.text || "").trim();
-  if (text === "/start" || text === "/help" || text === "🚀 Start") {
+  const parsed = parseCommand(text);
+
+  if (text === "🚀 Start" || parsed?.cmd === "start" || parsed?.cmd === "help") {
     pending.delete(chatId);
     await tg("sendMessage", {
       chat_id: chatId,
-      text: "Send or forward any PDF here, and I will check if it already exists, ask which subject and section to add it to, and push it to GitHub Pages.",
+      text:
+        `📚 <b>IS Study Hub Bot</b>\n\n` +
+        `• Send or forward any PDF to upload &amp; publish it.\n\n` +
+        `<b>File Management:</b>\n` +
+        `/files [query] — Browse or search files\n` +
+        `/rename [query] — Rename a file title\n` +
+        `/youtube [query] — Attach or clear YouTube link\n` +
+        `/move [query] — Move a file to another section\n` +
+        `/delete [query] — Delete a file\n\n` +
+        `<b>Repo &amp; Safety:</b>\n` +
+        `/status — Repo &amp; site status\n` +
+        `/rollback — Revert a recent commit\n` +
+        `/cancel — Cancel current action`,
+      parse_mode: "HTML",
       reply_markup: START_KEYBOARD,
     });
     return;
   }
 
-  if (text === "/cancel" || text === "❌ Cancel") {
+  if (text === "❌ Cancel" || parsed?.cmd === "cancel") {
     pending.delete(chatId);
     await tg("sendMessage", {
       chat_id: chatId,
       text: "Cancelled.",
       reply_markup: START_KEYBOARD,
     });
+    return;
+  }
+
+  if (parsed?.cmd === "status") {
+    pending.delete(chatId);
+    const st = getRepoStatus();
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `📊 <b>Site Status</b>\n` +
+        `• Repo: <code>${escapeHtml(st.repo)}</code> (${escapeHtml(st.branch)})\n` +
+        `• Latest commit: <code>${escapeHtml(st.sha)}</code> (${escapeHtml(st.relTime)})\n` +
+        `• Message: ${escapeHtml(st.message)}\n` +
+        `• Manifest updated: ${escapeHtml(st.updated)}\n` +
+        `• Subjects: ${st.subjectsCount} | Unique files: ${st.uniqueFiles} | Entries: ${st.totalEntries}`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
+  }
+
+  if (parsed?.cmd === "rollback") {
+    const commits = getRecentCommits(5);
+    if (commits.length === 0) {
+      await tg("sendMessage", { chat_id: chatId, text: "No commits found." });
+      return;
+    }
+    pending.set(chatId, { flow: "rollback", step: "rb_pick", commits });
+    const summary = commits
+      .map((c) => `• <code>${escapeHtml(c.sha)}</code> ${escapeHtml(c.message)} <i>(${escapeHtml(c.relTime)})</i>`)
+      .join("\n");
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `↩️ <b>Rollback</b>\nSelect a commit to revert:\n\n${summary}`,
+      parse_mode: "HTML",
+      reply_markup: rollbackKeyboard(commits),
+    });
+    return;
+  }
+
+  if (parsed && ["files", "rename", "youtube", "move", "delete"].includes(parsed.cmd)) {
+    await startPickerOrSearch(chatId, parsed.cmd, parsed.arg);
     return;
   }
 
@@ -700,9 +1242,56 @@ async function handleMessage(msg) {
   }
 
   const job = pending.get(chatId);
-  if (job && (job.step === "title" || job.step === "replace_title") && text) {
+  if (!job || !text) return;
+
+  if (job.step === "title" || job.step === "replace_title") {
     job.title = text;
     await runPublishFlow(chatId, job);
+    return;
+  }
+
+  if (job.step === "rename_input" && job.pickTarget) {
+    pending.delete(chatId);
+    await tg("sendMessage", { chat_id: chatId, text: `⏳ Renaming to "${text}" and pushing...` });
+    const res = renameFileInRepo(job.pickTarget.file.path, text);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>Renamed!</b>\n` +
+        `• Old: ${escapeHtml(res.oldTitle)}\n` +
+        `• New: <b>${escapeHtml(res.newTitle)}</b>\n` +
+        `• Sections: ${escapeHtml(res.touchedSections.join(", "))}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
+  }
+
+  if (job.step === "youtube_input" && job.pickTarget) {
+    const isClear = text.toLowerCase() === "clear";
+    if (!isClear && !isValidYouTubeUrl(text)) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "⚠️ Please send a valid YouTube URL (youtube.com or youtu.be), or send <code>clear</code>.",
+        parse_mode: "HTML",
+      });
+      return;
+    }
+    pending.delete(chatId);
+    const ytVal = isClear ? "" : text;
+    await tg("sendMessage", { chat_id: chatId, text: `⏳ Updating YouTube link and pushing...` });
+    const res = setYouTubeInRepo(job.pickTarget.file.path, ytVal);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>YouTube Updated!</b>\n` +
+        `• File: ${escapeHtml(res.title)}\n` +
+        `• Link: ${res.youtubeUrl ? escapeHtml(res.youtubeUrl) : "<i>cleared</i>"}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
   }
 }
 
@@ -744,6 +1333,8 @@ async function handleCallback(cb) {
   const data = cb.data || "";
   await tg("answerCallbackQuery", { callback_query_id: cb.id });
 
+  if (data === "noop") return;
+
   if (data === "cancel") {
     pending.delete(chatId);
     await tg("sendMessage", { chat_id: chatId, text: "Cancelled." });
@@ -752,8 +1343,186 @@ async function handleCallback(cb) {
 
   const job = pending.get(chatId);
   if (!job) {
-    await tg("sendMessage", { chat_id: chatId, text: "Session expired. Please send the PDF again." });
+    await tg("sendMessage", { chat_id: chatId, text: "Session expired. Please start again." });
     return;
+  }
+
+  if (data.startsWith("pick:")) {
+    const [, kind, rawIdx] = data.split(":");
+    const idx = Number.parseInt(rawIdx, 10);
+
+    if (kind === "subj") {
+      const subj = job.subjects?.[idx];
+      if (!subj) return;
+      job.pickSubject = subj;
+      job.step = "pick_sec";
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: `${ACTION_TITLES[job.action]}\nSubject: <b>${escapeHtml(subj.nameAr || subj.name)}</b>\n\nChoose a section:`,
+        parse_mode: "HTML",
+        reply_markup: pickSectionKeyboard(subj),
+      });
+      return;
+    }
+
+    if (kind === "sec" && job.pickSubject) {
+      const sec = job.pickSubject.sections?.[idx];
+      if (!sec) return;
+      if (!sec.files || sec.files.length === 0) {
+        await tg("sendMessage", { chat_id: chatId, text: "This section has no files." });
+        return;
+      }
+      job.pickSection = sec;
+      job.page = 0;
+      job.step = "pick_file";
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: `${ACTION_TITLES[job.action]}\n${escapeHtml(job.pickSubject.nameAr || job.pickSubject.name)} / <b>${escapeHtml(sec.name || sec.id)}</b>\n\nChoose a file:`,
+        parse_mode: "HTML",
+        reply_markup: pickFilesKeyboard(sec.files, 0),
+      });
+      return;
+    }
+
+    if (kind === "page" && job.pickSection) {
+      job.page = idx;
+      await tg("editMessageReplyMarkup", {
+        chat_id: chatId,
+        message_id: cb.message.message_id,
+        reply_markup: pickFilesKeyboard(job.pickSection.files, idx),
+      }).catch(() => {});
+      return;
+    }
+
+    if (kind === "file" && job.pickSubject && job.pickSection) {
+      const file = job.pickSection.files?.[idx];
+      if (!file) return;
+      await proceedWithPickedFile(chatId, job, {
+        subjectId: job.pickSubject.id,
+        subjectNameAr: job.pickSubject.nameAr || job.pickSubject.name,
+        sectionId: job.pickSection.id,
+        sectionName: job.pickSection.name || job.pickSection.id,
+        file,
+      });
+      return;
+    }
+
+    if (kind === "search" && Array.isArray(job.searchResults)) {
+      const target = job.searchResults[idx];
+      if (!target) return;
+      await proceedWithPickedFile(chatId, job, target);
+      return;
+    }
+  }
+
+  if (data.startsWith("act:") && job.pickTarget) {
+    const nextAction = data.slice(4);
+    if (["rename", "youtube", "move", "delete"].includes(nextAction)) {
+      job.action = nextAction;
+      await proceedWithPickedFile(chatId, job, job.pickTarget);
+      return;
+    }
+  }
+
+  if (data.startsWith("move:") && job.pickTarget) {
+    const [, kind, rawIdx] = data.split(":");
+    const idx = Number.parseInt(rawIdx, 10);
+
+    if (kind === "subj") {
+      const subj = job.subjects?.[idx];
+      if (!subj) return;
+      job.moveDestSubject = subj;
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: `📦 Destination Subject: <b>${escapeHtml(subj.nameAr || subj.name)}</b>\n\nChoose destination section:`,
+        parse_mode: "HTML",
+        reply_markup: pickSectionKeyboard(subj, "move:sec"),
+      });
+      return;
+    }
+
+    if (kind === "sec" && job.moveDestSubject) {
+      const sec = job.moveDestSubject.sections?.[idx];
+      if (!sec) return;
+      const source = job.pickTarget;
+      pending.delete(chatId);
+      await tg("sendMessage", { chat_id: chatId, text: `⏳ Moving "${source.file.title}" and pushing...` });
+      const res = moveFileInRepo(source, job.moveDestSubject.id, sec.id);
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `✅ <b>Moved!</b>\n` +
+          `• File: ${escapeHtml(res.title)}\n` +
+          `• Destination: <code>${escapeHtml(res.dest)}</code>\n` +
+          `• Path: <code>${escapeHtml(res.newRelPath)}</code>\n` +
+          `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+        parse_mode: "HTML",
+        reply_markup: START_KEYBOARD,
+      });
+      return;
+    }
+  }
+
+  if ((data === "del:one" || data === "del:all") && job.pickTarget) {
+    const target = job.pickTarget;
+    const deleteAll = data === "del:all";
+    pending.delete(chatId);
+    await tg("sendMessage", { chat_id: chatId, text: `⏳ Deleting "${target.file.title}" and pushing...` });
+    const res = deleteFileInRepo(target.file.path, target.subjectId, target.sectionId, deleteAll);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>Deleted!</b>\n` +
+        `• File: ${escapeHtml(res.title)}\n` +
+        `• Removed from: ${escapeHtml(res.removedFrom.join(", "))}\n` +
+        `• Disk file removed: ${res.deletedFromDisk ? "Yes" : "No (still referenced)"}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
+  }
+
+  if (data.startsWith("rb:") && Array.isArray(job.commits)) {
+    const [, kind, rawIdx] = data.split(":");
+    const idx = Number.parseInt(rawIdx, 10);
+    const commitObj = job.commits[idx];
+    if (!commitObj) return;
+
+    if (kind === "pick") {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `⚠️ <b>Confirm Rollback</b>\n` +
+          `Revert commit <code>${escapeHtml(commitObj.sha)}</code>?\n` +
+          `<i>${escapeHtml(commitObj.message)}</i>`,
+        parse_mode: "HTML",
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: `↩️ Confirm Revert ${commitObj.sha}`, callback_data: `rb:confirm:${idx}` }],
+            [{ text: "❌ Cancel", callback_data: "cancel" }],
+          ],
+        },
+      });
+      return;
+    }
+
+    if (kind === "confirm") {
+      pending.delete(chatId);
+      await tg("sendMessage", { chat_id: chatId, text: `⏳ Reverting ${commitObj.sha} and pushing...` });
+      const res = revertCommitInRepo(commitObj.sha);
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `✅ <b>Reverted!</b>\n` +
+          `• Reverted: <code>${escapeHtml(res.revertedSha)}</code>\n` +
+          `• New commit: <code>${escapeHtml(res.newSha)}</code>\n\n` +
+          `GitHub Pages will update in ~1 minute.`,
+        parse_mode: "HTML",
+        reply_markup: START_KEYBOARD,
+      });
+      return;
+    }
   }
 
   if (data === "dup:add_new") {
@@ -873,9 +1642,15 @@ async function poll() {
   try {
     await tg("setMyCommands", {
       commands: [
-        { command: "start", description: "Show start instructions" },
-        { command: "help", description: "How to upload files" },
-        { command: "cancel", description: "Cancel current upload" },
+        { command: "start", description: "Show instructions & commands" },
+        { command: "files", description: "Browse or search files" },
+        { command: "rename", description: "Rename a file title" },
+        { command: "youtube", description: "Attach or clear YouTube link" },
+        { command: "move", description: "Move a file to another section" },
+        { command: "delete", description: "Delete a file" },
+        { command: "status", description: "Repo & site status" },
+        { command: "rollback", description: "Revert a recent commit" },
+        { command: "cancel", description: "Cancel current action" },
       ],
     });
   } catch (err) {
