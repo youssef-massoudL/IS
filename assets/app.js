@@ -960,6 +960,17 @@ function markAllNotifsSeen(items) {
 
 function buildNotifications() {
   const items = [];
+  const networksSubject = subjectById("computer-networks");
+  items.push({
+    id: "announcement-networks-organized",
+    kind: "announcement",
+    priority: 0,
+    title: "كل ماتريال النيتورك .. مترتبة",
+    meta: "شبكات الحاسب · Computer Networks",
+    href: "#computer-networks",
+    ctaLabel: "فتح المادة",
+    accent: networksSubject?.accent || "#4e8d9c",
+  });
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
@@ -1082,11 +1093,13 @@ function renderNotifications() {
         .map((item) => {
           const unread = !seen.has(item.id);
           const badge =
-            item.kind === "exam-today"
-              ? `<span class="notif-tag is-exam">اليوم</span>`
-              : item.kind === "exam-soon"
-                ? `<span class="notif-tag is-soon">امتحان قريب</span>`
-                : `<span class="notif-tag">ملف جديد</span>`;
+            item.kind === "announcement"
+              ? `<span class="notif-tag is-soon">تحديث</span>`
+              : item.kind === "exam-today"
+                ? `<span class="notif-tag is-exam">اليوم</span>`
+                : item.kind === "exam-soon"
+                  ? `<span class="notif-tag is-soon">امتحان قريب</span>`
+                  : `<span class="notif-tag">ملف جديد</span>`;
           return `<a class="notif-item${unread ? " is-unread" : ""}" href="${esc(item.href)}" data-notif-id="${esc(item.id)}">
             <span class="notif-dot" style="background:${esc(item.accent)}"></span>
             <div class="notif-item-body">

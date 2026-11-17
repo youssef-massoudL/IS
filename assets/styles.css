@@ -2365,7 +2365,7 @@ kbd {
 
 .course-info {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   gap: 10px;
   margin: 0 0 14px;
@@ -7166,20 +7166,20 @@ h3 {
 
 
 .course-info .ci-links-inline {
+  display: block;
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  width: 100%;
   margin: 0;
-  justify-self: end;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  transition: border-top-color 0.25s ease;
 }
 
 .course-info .ci-links-inline[open] {
-  grid-column: 1 / -1;
-  justify-self: start;
-  width: 100%;
-  padding-top: 10px;
-  border-top: 1px dashed var(--border);
+  border-top-color: color-mix(in srgb, var(--border) 35%, transparent);
 }
 
-@media (max-width: 860px) {
-  .course-info .ci-links-inline {
-    justify-self: start;
-  }
+.course-info .ci-links-inline .links-circle-tray {
+  margin-top: 10px;
 }
