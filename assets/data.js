@@ -1390,7 +1390,6 @@ window.__SITE_DATA__ = {
               "ext": "pdf",
               "size": 648589,
               "youtube": "",
-              "info": "ملخص شامل لأول 6 محاضرات في قواعد البيانات 2 (مراجعة الميدترم) — إعداد يوسف ناجح.\nيغطي الملف: مفاهيم الـ Transactions و Concurrency Control و Two-Phase Locking و Deadlock Handling بالإضافة لأمثلة محلولة وأسئلة متوقعة للامتحان.\nملاحظة: يُنصح بمراجعة ملف الأسئلة السابقة بعد الانتهاء من هذا الملخص للتأكد من تثبيت جميع النقاط.",
               "lecture": null,
               "kind": "review",
               "keywords": [
@@ -3804,7 +3803,6 @@ window.__SITE_DATA__ = {
               "ext": "pdf",
               "size": 648589,
               "youtube": "",
-              "info": "ملخص شامل لأول 6 محاضرات في قواعد البيانات 2 (مراجعة الميدترم) — إعداد يوسف ناجح.\nيغطي الملف: مفاهيم الـ Transactions و Concurrency Control و Two-Phase Locking و Deadlock Handling بالإضافة لأمثلة محلولة وأسئلة متوقعة للامتحان.\nملاحظة: يُنصح بمراجعة ملف الأسئلة السابقة بعد الانتهاء من هذا الملخص للتأكد من تثبيت جميع النقاط.",
               "lecture": null,
               "kind": "review",
               "keywords": [
