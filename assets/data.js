@@ -9,7 +9,7 @@ window.__SITE_DATA__ = {
       "nameAr": "شبكات الحاسب",
       "accent": "#4e8d9c",
       "icon": "lan",
-      "youtube": "",
+      "youtube": "https://youtube.com/playlist?list=PLYljoJMAPFLHrCVfzuMLkJOZHhCgfSXG-",
       "sections": [
         {
           "id": "lectures",
@@ -4712,7 +4712,13 @@ window.__SITE_SCHEDULE__ = {
         6,
         7
       ],
-      "midtermScopeText": "أول 7 محاضرات"
+      "midtermScopeText": "أول 7 محاضرات",
+      "youtubeLinks": [
+        {
+          "url": "https://youtube.com/playlist?list=PLYljoJMAPFLHrCVfzuMLkJOZHhCgfSXG-",
+          "title": "شرح المادة"
+        }
+      ]
     }
   },
   "sharedLectures": [

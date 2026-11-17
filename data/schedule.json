@@ -320,7 +320,13 @@
         6,
         7
       ],
-      "midtermScopeText": "أول 7 محاضرات"
+      "midtermScopeText": "أول 7 محاضرات",
+      "youtubeLinks": [
+        {
+          "url": "https://youtube.com/playlist?list=PLYljoJMAPFLHrCVfzuMLkJOZHhCgfSXG-",
+          "title": "شرح المادة"
+        }
+      ]
     }
   },
   "sharedLectures": [
