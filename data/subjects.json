@@ -1617,6 +1617,40 @@
               ]
             },
             {
+              "id": "computer-networks-exam-bank-amr-hesham",
+              "title": "Computer Networks Exam Bank Amr Hesham",
+              "original": "Computer_Networks_Exam_Bank_Amr_Hesham.pdf",
+              "path": "files/computer-networks/midterm-revision/computer-networks-exam-bank-amr-hesham.pdf",
+              "ext": "pdf",
+              "size": 1745120,
+              "youtube": "",
+              "addedAt": "2026-11-17T16:52:27.002Z",
+              "docTag": "أسئلة",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "شبكات الحاسب",
+                "Computer Networks",
+                "computer-networks",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "pdf",
+                "Computer",
+                "Networks",
+                "Exam",
+                "Bank",
+                "Amr",
+                "Hesham"
+              ]
+            },
+            {
               "id": "computer-networks-previous-exam-and-book-questions-midterm",
               "title": "Computer Networks Previous Exam & Book Questions (Midterm)",
               "original": "media_1794924305535_6e6c368c.pdf",
@@ -4753,14 +4787,15 @@
               ]
             },
             {
-              "id": "q-and-a-d-ahmed-atwan-book",
-              "title": "Q&A - D. Ahmed Atwan Book",
-              "original": "Q&A - D. Ahmed Atwan Book.pdf",
-              "path": "files/computer-networks/midterm-revision/q-and-a-d-ahmed-atwan-book.pdf",
+              "id": "computer-networks-exam-bank-amr-hesham",
+              "title": "Computer Networks Exam Bank Amr Hesham",
+              "original": "Computer_Networks_Exam_Bank_Amr_Hesham.pdf",
+              "path": "files/computer-networks/midterm-revision/computer-networks-exam-bank-amr-hesham.pdf",
               "ext": "pdf",
-              "size": 204519,
+              "size": 1745120,
               "youtube": "",
-              "midtermReview": true,
+              "addedAt": "2026-11-17T16:52:27.002Z",
+              "docTag": "أسئلة",
               "lecture": null,
               "kind": "review",
               "keywords": [
@@ -4776,10 +4811,12 @@
                 "Computer Networks",
                 "computer-networks",
                 "pdf",
-                "Ahmed",
-                "Atwan",
-                "Book",
-                "and"
+                "Computer",
+                "Networks",
+                "Exam",
+                "Bank",
+                "Amr",
+                "Hesham"
               ]
             },
             {
@@ -4815,6 +4852,36 @@
                 "media",
                 "1794924305535",
                 "6e6c368c",
+                "and"
+              ]
+            },
+            {
+              "id": "q-and-a-d-ahmed-atwan-book",
+              "title": "Q&A - D. Ahmed Atwan Book",
+              "original": "Q&A - D. Ahmed Atwan Book.pdf",
+              "path": "files/computer-networks/midterm-revision/q-and-a-d-ahmed-atwan-book.pdf",
+              "ext": "pdf",
+              "size": 204519,
+              "youtube": "",
+              "midtermReview": true,
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "Computer Networks",
+                "computer-networks",
+                "pdf",
+                "Ahmed",
+                "Atwan",
+                "Book",
                 "and"
               ]
             }
