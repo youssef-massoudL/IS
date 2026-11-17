@@ -1481,8 +1481,9 @@ function sectionNameOf(subject, file) {
 function updateStudyProgress(subjectId) {
   const subject = subjectById(subjectId);
   if (!subject) return;
-  const lectureCount = lectureTotal(subject);
   const boxes = viewEl.querySelectorAll(`[data-study^="${CSS.escape(subjectId)}:"]`);
+  const lectureCount =
+    subjectId === "computer-networks" && boxes.length ? boxes.length : lectureTotal(subject);
   let studied = 0;
   boxes.forEach((box) => {
     if (box.checked) studied += 1;
@@ -1493,16 +1494,18 @@ function updateStudyProgress(subjectId) {
   const label = progress.querySelector(".progress-head span");
   const value = progress.querySelector(".progress-head strong");
   const bar = progress.querySelector(".progress span");
-  if (label) label.textContent = `تمت مذاكرة ${studied} من ${lectureCount} ${lectureNoun(lectureCount)}`;
+  const unitLabel = subjectId === "computer-networks" ? "فصل" : lectureNoun(lectureCount);
+  if (label) label.textContent = `تمت مذاكرة ${studied} من ${lectureCount} ${unitLabel}`;
   if (value) value.textContent = `${percent}%`;
   if (bar) bar.style.width = `${percent}%`;
 }
 
-function studyProgressMarkup(subject, studiedCount) {
-  const lectureCount = lectureTotal(subject);
+function studyProgressMarkup(subject, studiedCount, totalOverride = null) {
+  const lectureCount = totalOverride ?? lectureTotal(subject);
   const percent = lectureCount ? Math.round((studiedCount / lectureCount) * 100) : 0;
+  const unitLabel = subject.id === "computer-networks" ? "فصل" : lectureNoun(lectureCount);
   return `<div class="matrix-toolbar" data-progress="${esc(subject.id)}">
-      <div class="progress-head"><span>تمت مذاكرة ${studiedCount} من ${lectureCount} ${lectureNoun(lectureCount)}</span><strong>${percent}%</strong></div>
+      <div class="progress-head"><span>تمت مذاكرة ${studiedCount} من ${lectureCount} ${unitLabel}</span><strong>${percent}%</strong></div>
       <div class="progress"><span style="width:${percent}%"></span></div>
     </div>`;
 }
@@ -1982,6 +1985,146 @@ function renderMidtermKanban(subject) {
   </div>`;
 }
 
+function renderNetworksUnitTable(subject, section, units, colLabels, studiedMap, onStudied) {
+  if (!section) return "";
+  const rows = units
+    .map((unit) => {
+      const unitFiles = section.files.filter((file) => file.unit === unit.id);
+      if (!unitFiles.length) return "";
+      const slots = {
+        book: unitFiles.filter((f) => f.slot === "book"),
+        summary: unitFiles.filter((f) => f.slot === "summary"),
+        qa: unitFiles.filter((f) => f.slot === "qa"),
+      };
+      const studyHtml = unit.trackStudy
+        ? (() => {
+            const key = `${subject.id}:${unit.id}`;
+            const studied = Boolean(studiedMap[key]);
+            if (studied) onStudied();
+            return `<label class="study-check"><input type="checkbox" data-study="${esc(key)}"${studied ? " checked" : ""}><span>تمت المذاكرة</span></label>`;
+          })()
+        : "";
+      const rowStudied = unit.trackStudy && Boolean(studiedMap[`${subject.id}:${unit.id}`]);
+      return `<div class="matrix-row${rowStudied ? " is-studied" : ""}" data-unit="${esc(unit.id)}">
+        <div class="matrix-lecture">
+          <div class="matrix-lec-top">
+            <span class="lec-number">${esc(unit.badge)}</span>
+            <div>
+              <strong>${esc(unit.title)}</strong>
+              ${unit.sub ? `<span class="net-unit-sub" dir="ltr">${esc(unit.sub)}</span>` : ""}
+              ${unit.inExam ? '<span class="midterm-badge">مقرر بالامتحان</span>' : ""}
+            </div>
+          </div>
+          ${studyHtml}
+        </div>
+        <div class="matrix-cell" data-slot="book">${renderMatrixSlot(slots.book, subject)}</div>
+        <div class="matrix-cell" data-slot="summary">${renderMatrixSlot(slots.summary, subject)}</div>
+        <div class="matrix-cell" data-slot="qa">${renderMatrixSlot(slots.qa, subject)}</div>
+      </div>`;
+    })
+    .join("");
+
+  if (!rows) return "";
+  return `<div class="matrix-wrap net-matrix-wrap">
+    <div class="matrix net-matrix">
+      <div class="matrix-head net-matrix-head">
+        <div>${esc(colLabels[0])}</div>
+        <div>${ICONS.book}<span>${esc(colLabels[1])}</span></div>
+        <div>${ICONS.summary}<span>${esc(colLabels[2])}</span></div>
+        <div>${ICONS.question}<span>${esc(colLabels[3])}</span></div>
+      </div>
+      ${rows}
+    </div>
+  </div>`;
+}
+
+function renderNetworksHub(subject) {
+  const byId = new Map((subject.sections || []).map((sec) => [sec.id, sec]));
+  const atwanBook = byId.get("atwan-book");
+  const atwanChapters = byId.get("atwan-chapters");
+  const mahfouz = byId.get("mahfouz");
+  const midtermSec = byId.get("midterm-revision");
+  const committeesSec = byId.get("committees");
+
+  const reviewFiles = midtermSec?.files || [];
+
+  const committeesMarkup = committeesSec?.files?.length
+    ? sectionMarkup(
+        committeesSec,
+        committeesSec.files.map((file) => fileRow(file, subject, committeesSec.id)).join(""),
+        store.get(`section:${committeesSec.id}`) !== "closed",
+      )
+    : "";
+
+  const studiedMap = getStudied();
+  let studiedCount = 0;
+  const countStudied = () => {
+    studiedCount += 1;
+  };
+
+  const atwanChaptersTable = renderNetworksUnitTable(
+    subject,
+    atwanChapters,
+    [
+      { id: "atwan-ch1", badge: "Ch1", title: "Ch 01: Introduction to Networks", sub: "pp. 3–21 · مراجعة", inExam: true, trackStudy: true },
+      { id: "atwan-ch2", badge: "Ch2", title: "Ch 02: Data Communication", sub: "pp. 22–47 · مراجعة", inExam: true, trackStudy: true },
+      { id: "atwan-ch3", badge: "Ch3", title: "Ch 03: Network Hardware & LAN", sub: "pp. 48–79 · مراجعة", inExam: true, trackStudy: true },
+      { id: "atwan-ch4", badge: "Ch4", title: "Ch 04: OSI Model", sub: "pp. 80–102 · مراجعة", inExam: true, trackStudy: true },
+      { id: "atwan-ch5", badge: "Ch5", title: "Ch 05: Protocols", sub: "pp. 103–162 · مشروحة", inExam: true, trackStudy: true },
+      { id: "atwan-ch6", badge: "Ch6", title: "Ch 06: Wide Area Networks", sub: "pp. 163–176 · مشروحة", inExam: true, trackStudy: true },
+      { id: "atwan-ch7", badge: "Ch7", title: "Ch 07: Addressing", sub: "pp. 177–205 · مشروحة", inExam: true, trackStudy: true },
+      { id: "atwan-lec1-3", badge: "Lec", title: "ملخصات وأسئلة المحاضرات 1–3", sub: "Lec 01–03", inExam: false, trackStudy: false },
+      { id: "atwan-lec4-5", badge: "Lec", title: "محاضرات 4–5 و IPv4 Structure", sub: "Lec 04–05 + IPv4", inExam: false, trackStudy: false },
+    ],
+    ["الفصل / المحاضرة", "الكتاب (PDF)", "الملخص (.md / Lec)", "الأسئلة والحل (Q&A)"],
+    studiedMap,
+    countStudied,
+  );
+
+  const mahfouzTable = renderNetworksUnitTable(
+    subject,
+    mahfouz,
+    [
+      { id: "mahfouz-ch1", badge: "Ch1", title: "Ch 01: Introduction (Full)", sub: "84 Slides · Full", inExam: true, trackStudy: true },
+      { id: "mahfouz-ch2", badge: "Ch2", title: "Ch 02: Application Layer", sub: "Slides 1–42 (حتى Web Caches)", inExam: true, trackStudy: true },
+    ],
+    ["الفصل", "السلايدز (PDF)", "الملخص (.md)", "الأسئلة والحل (Q&A)"],
+    studiedMap,
+    countStudied,
+  );
+
+  return `${renderReviewBlock(subject, reviewFiles)}
+    ${committeesMarkup}
+    ${studyProgressMarkup(subject, studiedCount, 9)}
+    <section class="net-track" id="sec-atwan" data-spy-section="atwan" data-spy-label="د. أحمد عطوان">
+      <div class="net-track-head">
+        <div>
+          <h3>1. د. أحمد عطوان — الفصول 1 إلى 7</h3>
+          <span class="en" dir="ltr">Dr. Ahmed Atwan · Chapters 1–7</span>
+        </div>
+        <span class="net-scope-pill is-included">مقرر بالامتحان (Ch. 1–7)</span>
+      </div>
+      ${
+        atwanBook?.files?.length
+          ? `<div class="net-book-strip">${atwanBook.files
+              .map((f) => fileRow(f, subject, atwanBook.id, "file-compact"))
+              .join("")}</div>`
+          : ""
+      }
+      ${atwanChaptersTable}
+    </section>
+    <section class="net-track" id="sec-mahfouz" data-spy-section="mahfouz" data-spy-label="د. محمد محفوظ">
+      <div class="net-track-head">
+        <div>
+          <h3>2. د. محمد محفوظ — Kurose & Ross</h3>
+          <span class="en" dir="ltr">Dr. Mahfouz · Ch. 1 (Full) + Ch. 2 (Slides 1–42)</span>
+        </div>
+        <span class="net-scope-pill is-included">Ch. 1 + Ch. 2 (1–42)</span>
+      </div>
+      ${mahfouzTable}
+    </section>`;
+}
+
 function renderSubject(subject) {
   const supportsMatrix = subject.id !== "midterm-revision";
   const useMatrix = supportsMatrix && state.viewMode !== "classic";
@@ -1997,7 +2140,9 @@ function renderSubject(subject) {
     subject.id === "midterm-revision"
       ? renderMidtermKanban(subject)
       : useMatrix
-        ? renderMatrix(subject)
+        ? subject.id === "computer-networks"
+          ? renderNetworksHub(subject)
+          : renderMatrix(subject)
         : renderClassicSections(subject);
 
   viewEl.innerHTML = `<div class="subject-wrap" style="--accent:${subject.accent}">
@@ -3431,6 +3576,133 @@ async function openPdfViewer(file, body) {
   }
 }
 
+function renderMarkdownInline(text) {
+  let out = esc(text);
+  const codeSpans = [];
+  out = out.replace(/`([^`]+)`/g, (_, code) => {
+    const idx = codeSpans.length;
+    codeSpans.push(`<code>${code}</code>`);
+    return `\u0000CODE${idx}\u0000`;
+  });
+  out = out.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  out = out.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  out = out.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  out = out.replace(/\u0000CODE(\d+)\u0000/g, (_, idx) => codeSpans[Number(idx)] || "");
+  return out;
+}
+
+function renderMarkdownToHtml(source) {
+  const lines = String(source || "").replace(/\r\n?/g, "\n").split("\n");
+  const out = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    if (line.trim().startsWith("```")) {
+      const codeLines = [];
+      i += 1;
+      while (i < lines.length && !lines[i].trim().startsWith("```")) {
+        codeLines.push(esc(lines[i]));
+        i += 1;
+      }
+      i += 1;
+      out.push(`<pre class="md-code"><code>${codeLines.join("\n")}</code></pre>`);
+      continue;
+    }
+
+    if (/^---+$/.test(line.trim())) {
+      out.push("<hr>");
+      i += 1;
+      continue;
+    }
+
+    const heading = line.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      const level = heading[1].length;
+      out.push(`<h${level}>${renderMarkdownInline(heading[2])}</h${level}>`);
+      i += 1;
+      continue;
+    }
+
+    if (line.includes("|") && i + 1 < lines.length && /^\s*\|?\s*[-:]+/.test(lines[i + 1])) {
+      const parseRow = (row) =>
+        row
+          .trim()
+          .replace(/^\|/, "")
+          .replace(/\|$/, "")
+          .split("|")
+          .map((cell) => cell.trim());
+      const headers = parseRow(line);
+      i += 2;
+      const bodyRows = [];
+      while (i < lines.length && lines[i].includes("|") && lines[i].trim() !== "") {
+        bodyRows.push(parseRow(lines[i]));
+        i += 1;
+      }
+      out.push(
+        `<div class="md-table-wrap"><table><thead><tr>${headers
+          .map((h) => `<th>${renderMarkdownInline(h)}</th>`)
+          .join("")}</tr></thead><tbody>${bodyRows
+          .map(
+            (r) =>
+              `<tr>${r.map((c) => `<td>${renderMarkdownInline(c)}</td>`).join("")}</tr>`,
+          )
+          .join("")}</tbody></table></div>`,
+      );
+      continue;
+    }
+
+    if (/^\s*[-*]\s+/.test(line)) {
+      const items = [];
+      while (i < lines.length && /^\s*[-*]\s+/.test(lines[i])) {
+        items.push(`<li>${renderMarkdownInline(lines[i].replace(/^\s*[-*]\s+/, ""))}</li>`);
+        i += 1;
+      }
+      out.push(`<ul>${items.join("")}</ul>`);
+      continue;
+    }
+
+    if (/^\s*\d+\.\s+/.test(line)) {
+      const items = [];
+      while (i < lines.length && /^\s*\d+\.\s+/.test(lines[i])) {
+        items.push(`<li>${renderMarkdownInline(lines[i].replace(/^\s*\d+\.\s+/, ""))}</li>`);
+        i += 1;
+      }
+      out.push(`<ol>${items.join("")}</ol>`);
+      continue;
+    }
+
+    if (line.trim().startsWith(">")) {
+      const quoteLines = [];
+      while (i < lines.length && lines[i].trim().startsWith(">")) {
+        quoteLines.push(renderMarkdownInline(lines[i].replace(/^\s*>\s?/, "")));
+        i += 1;
+      }
+      out.push(`<blockquote>${quoteLines.join("<br>")}</blockquote>`);
+      continue;
+    }
+
+    if (line.trim() === "") {
+      i += 1;
+      continue;
+    }
+
+    const para = [];
+    while (
+      i < lines.length &&
+      lines[i].trim() !== "" &&
+      !/^(#{1,4}\s|---+|\s*[-*]\s|\s*\d+\.\s|\s*>|```)/.test(lines[i])
+    ) {
+      para.push(renderMarkdownInline(lines[i]));
+      i += 1;
+    }
+    out.push(`<p>${para.join(" ")}</p>`);
+  }
+
+  return out.join("\n");
+}
+
 function openPreview(file, options = {}) {
   const ext = (file.ext || "").toLowerCase();
   teardownPdfViewer();
@@ -3453,6 +3725,19 @@ function openPreview(file, options = {}) {
       : `<iframe src="${esc(file.path)}#view=FitH" title="${esc(file.title)}"></iframe>`;
   } else if (["jpg", "jpeg", "png", "webp", "gif"].includes(ext)) {
     body.innerHTML = `<img src="${esc(file.path)}" alt="${esc(file.title)}" style="height:100%;width:100%;object-fit:contain">`;
+  } else if (ext === "md") {
+    body.innerHTML = `<div class="md-preview-wrap"><p>جارٍ التحميل…</p></div>`;
+    fetch(file.path)
+      .then((response) => {
+        if (!response.ok) throw new Error("fetch failed");
+        return response.text();
+      })
+      .then((text) => {
+        body.innerHTML = `<div class="md-preview-wrap"><article class="md-preview" dir="ltr">${renderMarkdownToHtml(text)}</article></div>`;
+      })
+      .catch(() => {
+        body.innerHTML = note("تعذّر قراءة الملف", "يمكنك تحميله بدلًا من ذلك.", "file");
+      });
   } else if (ext === "txt") {
     body.innerHTML = `<pre>جارٍ التحميل…</pre>`;
     fetch(file.path)

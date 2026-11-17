@@ -213,7 +213,7 @@
       "dayAr": "الأربعاء",
       "startTime": "11:00",
       "endTime": "11:30",
-      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
+      "venue": "مراكز الاختبارات الإلكترونية بكلية التجارة",
       "studentsCount": 428,
       "marks": 10,
       "lecturesInScope": [
@@ -226,7 +226,30 @@
         7
       ],
       "scopeNote": "أول 7 محاضرات (متاح منها 6 ملفات لأن محاضرة 3 و4 مدمجين)",
-      "hallsFile": "files/committees/computer-networks-committees.pdf"
+      "hallsFile": "files/committees/computer-networks-committees.pdf",
+      "halls": [
+        {
+          "name": "صالة 3",
+          "location": "كلية التجارة — لجان com_17 إلى com_23 (130 طالب)",
+          "pcFrom": 304,
+          "pcTo": 433,
+          "count": 130
+        },
+        {
+          "name": "صالة 4",
+          "location": "كلية التجارة — لجان com_32 إلى com_45 (278 طالب)",
+          "pcFrom": 591,
+          "pcTo": 868,
+          "count": 278
+        },
+        {
+          "name": "صالة 5",
+          "location": "كلية التجارة — لجان com_57 إلى com_58 (20 طالب)",
+          "pcFrom": 1108,
+          "pcTo": 1127,
+          "count": 20
+        }
+      ]
     }
   ],
   "coursesMeta": {
@@ -320,7 +343,17 @@
         6,
         7
       ],
-      "midtermScopeText": "أول 7 محاضرات"
+      "midtermScopeText": "أول 7 محاضرات",
+      "youtubeLinks": [
+        {
+          "url": "https://youtube.com/playlist?list=PLYljoJMAPFLHrCVfzuMLkJOZHhCgfSXG-",
+          "title": "شرح المادة"
+        },
+        {
+          "url": "https://www.youtube.com/playlist?list=PLbbGpxN09JenP6lEkGId9muuVj4nXmDi7",
+          "title": "شرح المادة (2)"
+        }
+      ]
     }
   },
   "sharedLectures": [
