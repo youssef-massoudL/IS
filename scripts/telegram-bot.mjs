@@ -48,7 +48,7 @@ const GEMINI_MODEL = String(process.env.GEMINI_MODEL || "gemini-3.8-flash").trim
 const GEMINI_FALLBACK_MODELS = [
   ...new Set([
     GEMINI_MODEL,
-    ...String(process.env.GEMINI_FALLBACK_MODELS || "gemini-3.8-flash,gemini-3.8-flash-lite,gemini-2.5-flash")
+    ...String(process.env.GEMINI_FALLBACK_MODELS || "gemini-3.8-flash,gemini-3.8-flash-lite")
       .split(",")
       .map((m) => m.trim())
       .filter(Boolean),
@@ -405,7 +405,8 @@ async function extractQuestionsWithGemini(filePath, subjectId, title) {
   });
 
   const retryableStatuses = new Set([429, 500, 502, 503, 504]);
-  const maxAttemptsPerModel = 3;
+  const maxAttemptsPerModel = 4;
+  let primaryError = null;
   let lastError = null;
   let data = null;
 
@@ -425,7 +426,9 @@ async function extractQuestionsWithGemini(filePath, subjectId, title) {
         }
 
         const errText = await res.text().catch(() => "");
-        lastError = new Error(`Gemini API (${model}) HTTP ${res.status}: ${errText.slice(0, 200)}`);
+        const err = new Error(`Gemini API (${model}) HTTP ${res.status}: ${errText.slice(0, 200)}`);
+        if (!primaryError) primaryError = err;
+        if (res.status !== 404 || !lastError) lastError = err;
 
         if (retryableStatuses.has(res.status) && attempt < maxAttemptsPerModel) {
           const delayMs = 1500 * Math.pow(2, attempt - 1) + Math.floor(Math.random() * 500);
@@ -437,8 +440,9 @@ async function extractQuestionsWithGemini(filePath, subjectId, title) {
         if (res.status === 404 || retryableStatuses.has(res.status)) {
           break;
         }
-        throw lastError;
+        throw err;
       } catch (err) {
+        if (!primaryError) primaryError = err;
         lastError = err;
         if (attempt < maxAttemptsPerModel && !String(err.message || "").includes("HTTP 400") && !String(err.message || "").includes("HTTP 401") && !String(err.message || "").includes("HTTP 403")) {
           const delayMs = 1500 * Math.pow(2, attempt - 1) + Math.floor(Math.random() * 500);
@@ -452,7 +456,7 @@ async function extractQuestionsWithGemini(filePath, subjectId, title) {
   }
 
   if (!data) {
-    throw lastError || new Error("Gemini API request failed");
+    throw primaryError || lastError || new Error("Gemini API request failed");
   }
 
   const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "[]";
