@@ -1659,7 +1659,7 @@ window.__SITE_DATA__ = {
               "size": 761321,
               "youtube": "",
               "addedAt": "2026-11-17T16:55:02.636Z",
-              "docTag": "مهم",
+              "docTag": "مهم - ملخص",
               "lecture": null,
               "kind": "review",
               "keywords": [
@@ -4825,7 +4825,7 @@ window.__SITE_DATA__ = {
               "size": 761321,
               "youtube": "",
               "addedAt": "2026-11-17T16:55:02.636Z",
-              "docTag": "مهم",
+              "docTag": "مهم - ملخص",
               "lecture": null,
               "kind": "review",
               "keywords": [
