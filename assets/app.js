@@ -1657,58 +1657,61 @@ function renderSubjectLinksBox(subject) {
     : [];
   if (!ytLinks.length && !extLinks.length) return "";
 
-  const ytCol = ytLinks.length
-    ? `<div class="slb-col">
-        <span class="ci-label">شرح المادة</span>
-        <div class="slb-items">
-          ${ytLinks
-            .map((link) => {
-              const parsed = parseYouTubeUrl(link.url);
-              const chapters = link.chapters
-                .map(
-                  (chapter) =>
-                    `<a class="yt-chapter-chip" href="${esc(buildYouTubeTimestampUrl(link.url, chapter.t))}" target="_blank" rel="noopener">▶ ${esc(formatYouTubeTimestamp(chapter.t))} · ${esc(chapter.label)}</a>`,
-                )
-                .join("");
-              return `<div class="slb-row">
-                <span class="slb-title">${esc(link.title)}</span>
-                <div class="slb-btns">
-                  <a class="circle-icon-btn yt-circle" href="${esc(link.url)}" target="_blank" rel="noopener" title="مشاهدة على يوتيوب — ${esc(link.title)}" aria-label="مشاهدة على يوتيوب">${ICONS.youtube}</a>
-                  ${
-                    parsed
-                      ? `<button class="circle-icon-btn play-circle" type="button" data-yt-embed="${esc(parsed.videoId)}" data-yt-start="${parsed.startSeconds}" data-yt-title="${esc(link.title)}" title="تشغيل هنا — ${esc(link.title)}" aria-label="تشغيل هنا">${ICONS.play}</button>`
-                      : ""
-                  }
-                </div>
-                ${chapters ? `<div class="yt-chapters">${chapters}</div>` : ""}
-              </div>`;
-            })
-            .join("")}
-        </div>
-      </div>`
-    : "";
+  const totalCount = ytLinks.length + extLinks.length;
+  const triggerLabel = ytLinks.length ? "شرح المادة" : "روابط المادة";
+  const triggerIcon = ytLinks.length ? ICONS.youtube : ICONS.external;
 
-  const extCol = extLinks.length
-    ? `<div class="slb-col">
-        <span class="ci-label">روابط المادة</span>
-        <div class="slb-items">
-          ${extLinks
-            .map((link) => {
-              const title = String(link.title || "").trim() || "فتح الرابط";
-              const url = String(link.url).trim();
-              return `<div class="slb-row">
-                <span class="slb-title">${esc(title)}</span>
-                <div class="slb-btns">
-                  <a class="circle-icon-btn ext-circle" href="${esc(url)}" target="_blank" rel="noopener" title="${esc(title)}" aria-label="${esc(title)}">${ICONS.external}</a>
-                </div>
-              </div>`;
-            })
-            .join("")}
+  const ytItems = ytLinks
+    .map((link) => {
+      const parsed = parseYouTubeUrl(link.url);
+      const chapters = link.chapters
+        .map(
+          (chapter) =>
+            `<a class="yt-chapter-chip" href="${esc(buildYouTubeTimestampUrl(link.url, chapter.t))}" target="_blank" rel="noopener">▶ ${esc(formatYouTubeTimestamp(chapter.t))} · ${esc(chapter.label)}</a>`,
+        )
+        .join("");
+      return `<div class="slb-pill">
+        <span class="slb-title">${esc(link.title)}</span>
+        <div class="slb-btns">
+          <a class="circle-icon-btn yt-circle" href="${esc(link.url)}" target="_blank" rel="noopener" title="مشاهدة على يوتيوب — ${esc(link.title)}" aria-label="مشاهدة على يوتيوب">${ICONS.youtube}</a>
+          ${
+            parsed
+              ? `<button class="circle-icon-btn play-circle" type="button" data-yt-embed="${esc(parsed.videoId)}" data-yt-start="${parsed.startSeconds}" data-yt-title="${esc(link.title)}" title="تشغيل هنا — ${esc(link.title)}" aria-label="تشغيل هنا">${ICONS.play}</button>`
+              : ""
+          }
         </div>
-      </div>`
-    : "";
+        ${chapters ? `<div class="yt-chapters">${chapters}</div>` : ""}
+      </div>`;
+    })
+    .join("");
 
-  return `<div class="subject-links-box" style="--accent:${subject.accent}">${ytCol}${extCol}</div>`;
+  const extItems = extLinks
+    .map((link) => {
+      const title = String(link.title || "").trim() || "فتح الرابط";
+      const url = String(link.url).trim();
+      return `<div class="slb-pill">
+        <span class="slb-title">${esc(title)}</span>
+        <div class="slb-btns">
+          <a class="circle-icon-btn ext-circle" href="${esc(url)}" target="_blank" rel="noopener" title="${esc(title)}" aria-label="${esc(title)}">${ICONS.external}</a>
+        </div>
+      </div>`;
+    })
+    .join("");
+
+  return `<details class="links-circle-card" style="--accent:${subject.accent}">
+    <summary class="links-circle-trigger" title="${esc(triggerLabel)}" aria-label="${esc(triggerLabel)}">
+      <span class="links-circle-orb${ytLinks.length ? " is-yt" : ""}">
+        ${triggerIcon}
+        ${totalCount > 1 ? `<span class="links-circle-count">${totalCount}</span>` : ""}
+      </span>
+      <span class="links-circle-label">${esc(triggerLabel)}</span>
+      <span class="ci-summary-chevron" aria-hidden="true">▾</span>
+    </summary>
+    <div class="links-circle-tray">
+      ${ytItems}
+      ${extItems}
+    </div>
+  </details>`;
 }
 
 function renderCourseInfo(subject) {
@@ -1734,25 +1737,26 @@ function renderCourseInfo(subject) {
 function renderReviewBlock(subject, files) {
   const practiceHref = `#practice/${esc(subject.id)}`;
   const midtermSection = subject.sections?.find((section) => section.id === "midterm-revision");
-  return `<section class="review-block" id="sec-review" data-spy-section="review" data-spy-label="مراجعات الميدترم">
-    <div class="review-head">
-      <div>
-        <div class="review-title-row">
-          <h3>مراجعات الميدترم والملفات الشاملة</h3>
-          <span class="important-badge">★ مهم</span>
-        </div>
-        ${midtermSection?.nameEn ? `<span class="review-folder" dir="ltr">${esc(midtermSection.nameEn)}</span>` : ""}
-        <p>${files.length} ملف · تشغيل مباشر للملفات التفاعلية أو اختبار سريع</p>
-      </div>
+  const open = store.get("section:review") !== "closed";
+  return `<section class="section review-block" id="sec-review" data-section="review" data-open="${open}" data-spy-section="review" data-spy-label="مراجعات الميدترم">
+    <div class="section-head review-head" role="button" tabindex="0" aria-expanded="${open}">
+      <span class="section-icon">${ICONS.revision}</span>
+      <span class="section-titles">
+        <h3>مراجعات الميدترم والملفات الشاملة <span class="important-badge">★ مهم</span></h3>
+        <span class="en">${midtermSection?.nameEn ? `${esc(midtermSection.nameEn)} · ` : ""}${files.length} ملف</span>
+      </span>
       <a class="btn btn-sm" href="${practiceHref}">${ICONS.question}<span>اختبر نفسك</span></a>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
-    ${
-      files.length
-        ? `<div class="review-grid">${files
-            .map((file) => fileRow(file, subject, sectionIdOf(subject, file)))
-            .join("")}</div>`
-        : `<p class="review-empty">لا توجد ملفات مراجعة لهذه المادة بعد.</p>`
-    }
+    <div class="section-body review-body">
+      ${
+        files.length
+          ? `<div class="review-grid">${files
+              .map((file) => fileRow(file, subject, sectionIdOf(subject, file)))
+              .join("")}</div>`
+          : `<p class="review-empty">لا توجد ملفات مراجعة لهذه المادة بعد.</p>`
+      }
+    </div>
   </section>`;
 }
 
@@ -3067,6 +3071,12 @@ viewEl.addEventListener("change", (event) => {
 });
 
 viewEl.addEventListener("keydown", (event) => {
+  const head = event.target.closest?.('.section-head[role="button"]');
+  if (head && event.target === head && (event.key === "Enter" || event.key === " ")) {
+    event.preventDefault();
+    head.click();
+    return;
+  }
   const row = event.target.closest?.(".file");
   if (!row || event.target !== row) return;
   if (event.key === "Enter" || event.key === " ") {

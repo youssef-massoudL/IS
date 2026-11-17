@@ -126,17 +126,21 @@
 }
 
 html {
+  min-height: 100%;
+  background-color: var(--bg);
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
   font-family: var(--font);
   background:
     radial-gradient(880px 520px at 8% -5%, rgba(78, 141, 156, 0.14), transparent 65%),
     radial-gradient(720px 440px at 94% 2%, rgba(200, 95, 107, 0.11), transparent 60%),
     radial-gradient(640px 420px at 52% 0%, rgba(237, 247, 189, 0.28), transparent 62%),
     var(--bg);
+  background-repeat: no-repeat;
   color: var(--text);
   line-height: 1.65;
   font-size: 15px;
@@ -149,6 +153,7 @@ body {
     radial-gradient(720px 440px at 92% 4%, rgba(200, 95, 107, 0.13), transparent 62%),
     radial-gradient(680px 440px at 50% 0%, rgba(40, 28, 89, 0.34), transparent 64%),
     var(--bg);
+  background-repeat: no-repeat;
 }
 
 h1,
@@ -2159,14 +2164,100 @@ kbd {
   box-shadow: none;
 }
 
-.subject-links-box {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px 18px;
+.links-circle-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
   margin: 0 0 14px;
-  padding: 12px 14px;
+  max-width: 100%;
+}
+
+.links-circle-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.links-circle-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.links-circle-orb {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--accent, #4e8d9c) 35%, var(--border));
+  background: color-mix(in srgb, var(--accent, #4e8d9c) 11%, var(--surface));
+  color: var(--accent, #4e8d9c);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.14s ease, background 0.14s ease;
+}
+
+.links-circle-orb.is-yt {
+  color: #ef4444;
+  border-color: color-mix(in srgb, #ef4444 38%, var(--border));
+  background: color-mix(in srgb, #ef4444 12%, var(--surface));
+}
+
+.links-circle-trigger:hover .links-circle-orb {
+  transform: translateY(-1px);
+}
+
+.links-circle-orb svg {
+  width: 19px;
+  height: 19px;
+}
+
+.links-circle-count {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 0 0 2px var(--bg);
+}
+
+.links-circle-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.links-circle-card[open] .ci-summary-chevron {
+  transform: rotate(180deg);
+}
+
+.links-circle-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.slb-pill {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 999px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
@@ -2429,33 +2520,22 @@ kbd {
 
 .review-block {
   margin: 0 0 14px;
-  padding: 16px 18px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
   background:
     radial-gradient(120% 150% at 100% 0%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 62%),
     var(--surface);
-  box-shadow: var(--shadow-sm);
+  background-repeat: no-repeat;
 }
 
 .review-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 12px;
+  align-items: center;
 }
 
-.review-head h3 {
-  font-size: 16px;
-  font-weight: 700;
+.review-head .btn {
+  flex: none;
 }
 
-.review-head p {
-  margin-top: 2px;
-  font-size: 11.5px;
-  color: var(--muted);
+.review-body {
+  padding: 14px 16px;
 }
 
 .review-title-row {
@@ -3287,7 +3367,7 @@ kbd {
   }
 
   .schedule-block,
-  .review-block {
+  .review-body {
     padding: 14px;
   }
 
@@ -4774,11 +4854,14 @@ html.sidebar-open body {
 
 .review-block {
   margin-bottom: 12px;
+}
+
+.review-body {
   padding: 12px 14px;
 }
 
 .review-head {
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 .review-head h3 {
