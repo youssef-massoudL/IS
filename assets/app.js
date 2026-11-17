@@ -1698,7 +1698,7 @@ function renderSubjectLinksBox(subject) {
     })
     .join("");
 
-  return `<details class="links-circle-card" style="--accent:${subject.accent}">
+  return `<details class="links-circle-card ci-links-inline" style="--accent:${subject.accent}">
     <summary class="links-circle-trigger" title="${esc(triggerLabel)}" aria-label="${esc(triggerLabel)}">
       <span class="links-circle-orb${ytLinks.length ? " is-yt" : ""}">
         ${triggerIcon}
@@ -1729,7 +1729,7 @@ function renderCourseInfo(subject) {
       <div class="ci-item"><span class="ci-label">معيد سكشنك (${esc(state.section)})</span><strong>${esc(instructors || "غير محدد")}</strong></div>
       <div class="ci-item"><span class="ci-label">درجة الميدترم</span><strong>${esc(meta.midtermMarks || "غير محدد")}</strong></div>
       <div class="ci-item"><span class="ci-label">نطاق الميدترم</span><strong>${esc(meta.midtermScopeText || "غير محدد")}</strong></div>
-      <a class="btn btn-sm ci-action" href="#practice/${esc(subject.id)}">${ICONS.question}<span>اختبر نفسك في المادة</span></a>
+      ${renderSubjectLinksBox(subject)}
     </div>
   </details>`;
 }
@@ -2171,7 +2171,6 @@ function renderSubject(subject) {
       </div>
     </div>
     ${renderCourseInfo(subject)}
-    ${renderSubjectLinksBox(subject)}
     ${toggle}
     ${bookmarksSlotMarkup(subject)}
     ${body}

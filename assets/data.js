@@ -4761,6 +4761,7 @@ window.__SITE_DATA__ = {
               "ext": "pdf",
               "size": 453330,
               "youtube": "",
+              "midtermReview": true,
               "lecture": null,
               "kind": "review",
               "keywords": [
@@ -4792,6 +4793,7 @@ window.__SITE_DATA__ = {
               "ext": "pdf",
               "size": 781754,
               "youtube": "",
+              "midtermReview": true,
               "lecture": null,
               "kind": "review",
               "keywords": [
@@ -4813,6 +4815,64 @@ window.__SITE_DATA__ = {
                 "to",
                 "Master",
                 "Guide"
+              ]
+            },
+            {
+              "id": "book-questions",
+              "title": "Book Questions",
+              "original": "Book Questions.pdf",
+              "path": "files/computer-networks/midterm-revision/book-questions.pdf",
+              "ext": "pdf",
+              "size": 303249,
+              "youtube": "",
+              "midtermReview": true,
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "Computer Networks",
+                "computer-networks",
+                "pdf",
+                "Book",
+                "Questions"
+              ]
+            },
+            {
+              "id": "q-and-a-d-ahmed-atwan-book",
+              "title": "Q&A - D. Ahmed Atwan Book",
+              "original": "Q&A - D. Ahmed Atwan Book.pdf",
+              "path": "files/computer-networks/midterm-revision/q-and-a-d-ahmed-atwan-book.pdf",
+              "ext": "pdf",
+              "size": 204519,
+              "youtube": "",
+              "midtermReview": true,
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "Computer Networks",
+                "computer-networks",
+                "pdf",
+                "Ahmed",
+                "Atwan",
+                "Book",
+                "and"
               ]
             }
           ]

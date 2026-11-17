@@ -2152,7 +2152,7 @@ kbd {
   transition: transform 0.16s ease;
 }
 
-.course-info-card[open] .ci-summary-chevron {
+.course-info-card[open] > .course-info-summary .ci-summary-chevron {
   transform: rotate(180deg);
 }
 
@@ -2224,7 +2224,7 @@ kbd {
   height: 18px;
   padding: 0 5px;
   border-radius: 999px;
-  background: #ef4444;
+  background: var(--accent, #4e8d9c);
   color: #fff;
   font-size: 10px;
   font-weight: 800;
@@ -6982,10 +6982,18 @@ h3 {
 
 .net-matrix-wrap {
   margin-top: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .net-matrix {
   min-width: 680px;
+}
+
+@media (max-width: 760px) {
+  .net-matrix {
+    min-width: 840px;
+  }
 }
 
 .net-matrix .matrix-head,
@@ -7156,9 +7164,22 @@ h3 {
   font-weight: 700;
 }
 
-@media (max-width: 960px) {
-  .net-matrix .matrix-head,
-  .net-matrix .matrix-row {
-    grid-template-columns: 1fr;
+
+.course-info .ci-links-inline {
+  margin: 0;
+  justify-self: end;
+}
+
+.course-info .ci-links-inline[open] {
+  grid-column: 1 / -1;
+  justify-self: start;
+  width: 100%;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+
+@media (max-width: 860px) {
+  .course-info .ci-links-inline {
+    justify-self: start;
   }
 }
