@@ -79,41 +79,6 @@ window.__SITE_DATA__ = {
               ]
             },
             {
-              "id": "computer-network-lecture-03-04",
-              "title": "المحاضرات 03–04",
-              "original": "Computer Network _Lecture 03-04.pdf",
-              "path": "files/computer-networks/lectures/computer-network-lecture-03-04.pdf",
-              "ext": "pdf",
-              "size": 4822446,
-              "youtube": "",
-              "lecture": 3,
-              "kind": "lecture",
-              "keywords": [
-                "محاضرة",
-                "محاضرات",
-                "lecture",
-                "lec",
-                "شبكات الحاسب",
-                "Computer Networks",
-                "computer-networks",
-                "المحاضرات",
-                "Lectures",
-                "محاضرة 3",
-                "lecture 3",
-                "lec 3",
-                "3",
-                "pdf",
-                "03",
-                "04",
-                "Computer",
-                "Network"
-              ],
-              "lectureSpan": [
-                3,
-                4
-              ]
-            },
-            {
               "id": "computer-network-lecture-05",
               "title": "المحاضرة 05",
               "original": "Computer Network_Lecture 05.pdf",
