@@ -1,7 +1,7 @@
 window.__SITE_DATA__ = {
   "title": "سنة تالتة — الترم الأول",
   "subtitle": "نظم المعلومات · ملازم ومحاضرات ومراجعات",
-  "updated": "2026-11-16",
+  "updated": "2026-11-17",
   "subjects": [
     {
       "id": "computer-networks",
@@ -1480,6 +1480,42 @@ window.__SITE_DATA__ = {
                 "Database",
                 "System",
                 "II"
+              ]
+            },
+            {
+              "id": "database-system-ii-exam-questions-youssef-nageh",
+              "title": "Database System II Exam Questions - Youssef Nageh",
+              "original": "Database System II Exam Questions - Youssef Nageh.pdf",
+              "path": "files/database-2/midterm-revision/database-system-ii-exam-questions-youssef-nageh.pdf",
+              "ext": "pdf",
+              "size": 479281,
+              "youtube": "",
+              "addedAt": "2026-11-17T00:56:32.260Z",
+              "docTag": "أسئلة",
+              "info": "أسئلة من امتحانات الميد تيرم و الامتحانات السابقة فقط",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "قواعد البيانات",
+                "Database II",
+                "database-2",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "pdf",
+                "Database",
+                "System",
+                "II",
+                "Exam",
+                "Questions",
+                "Youssef",
+                "Nageh"
               ]
             },
             {
@@ -3850,6 +3886,39 @@ window.__SITE_DATA__ = {
                 "IS313P",
                 "System",
                 "II"
+              ]
+            },
+            {
+              "id": "database-system-ii-exam-questions-youssef-nageh",
+              "title": "Database System II Exam Questions - Youssef Nageh",
+              "original": "Database System II Exam Questions - Youssef Nageh.pdf",
+              "path": "files/database-2/midterm-revision/database-system-ii-exam-questions-youssef-nageh.pdf",
+              "ext": "pdf",
+              "size": 479281,
+              "youtube": "",
+              "addedAt": "2026-11-17T00:56:32.260Z",
+              "docTag": "أسئلة",
+              "info": "أسئلة من امتحانات الميد تيرم و الامتحانات السابقة فقط",
+              "lecture": null,
+              "kind": "review",
+              "keywords": [
+                "مراجعة",
+                "مراجعات",
+                "ميدترم",
+                "midterm",
+                "revision",
+                "شامل",
+                "مراجعة الميد",
+                "Midterm Revision",
+                "midterm-revision",
+                "Database",
+                "pdf",
+                "System",
+                "II",
+                "Exam",
+                "Questions",
+                "Youssef",
+                "Nageh"
               ]
             },
             {
