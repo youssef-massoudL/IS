@@ -1621,39 +1621,6 @@ window.__SITE_DATA__ = {
               ]
             },
             {
-              "id": "computer-networks-lectures-1-to-6-master-guide",
-              "title": "Computer Networks Lectures 1 to 6 Master Guide",
-              "original": "Computer_Networks_Lectures_1_to_6_Master_Guide.pdf",
-              "path": "files/computer-networks/midterm-revision/computer-networks-lectures-1-to-6-master-guide.pdf",
-              "ext": "pdf",
-              "size": 781754,
-              "youtube": "",
-              "midtermReview": true,
-              "lecture": null,
-              "kind": "review",
-              "keywords": [
-                "مراجعة",
-                "مراجعات",
-                "ميدترم",
-                "midterm",
-                "revision",
-                "شامل",
-                "شبكات الحاسب",
-                "Computer Networks",
-                "computer-networks",
-                "مراجعة الميد",
-                "Midterm Revision",
-                "midterm-revision",
-                "pdf",
-                "Computer",
-                "Networks",
-                "Lectures",
-                "to",
-                "Master",
-                "Guide"
-              ]
-            },
-            {
               "id": "book-questions",
               "title": "Book Questions",
               "original": "Book Questions.pdf",
@@ -4820,38 +4787,6 @@ window.__SITE_DATA__ = {
                 "Bank",
                 "Lectures",
                 "to"
-              ]
-            },
-            {
-              "id": "computer-networks-lectures-1-to-6-master-guide",
-              "title": "Computer Networks Lectures 1 to 6 Master Guide",
-              "original": "Computer_Networks_Lectures_1_to_6_Master_Guide.pdf",
-              "path": "files/computer-networks/midterm-revision/computer-networks-lectures-1-to-6-master-guide.pdf",
-              "ext": "pdf",
-              "size": 781754,
-              "youtube": "",
-              "midtermReview": true,
-              "lecture": null,
-              "kind": "review",
-              "keywords": [
-                "مراجعة",
-                "مراجعات",
-                "ميدترم",
-                "midterm",
-                "revision",
-                "شامل",
-                "مراجعة الميد",
-                "Midterm Revision",
-                "midterm-revision",
-                "Computer Networks",
-                "computer-networks",
-                "pdf",
-                "Computer",
-                "Networks",
-                "Lectures",
-                "to",
-                "Master",
-                "Guide"
               ]
             },
             {
