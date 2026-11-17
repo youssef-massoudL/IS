@@ -6901,9 +6901,23 @@ h3 {
   margin-top: 8px;
 }
 
+.net-matrix {
+  min-width: 680px;
+}
+
 .net-matrix .matrix-head,
 .net-matrix .matrix-row {
-  grid-template-columns: minmax(190px, 1.15fr) repeat(3, minmax(180px, 1fr));
+  grid-template-columns: minmax(150px, 1.05fr) repeat(3, minmax(0, 1fr));
+}
+
+.net-matrix .cell-files,
+.net-matrix .file.file-compact,
+.net-matrix .file-main {
+  min-width: 0;
+}
+
+.net-matrix .file.file-compact {
+  overflow: hidden;
 }
 
 .net-unit-sub {
