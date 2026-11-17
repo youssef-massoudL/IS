@@ -2093,35 +2093,46 @@ function renderNetworksHub(subject) {
     countStudied,
   );
 
+  const atwanOpen = store.get("section:net-atwan") !== "closed";
+  const mahfouzOpen = store.get("section:net-mahfouz") !== "closed";
+
   return `${renderReviewBlock(subject, reviewFiles)}
     ${committeesMarkup}
     ${studyProgressMarkup(subject, studiedCount, 9)}
-    <section class="net-track" id="sec-atwan" data-spy-section="atwan" data-spy-label="د. أحمد عطوان">
-      <div class="net-track-head">
-        <div>
+    <section class="section net-track" id="sec-atwan" data-section="net-atwan" data-open="${atwanOpen}" data-spy-section="atwan" data-spy-label="د. أحمد عطوان">
+      <button class="section-head" type="button" aria-expanded="${atwanOpen}">
+        <span class="section-icon">${ICONS.lecture}</span>
+        <span class="section-titles">
           <h3>1. د. أحمد عطوان — الفصول 1 إلى 7</h3>
-          <span class="en" dir="ltr">Dr. Ahmed Atwan · Chapters 1–7</span>
-        </div>
+          <span class="en">Dr. Ahmed Atwan · Chapters 1–7</span>
+        </span>
         <span class="net-scope-pill is-included">مقرر بالامتحان (Ch. 1–7)</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="section-body net-track-body">
+        ${
+          atwanBook?.files?.length
+            ? `<div class="net-book-strip">${atwanBook.files
+                .map((f) => fileRow(f, subject, atwanBook.id, "file-compact"))
+                .join("")}</div>`
+            : ""
+        }
+        ${atwanChaptersTable}
       </div>
-      ${
-        atwanBook?.files?.length
-          ? `<div class="net-book-strip">${atwanBook.files
-              .map((f) => fileRow(f, subject, atwanBook.id, "file-compact"))
-              .join("")}</div>`
-          : ""
-      }
-      ${atwanChaptersTable}
     </section>
-    <section class="net-track" id="sec-mahfouz" data-spy-section="mahfouz" data-spy-label="د. محمد محفوظ">
-      <div class="net-track-head">
-        <div>
+    <section class="section net-track" id="sec-mahfouz" data-section="net-mahfouz" data-open="${mahfouzOpen}" data-spy-section="mahfouz" data-spy-label="د. محمد محفوظ">
+      <button class="section-head" type="button" aria-expanded="${mahfouzOpen}">
+        <span class="section-icon">${ICONS.slides}</span>
+        <span class="section-titles">
           <h3>2. د. محمد محفوظ — Kurose & Ross</h3>
-          <span class="en" dir="ltr">Dr. Mahfouz · Ch. 1 (Full) + Ch. 2 (Slides 1–42)</span>
-        </div>
+          <span class="en">Dr. Mahfouz · Ch. 1 (Full) + Ch. 2 (Slides 1–42)</span>
+        </span>
         <span class="net-scope-pill is-included">Ch. 1 + Ch. 2 (1–42)</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="section-body net-track-body">
+        ${mahfouzTable}
       </div>
-      ${mahfouzTable}
     </section>`;
 }
 

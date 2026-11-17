@@ -6821,11 +6821,11 @@ h3 {
 }
 
 .net-track {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 18px;
   margin-top: 16px;
+}
+
+.net-track-body {
+  padding: 16px;
 }
 
 .net-track-head {
