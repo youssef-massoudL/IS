@@ -1014,50 +1014,6 @@ function buildNotifications() {
     }
   }
 
-  const fileCandidates = new Map();
-  for (const subject of state.data?.subjects || []) {
-    for (const section of subject.sections || []) {
-      for (const file of section.files || []) {
-        if (!file.addedAt) continue;
-        const addedMs = Date.parse(file.addedAt);
-        if (Number.isNaN(addedMs)) continue;
-        const diff = Date.now() - addedMs;
-        if (diff < -60000 || diff > NOTIF_FILE_WINDOW_MS) continue;
-
-        const key = file.path || `${subject.id}/${section.id}/${file.id}`;
-        const existing = fileCandidates.get(key);
-        const candidate = {
-          subject,
-          section,
-          file,
-          addedMs,
-          isPrimary: subject.id !== "midterm-revision",
-        };
-        if (!existing || (candidate.isPrimary && !existing.isPrimary)) {
-          fileCandidates.set(key, candidate);
-        }
-      }
-    }
-  }
-
-  const recentFiles = Array.from(fileCandidates.values())
-    .sort((a, b) => b.addedMs - a.addedMs)
-    .slice(0, 5);
-  for (const entry of recentFiles) {
-    const recent24h = isRecentFile(entry.file);
-    items.push({
-      id: `file-${entry.file.path}-${entry.file.addedAt}`,
-      kind: "new-file",
-      priority: recent24h ? 2 : 4,
-      recent24h,
-      title: entry.file.title,
-      meta: `${entry.subject.nameAr} · ${entry.section.name} · ${formatRelativeTimeAr(entry.file.addedAt)}`,
-      href: `#${entry.subject.id}/${entry.section.id}/${entry.file.id}`,
-      ctaLabel: "فتح الملف",
-      accent: entry.subject.accent || "#4e8d9c",
-    });
-  }
-
   return items.sort((a, b) => a.priority - b.priority);
 }
 
