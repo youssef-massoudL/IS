@@ -1625,7 +1625,7 @@ window.__SITE_DATA__ = {
               "size": 1745120,
               "youtube": "",
               "addedAt": "2026-11-17T16:52:27.002Z",
-              "docTag": "أسئلة",
+              "docTag": "مهم - أسئلة",
               "lecture": null,
               "kind": "review",
               "keywords": [
@@ -4792,7 +4792,7 @@ window.__SITE_DATA__ = {
               "size": 1745120,
               "youtube": "",
               "addedAt": "2026-11-17T16:52:27.002Z",
-              "docTag": "أسئلة",
+              "docTag": "مهم - أسئلة",
               "lecture": null,
               "kind": "review",
               "keywords": [
