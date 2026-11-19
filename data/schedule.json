@@ -16,7 +16,8 @@
       "title": "امتحانات الميدترم (الأسبوع التاسع)",
       "startDate": "2026-11-14",
       "endDate": "2026-11-19",
-      "note": "تستمر الدراسة بالتوازي مع الاختبارات"
+      "note": "تستمر الدراسة بالتوازي مع الاختبارات",
+      "status": "done"
     },
     {
       "id": "practical-oral",
@@ -40,6 +41,7 @@
       "note": "أسبوعان"
     }
   ],
+  "weeklyTasks": [],
   "periods": [
     {
       "id": 1,
@@ -78,211 +80,21 @@
       "end": "19:30"
     }
   ],
-  "midterms": [
-    {
-      "subjectId": "system-analysis",
-      "subjectName": "تحليل النظم والتصميم المنطقي",
-      "date": "2026-11-14",
-      "dayAr": "السبت",
-      "startTime": "11:00",
-      "endTime": "11:30",
-      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
-      "studentsCount": 403,
-      "marks": 10,
-      "lecturesInScope": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "scopeNote": "أول 5 محاضرات"
-    },
-    {
-      "subjectId": "research-methods",
-      "subjectName": "أساليب البحث العلمي",
-      "date": "2026-11-15",
-      "dayAr": "الأحد",
-      "startTime": "11:00",
-      "endTime": "11:30",
-      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
-      "studentsCount": 410,
-      "marks": 15,
-      "marksNote": "15 درجة ميدترم + 10 درجات Presentation البحث (أو 25 درجة حسب التوزيع النهائي)",
-      "lecturesInScope": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "scopeNote": "أول 4 محاضرات"
-    },
-    {
-      "subjectId": "information-theory",
-      "subjectName": "نظرية المعلومات",
-      "date": "2026-11-16",
-      "dayAr": "الاثنين",
-      "startTime": "11:00",
-      "endTime": "11:30",
-      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
-      "studentsCount": 427,
-      "marks": 25,
-      "lecturesInScope": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7
-      ],
-      "scopeNote": "أول 6 أو 7 محاضرات",
-      "hallsFile": "files/committees/information-theory-committees.pdf",
-      "halls": [
-        {
-          "name": "صالة 3",
-          "location": "مدرج أ.د عبدالفتاح حسن",
-          "pcFrom": 556,
-          "pcTo": 706,
-          "count": 151
-        },
-        {
-          "name": "صالة 4",
-          "location": "أسفل المبنى الجديد",
-          "pcFrom": 879,
-          "pcTo": 1152,
-          "count": 274
-        },
-        {
-          "name": "صالة 5",
-          "location": "أسفل المبنى الجديد",
-          "pcFrom": 1153,
-          "pcTo": 1154,
-          "count": 2
-        }
-      ]
-    },
-    {
-      "subjectId": "database-2",
-      "subjectName": "قواعد بيانات 2",
-      "date": "2026-11-17",
-      "dayAr": "الثلاثاء",
-      "startTime": "11:00",
-      "endTime": "11:30",
-      "venue": "مراكز الاختبارات الإلكترونية بكلية الحقوق والهندسة",
-      "studentsCount": 433,
-      "marks": 10,
-      "lecturesInScope": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
-      "scopeNote": "أول 6 محاضرات",
-      "hallsFile": "files/committees/database-2-committees.pdf",
-      "halls": [
-        {
-          "name": "صالة 3",
-          "location": "مدرج أ.د عبدالفتاح حسن",
-          "pcFrom": 722,
-          "pcTo": 878,
-          "count": 157
-        },
-        {
-          "name": "صالة 4",
-          "location": "أسفل المبنى الجديد",
-          "pcFrom": 879,
-          "pcTo": 1152,
-          "count": 274
-        },
-        {
-          "name": "صالة 5",
-          "location": "أسفل المبنى الجديد",
-          "pcFrom": 1526,
-          "pcTo": 1527,
-          "count": 2
-        }
-      ]
-    },
-    {
-      "subjectId": "computer-networks",
-      "subjectName": "شبكات الحاسب",
-      "date": "2026-11-18",
-      "dayAr": "الأربعاء",
-      "startTime": "11:00",
-      "endTime": "11:30",
-      "venue": "مراكز الاختبارات الإلكترونية بكلية التجارة",
-      "studentsCount": 428,
-      "marks": 10,
-      "lecturesInScope": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7
-      ],
-      "scopeNote": "أول 7 محاضرات (متاح منها 6 ملفات لأن محاضرة 3 و4 مدمجين)",
-      "hallsFile": "files/committees/computer-networks-committees.pdf",
-      "halls": [
-        {
-          "name": "صالة 3",
-          "location": "كلية التجارة — لجان com_17 إلى com_23 (130 طالب)",
-          "pcFrom": 304,
-          "pcTo": 433,
-          "count": 130
-        },
-        {
-          "name": "صالة 4",
-          "location": "كلية التجارة — لجان com_32 إلى com_45 (278 طالب)",
-          "pcFrom": 591,
-          "pcTo": 868,
-          "count": 278
-        },
-        {
-          "name": "صالة 5",
-          "location": "كلية التجارة — لجان com_57 إلى com_58 (20 طالب)",
-          "pcFrom": 1108,
-          "pcTo": 1127,
-          "count": 20
-        }
-      ]
-    }
-  ],
   "coursesMeta": {
     "system-analysis": {
       "code": "IS312P",
       "doctors": [
         "أ.د/ سمير عبدالرازق"
       ],
-      "midtermMarks": "10 درجات",
-      "midtermLectures": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 5"
+      "totalMarks": 100,
+      "remainingMarks": 90,
+      "remainingMarksText": "90 درجة متبقية من 100"
     },
     "database-2": {
       "code": "IS313P",
       "doctors": [
         "أ.د/ أميرة رزق"
       ],
-      "midtermMarks": "10 درجات",
-      "midtermLectures": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
-      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 6",
       "youtubeLinks": [
         {
           "url": "https://youtu.be/c-uDHzjmqyQ?si=qAu_olRr8GkKlrM1",
@@ -294,38 +106,28 @@
           "title": "ملفات د. أميرة رزق (SharePoint)",
           "url": "https://medmansedu-my.sharepoint.com/:f:/g/personal/amira_rezk_mans_edu_eg/EgR9-6dgmeNFkvujraO8kCUB9SggzQ4cVkbP28hl9K04oQ?e=LntrKR"
         }
-      ]
+      ],
+      "totalMarks": 100,
+      "remainingMarks": 90,
+      "remainingMarksText": "90 درجة متبقية من 100"
     },
     "information-theory": {
       "code": "IS311T",
       "doctors": [
         "د/ إسراء جمال"
       ],
-      "midtermMarks": "25 درجة",
-      "midtermLectures": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7
-      ],
-      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 7"
+      "totalMarks": 100,
+      "remainingMarks": 75,
+      "remainingMarksText": "75 درجة متبقية من 100"
     },
     "research-methods": {
       "code": "IS315T",
       "doctors": [
         "د/ هالة عكاشة"
       ],
-      "midtermMarks": "15 درجة (+ 10 درجات عرض البحث)",
-      "midtermLectures": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "midtermScopeText": "من المحاضرة 1 إلى المحاضرة 4"
+      "totalMarks": 100,
+      "remainingMarks": 85,
+      "remainingMarksText": "85 درجة متبقية من 100 (شاملة 10 درجات عرض البحث)"
     },
     "computer-networks": {
       "code": "IS314P",
@@ -333,17 +135,6 @@
         "أ.د/ أحمد عطوان",
         "أ.د/ محمد محفوظ"
       ],
-      "midtermMarks": "10 درجات",
-      "midtermLectures": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7
-      ],
-      "midtermScopeText": "أول 7 محاضرات",
       "youtubeLinks": [
         {
           "url": "https://youtube.com/playlist?list=PLYljoJMAPFLHrCVfzuMLkJOZHhCgfSXG-",
@@ -353,7 +144,10 @@
           "url": "https://www.youtube.com/playlist?list=PLbbGpxN09JenP6lEkGId9muuVj4nXmDi7",
           "title": "شرح المادة (2)"
         }
-      ]
+      ],
+      "totalMarks": 100,
+      "remainingMarks": 90,
+      "remainingMarksText": "90 درجة متبقية من 100"
     }
   },
   "sharedLectures": [

@@ -27,6 +27,7 @@ const ICONS = {
   check: '<svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.4 4.4L19 7.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   info: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5v5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg>',
   grid: '<svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/></svg>',
+  home: '<svg viewBox="0 0 24 24" fill="none"><path d="M3.5 10.8 12 4l8.5 6.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 9.8V19a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5V9.8" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9.8 20.5v-5.3a1.2 1.2 0 0 1 1.2-1.2h2a1.2 1.2 0 0 1 1.2 1.2v5.3" stroke="currentColor" stroke-width="1.6"/></svg>',
 };
 
 const SECTION_ICONS = {
@@ -36,7 +37,6 @@ const SECTION_ICONS = {
   questions: "question",
   summaries: "summary",
   "midterm-revision": "revision",
-  committees: "pin",
   "simplified-explanations": "simple",
   general: "folder",
 };
@@ -62,7 +62,9 @@ const state = {
   sidebarOpen: false,
   tabsExpanded: false,
   notifOpen: false,
-  kanbanExpanded: null,
+  sectionPicked: false,
+  homeSectionDrawerOpen: false,
+  homeLecturesExpanded: false,
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -89,9 +91,11 @@ const tabsNextEl = $("#tabs-next");
 const modeSwitcherEl = $("#mode-switcher");
 const tabsBarEl = $("#tabs-bar");
 const midtermPinEl = $("#midterm-pin");
-const examNewsEl = $("#exam-news");
-const examNewsLinkEl = $("#exam-news-link");
-const examNewsCloseEl = $("#exam-news-close");
+const examCountdownEl = $("#exam-countdown");
+const COUNTDOWN_DISMISSED_KEY = "hub:countdownDismissed";
+const SECTION_PICKED_KEY = "hub:sectionPicked";
+let pendingCalendarScroll = false;
+let lastCountdownSignature = "";
 
 const SECTION_VALUES = Array.from({ length: 11 }, (_, index) => String(index + 1));
 const AR_DAYS = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
@@ -154,7 +158,7 @@ const KIND_LABELS = {
   summary: "الملخص",
   questions: "الأسئلة",
   solution: "الحل",
-  review: "مراجعة ميدترم",
+  review: "مراجعة شاملة",
   book: "كتاب شامل",
 };
 
@@ -203,7 +207,6 @@ const SUBJECT_SYNONYMS = {
   "information-theory": ["نظرية المعلومات", "نظريه المعلومات", "information theory"],
   "research-methods": ["اساليب البحث", "مناهج البحث", "طرق البحث", "research methods"],
   "computer-networks": ["شبكات الحاسب", "شبكات", "computer networks", "networks", "network"],
-  "midterm-revision": ["مراجعة الميد", "مراجعه الميد", "midterm revision"],
 };
 
 const MAX_QUESTIONS_PER_SUBJECT = 12;
@@ -303,10 +306,6 @@ function matchesKind(file, kind) {
   if (kind === "all") return true;
   if (kind === "review") return isReviewFile(file);
   return file.kind === kind;
-}
-
-function midtermScope(subjectId) {
-  return new Set(state.schedule?.coursesMeta?.[subjectId]?.midtermLectures || []);
 }
 
 function facetsActive() {
@@ -508,10 +507,7 @@ function fileMatchesFacetsAndQuery(entry, parsed) {
     return false;
   }
 
-  if (parsed.midterm) {
-    const scope = midtermScope(subject.id);
-    if (!isReviewFile(file) && !lectures.some((lecture) => scope.has(lecture))) return false;
-  }
+  if (parsed.midterm && !isReviewFile(file)) return false;
 
   return parsed.tokens.every((token) => hay.includes(token));
 }
@@ -534,11 +530,6 @@ function questionMatchesFacetsAndQuery(entry, parsed) {
 
   if (state.facets.kind !== "all" && state.facets.kind !== "questions") return false;
   if (parsed.kinds.size && !parsed.kinds.has("questions")) return false;
-
-  if (parsed.midterm) {
-    const scope = midtermScope(entry.subjectId);
-    if (entry.lecture === null || !scope.has(entry.lecture)) return false;
-  }
 
   return parsed.tokens.every((token) => entry.hay.includes(token));
 }
@@ -606,13 +597,11 @@ function renderFacets() {
 
   const subjectRow = [
     { value: "all", label: "الكل" },
-    ...state.data.subjects
-      .filter((subject) => subject.id !== "midterm-revision")
-      .map((subject) => ({
-        value: subject.id,
-        label: subject.nameAr,
-        accent: subject.accent,
-      })),
+    ...state.data.subjects.map((subject) => ({
+      value: subject.id,
+      label: subject.nameAr,
+      accent: subject.accent,
+    })),
   ];
   const lectureRow = [
     { value: "all", label: "كل المحاضرات" },
@@ -628,7 +617,7 @@ function renderFacets() {
     { value: "summary", label: "الملخص" },
     { value: "questions", label: "الأسئلة" },
     { value: "solution", label: "الحل" },
-    { value: "review", label: "مراجعة ميدترم" },
+    { value: "review", label: "مراجعات شاملة" },
   ];
 
   const row = (facet, label, items) => `<div class="facet-row">
@@ -656,22 +645,6 @@ const fmtSize = (bytes) => {  if (!bytes) return "0 KB";
 const subjectFiles = (subject) => subject.sections.flatMap((section) => section.files);
 const sectionIconKey = (section) => SECTION_ICONS[section.id] || "folder";
 const subjectById = (id) => state.data?.subjects?.find((subject) => subject.id === id) || null;
-
-const MIDTERM_TO_SUBJECT_ID = {
-  "computer-networks": "computer-networks",
-  database: "database-2",
-  "information-theory": "information-theory",
-  research: "research-methods",
-  "system-analysis": "system-analysis",
-};
-
-const SUBJECT_TO_MIDTERM_SEC = {
-  "computer-networks": "computer-networks",
-  "database-2": "database",
-  "information-theory": "information-theory",
-  "research-methods": "research",
-  "system-analysis": "system-analysis",
-};
 
 function themeInit() {
   const forced = new URLSearchParams(location.search).get("theme");
@@ -710,8 +683,12 @@ function initSection() {
   const savedSection =
     Number.isInteger(savedValue) && savedValue >= 1 && savedValue <= 11 ? String(savedValue) : null;
   state.section = querySection || savedSection || "1";
-  if (querySection) store.set("hub:mySection", querySection);
-  else if (!savedSection) store.set("hub:mySection", state.section);
+  state.sectionPicked =
+    Boolean(querySection) || store.get(SECTION_PICKED_KEY) === "1";
+  if (querySection) {
+    store.set("hub:mySection", querySection);
+    store.set(SECTION_PICKED_KEY, "1");
+  } else if (!savedSection) store.set("hub:mySection", state.section);
   state.viewMode = store.get("hub:viewMode") === "classic" ? "classic" : "matrix";
 }
 
@@ -782,6 +759,196 @@ function formatRange(start, end) {
   return `${from} — ${formatDateShort(end)}`;
 }
 
+/* ---------- exam countdown banner ---------- */
+
+function getCountdownNow() {
+  const mock = new URLSearchParams(location.search).get("mockDate");
+  if (mock && /^\d{4}-\d{2}-\d{2}$/.test(mock)) {
+    const [year, month, day] = mock.split("-").map(Number);
+    const parsed = parseDateParts(mock);
+    if (
+      !Number.isNaN(parsed.getTime()) &&
+      parsed.getFullYear() === year &&
+      parsed.getMonth() === month - 1 &&
+      parsed.getDate() === day
+    ) {
+      parsed.setHours(10, 0, 0, 0);
+      return parsed;
+    }
+  }
+  return new Date();
+}
+
+function formatCountdownDaysAr(days) {
+  if (days <= 0) return "اليوم";
+  if (days === 1) return "غداً";
+  if (days === 2) return "باقي يومان";
+  if (days <= 10) return `باقي ${days} أيام`;
+  return `باقي ${days} يوم`;
+}
+
+function daysBetweenDates(fromDate, toDate) {
+  const fromMid = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+  const toMid = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate());
+  return Math.round((toMid.getTime() - fromMid.getTime()) / 86400000);
+}
+
+function getDismissedCountdownPhases() {
+  const raw = store.getJson(COUNTDOWN_DISMISSED_KEY, []);
+  return Array.isArray(raw) ? raw.filter((key) => typeof key === "string") : [];
+}
+
+function isCountdownDismissed(phaseKey) {
+  return getDismissedCountdownPhases().includes(phaseKey);
+}
+
+function dismissCountdownPhase(phaseKey) {
+  const list = getDismissedCountdownPhases().filter((key) => key !== phaseKey);
+  list.push(phaseKey);
+  store.setJson(COUNTDOWN_DISMISSED_KEY, list.slice(-12));
+}
+
+function resolveExamCountdownPhase(now = getCountdownNow()) {
+  const calendar = state.schedule?.calendar || [];
+  const practical = calendar.find((item) => item.id === "practical-oral");
+  const finals = calendar.find((item) => item.id === "final-exams");
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  const isDone = (item) => {
+    if (!item || item.status === "done") return true;
+    const end = parseDateParts(item.endDate || item.startDate);
+    if (Number.isNaN(end.getTime())) return false;
+    return todayMid > end;
+  };
+
+  if (practical && !isDone(practical)) {
+    const pStart = parseDateParts(practical.startDate);
+    const pEnd = parseDateParts(practical.endDate || practical.startDate);
+    if (todayMid < pStart) {
+      const days = daysBetweenDates(todayMid, pStart);
+      const finalsDays = finals ? daysBetweenDates(todayMid, parseDateParts(finals.startDate)) : null;
+      return {
+        key: "practical-upcoming",
+        tone: "practical",
+        badge: "المرحلة القادمة",
+        title: "الامتحانات العملية والشفوية",
+        pill: formatCountdownDaysAr(days),
+        meta: formatRange(practical.startDate, practical.endDate),
+        sub:
+          finalsDays && finalsDays > 0
+            ? `تليها امتحانات نص السنة (${formatCountdownDaysAr(finalsDays)})`
+            : "",
+      };
+    }
+    if (todayMid >= pStart && todayMid <= pEnd) {
+      const finalsDays =
+        finals && !isDone(finals) ? daysBetweenDates(todayMid, parseDateParts(finals.startDate)) : null;
+      return {
+        key: "practical-active",
+        tone: "live",
+        badge: "جارية الآن",
+        title: "الامتحانات العملية والشفوية",
+        pill: finalsDays && finalsDays > 0 ? `نص السنة: ${formatCountdownDaysAr(finalsDays)}` : "بالتوفيق!",
+        meta: `حتى ${formatDateShort(practical.endDate)}`,
+        sub: finals ? `بداية الفاينل: ${formatDateShort(finals.startDate)}` : "",
+      };
+    }
+  }
+
+  if (finals && !isDone(finals)) {
+    const fStart = parseDateParts(finals.startDate);
+    const fEnd = parseDateParts(finals.endDate || finals.startDate);
+    if (todayMid < fStart) {
+      const days = daysBetweenDates(todayMid, fStart);
+      return {
+        key: "finals-upcoming",
+        tone: "finals",
+        badge: "امتحانات نص السنة",
+        title: "امتحانات نهاية الفصل الدراسي الأول (النظري)",
+        pill: formatCountdownDaysAr(days),
+        meta: formatRange(finals.startDate, finals.endDate),
+        sub: "استعد بمراجعة المحاضرات وبنك الأسئلة",
+      };
+    }
+    if (todayMid >= fStart && todayMid <= fEnd) {
+      const daysLeft = Math.max(0, daysBetweenDates(todayMid, fEnd));
+      return {
+        key: "finals-active",
+        tone: "finals-live",
+        badge: "جارية الآن",
+        title: "امتحانات نص السنة — بالتوفيق!",
+        pill:
+          daysLeft === 0
+            ? "آخر يوم امتحانات!"
+            : `متبقي ${daysLeft} ${daysLeft === 1 ? "يوم" : daysLeft === 2 ? "يومان" : daysLeft <= 10 ? "أيام" : "يوم"}`,
+        meta: `حتى ${formatDateShort(finals.endDate)}`,
+        sub: "",
+      };
+    }
+  }
+
+  return null;
+}
+
+function renderExamCountdown() {
+  if (!examCountdownEl) return;
+  if (!state.schedule || searchActive() || state.filtersOpen) {
+    examCountdownEl.hidden = true;
+    lastCountdownSignature = "";
+    return;
+  }
+
+  const phase = resolveExamCountdownPhase();
+  if (!phase || isCountdownDismissed(phase.key)) {
+    examCountdownEl.hidden = true;
+    lastCountdownSignature = "";
+    return;
+  }
+
+  const signature = `${phase.key}|${phase.pill}|${phase.sub}`;
+  if (signature === lastCountdownSignature && !examCountdownEl.hidden) return;
+
+  lastCountdownSignature = signature;
+  examCountdownEl.dataset.tone = phase.tone;
+  examCountdownEl.hidden = false;
+  examCountdownEl.innerHTML = `<div class="ec-inner">
+    <div class="ec-main">
+      <span class="ec-badge">
+        ${phase.tone.includes("live") ? '<span class="ec-pulse" aria-hidden="true"></span>' : ICONS.clock}
+        <span>${esc(phase.badge)}</span>
+      </span>
+      <div class="ec-copy">
+        <strong class="ec-title">${esc(phase.title)}</strong>
+        <span class="ec-meta">${esc(phase.meta)}${
+          phase.sub ? `<span class="ec-sub"> · ${esc(phase.sub)}</span>` : ""
+        }</span>
+      </div>
+    </div>
+    <div class="ec-end">
+      <span class="ec-pill">${esc(phase.pill)}</span>
+      <button class="ec-link" type="button" data-ec-calendar="1">${ICONS.calendar}<span>الخريطة الزمنية</span></button>
+      <button class="ec-close" type="button" data-ec-dismiss="${esc(phase.key)}" aria-label="إخفاء الشريط" title="إخفاء لهذه المرحلة">
+        <svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>`;
+}
+
+examCountdownEl?.addEventListener("click", (event) => {
+  const dismissBtn = event.target.closest("[data-ec-dismiss]");
+  if (dismissBtn) {
+    dismissCountdownPhase(dismissBtn.dataset.ecDismiss);
+    lastCountdownSignature = "";
+    examCountdownEl.hidden = true;
+    return;
+  }
+
+  if (event.target.closest("[data-ec-calendar]")) {
+    pendingCalendarScroll = true;
+    navigate("schedule");
+  }
+});
+
 function withLtrYears(value) {
   return esc(String(value || "")).replace(
     /(\d{4})\s*[-–]\s*(\d{4})/g,
@@ -844,47 +1011,8 @@ function resolveToday() {
   return { label: "قريباً", dayName: "", entries: [], date: now };
 }
 
-function nextMidterm() {
-  const now = new Date();
-  return (
-    (state.schedule?.midterms || [])
-      .map((midterm) => ({
-        ...midterm,
-        endAt: parseDateTime(midterm.date, midterm.endTime || midterm.startTime),
-      }))
-      .filter((midterm) => midterm.endAt >= now)
-      .sort((a, b) => a.endAt - b.endAt)[0] || null
-  );
-}
-
-function defaultMidtermKanbanSectionId() {
-  return SUBJECT_TO_MIDTERM_SEC[defaultSubjectId()] || null;
-}
-
 function defaultSubjectId() {
-  const sorted = (state.schedule?.midterms || [])
-    .map((midterm) => ({
-      ...midterm,
-      startAt: parseDateTime(midterm.date, midterm.startTime),
-      endAt: parseDateTime(midterm.date, midterm.endTime || midterm.startTime),
-    }))
-    .filter((midterm) => !Number.isNaN(midterm.endAt.getTime()))
-    .sort((a, b) => a.startAt - b.startAt);
-
-  const fallback = subjectById("system-analysis")?.id || state.data?.subjects?.[0]?.id || null;
-  if (!sorted.length) return fallback;
-
-  const now = new Date();
-  const windowStart = new Date(sorted[0].startAt);
-  windowStart.setHours(0, 0, 0, 0);
-  const windowEnd = new Date(sorted[sorted.length - 1].endAt);
-  const insideMidterms = now >= windowStart && now <= windowEnd;
-  if (!insideMidterms) return fallback;
-
-  const current = sorted.find(
-    (midterm) => midterm.endAt >= now && subjectById(midterm.subjectId),
-  );
-  return current?.subjectId || fallback;
+  return subjectById("system-analysis")?.id || state.data?.subjects?.[0]?.id || null;
 }
 
 function countdownLabel(date) {
@@ -892,30 +1020,220 @@ function countdownLabel(date) {
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
   const days = Math.round((target - today) / 86400000);
-  if (days <= 0) return "اليوم";
+  if (days < 0) {
+    if (days === -1) return "منذ يوم";
+    if (days === -2) return "منذ يومين";
+    return Math.abs(days) >= -10 ? `متأخر ${Math.abs(days)} أيام` : `متأخر ${Math.abs(days)} يوم`;
+  }
+  if (days === 0) return "اليوم";
   if (days === 1) return "غداً";
+  if (days === 2) return "بعد يومين";
+  if (days <= 10) return `بعد ${days} أيام`;
   return `بعد ${days} يوم`;
 }
 
-function midtermStatus(midterm) {
-  const start = parseDateTime(midterm.date, midterm.startTime);
-  const end = parseDateTime(midterm.date, midterm.endTime);
+const TASKS_DONE_KEY = "hub:tasksDone";
+const TASK_KIND_META = {
+  assignment: { label: "تسليم", tone: "warn" },
+  quiz: { label: "كويز", tone: "danger" },
+  presentation: { label: "عرض", tone: "info" },
+  project: { label: "مشروع", tone: "accent" },
+  news: { label: "خبر", tone: "neutral" },
+};
+const TASK_ROLE_LABELS = { doctor: "دكتور", ta: "معيد", admin: "إدارة" };
+
+function getTasksDone() {
+  const value = store.getJson(TASKS_DONE_KEY, {});
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function toggleTaskDone(taskId) {
+  if (!taskId) return false;
+  const done = getTasksDone();
+  const next = !done[taskId];
+  if (next) done[taskId] = true;
+  else delete done[taskId];
+  store.setJson(TASKS_DONE_KEY, done);
+  return next;
+}
+
+function taskMatchesSection(task, section) {
+  if (!task.sections || task.sections === "all") return true;
+  if (!Array.isArray(task.sections)) return false;
+  return task.sections.map(Number).includes(Number(section));
+}
+
+function isTaskActive(task, todayMid) {
+  const today = new Date(
+    todayMid.getFullYear(),
+    todayMid.getMonth(),
+    todayMid.getDate(),
+  );
+  if (task.expiresAt) {
+    const expires = parseDateParts(task.expiresAt);
+    return Number.isNaN(expires.getTime()) ? true : today <= expires;
+  }
+  if (task.dueDate) {
+    const due = parseDateParts(task.dueDate);
+    if (Number.isNaN(due.getTime())) return true;
+    const cutoff = new Date(due);
+    cutoff.setDate(cutoff.getDate() + 2);
+    return today <= cutoff;
+  }
+  if (task.createdAt) {
+    const created = Date.parse(task.createdAt);
+    if (!Number.isNaN(created) && Date.now() - created > 14 * 86400000) return false;
+  }
+  return true;
+}
+
+function getActiveWeeklyTasks({ section = state.section, subjectIds = null } = {}) {
+  const done = getTasksDone();
+  const subjectSet = subjectIds
+    ? subjectIds instanceof Set
+      ? subjectIds
+      : new Set(subjectIds)
+    : null;
   const now = new Date();
-  if (now >= start && now <= end) return { label: "جارٍ الآن", active: true };
-  if (now > end) return { label: "انتهى", active: false };
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const target = parseDateParts(midterm.date);
-  const days = Math.round((target - today) / 86400000);
-  if (days <= 0) return { label: "اليوم", active: false };
-  if (days === 1) return { label: "غداً", active: false };
-  return { label: `بعد ${days} يوم`, active: false };
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const tasks = (state.schedule?.weeklyTasks || []).filter(
+    (task) =>
+      taskMatchesSection(task, section) &&
+      isTaskActive(task, todayMid) &&
+      (!subjectSet || subjectSet.has(task.subjectId)),
+  );
+  const dueTime = (task) => {
+    if (!task.dueDate) return Number.POSITIVE_INFINITY;
+    const due = parseDateParts(task.dueDate);
+    return Number.isNaN(due.getTime()) ? Number.POSITIVE_INFINITY : due.getTime();
+  };
+  const createdTime = (task) => {
+    const created = Date.parse(task.createdAt || "");
+    return Number.isNaN(created) ? 0 : created;
+  };
+  return tasks.sort((a, b) => {
+    const doneA = done[a.id] ? 1 : 0;
+    const doneB = done[b.id] ? 1 : 0;
+    if (doneA !== doneB) return doneA - doneB;
+    const dueA = dueTime(a);
+    const dueB = dueTime(b);
+    if (dueA !== dueB) return dueA - dueB;
+    return createdTime(b) - createdTime(a);
+  });
+}
+
+function formatTaskDueBadge(task) {
+  if (!task.dueDate) return null;
+  const due = parseDateParts(task.dueDate);
+  if (Number.isNaN(due.getTime())) return null;
+  const now = new Date();
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const days = Math.round((due - todayMid) / 86400000);
+  return { label: countdownLabel(due), urgent: days <= 1 };
+}
+
+function renderWeeklyTaskItem(task, doneMap, highlightSubjectIds = null) {
+  const meta = TASK_KIND_META[task.kind] || TASK_KIND_META.news;
+  const subject =
+    task.subjectId && task.subjectId !== "general" ? subjectById(task.subjectId) : null;
+  const accent = subject?.accent || "#4e8d9c";
+  const subjectLabel = subject ? subject.nameAr : "عام — القسم";
+  const subjectHtml = subject
+    ? `<a class="task-subject" href="#${esc(subject.id)}">${esc(subjectLabel)}</a>`
+    : `<span class="task-subject">${esc(subjectLabel)}</span>`;
+  const due = formatTaskDueBadge(task);
+  const dueHtml = due
+    ? `<span class="task-due${due.urgent ? " is-urgent" : ""}">${esc(due.label)}</span>`
+    : "";
+  const scopeHtml = Array.isArray(task.sections)
+    ? `<span class="task-scope">سكشنك</span>`
+    : "";
+  const focus =
+    task.subjectId &&
+    task.subjectId !== "general" &&
+    highlightSubjectIds?.has(task.subjectId);
+  const focusHtml = focus ? `<span class="task-focus">مادة قريبة</span>` : "";
+  const done = Boolean(doneMap[task.id]);
+  const checkHtml =
+    task.kind === "news"
+      ? ""
+      : `<label class="task-check"><input type="checkbox" data-task-done="${esc(task.id)}"${done ? " checked" : ""}><span>تم</span></label>`;
+  const authorLabel = TASK_ROLE_LABELS[task.authorRole];
+  const authorHtml =
+    task.authorName && authorLabel
+      ? `<span class="task-author">${esc(authorLabel)}: ${esc(task.authorName)}</span>`
+      : task.authorName
+        ? `<span class="task-author">${esc(task.authorName)}</span>`
+        : "";
+  return `<div class="task-item${done ? " is-done" : ""}${due?.urgent ? " is-urgent" : ""}${focus ? " is-focus" : ""}" data-task-id="${esc(task.id)}" style="--task-accent:${esc(accent)}">
+    <div class="task-head">
+      <div class="task-meta">
+        <span class="task-dot" style="background:${esc(accent)}"></span>
+        ${subjectHtml}
+        <span class="task-kind is-${esc(meta.tone)}">${esc(meta.label)}</span>
+        ${dueHtml}
+        ${scopeHtml}
+        ${focusHtml}
+      </div>
+      ${checkHtml}
+    </div>
+    <strong class="task-title">${esc(task.title)}</strong>
+    ${task.details ? `<p class="task-details">${esc(task.details)}</p>` : ""}
+    ${authorHtml ? `<div class="task-foot">${authorHtml}</div>` : ""}
+  </div>`;
+}
+
+function renderWeeklyTasksCard({
+  section = state.section,
+  subjectIds = null,
+  kicker = "أخبار ومطلوب الأسبوع",
+  heading = null,
+  highlightSubjectIds = null,
+  className = "",
+} = {}) {
+  const doneMap = getTasksDone();
+  const tasks = getActiveWeeklyTasks({ section, subjectIds });
+  const remaining = tasks.filter((task) => !doneMap[task.id]).length;
+  const countLabel = remaining ? `${remaining} مطلوب` : "لا توجد متطلبات";
+  const body = tasks.length
+    ? `<div class="tasks-list">${tasks
+        .map((task) => renderWeeklyTaskItem(task, doneMap, highlightSubjectIds))
+        .join("")}</div>`
+    : `<div class="tasks-empty">
+        <strong>لا توجد تسليمات أو متطلبات مسجلة لسكشن ${esc(section)} هذا الأسبوع.</strong>
+        <span>أي كويز أو تسليم أو تنبيه جديد من الدكاترة والمعيدين هيظهر هنا تلقائياً.</span>
+      </div>`;
+  return `<div class="smart-card tasks-card${className ? ` ${className}` : ""}" data-tasks-card>
+    <div class="smart-head">
+      <div>
+        <span class="smart-kicker">${esc(kicker)}</span>
+        ${heading ? `<strong class="smart-day tasks-heading">${esc(heading)}</strong>` : ""}
+      </div>
+      <span class="tasks-count${remaining ? " is-active" : ""}">${esc(countLabel)}</span>
+    </div>
+    ${body}
+  </div>`;
+}
+
+function handleTaskDoneChange(event) {
+  const checkbox = event.target.closest("[data-task-done]");
+  if (!checkbox) return;
+  toggleTaskDone(checkbox.dataset.taskDone);
+  if (state.feature === "home" && viewEl.contains(checkbox)) {
+    refreshHomeTasksSlot();
+    renderNotifications();
+    return;
+  }
+  const item = checkbox.closest(".task-item");
+  if (item) item.classList.toggle("is-done", checkbox.checked);
+  if (smartStripEl?.contains(checkbox)) renderSmartStrip();
+  renderNotifications();
 }
 
 const RECENT_FILE_WINDOW_MS = 24 * 60 * 60 * 1000;
 const NOTIF_FILE_WINDOW_MS = RECENT_FILE_WINDOW_MS;
 const NOTIF_SEEN_KEY = "hub:notif:seen";
 const NOTIF_BROWSER_KEY = "hub:notif:browser";
-const EXAM_NEWS_SEEN_KEY = "hub:exam-news:seen";
 
 function isRecentFile(file) {
   if (!file?.addedAt) return false;
@@ -971,47 +1289,35 @@ function buildNotifications() {
     ctaLabel: "فتح المادة",
     accent: networksSubject?.accent || "#4e8d9c",
   });
+
   const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-  for (const midterm of state.schedule?.midterms || []) {
-    const startAt = parseDateTime(midterm.date, midterm.startTime);
-    const endAt = parseDateTime(midterm.date, midterm.endTime || midterm.startTime);
-    if (Number.isNaN(startAt.getTime())) continue;
-    const targetDay = new Date(startAt.getFullYear(), startAt.getMonth(), startAt.getDate());
-    const days = Math.round((targetDay - today) / 86400000);
-    const subject = subjectById(midterm.subjectId);
-    const accent = subject?.accent || "#4e8d9c";
-    const revisionHref = `#${midterm.subjectId}/midterm-revision`;
-
-    if (days === 0 && endAt >= now) {
-      const ongoing = now >= startAt && now <= endAt;
-      items.push({
-        id: `exam-today-${midterm.subjectId}-${midterm.date}`,
-        kind: "exam-today",
-        priority: 1,
-        title: ongoing
-          ? `امتحان ${midterm.subjectName} جارٍ الآن`
-          : `اليوم امتحان ${midterm.subjectName}`,
-        meta: `${midterm.startTime}–${midterm.endTime} · ${midterm.venue}`,
-        href: revisionHref,
-        ctaLabel: "مراجعة الميدترم ★",
-        accent,
-        midterm,
-      });
-    } else if (days === 1) {
-      items.push({
-        id: `exam-tomorrow-${midterm.subjectId}-${midterm.date}`,
-        kind: "exam-soon",
-        priority: 2,
-        title: `غداً امتحان ${midterm.subjectName}`,
-        meta: `${formatDateShort(midterm.date)} · ${midterm.startTime}–${midterm.endTime}`,
-        href: revisionHref,
-        ctaLabel: "مراجعة الميدترم",
-        accent,
-        midterm,
-      });
-    }
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const doneMap = getTasksDone();
+  for (const task of getActiveWeeklyTasks({ section: state.section })) {
+    if (doneMap[task.id]) continue;
+    const due = task.dueDate ? parseDateParts(task.dueDate) : null;
+    const days = due && !Number.isNaN(due.getTime())
+      ? Math.round((due - todayMid) / 86400000)
+      : null;
+    const created = task.createdAt ? Date.parse(task.createdAt) : NaN;
+    const isRecent = !Number.isNaN(created) && Date.now() - created <= 48 * 3600000;
+    const dueSoon = days !== null && days <= 3;
+    if (!dueSoon && !isRecent) continue;
+    const subject =
+      task.subjectId && task.subjectId !== "general" ? subjectById(task.subjectId) : null;
+    const kindMeta = TASK_KIND_META[task.kind] || TASK_KIND_META.news;
+    items.push({
+      id: `weekly-task:${task.id}`,
+      kind: "task",
+      priority: days !== null && days <= 1 ? 2 : 3,
+      title: task.title,
+      meta: `${subject?.nameAr || "عام — القسم"} · ${kindMeta.label}${
+        task.dueDate ? ` · ${formatDateShort(task.dueDate)}` : ""
+      }`,
+      href: "#schedule",
+      ctaLabel: "التفاصيل",
+      accent: subject?.accent || "#4e8d9c",
+    });
   }
 
   return items.sort((a, b) => a.priority - b.priority);
@@ -1051,11 +1357,9 @@ function renderNotifications() {
           const badge =
             item.kind === "announcement"
               ? `<span class="notif-tag is-soon">تحديث</span>`
-              : item.kind === "exam-today"
-                ? `<span class="notif-tag is-exam">اليوم</span>`
-                : item.kind === "exam-soon"
-                  ? `<span class="notif-tag is-soon">امتحان قريب</span>`
-                  : `<span class="notif-tag">ملف جديد</span>`;
+              : item.kind === "task"
+                ? `<span class="notif-tag is-soon">مطلوب</span>`
+                : `<span class="notif-tag">ملف جديد</span>`;
           return `<a class="notif-item${unread ? " is-unread" : ""}" href="${esc(item.href)}" data-notif-id="${esc(item.id)}">
             <span class="notif-dot" style="background:${esc(item.accent)}"></span>
             <div class="notif-item-body">
@@ -1088,7 +1392,7 @@ function maybeSendBrowserNotifications() {
   const browserSentKey = "hub:notif:browser-sent";
   const sent = new Set(store.getJson(browserSentKey, []));
   for (const item of items) {
-    if (item.kind !== "exam-today") continue;
+    if (item.kind !== "task") continue;
     if (sent.has(item.id)) continue;
     sent.add(item.id);
     try {
@@ -1114,7 +1418,6 @@ function renderSmartStrip() {
   }
   smartStripEl.hidden = false;
   const today = resolveToday();
-  const midterm = nextMidterm();
   const events = today.entries.length
     ? today.entries
         .map((entry) => {
@@ -1132,58 +1435,11 @@ function renderSmartStrip() {
         })
         .join("")
     : `<p class="smart-empty">لا توجد محاضرات أو سكاشن ${today.label === "اليوم" ? "اليوم" : today.label} لسكشن ${esc(state.section)}.</p>`;
-  const hallsFile = midterm?.hallsFile || "";
-  const hallsGuide = midterm?.halls?.length || hallsFile
-    ? `<div class="midterm-halls">
-        <div class="midterm-halls-head">
-          <span class="midterm-halls-title">${ICONS.pin} دليل اللجان والأجهزة</span>
-          ${hallsFile
-            ? `<button class="btn btn-sm halls-file-btn" type="button" data-halls-pdf="${esc(hallsFile)}" data-halls-title="${esc(`توزيع لجان ${midterm.subjectName}`)}">${ICONS.file}<span>ملف توزيع اللجان (PDF)</span></button>`
-            : ""}
-        </div>
-        ${midterm.halls?.length
-          ? `<div class="midterm-halls-list">
-              ${midterm.halls
-                .map(
-                  (hall) => `<div class="midterm-hall-item">
-                    <div class="hall-info">
-                      <strong class="hall-name">${esc(hall.name)}</strong>
-                      <span class="hall-loc">${esc(hall.location)}</span>
-                    </div>
-                    <span class="hall-range" dir="ltr">PC ${hall.pcFrom} – ${hall.pcTo}</span>
-                  </div>`,
-                )
-                .join("")}
-            </div>`
-          : ""}
-      </div>`
-    : "";
-  const midtermCard = midterm
-    ? `<div class="smart-card midterm-card">
-        <div class="smart-head">
-          <div>
-            <span class="smart-kicker">أقرب ميدترم</span>
-            <strong class="midterm-subject">${esc(midterm.subjectName)}</strong>
-          </div>
-          <span class="countdown-pill">${esc(countdownLabel(midterm.endAt))}</span>
-        </div>
-        <div class="midterm-facts">
-          <span>${ICONS.calendar} ${esc(formatDateShort(midterm.date))}</span>
-          <span>${ICONS.clock} <span dir="ltr">${esc(midterm.startTime)}–${esc(midterm.endTime)}</span></span>
-          <span>${ICONS.pin} ${esc(midterm.venue)}</span>
-          <span>${ICONS.lecture} ${(midterm.lecturesInScope || []).length} محاضرات</span>
-          <span>${esc(String(midterm.marks))} درجة</span>
-        </div>
-        ${hallsGuide}
-        <div class="smart-actions">
-          <a class="smart-action" href="#${esc(midterm.subjectId)}/midterm-revision">${ICONS.revision}<span>مراجعة الميدترم</span></a>
-          <a class="smart-action" href="#practice/${esc(midterm.subjectId)}">${ICONS.question}<span>اختبر نفسك</span></a>
-        </div>
-      </div>`
-    : `<div class="smart-card midterm-card">
-        <div class="smart-head"><span class="smart-kicker">أقرب ميدترم</span></div>
-        <p class="smart-empty">لا يوجد ميدترم قادم في الجدول.</p>
-      </div>`;
+  const tasksCard = renderWeeklyTasksCard({
+    section: state.section,
+    kicker: "أخبار ومطلوب الأسبوع",
+    heading: `متطلبات الدكاترة والمعيدين · سكشن ${state.section}`,
+  });
   smartStripEl.innerHTML = `<div class="smart-card today-card">
       <div class="smart-head">
         <div>
@@ -1194,31 +1450,17 @@ function renderSmartStrip() {
       </div>
       ${events}
     </div>
-    ${midtermCard}`;
-}
-
-if (smartStripEl) {
-  smartStripEl.addEventListener("click", (event) => {
-    const btn = event.target.closest("[data-halls-pdf]");
-    if (!btn) return;
-    const path = btn.dataset.hallsPdf;
-    if (!path) return;
-    const title = btn.dataset.hallsTitle || "توزيع اللجان";
-    openPreview({ title, ext: "pdf", path });
-  });
+    ${tasksCard}`;
 }
 
 function renderTabs() {
   const searching = searchActive();
   const featureActive = Boolean(state.feature) && !searching;
-  const midtermSubject = state.data.subjects.find((subject) => subject.id === "midterm-revision");
-  const regularSubjects = state.data.subjects.filter(
-    (subject) => subject.id !== "midterm-revision",
-  );
+  const regularSubjects = state.data.subjects;
   const collapsed =
     !searching &&
     !featureActive &&
-    Boolean(state.subjectId && state.subjectId !== "midterm-revision") &&
+    Boolean(state.subjectId) &&
     !state.tabsExpanded;
 
   const isInitialMount = !tabsEl.dataset.mounted;
@@ -1242,16 +1484,22 @@ function renderTabs() {
     tabsEl.classList.add("is-no-anim");
     tabsEl.innerHTML = subjectTabs + collector;
     tabsEl.dataset.mounted = "1";
+  }
 
-    if (midtermPinEl && midtermSubject) {
-      midtermPinEl.innerHTML = `<button class="tab tab-pinned" type="button" role="tab"
-        aria-selected="false" data-subject="midterm-revision"
-        style="--tab-accent:${midtermSubject.accent}">
-        <span class="dot"></span>
-        <span class="pinned-icon">${ICONS.revision}</span>
-        <span>${esc(midtermSubject.nameAr)}</span>
-      </button>`;
-    }
+  if (midtermPinEl && !midtermPinEl.querySelector(".tab-home")) {
+    midtermPinEl.innerHTML = `<button class="tab tab-pinned tab-home" type="button" role="tab"
+      aria-selected="false" data-route="home" style="--tab-accent:var(--home-theme)">
+      <span class="dot"></span>
+      <span class="pinned-icon">${ICONS.home}</span>
+      <span>الرئيسية</span>
+    </button>`;
+  }
+  const homeTab = midtermPinEl?.querySelector(".tab-home");
+  if (homeTab) {
+    homeTab.setAttribute(
+      "aria-selected",
+      !searching && state.feature === "home" ? "true" : "false",
+    );
   }
 
   tabsEl.querySelectorAll(".tab[data-subject]").forEach((btn) => {
@@ -1277,12 +1525,6 @@ function renderTabs() {
       collectorBtn.setAttribute("tabindex", "-1");
       collectorBtn.setAttribute("aria-hidden", "true");
     }
-  }
-
-  const pinnedBtn = midtermPinEl?.querySelector(".tab-pinned");
-  if (pinnedBtn) {
-    const active = !featureActive && !searching && state.subjectId === "midterm-revision";
-    pinnedBtn.setAttribute("aria-selected", active ? "true" : "false");
   }
 
   tabsEl.classList.toggle("is-collapsed", collapsed);
@@ -1384,11 +1626,7 @@ function maxLecture(subject) {
 }
 
 function lectureTotal(subject) {
-  const midterm = state.schedule?.coursesMeta?.[subject.id]?.midtermLectures || [];
-  return midterm.reduce(
-    (max, lecture) => (Number.isInteger(lecture) ? Math.max(max, lecture) : max),
-    maxLecture(subject),
-  );
+  return maxLecture(subject);
 }
 
 function lectureNoun(count) {
@@ -1402,6 +1640,105 @@ function fileAppliesToLecture(file, lecture) {
 function getStudied() {
   const value = store.getJson("hub:studied", {});
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+const NETWORK_STUDY_ITEMS = [
+  { key: "atwan-ch1", label: "الفصل 1: مقدمة في الشبكات" },
+  { key: "atwan-ch2", label: "الفصل 2: نقل البيانات" },
+  { key: "atwan-ch3", label: "الفصل 3: أجهزة الشبكة والشبكات المحلية" },
+  { key: "atwan-ch4", label: "الفصل 4: نموذج OSI" },
+  { key: "atwan-ch5", label: "الفصل 5: البروتوكولات" },
+  { key: "atwan-ch6", label: "الفصل 6: الشبكات واسعة النطاق" },
+  { key: "atwan-ch7", label: "الفصل 7: العنونة" },
+  { key: "mahfouz-ch1", label: "شابتر 1: مقدمة (كامل)" },
+  { key: "mahfouz-ch2", label: "شابتر 2: طبقة التطبيقات" },
+];
+
+function pomodoroStudyItems(subjectId) {
+  const subject = subjectById(subjectId);
+  if (!subject) return [];
+  const studied = getStudied();
+  if (subjectId === "computer-networks") {
+    return NETWORK_STUDY_ITEMS.map((item) => {
+      const key = `computer-networks:${item.key}`;
+      return { key, label: item.label, studied: Boolean(studied[key]) };
+    });
+  }
+  const total = lectureTotal(subject);
+  return Array.from({ length: total }, (_, index) => {
+    const lecture = index + 1;
+    const key = `${subject.id}:${lecture}`;
+    return { key, label: `محاضرة ${lecture}`, studied: Boolean(studied[key]) };
+  });
+}
+
+function handlePomodoroStudyChanged(subjectId) {
+  if (state.feature || searchActive() || state.subjectId !== subjectId) return;
+  const studied = getStudied();
+  viewEl.querySelectorAll(`[data-study^="${CSS.escape(subjectId)}:"]`).forEach((box) => {
+    const isStudied = Boolean(studied[box.dataset.study]);
+    box.checked = isStudied;
+    box
+      .closest(".lec-card, .matrix-row, .file")
+      ?.classList.toggle("is-studied", isStudied);
+  });
+  updateStudyProgress(subjectId);
+}
+
+const LEC_OPEN_KEY = "hub:lecOpen";
+
+function getLecOpenMap() {
+  const value = store.getJson(LEC_OPEN_KEY, {});
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function saveLecOpenMap(map) {
+  store.setJson(LEC_OPEN_KEY, map);
+}
+
+function resolveInitialLecOpen(subjectId, cardKeys, studiedMap, defaultKeys = cardKeys) {
+  const openMap = getLecOpenMap();
+  const hasSaved = cardKeys.some((key) =>
+    Object.prototype.hasOwnProperty.call(openMap, key),
+  );
+  if (hasSaved) {
+    return new Set(cardKeys.filter((key) => openMap[key] === true));
+  }
+  const candidates = defaultKeys.length ? defaultKeys : cardKeys;
+  const defaultKey =
+    candidates.find((key) => !studiedMap[key]) || candidates[candidates.length - 1];
+  return new Set(defaultKey ? [defaultKey] : []);
+}
+
+function setLecCardOpen(cardEl, open, { persist = true } = {}) {
+  if (!cardEl) return;
+  cardEl.dataset.open = String(open);
+  cardEl.querySelectorAll("[data-lec-toggle]").forEach((btn) => {
+    btn.setAttribute("aria-expanded", String(open));
+  });
+  const bodyEl = cardEl.querySelector(".lec-card-body");
+  if (bodyEl) bodyEl.hidden = !open;
+  if (persist && cardEl.dataset.lecCard) {
+    const openMap = getLecOpenMap();
+    openMap[cardEl.dataset.lecCard] = Boolean(open);
+    saveLecOpenMap(openMap);
+  }
+}
+
+function syncBulkLecturesButton() {
+  const btn = viewEl.querySelector("[data-lectures-toggle-all]");
+  if (!btn) return;
+  const cards = [...viewEl.querySelectorAll(".lec-card")];
+  if (!cards.length) {
+    btn.hidden = true;
+    return;
+  }
+  btn.hidden = false;
+  const allOpen = cards.every((card) => card.dataset.open === "true");
+  btn.dataset.allOpen = String(allOpen);
+  btn.setAttribute("aria-pressed", String(allOpen));
+  const label = btn.querySelector("span");
+  if (label) label.textContent = allOpen ? "طي كل المحاضرات" : "فتح كل المحاضرات";
 }
 
 const BOOKMARKS_KEY = "hub:bookmarks";
@@ -1696,8 +2033,10 @@ function renderCourseInfo(subject) {
     <div class="course-info">
       <div class="ci-item"><span class="ci-label">الدكتور</span><strong>${esc((meta.doctors || []).join("، ") || "غير محدد")}</strong></div>
       <div class="ci-item"><span class="ci-label">معيد سكشنك (${esc(state.section)})</span><strong>${esc(instructors || "غير محدد")}</strong></div>
-      <div class="ci-item"><span class="ci-label">درجة الميدترم</span><strong>${esc(meta.midtermMarks || "غير محدد")}</strong></div>
-      <div class="ci-item"><span class="ci-label">نطاق الميدترم</span><strong>${esc(meta.midtermScopeText || "غير محدد")}</strong></div>
+      <div class="ci-item">
+        <span class="ci-label">الدرجات المتبقية</span>
+        <strong>${esc(meta.remainingMarksText || (meta.remainingMarks != null ? `${meta.remainingMarks} درجة من ${meta.totalMarks || 100}` : "غير محدد"))}</strong>
+      </div>
       ${renderSubjectLinksBox(subject)}
     </div>
   </details>`;
@@ -1707,11 +2046,11 @@ function renderReviewBlock(subject, files) {
   const practiceHref = `#practice/${esc(subject.id)}`;
   const midtermSection = subject.sections?.find((section) => section.id === "midterm-revision");
   const open = store.get("section:review") !== "closed";
-  return `<section class="section review-block" id="sec-review" data-section="review" data-open="${open}" data-spy-section="review" data-spy-label="مراجعات الميدترم">
+  return `<section class="section review-block" id="sec-review" data-section="review" data-open="${open}" data-spy-section="review" data-spy-label="المراجعات والملفات الشاملة">
     <div class="section-head review-head" role="button" tabindex="0" aria-expanded="${open}">
       <span class="section-icon">${ICONS.revision}</span>
       <span class="section-titles">
-        <h3>مراجعات الميدترم والملفات الشاملة <span class="important-badge">★ مهم</span></h3>
+        <h3>المراجعات والملفات الشاملة</h3>
         <span class="en">${midtermSection?.nameEn ? `${esc(midtermSection.nameEn)} · ` : ""}${files.length} ملف</span>
       </span>
       <a class="btn btn-sm" href="${practiceHref}">${ICONS.question}<span>اختبر نفسك</span></a>
@@ -1736,117 +2075,130 @@ function renderMatrixSlot(files, subject) {
     .join("")}</div>`;
 }
 
+function renderLectureCard({
+  cardKey,
+  domId,
+  badge,
+  title,
+  sub = "",
+  studied = false,
+  studyHtml = "",
+  open = false,
+  columns,
+  subject,
+  dataAttrs = "",
+}) {
+  const pills =
+    columns
+      .filter((col) => col.files.length)
+      .map(
+        (col) =>
+          `<span class="lec-slot-pill" data-slot-kind="${esc(col.key)}">${esc(col.label)} <b>${col.files.length}</b></span>`,
+      )
+      .join("") || `<span class="lec-slot-pill is-empty">لا توجد ملفات بعد</span>`;
+
+  const slots = columns
+    .map(
+      (col) => `<div class="lec-slot${col.files.length ? "" : " is-empty"}" data-slot="${esc(col.key)}">
+        <div class="lec-slot-head">${col.icon}<span>${esc(col.label)}</span>${col.files.length ? `<span class="lec-slot-count">${col.files.length}</span>` : ""}</div>
+        ${renderMatrixSlot(col.files, subject)}
+      </div>`,
+    )
+    .join("");
+
+  return `<div class="lec-card${studied ? " is-studied" : ""}" data-lec-card="${esc(cardKey)}" ${dataAttrs} data-open="${open}" style="--accent:${subject.accent}">
+    <div class="lec-card-head">
+      <button class="lec-card-toggle" type="button" data-lec-toggle aria-expanded="${open}" aria-controls="${esc(domId)}" aria-label="${esc(title)}">
+        <span class="lec-number">${esc(badge)}</span>
+        <span class="lec-head-main">
+          <span class="lec-title">${esc(title)}</span>
+          ${sub ? `<span class="lec-sub" dir="ltr">${esc(sub)}</span>` : ""}
+          <span class="lec-slot-pills">${pills}</span>
+        </span>
+      </button>
+      <div class="lec-head-end">
+        ${studyHtml}
+        <button class="lec-chevron-btn" type="button" data-lec-toggle aria-expanded="${open}" aria-controls="${esc(domId)}" aria-label="فتح أو طي المحاضرة">
+          <svg class="lec-chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="lec-card-body" id="${esc(domId)}"${open ? "" : " hidden"}>
+      <div class="lec-slots lec-slots-${columns.length}">${slots}</div>
+    </div>
+  </div>`;
+}
+
 function renderMatrix(subject) {
-  const meta = state.schedule?.coursesMeta?.[subject.id];
-  const midtermLectures = new Set(meta?.midtermLectures || []);
   const files = subjectFiles(subject);
   const lectureCount = lectureTotal(subject);
   const midtermSection = subject.sections.find((section) => section.id === "midterm-revision");
-  const committeesSection = subject.sections.find(
-    (section) => section.id === "committees" && section.files.length,
-  );
-  const curatedSection = SUBJECT_TO_MIDTERM_SEC[subject.id]
-    ? subjectById("midterm-revision")?.sections.find(
-        (section) => section.id === SUBJECT_TO_MIDTERM_SEC[subject.id],
-      )
-    : null;
-  const curatedFiles = curatedSection?.files || [];
-  const curatedOrder = new Map();
-  const curatedTags = new Map();
-  curatedFiles.forEach((file, index) => {
-    if (file.id) {
-      curatedOrder.set(file.id, index);
-      if (file.docTag) curatedTags.set(file.id, file.docTag);
-    }
-    curatedOrder.set(file.path, index);
-    if (file.docTag) curatedTags.set(file.path, file.docTag);
-  });
-  let reviewFiles = files.filter(
-    (file) =>
-      file.midtermReview === true ||
-      (file.midtermReview !== false &&
-        (file.kind === "review" || file.kind === "book" || file.lecture === null)),
-  );
-  if (subject.id !== "system-analysis") {
-    reviewFiles = curatedFiles
-      .map((curated) => {
-        const file = files.find(
-          (entry) => entry.id === curated.id || entry.path === curated.path,
-        );
-        return file ? { ...file, docTag: curated.docTag || file.docTag, info: curated.info || file.info, addedAt: file.addedAt || curated.addedAt } : curated;
-      })
-      .filter(Boolean);
-  } else {
-    const orderOf = (file) =>
-      (file.id && curatedOrder.has(file.id) ? curatedOrder.get(file.id) : undefined) ??
-      (curatedOrder.has(file.path) ? curatedOrder.get(file.path) : Number.MAX_SAFE_INTEGER);
-    reviewFiles.sort((a, b) => orderOf(a) - orderOf(b));
+  const reviewFiles = [];
+  const seenReview = new Set();
+  for (const file of midtermSection?.files || []) {
+    if (seenReview.has(file.path)) continue;
+    seenReview.add(file.path);
+    reviewFiles.push(file);
   }
   const reviewSet = new Set(reviewFiles.map((file) => file.path));
-  const extraFiles = ["computer-networks", "database-2", "information-theory"].includes(
-    subject.id,
-  )
-    ? files.filter(
-        (file) =>
-          !String(file.path || "").startsWith("files/committees/") &&
-          !reviewSet.has(file.path) &&
-          !Number.isInteger(file.lecture) &&
-          !(Array.isArray(file.lectureSpan) && file.lectureSpan.length),
-      )
-    : [];
+  const extraFiles = files.filter(
+    (file) =>
+      !reviewSet.has(file.path) &&
+      !Number.isInteger(file.lecture) &&
+      !(Array.isArray(file.lectureSpan) && file.lectureSpan.length),
+  );
   const studiedMap = getStudied();
   let studiedCount = 0;
-  const rows = [];
+  const cardKeys = Array.from({ length: lectureCount }, (_, index) => `${subject.id}:${index + 1}`);
+  const openSet = resolveInitialLecOpen(subject.id, cardKeys, studiedMap);
+  const columns = [
+    { key: "lecture", label: "المحاضرة", icon: ICONS.lecture },
+    { key: "summary", label: "الملخص", icon: ICONS.summary },
+    { key: "questions", label: "الأسئلة", icon: ICONS.question },
+    { key: "solution", label: "الحل", icon: ICONS.check },
+  ];
+  const cards = [];
 
   for (let lecture = 1; lecture <= lectureCount; lecture += 1) {
     const lectureFiles = files.filter((file) => fileAppliesToLecture(file, lecture));
+    const key = `${subject.id}:${lecture}`;
+    const studied = Boolean(studiedMap[key]);
+    if (studied) studiedCount += 1;
     const slots = {
       lecture: lectureFiles.filter((file) => file.kind === "lecture"),
       summary: lectureFiles.filter((file) => file.kind === "summary"),
       questions: lectureFiles.filter((file) => file.kind === "questions"),
       solution: lectureFiles.filter((file) => file.kind === "solution"),
     };
-    const key = `${subject.id}:${lecture}`;
-    const studied = Boolean(studiedMap[key]);
-    if (studied) studiedCount += 1;
-    rows.push(`<div class="matrix-row${studied ? " is-studied" : ""}" data-lecture="${lecture}">
-      <div class="matrix-lecture">
-        <div class="matrix-lec-top">
-          <span class="lec-number">${lecture}</span>
-          <div>
-            <strong>محاضرة ${lecture}</strong>
-            ${midtermLectures.has(lecture) ? '<span class="midterm-badge">في الميدترم</span>' : ""}
-          </div>
-        </div>
-        <label class="study-check"><input type="checkbox" data-study="${esc(key)}"${studied ? " checked" : ""}><span>تمت المذاكرة</span></label>
-      </div>
-      ${["lecture", "summary", "questions", "solution"]
-        .map(
-          (slot) =>
-            `<div class="matrix-cell" data-slot="${slot}">${renderMatrixSlot(slots[slot], subject)}</div>`,
-        )
-        .join("")}
-    </div>`);
+    cards.push(
+      renderLectureCard({
+        cardKey: key,
+        domId: `lec-card-${subject.id}-${lecture}`,
+        badge: String(lecture),
+        title: `محاضرة ${lecture}`,
+        studied,
+        studyHtml: `<label class="study-check"><input type="checkbox" data-study="${esc(key)}"${studied ? " checked" : ""}><span>تمت المذاكرة</span></label>`,
+        open: openSet.has(key),
+        columns: columns.map((col) => ({ ...col, files: slots[col.key] })),
+        subject,
+        dataAttrs: `data-lecture="${lecture}"`,
+      }),
+    );
   }
 
   const table = lectureCount
-    ? `<div class="matrix-wrap" id="sec-matrix" data-spy-section="matrix" data-spy-label="جدول المحاضرات"><div class="matrix">
-        <div class="matrix-head">
-          <div>المحاضرة</div>
-          <div>${ICONS.lecture}<span>المحاضرة</span></div>
-          <div>${ICONS.summary}<span>الملخص</span></div>
-          <div>${ICONS.question}<span>الأسئلة</span></div>
-          <div>${ICONS.check}<span>الحل</span></div>
-        </div>
-        ${rows.join("")}
-      </div></div>`
+    ? `<div class="lec-list" id="sec-matrix" data-spy-section="matrix" data-spy-label="جدول المحاضرات">
+        ${cards.join("")}
+      </div>`
     : `<div class="empty">${ICONS.lecture}<strong>لا توجد محاضرات مفهرسة</strong><span>لم يتم العثور على ملفات محاضرات مرقمة لهذه المادة.</span></div>`;
+  const extraOpen = store.get("section:extra") !== "closed";
   const extraSection = extraFiles.length
-    ? `<section class="section matrix-extra" id="sec-extra" data-section="extra" data-spy-section="extra" data-spy-label="مراجع وملفات إضافية" data-open="true">
-        <button class="section-head" type="button" aria-expanded="true">
+    ? `<section class="section matrix-extra" id="sec-extra" data-section="extra" data-spy-section="extra" data-spy-label="مراجع وملفات إضافية" data-open="${extraOpen}">
+        <button class="section-head" type="button" aria-expanded="${extraOpen}">
           <span class="section-icon">${ICONS.file}</span>
           <span class="section-titles"><h3>مراجع وملفات إضافية</h3><span class="en">Reference Files</span></span>
           <span class="section-badge">${extraFiles.length}</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="section-body">${extraFiles
           .map((file) => fileRow(file, subject, sectionIdOf(subject, file)))
@@ -1854,20 +2206,9 @@ function renderMatrix(subject) {
       </section>`
     : "";
 
-  const committeesMarkup = committeesSection
-    ? sectionMarkup(
-        committeesSection,
-        committeesSection.files
-          .map((file) => fileRow(file, subject, committeesSection.id))
-          .join(""),
-        store.get(`section:${committeesSection.id}`) !== "closed",
-      )
-    : "";
-
-  return `${renderReviewBlock(subject, reviewFiles)}
-    ${committeesMarkup}
-    ${studyProgressMarkup(subject, studiedCount)}
+  return `${studyProgressMarkup(subject, studiedCount)}
     ${table}
+    ${renderReviewBlock(subject, reviewFiles)}
     ${extraSection}`;
 }
 
@@ -1893,6 +2234,7 @@ function renderClassicSections(subject) {
   const seenLectures = new Set();
   let studiedCount = 0;
   const sections = subject.sections
+    .filter((section) => section.files?.length)
     .map((section) => {
       const open = store.get(`section:${section.id}`) !== "closed";
       const rows = section.files
@@ -1915,52 +2257,14 @@ function renderClassicSections(subject) {
   return `${studyProgressMarkup(subject, studiedCount)}${sections}`;
 }
 
-function renderMidtermKanban(subject) {
-  const columns = subject.sections.filter((section) => section.id !== "general");
-  if (!(state.kanbanExpanded instanceof Set)) {
-    const defId = defaultMidtermKanbanSectionId() || columns[0]?.id;
-    state.kanbanExpanded = new Set(defId ? [defId] : []);
-  }
-  return `<div class="kanban-board">
-    ${columns
-      .map((section) => {
-        const targetId = MIDTERM_TO_SUBJECT_ID[section.id] || section.id;
-        const targetSubject = subjectById(targetId);
-        const isOpen = state.kanbanExpanded.has(section.id);
-        const bodyId = `kanban-body-${section.id}`;
-        return `<section class="kanban-col${isOpen ? "" : " is-collapsed"}" id="sec-${esc(section.id)}"
-          data-spy-section="${esc(section.id)}" data-spy-label="${esc(section.name)}"
-          style="--col-accent:${esc(targetSubject?.accent || subject.accent)}">
-          <header class="kanban-col-head">
-            <button class="kanban-col-toggle" type="button" data-kanban-toggle="${esc(section.id)}"
-              aria-expanded="${isOpen}" aria-controls="${esc(bodyId)}">
-              <span class="dot" style="background:var(--col-accent)"></span>
-              <span class="kanban-col-name">${esc(section.name)}</span>
-              <span class="kanban-col-count">${section.files.length}</span>
-              <svg class="kanban-col-chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <a class="kanban-col-link" href="#${esc(targetId)}">المادة ↗</a>
-          </header>
-          <div class="kanban-col-body" id="${esc(bodyId)}"${isOpen ? "" : " hidden"}>
-            ${
-              section.files.length
-                ? section.files
-                    .map((file) =>
-                      fileRow(file, targetSubject || subject, section.id, "file-kanban"),
-                    )
-                    .join("")
-                : '<span class="cell-empty">غير متاح حالياً</span>'
-            }
-          </div>
-        </section>`;
-      })
-      .join("")}
-  </div>`;
-}
-
-function renderNetworksUnitTable(subject, section, units, colLabels, studiedMap, onStudied) {
+function renderNetworksUnitTable(subject, section, units, colLabels, studiedMap, onStudied, openSet) {
   if (!section) return "";
-  const rows = units
+  const columns = [
+    { key: "book", label: colLabels[1], icon: ICONS.book },
+    { key: "summary", label: colLabels[2], icon: ICONS.summary },
+    { key: "qa", label: colLabels[3], icon: ICONS.question },
+  ];
+  const cards = units
     .map((unit) => {
       const unitFiles = section.files.filter((file) => file.unit === unit.id);
       if (!unitFiles.length) return "";
@@ -1969,46 +2273,31 @@ function renderNetworksUnitTable(subject, section, units, colLabels, studiedMap,
         summary: unitFiles.filter((f) => f.slot === "summary"),
         qa: unitFiles.filter((f) => f.slot === "qa"),
       };
+      const key = `${subject.id}:${unit.id}`;
+      const studied = Boolean(studiedMap[key]);
+      if (studied && unit.trackStudy) onStudied();
       const studyHtml = unit.trackStudy
-        ? (() => {
-            const key = `${subject.id}:${unit.id}`;
-            const studied = Boolean(studiedMap[key]);
-            if (studied) onStudied();
-            return `<label class="study-check"><input type="checkbox" data-study="${esc(key)}"${studied ? " checked" : ""}><span>تمت المذاكرة</span></label>`;
-          })()
+        ? `<label class="study-check"><input type="checkbox" data-study="${esc(key)}"${studied ? " checked" : ""}><span>تمت المذاكرة</span></label>`
         : "";
-      const rowStudied = unit.trackStudy && Boolean(studiedMap[`${subject.id}:${unit.id}`]);
-      return `<div class="matrix-row${rowStudied ? " is-studied" : ""}" data-unit="${esc(unit.id)}">
-        <div class="matrix-lecture">
-          <div class="matrix-lec-top">
-            <span class="lec-number">${esc(unit.badge)}</span>
-            <div>
-              <strong>${esc(unit.title)}</strong>
-              ${unit.sub ? `<span class="net-unit-sub" dir="ltr">${esc(unit.sub)}</span>` : ""}
-              ${unit.inExam ? '<span class="midterm-badge">مقرر بالامتحان</span>' : ""}
-            </div>
-          </div>
-          ${studyHtml}
-        </div>
-        <div class="matrix-cell" data-slot="book">${renderMatrixSlot(slots.book, subject)}</div>
-        <div class="matrix-cell" data-slot="summary">${renderMatrixSlot(slots.summary, subject)}</div>
-        <div class="matrix-cell" data-slot="qa">${renderMatrixSlot(slots.qa, subject)}</div>
-      </div>`;
+      return renderLectureCard({
+        cardKey: key,
+        domId: `lec-card-${subject.id}-${unit.id}`,
+        badge: unit.badge,
+        title: unit.title,
+        sub: unit.sub,
+        studied: unit.trackStudy && studied,
+        studyHtml,
+        open: Boolean(openSet?.has(key)),
+        columns: columns.map((col) => ({ ...col, files: slots[col.key] })),
+        subject,
+        dataAttrs: `data-unit="${esc(unit.id)}"`,
+      });
     })
+    .filter(Boolean)
     .join("");
 
-  if (!rows) return "";
-  return `<div class="matrix-wrap net-matrix-wrap">
-    <div class="matrix net-matrix">
-      <div class="matrix-head net-matrix-head">
-        <div>${esc(colLabels[0])}</div>
-        <div>${ICONS.book}<span>${esc(colLabels[1])}</span></div>
-        <div>${ICONS.summary}<span>${esc(colLabels[2])}</span></div>
-        <div>${ICONS.question}<span>${esc(colLabels[3])}</span></div>
-      </div>
-      ${rows}
-    </div>
-  </div>`;
+  if (!cards) return "";
+  return `<div class="lec-list net-lec-list">${cards}</div>`;
 }
 
 function renderNetworksHub(subject) {
@@ -2017,17 +2306,8 @@ function renderNetworksHub(subject) {
   const atwanChapters = byId.get("atwan-chapters");
   const mahfouz = byId.get("mahfouz");
   const midtermSec = byId.get("midterm-revision");
-  const committeesSec = byId.get("committees");
 
   const reviewFiles = midtermSec?.files || [];
-
-  const committeesMarkup = committeesSec?.files?.length
-    ? sectionMarkup(
-        committeesSec,
-        committeesSec.files.map((file) => fileRow(file, subject, committeesSec.id)).join(""),
-        store.get(`section:${committeesSec.id}`) !== "closed",
-      )
-    : "";
 
   const studiedMap = getStudied();
   let studiedCount = 0;
@@ -2035,43 +2315,51 @@ function renderNetworksHub(subject) {
     studiedCount += 1;
   };
 
+  const atwanUnits = [
+    { id: "atwan-ch1", badge: "Ch1", title: "Ch 01: Introduction to Networks", sub: "pp. 3–21 · مراجعة", inExam: true, trackStudy: true },
+    { id: "atwan-ch2", badge: "Ch2", title: "Ch 02: Data Communication", sub: "pp. 22–47 · مراجعة", inExam: true, trackStudy: true },
+    { id: "atwan-ch3", badge: "Ch3", title: "Ch 03: Network Hardware & LAN", sub: "pp. 48–79 · مراجعة", inExam: true, trackStudy: true },
+    { id: "atwan-ch4", badge: "Ch4", title: "Ch 04: OSI Model", sub: "pp. 80–102 · مراجعة", inExam: true, trackStudy: true },
+    { id: "atwan-ch5", badge: "Ch5", title: "Ch 05: Protocols", sub: "pp. 103–162 · مشروحة", inExam: true, trackStudy: true },
+    { id: "atwan-ch6", badge: "Ch6", title: "Ch 06: Wide Area Networks", sub: "pp. 163–176 · مشروحة", inExam: true, trackStudy: true },
+    { id: "atwan-ch7", badge: "Ch7", title: "Ch 07: Addressing", sub: "pp. 177–205 · مشروحة", inExam: true, trackStudy: true },
+    { id: "atwan-lec1-3", badge: "Lec", title: "ملخصات وأسئلة المحاضرات 1–3", sub: "Lec 01–03", inExam: false, trackStudy: false },
+    { id: "atwan-lec4-5", badge: "Lec", title: "محاضرات 4–5 و IPv4 Structure", sub: "Lec 04–05 + IPv4", inExam: false, trackStudy: false },
+  ];
+  const mahfouzUnits = [
+    { id: "mahfouz-ch1", badge: "Ch1", title: "Ch 01: Introduction (Full)", sub: "84 Slides · Full", inExam: true, trackStudy: true },
+    { id: "mahfouz-ch2", badge: "Ch2", title: "Ch 02: Application Layer", sub: "Slides 1–42 (حتى Web Caches)", inExam: true, trackStudy: true },
+  ];
+  const allUnitKeys = [...atwanUnits, ...mahfouzUnits].map((unit) => `${subject.id}:${unit.id}`);
+  const trackedUnitKeys = [...atwanUnits, ...mahfouzUnits]
+    .filter((unit) => unit.trackStudy)
+    .map((unit) => `${subject.id}:${unit.id}`);
+  const openSet = resolveInitialLecOpen(subject.id, allUnitKeys, studiedMap, trackedUnitKeys);
+
   const atwanChaptersTable = renderNetworksUnitTable(
     subject,
     atwanChapters,
-    [
-      { id: "atwan-ch1", badge: "Ch1", title: "Ch 01: Introduction to Networks", sub: "pp. 3–21 · مراجعة", inExam: true, trackStudy: true },
-      { id: "atwan-ch2", badge: "Ch2", title: "Ch 02: Data Communication", sub: "pp. 22–47 · مراجعة", inExam: true, trackStudy: true },
-      { id: "atwan-ch3", badge: "Ch3", title: "Ch 03: Network Hardware & LAN", sub: "pp. 48–79 · مراجعة", inExam: true, trackStudy: true },
-      { id: "atwan-ch4", badge: "Ch4", title: "Ch 04: OSI Model", sub: "pp. 80–102 · مراجعة", inExam: true, trackStudy: true },
-      { id: "atwan-ch5", badge: "Ch5", title: "Ch 05: Protocols", sub: "pp. 103–162 · مشروحة", inExam: true, trackStudy: true },
-      { id: "atwan-ch6", badge: "Ch6", title: "Ch 06: Wide Area Networks", sub: "pp. 163–176 · مشروحة", inExam: true, trackStudy: true },
-      { id: "atwan-ch7", badge: "Ch7", title: "Ch 07: Addressing", sub: "pp. 177–205 · مشروحة", inExam: true, trackStudy: true },
-      { id: "atwan-lec1-3", badge: "Lec", title: "ملخصات وأسئلة المحاضرات 1–3", sub: "Lec 01–03", inExam: false, trackStudy: false },
-      { id: "atwan-lec4-5", badge: "Lec", title: "محاضرات 4–5 و IPv4 Structure", sub: "Lec 04–05 + IPv4", inExam: false, trackStudy: false },
-    ],
+    atwanUnits,
     ["الفصل / المحاضرة", "الكتاب (PDF)", "الملخص (.md / Lec)", "الأسئلة والحل (Q&A)"],
     studiedMap,
     countStudied,
+    openSet,
   );
 
   const mahfouzTable = renderNetworksUnitTable(
     subject,
     mahfouz,
-    [
-      { id: "mahfouz-ch1", badge: "Ch1", title: "Ch 01: Introduction (Full)", sub: "84 Slides · Full", inExam: true, trackStudy: true },
-      { id: "mahfouz-ch2", badge: "Ch2", title: "Ch 02: Application Layer", sub: "Slides 1–42 (حتى Web Caches)", inExam: true, trackStudy: true },
-    ],
+    mahfouzUnits,
     ["الفصل", "السلايدز (PDF)", "الملخص (.md)", "الأسئلة والحل (Q&A)"],
     studiedMap,
     countStudied,
+    openSet,
   );
 
   const atwanOpen = store.get("section:net-atwan") !== "closed";
   const mahfouzOpen = store.get("section:net-mahfouz") !== "closed";
 
-  return `${renderReviewBlock(subject, reviewFiles)}
-    ${committeesMarkup}
-    ${studyProgressMarkup(subject, studiedCount, 9)}
+  return `${studyProgressMarkup(subject, studiedCount, 9)}
     <section class="section net-track" id="sec-atwan" data-section="net-atwan" data-open="${atwanOpen}" data-spy-section="atwan" data-spy-label="د. أحمد عطوان">
       <button class="section-head" type="button" aria-expanded="${atwanOpen}">
         <span class="section-icon">${ICONS.lecture}</span>
@@ -2079,7 +2367,6 @@ function renderNetworksHub(subject) {
           <h3>1. د. أحمد عطوان — الفصول 1 إلى 7</h3>
           <span class="en">Dr. Ahmed Atwan · Chapters 1–7</span>
         </span>
-        <span class="net-scope-pill is-included">مقرر بالامتحان (Ch. 1–7)</span>
         <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="section-body net-track-body">
@@ -2100,34 +2387,34 @@ function renderNetworksHub(subject) {
           <h3>2. د. محمد محفوظ — Kurose & Ross</h3>
           <span class="en">Dr. Mahfouz · Ch. 1 (Full) + Ch. 2 (Slides 1–42)</span>
         </span>
-        <span class="net-scope-pill is-included">Ch. 1 + Ch. 2 (1–42)</span>
         <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="section-body net-track-body">
         ${mahfouzTable}
       </div>
-    </section>`;
+    </section>
+    ${renderReviewBlock(subject, reviewFiles)}`;
 }
 
 function renderSubject(subject) {
-  const supportsMatrix = subject.id !== "midterm-revision";
-  const useMatrix = supportsMatrix && state.viewMode !== "classic";
-  const toggle = supportsMatrix
-    ? `<div class="subject-toolbar">
+  const useMatrix = state.viewMode !== "classic";
+  const bulkToggle = useMatrix
+    ? `<button class="btn btn-sm" type="button" data-lectures-toggle-all="1" aria-pressed="false">
+          <span>فتح كل المحاضرات</span>
+        </button>`
+    : "";
+  const toggle = `<div class="subject-toolbar">
         <button class="btn btn-sm" type="button" data-view-toggle="1">
           ${useMatrix ? ICONS.folder : ICONS.grid}
           <span>${useMatrix ? "عرض كأقسام كلاسيكية (القديم)" : "عرض كجدول محاضرات (الجديد)"}</span>
         </button>
-      </div>`
-    : "";
-  const body =
-    subject.id === "midterm-revision"
-      ? renderMidtermKanban(subject)
-      : useMatrix
-        ? subject.id === "computer-networks"
-          ? renderNetworksHub(subject)
-          : renderMatrix(subject)
-        : renderClassicSections(subject);
+        ${bulkToggle}
+      </div>`;
+  const body = useMatrix
+    ? subject.id === "computer-networks"
+      ? renderNetworksHub(subject)
+      : renderMatrix(subject)
+    : renderClassicSections(subject);
 
   viewEl.innerHTML = `<div class="subject-wrap" style="--accent:${subject.accent}">
     <div class="subject-head">
@@ -2144,6 +2431,8 @@ function renderSubject(subject) {
     ${bookmarksSlotMarkup(subject)}
     ${body}
   </div>`;
+
+  syncBulkLecturesButton();
 }
 
 function renderSearch(query) {
@@ -2332,43 +2621,21 @@ function renderSchedule() {
     </div>`;
   }).join("");
 
-  const midtermRows = (schedule.midterms || [])
-    .map((midterm) => {
-      const status = midtermStatus(midterm);
-      const meta = schedule.coursesMeta?.[midterm.subjectId];
-      return `<tr class="${status.active ? "now-row" : ""}">
-        <td><strong>${esc(midterm.subjectName)}</strong>${meta?.code ? `<div class="muted" dir="ltr">${esc(meta.code)}</div>` : ""}</td>
-        <td>${esc(midterm.dayAr)}</td>
-        <td>${esc(formatDateShort(midterm.date))}</td>
-        <td dir="ltr">${esc(midterm.startTime)}–${esc(midterm.endTime)}</td>
-        <td>${esc(midterm.venue)}${
-          midterm.halls?.length
-            ? `<div class="muted">${midterm.halls
-                .map((h) => `${esc(h.name)}: <span dir="ltr">${h.pcFrom}–${h.pcTo}</span>`)
-                .join(" · ")}</div>`
-            : ""
-        }</td>
-        <td>${(midterm.lecturesInScope || []).length} محاضرة${midterm.scopeNote ? `<div class="muted">${esc(midterm.scopeNote)}</div>` : ""}</td>
-        <td>${esc(String(midterm.marks))} درجة${midterm.marksNote ? `<div class="muted">${esc(midterm.marksNote)}</div>` : ""}</td>
-        <td><span class="status-pill${status.active ? " active" : ""}">${esc(status.label)}</span></td>
-      </tr>`;
-    })
-    .join("");
-
   const calendar = (schedule.calendar || [])
     .map((item) => {
       const start = parseDateParts(item.startDate);
       const end = parseDateParts(item.endDate || item.startDate);
       let statusClass = "is-upcoming";
       let statusLabel = "قادم";
-      if (!Number.isNaN(end.getTime()) && end < todayMid) {
+      if (item.status === "done" || (!Number.isNaN(end.getTime()) && end < todayMid)) {
         statusClass = "is-past";
         statusLabel = "انتهى";
       } else if (
-        !Number.isNaN(start.getTime()) &&
-        !Number.isNaN(end.getTime()) &&
-        start <= todayMid &&
-        todayMid <= end
+        item.status === "current" ||
+        (!Number.isNaN(start.getTime()) &&
+          !Number.isNaN(end.getTime()) &&
+          start <= todayMid &&
+          todayMid <= end)
       ) {
         statusClass = "is-current";
         statusLabel = "الآن";
@@ -2408,16 +2675,6 @@ function renderSchedule() {
       <h2>جدول الأسبوع</h2>
       <p>المحاضرات المشتركة تظهر تلقائيًا حسب السكشن المختار.</p>
       <div class="week-grid">${week}</div>
-    </section>
-    <section class="schedule-block" id="sec-midterms" data-spy-section="midterms" data-spy-label="امتحانات الميدترم">
-      <h2>امتحانات الميدترم</h2>
-      <p>5 امتحانات إلكترونية — 11:00 إلى 11:30 صباحًا.</p>
-      <div class="table-scroll">
-        <table class="data-table">
-          <thead><tr><th>المادة</th><th>اليوم</th><th>التاريخ</th><th>الوقت</th><th>المكان</th><th>المحاضرات</th><th>الدرجة</th><th>الحالة</th></tr></thead>
-          <tbody>${midtermRows}</tbody>
-        </table>
-      </div>
     </section>
     <section class="schedule-block" id="sec-calendar" data-spy-section="calendar" data-spy-label="الخريطة الزمنية">
       <h2>الخريطة الزمنية للترم</h2>
@@ -2553,7 +2810,9 @@ function renderSidebar() {
   const currentSubject = !featureActive && !searching ? subjectById(state.subjectId) : null;
   const contextLabel = searching
     ? "البحث والفلاتر"
-    : state.feature === "schedule"
+    : state.feature === "home"
+      ? "الصفحة الرئيسية"
+      : state.feature === "schedule"
       ? "الجدول الدراسي"
       : state.feature === "practice"
         ? "بنك الأسئلة"
@@ -2628,25 +2887,703 @@ function renderModeSwitcher() {
   });
 }
 
-let pendingMidtermHighlight = false;
-let midtermHighlightTimer = 0;
+/* ---------- revamp 06: personalized home ---------- */
 
-function highlightNearestMidterm() {
-  const card = smartStripEl?.querySelector(".midterm-card");
-  if (!card || smartStripEl.hidden) return;
-  card.scrollIntoView({ behavior: "smooth", block: "center" });
-  card.classList.remove("is-highlighted");
-  void card.offsetWidth;
-  card.classList.add("is-highlighted");
-  window.clearTimeout(midtermHighlightTimer);
-  midtermHighlightTimer = window.setTimeout(
-    () => card.classList.remove("is-highlighted"),
-    2800,
+const HOME_RECENT_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+const HOME_MAX_LECTURES = 6;
+const HOME_NETWORK_UNITS = [
+  "mahfouz-ch2",
+  "mahfouz-ch1",
+  "atwan-ch7",
+  "atwan-ch6",
+  "atwan-ch5",
+  "atwan-ch4",
+  "atwan-ch3",
+  "atwan-ch2",
+  "atwan-ch1",
+];
+const HOME_NETWORK_TRACKED = [
+  "atwan-ch1",
+  "atwan-ch2",
+  "atwan-ch3",
+  "atwan-ch4",
+  "atwan-ch5",
+  "atwan-ch6",
+  "atwan-ch7",
+  "mahfouz-ch1",
+  "mahfouz-ch2",
+];
+
+function homeTimeMinutes(time) {
+  const [hours, minutes] = String(time || "00:00").split(":").map(Number);
+  return (hours || 0) * 60 + (minutes || 0);
+}
+
+function getTimeGreeting(now = getCountdownNow()) {
+  const hour = now.getHours();
+  return hour >= 5 && hour < 12 ? "صباح الخير" : "مساء الخير";
+}
+
+function resolveHomeSchedule(section, now = getCountdownNow()) {
+  const todayDate = new Date(now.getTime());
+  const todayName = AR_DAYS[todayDate.getDay()];
+  const todayEntries = getDayEntries(todayName, section);
+
+  const tomorrowDate = new Date(todayDate);
+  tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+  const tomorrowName = AR_DAYS[tomorrowDate.getDay()];
+  const tomorrowEntries = getDayEntries(tomorrowName, section);
+
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  const annotatedToday = todayEntries.map((entry) => {
+    const range = eventPeriodRange(entry);
+    const start = range.start ? homeTimeMinutes(range.start.start) : null;
+    const end = range.end ? homeTimeMinutes(range.end.end) : null;
+    let status = "";
+    if (start !== null && end !== null) {
+      if (nowMinutes >= start && nowMinutes <= end) status = "now";
+      else if (nowMinutes > end) status = "done";
+    }
+    return { ...entry, status };
+  });
+
+  const next = annotatedToday.find((entry) => {
+    const range = eventPeriodRange(entry);
+    return range.start && homeTimeMinutes(range.start.start) > nowMinutes;
+  });
+  if (next) next.status = "next";
+
+  let nextDay = null;
+  if (!todayEntries.length && !tomorrowEntries.length) {
+    for (let offset = 2; offset <= 7; offset += 1) {
+      const date = new Date(todayDate);
+      date.setDate(date.getDate() + offset);
+      const dayName = AR_DAYS[date.getDay()];
+      const entries = getDayEntries(dayName, section);
+      if (entries.length) {
+        nextDay = { dayName, date, entries };
+        break;
+      }
+    }
+  }
+
+  const focusEntries = [...todayEntries, ...tomorrowEntries];
+  const focusSource = focusEntries.length ? focusEntries : nextDay?.entries || [];
+  const focusSubjectIds = [
+    ...new Set(focusSource.map((entry) => entry.subjectId).filter(Boolean)),
+  ];
+
+  return {
+    today: { dayName: todayName, date: todayDate, entries: annotatedToday },
+    tomorrow: { dayName: tomorrowName, date: tomorrowDate, entries: tomorrowEntries },
+    nextDay,
+    focusSubjectIds,
+  };
+}
+
+function getSemesterStudySummary() {
+  const studiedMap = getStudied();
+  let studied = 0;
+  let total = 0;
+  for (const subject of state.data?.subjects || []) {
+    if (subject.id === "computer-networks") {
+      total += HOME_NETWORK_TRACKED.length;
+      for (const unitId of HOME_NETWORK_TRACKED) {
+        if (studiedMap[`${subject.id}:${unitId}`]) studied += 1;
+      }
+      continue;
+    }
+    const count = lectureTotal(subject);
+    total += count;
+    for (let lecture = 1; lecture <= count; lecture += 1) {
+      if (studiedMap[`${subject.id}:${lecture}`]) studied += 1;
+    }
+  }
+  return {
+    studied,
+    total,
+    percent: total ? Math.round((studied / total) * 100) : 0,
+  };
+}
+
+function homeFileHref(subject, file) {
+  if (file.unit) return `#${subject.id}/unit-${file.unit}`;
+  if (Number.isInteger(file.lecture)) return `#${subject.id}/lec-${file.lecture}`;
+  const sectionId = sectionIdOf(subject, file);
+  return sectionId ? `#${subject.id}/${sectionId}` : `#${subject.id}`;
+}
+
+function homeStudiedKey(subject, file) {
+  if (file.unit) return `${subject.id}:${file.unit}`;
+  if (Number.isInteger(file.lecture)) return `${subject.id}:${file.lecture}`;
+  return null;
+}
+
+const HOME_LECTURE_KIND_RANK = {
+  lecture: 0,
+  summary: 1,
+  questions: 2,
+  solution: 3,
+};
+const HOME_VISIBLE_LECTURES = 4;
+
+function pickPrimaryHomeRecent(entries) {
+  return [...entries].sort((a, b) => {
+    const lecA = Number.isInteger(a.file.lecture) ? a.file.lecture : -1;
+    const lecB = Number.isInteger(b.file.lecture) ? b.file.lecture : -1;
+    if (lecB !== lecA) return lecB - lecA;
+    const rankA = HOME_LECTURE_KIND_RANK[a.file.kind] ?? 4;
+    const rankB = HOME_LECTURE_KIND_RANK[b.file.kind] ?? 4;
+    if (rankA !== rankB) return rankA - rankB;
+    return b.added - a.added;
+  })[0];
+}
+
+function collectHomeLectures(focusSubjectIds, now = getCountdownNow()) {
+  const focusList = [...new Set(focusSubjectIds || [])];
+  const studiedMap = getStudied();
+  const nowMs = now.getTime();
+  const recentBySubject = new Map();
+
+  for (const subject of state.data?.subjects || []) {
+    for (const section of subject.sections || []) {
+      if (section.id === "midterm-revision") continue;
+      for (const file of section.files || []) {
+        if (!file.addedAt) continue;
+        if (file.kind === "review" || file.kind === "book" || file.slot === "book") continue;
+        const added = Date.parse(file.addedAt);
+        if (Number.isNaN(added)) continue;
+        const diff = nowMs - added;
+        if (diff < -60000 || diff > HOME_RECENT_WINDOW_MS) continue;
+        if (!recentBySubject.has(subject.id)) recentBySubject.set(subject.id, []);
+        recentBySubject.get(subject.id).push({ subject, file, added });
+      }
+    }
+  }
+
+  const items = [];
+  const seenSubjects = new Set();
+  const buildRecentItem = (subjectId) => {
+    const entries = recentBySubject.get(subjectId);
+    if (!entries?.length) return null;
+    const primary = pickPrimaryHomeRecent(entries);
+    if (!primary?.file?.path) return null;
+    const { subject, file } = primary;
+    const studiedKey = homeStudiedKey(subject, file);
+    const latestAdded = Math.max(...entries.map((entry) => entry.added));
+    return {
+      kind: "new",
+      subject,
+      file,
+      label: Number.isInteger(file.lecture) ? `محاضرة ${file.lecture} · جديد` : "جديد",
+      extraCount: Math.max(0, entries.length - 1),
+      timeLabel: formatRelativeTimeAr(new Date(latestAdded).toISOString()),
+      href: homeFileHref(subject, file),
+      studied: Boolean(studiedKey && studiedMap[studiedKey]),
+    };
+  };
+
+  const buildLatestItem = (subjectId) => {
+    const subject = subjectById(subjectId);
+    if (!subject) return null;
+    if (subject.id === "computer-networks") {
+      const unitId = HOME_NETWORK_UNITS.find((id) =>
+        subjectFiles(subject).some((file) => file.unit === id),
+      );
+      if (!unitId) return null;
+      const files = subjectFiles(subject).filter((file) => file.unit === unitId);
+      const file = files.find((entry) => entry.slot === "book") || files[0];
+      if (!file) return null;
+      const chapter = /-ch(\d+)$/.exec(unitId);
+      return {
+        kind: "latest",
+        subject,
+        file,
+        label: chapter ? `Ch ${chapter[1]}` : "آخر فصل",
+        extraCount: 0,
+        timeLabel: "",
+        href: `#${subject.id}/unit-${unitId}`,
+        studied: Boolean(studiedMap[`${subject.id}:${unitId}`]),
+      };
+    }
+
+    const latest = maxLecture(subject);
+    if (!latest) return null;
+    const lectureFiles = subjectFiles(subject).filter((file) =>
+      fileAppliesToLecture(file, latest),
+    );
+    const file =
+      lectureFiles.find((entry) => entry.kind === "lecture") ||
+      lectureFiles.find((entry) => entry.kind === "summary") ||
+      lectureFiles[0];
+    if (!file) return null;
+    return {
+      kind: "latest",
+      subject,
+      file,
+      label: `محاضرة ${latest}`,
+      extraCount: 0,
+      timeLabel: "",
+      href: `#${subject.id}/lec-${latest}`,
+      studied: Boolean(studiedMap[`${subject.id}:${latest}`]),
+    };
+  };
+
+  // 1. Today & Tomorrow subjects first (in schedule order; prefer new uploads this week)
+  const targetIds = focusList.length
+    ? focusList
+    : (state.data?.subjects || []).map((subject) => subject.id);
+
+  for (const subjectId of targetIds) {
+    if (seenSubjects.has(subjectId)) continue;
+    const item = buildRecentItem(subjectId) || buildLatestItem(subjectId);
+    if (!item) continue;
+    seenSubjects.add(subjectId);
+    items.push(item);
+  }
+
+  // 2. Remaining subjects that received actual new uploads this week (newest first)
+  const otherRecent = [...recentBySubject.entries()]
+    .filter(([subjectId]) => !seenSubjects.has(subjectId))
+    .map(([subjectId, entries]) => ({
+      subjectId,
+      latestAdded: Math.max(...entries.map((entry) => entry.added)),
+    }))
+    .sort((a, b) => b.latestAdded - a.latestAdded);
+
+  for (const { subjectId } of otherRecent) {
+    const item = buildRecentItem(subjectId);
+    if (!item) continue;
+    seenSubjects.add(subjectId);
+    items.push(item);
+  }
+
+  return items;
+}
+
+function renderSectionOnboarding() {
+  return `<div class="home-page home-page-onboard">
+    <section class="home-onboard">
+      <div class="home-onboard-mark">
+        <img src="assets/logo.png" alt="" width="46" height="46">
+      </div>
+      <span class="home-onboard-kicker">الرئيسية</span>
+      <h2>اختار سكشنك عشان نظبطلك يومك</h2>
+      <p>الصفحة الرئيسية هتفتكر سكشنك وتعرضلك جدول النهاردة وبكرا، وآخر المحاضرات، والمطلوب من الدكاترة والمعيدين تلقائياً.</p>
+      <div class="onboard-grid">
+        ${SECTION_VALUES.map(
+          (value) =>
+            `<button class="onboard-sec-btn" type="button" data-pick-section="${value}">سكشن ${value}</button>`,
+        ).join("")}
+      </div>
+      <button class="onboard-skip" type="button" data-pick-section="1">متابعة مؤقتاً بسكشن 1</button>
+    </section>
+  </div>`;
+}
+
+function renderHomeEvent(entry, withStatus = false) {
+  const subject = subjectById(entry.subjectId);
+  const range = eventPeriodRange(entry);
+  const status = entry.status || "";
+  const statusLabel =
+    status === "now" ? "الآن" : status === "next" ? "التالي" : status === "done" ? "انتهى" : "";
+  const statusHtml = statusLabel
+    ? `<span class="home-event-status is-${status}">${statusLabel}</span>`
+    : "";
+  const typeLabel = entry.type === "section" ? "سكشن" : "محاضرة";
+  return `<a class="home-event${withStatus && status ? ` is-${status}` : ""}" href="#${esc(entry.subjectId)}" style="--home-accent:${esc(subject?.accent || "#4e8d9c")}">
+    <span class="home-event-dot"></span>
+    <span class="home-event-time" dir="ltr">${esc(range.label)}</span>
+    <span class="home-event-main">
+      <strong>${esc(entry.title || subject?.nameAr || "محاضرة")}</strong>
+      <span>${esc(entry.room || "")}${entry.instructor ? ` · ${esc(entry.instructor)}` : ""}</span>
+    </span>
+    <span class="home-event-end">
+      ${statusHtml}
+      <span class="home-event-type">${typeLabel}</span>
+    </span>
+  </a>`;
+}
+
+function renderHomeDayGroup(label, date, entries, withStatus = false) {
+  return `<div class="home-day-group">
+    <div class="home-day-label">
+      <strong>${esc(label)}</strong>
+      <span>${esc(formatDateShort(date))}</span>
+    </div>
+    ${
+      entries.length
+        ? `<div class="home-day-events">${entries
+            .map((entry) => renderHomeEvent(entry, withStatus))
+            .join("")}</div>`
+        : `<span class="home-day-empty">لا توجد محاضرات</span>`
+    }
+  </div>`;
+}
+
+function renderHomeScheduleCard(sched) {
+  const bothEmpty = !sched.today.entries.length && !sched.tomorrow.entries.length;
+  const fallback = bothEmpty && sched.nextDay;
+  return `<section class="home-card home-schedule-card" id="sec-home-schedule" data-spy-section="home-schedule" data-spy-label="جدول اليوم وبكرا">
+    <div class="home-card-head">
+      <div>
+        <span class="smart-kicker">جدولك الدراسي</span>
+        <h3>اليوم وبكرا · سكشن ${esc(state.section)}</h3>
+      </div>
+      <a class="home-card-link" href="#schedule">الجدول الكامل</a>
+    </div>
+    ${
+      fallback
+        ? `<p class="home-free-note">اليوم وبكرا إجازة — أقرب يوم دراسي: ${esc(sched.nextDay.dayName)}</p>
+           ${renderHomeDayGroup(`أقرب يوم دراسي · ${sched.nextDay.dayName}`, sched.nextDay.date, sched.nextDay.entries)}`
+        : `${renderHomeDayGroup(`اليوم · ${sched.today.dayName}`, sched.today.date, sched.today.entries, true)}
+           ${renderHomeDayGroup(`بكرا · ${sched.tomorrow.dayName}`, sched.tomorrow.date, sched.tomorrow.entries)}`
+    }
+  </section>`;
+}
+
+function homeTasksMarkup(focusSubjectIds) {
+  return renderWeeklyTasksCard({
+    section: state.section,
+    kicker: "المطلوب الأسبوع ده",
+    heading: "متطلبات الدكاترة والمعيدين",
+    highlightSubjectIds: new Set(focusSubjectIds || []),
+    className: "home-card",
+  });
+}
+
+function renderHomeTasksSlot(focusSubjectIds) {
+  return `<div class="home-tasks-slot" data-home-tasks-slot id="sec-home-tasks" data-spy-section="home-tasks" data-spy-label="المطلوب الأسبوع ده">${homeTasksMarkup(focusSubjectIds)}</div>`;
+}
+
+function formatExtraFilesBadge(count) {
+  if (count <= 0) return "";
+  if (count === 1) return "+ملف آخر";
+  if (count === 2) return "+ملفان";
+  return count <= 10 ? `+${count} ملفات` : `+${count} ملف`;
+}
+
+function renderHomeLecturesCard(items, focusSubjectIds) {
+  const heading = focusSubjectIds.length
+    ? "آخر المحاضرات لمواد اليوم وبكرا"
+    : "أحدث المحاضرات المتاحة";
+  const hasMore = items.length > HOME_VISIBLE_LECTURES;
+  const visibleItems =
+    hasMore && !state.homeLecturesExpanded ? items.slice(0, HOME_VISIBLE_LECTURES) : items;
+  const hiddenCount = Math.max(0, items.length - visibleItems.length);
+  const body = visibleItems.length
+    ? `<div class="home-lec-list">${visibleItems
+        .map((item) => {
+          const subject = item.subject;
+          const file = item.file;
+          const meta =
+            item.kind === "new" && item.timeLabel
+              ? `${item.timeLabel} · ${fmtSize(file.size)}`
+              : fmtSize(file.size);
+          const extraLabel = formatExtraFilesBadge(item.extraCount || 0);
+          return `<div class="home-lec-item" style="--home-accent:${esc(subject.accent)}">
+            <div class="home-lec-body">
+              <div class="home-lec-top">
+                <span class="home-lec-dot"></span>
+                <a class="home-lec-subject" href="#${esc(subject.id)}">${esc(subject.nameAr)}</a>
+                <span class="home-new-badge${item.kind === "new" ? " is-new" : ""}">${esc(item.label)}</span>
+                ${extraLabel ? `<span class="home-extra-badge">${esc(extraLabel)}</span>` : ""}
+                ${item.studied ? `<span class="home-studied-badge" title="تمت المذاكرة">✓</span>` : ""}
+              </div>
+              <div class="home-lec-sub">
+                <span class="home-lec-title" title="${esc(file.title)}">${esc(file.title)}</span>
+                <span class="home-lec-meta" dir="ltr">${esc(meta)}</span>
+              </div>
+            </div>
+            <div class="home-lec-actions">
+              <button class="home-mini-btn" type="button" data-home-preview data-subject="${esc(subject.id)}" data-file="${esc(file.path)}">معاينة</button>
+              <a class="home-mini-btn is-solid" href="${esc(item.href)}">فتح</a>
+            </div>
+          </div>`;
+        })
+        .join("")}</div>${
+        hasMore
+          ? `<button class="home-lec-more-btn" type="button" data-home-lectures-toggle="1" aria-expanded="${state.homeLecturesExpanded ? "true" : "false"}">${
+              state.homeLecturesExpanded
+                ? "عرض أقل"
+                : `عرض باقي المواد (+${hiddenCount})`
+            }</button>`
+          : ""
+      }`
+    : `<div class="home-empty">${ICONS.lecture}<strong>لا توجد محاضرات متاحة حالياً</strong><span>هتلاقي أحدث المحاضرات هنا أول ما تتضاف.</span></div>`;
+
+  return `<section class="home-card home-lectures-card" id="sec-home-lectures" data-spy-section="home-lectures" data-spy-label="آخر المحاضرات">
+    <div class="home-card-head">
+      <div>
+        <span class="smart-kicker">محاضرات الأسبوع</span>
+        <h3>${esc(heading)}</h3>
+      </div>
+      <span class="home-card-count">${items.length}</span>
+    </div>
+    ${body}
+  </section>`;
+}
+
+function homeQuizContent() {
+  const summary = window.HubQuiz?.getSummary?.() || null;
+  const engaged = Boolean(
+    summary &&
+      (summary.attempts > 0 ||
+        summary.activeMistakes > 0 ||
+        summary.masteredMistakes > 0 ||
+        summary.hasInProgress),
   );
+
+  if (!engaged) {
+    return `<section class="home-card home-quiz-card">
+      <div class="home-card-head">
+        <div>
+          <span class="smart-kicker">امتحني</span>
+          <h3>ملخص أدائك في امتحني</h3>
+        </div>
+      </div>
+      <div class="home-quiz-empty">
+        ${ICONS.question}
+        <strong>لسه مفيش محاولات</strong>
+        <span>ابدأ اختبار سريع وهتلاقي هنا متوسط درجاتك وأخطاءك اللي محتاجة مراجعة.</span>
+        <a class="home-mini-btn is-solid" href="#practice">اختبار سريع</a>
+      </div>
+    </section>`;
+  }
+
+  const avg = summary.avgScore === null ? "—" : `${summary.avgScore}%`;
+  const resume = summary.hasInProgress
+    ? `<a class="home-quiz-resume" href="#practice${summary.hasInProgress.subjectId !== "all" ? `/${esc(summary.hasInProgress.subjectId)}` : ""}">
+        <span class="home-quiz-resume-dot"></span>
+        <span>
+          <strong>عندك اختبار مكمّل: ${esc(summary.hasInProgress.subjectName)}</strong>
+          <span>${summary.hasInProgress.answered} من ${summary.hasInProgress.total} سؤال · كمّل من حيث ما وقفت</span>
+        </span>
+        <span class="home-quiz-resume-cta">كمّل</span>
+      </a>`
+    : "";
+  const last = summary.lastAttempt
+    ? `<p class="home-quiz-note">آخر محاولة: ${esc(summary.lastAttempt.subjectName)} · ${summary.lastAttempt.correct}/${summary.lastAttempt.answered} (${summary.lastAttempt.percent}%)</p>`
+    : "";
+  const weakest = summary.weakestSubject
+    ? summary.weakestSubject.mistakes > 0
+      ? `ركز على ${esc(summary.weakestSubject.subjectName)} — عندك ${summary.weakestSubject.mistakes} سؤال محتاج مراجعة.`
+      : `أقرب مادة للمراجعة: ${esc(summary.weakestSubject.subjectName)}${
+          summary.weakestSubject.avgScore !== null
+            ? ` (متوسط ${summary.weakestSubject.avgScore}%)`
+            : ""
+        }.`
+    : "أداؤك متوازن — كمّل تدريبك للحفاظ على مستواك.";
+
+  return `<section class="home-card home-quiz-card">
+    <div class="home-card-head">
+      <div>
+        <span class="smart-kicker">امتحني</span>
+        <h3>ملخص أدائك في امتحني</h3>
+      </div>
+      <a class="home-card-link" href="#mistakes">أخطائي</a>
+    </div>
+    <div class="home-quiz-stats">
+      <div class="home-quiz-stat"><span>متوسط الدرجات</span><strong>${esc(avg)}</strong></div>
+      <div class="home-quiz-stat"><span>اختبارات مكتملة</span><strong>${summary.attempts}</strong></div>
+      <div class="home-quiz-stat"><span>أخطاء للمراجعة</span><strong>${summary.activeMistakes}</strong></div>
+    </div>
+    ${resume}
+    ${last}
+    <p class="home-quiz-tip">${weakest}</p>
+    <div class="home-quiz-actions">
+      <a class="home-mini-btn" href="#mistakes">راجع أخطائك</a>
+      <a class="home-mini-btn is-solid" href="#practice">اختبار سريع</a>
+    </div>
+  </section>`;
+}
+
+function renderHomeQuizSlot() {
+  return `<div class="home-quiz-slot" data-home-quiz-slot id="sec-home-quiz" data-spy-section="home-quiz" data-spy-label="ملخص أدائك في امتحني">${homeQuizContent()}</div>`;
+}
+
+function refreshHomeTasksSlot() {
+  const slot = viewEl.querySelector("[data-home-tasks-slot]");
+  if (!slot) return;
+  const focusSubjectIds = resolveHomeSchedule(state.section).focusSubjectIds;
+  slot.innerHTML = homeTasksMarkup(focusSubjectIds);
+}
+
+function refreshHomeQuizSlot() {
+  const slot = viewEl.querySelector("[data-home-quiz-slot]");
+  if (!slot) return;
+  slot.innerHTML = homeQuizContent();
+}
+
+function formatFocusDurationAr(minutes) {
+  const mins = Math.max(0, Math.round(Number(minutes) || 0));
+  if (mins < 60) return `${mins} د`;
+  const hours = Math.floor(mins / 60);
+  const rem = mins % 60;
+  return rem ? `${hours} س ${rem} د` : `${hours} س`;
+}
+
+function homeFocusCardMarkup() {
+  let summary = null;
+  try {
+    summary = window.HubPomodoro?.getSummary() || null;
+  } catch {
+    summary = null;
+  }
+  const total = Number(summary?.totalMinutes) || 0;
+  const today = Number(summary?.todayMinutes) || 0;
+  const sessions = Number(summary?.sessionsCount) || 0;
+  const bySubject = summary?.bySubject || {};
+  const subjects = state.data?.subjects || [];
+
+  if (!total) {
+    return `<section class="home-card home-focus-card">
+      <div class="home-card-head">
+        <div>
+          <span class="smart-kicker">سجل التركيز</span>
+          <h3>وقت مذاكرتك حسب المادة</h3>
+        </div>
+        <button class="home-card-link home-link-btn" type="button" data-open-pomodoro-tracker>السجل الكامل</button>
+      </div>
+      <div class="home-focus-empty">
+        <p>ابدأ جلسة تركيز لأي مادة وهيتحسب وقت كل مادة هنا بشكل منفصل تلقائياً.</p>
+        <button class="home-mini-btn is-solid" type="button" data-open-pomodoro>ابدأ أول جلسة</button>
+      </div>
+    </section>`;
+  }
+
+  const rows = subjects
+    .map((subj, idx) => ({
+      subject: subj,
+      minutes: Math.max(0, Number(bySubject[subj.id]) || 0),
+      idx,
+    }))
+    .sort((a, b) => b.minutes - a.minutes || a.idx - b.idx);
+  const maxMins = Math.max(1, ...rows.map((r) => r.minutes));
+
+  const listHtml = rows
+    .map(({ subject, minutes }) => {
+      const pct = Math.round((minutes / total) * 100);
+      const width = minutes ? Math.max(6, Math.round((minutes / maxMins) * 100)) : 0;
+      return `<div class="home-track-row${minutes ? " has-time" : ""}" style="--track-accent:${esc(subject.accent || "#4e8d9c")}">
+        <div class="home-track-top">
+          <span class="home-track-name">
+            <span class="home-track-dot" aria-hidden="true"></span>
+            <a href="#${esc(subject.id)}">${esc(subject.nameAr)}</a>
+          </span>
+          <span class="home-track-meta">
+            <strong>${esc(formatFocusDurationAr(minutes))}</strong>
+            ${minutes ? `<span>${pct}%</span>` : ""}
+          </span>
+        </div>
+        <span class="home-track-bar" aria-hidden="true"><span style="width:${width}%"></span></span>
+      </div>`;
+    })
+    .join("");
+
+  return `<section class="home-card home-focus-card">
+    <div class="home-card-head">
+      <div>
+        <span class="smart-kicker">سجل التركيز</span>
+        <h3>وقت مذاكرتك حسب المادة</h3>
+      </div>
+      <button class="home-card-link home-link-btn" type="button" data-open-pomodoro-tracker>السجل الكامل</button>
+    </div>
+    <div class="home-focus-kpis">
+      <div class="home-focus-kpi"><span>اليوم</span><strong>${esc(formatFocusDurationAr(today))}</strong></div>
+      <div class="home-focus-kpi"><span>الإجمالي</span><strong>${esc(formatFocusDurationAr(total))}</strong></div>
+      <div class="home-focus-kpi"><span>الجلسات</span><strong>${sessions}</strong></div>
+    </div>
+    <div class="home-track-list">${listHtml}</div>
+  </section>`;
+}
+
+function renderHomeFocusSlot() {
+  return `<div class="home-focus-slot" data-home-focus-slot id="sec-home-focus" data-spy-section="home-focus" data-spy-label="وقت المذاكرة">${homeFocusCardMarkup()}</div>`;
+}
+
+function homeFocusActionMarkup() {
+  let summary = null;
+  try {
+    summary = window.HubPomodoro?.getSummary() || null;
+  } catch {
+    summary = null;
+  }
+  const minutes = Number(summary?.todayMinutes) || 0;
+  const active = summary?.status === "running" || summary?.status === "paused";
+  const completed = summary?.status === "completed";
+  const title = completed ? "كمّل جلسة التركيز" : active ? "مؤقت التركيز شغّال" : "ابدأ جلسة تركيز";
+  const meta = completed
+    ? "في انتظار التأكيد"
+    : active
+      ? "افتح المؤقت"
+      : minutes
+        ? `اليوم ${formatFocusDurationAr(minutes)}`
+        : "مؤقت 25 د";
+  return `<button class="home-focus-btn${active ? " is-live" : ""}${completed ? " is-completed" : ""}" type="button" data-open-pomodoro aria-label="${esc(title)}">
+    <span class="home-focus-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="7.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 9.5V13l2.5 1.8M9 2.5h6M12 2.5v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </span>
+    <span class="home-focus-text"><strong>${esc(title)}</strong><span>${esc(meta)}</span></span>
+    <svg class="home-focus-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 6-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>`;
+}
+
+function renderHomeHero(now) {
+  const drawer = state.homeSectionDrawerOpen
+    ? `<div class="home-sec-drawer">
+        <span class="home-sec-drawer-label">اختار سكشنك</span>
+        <div class="home-sec-grid">
+          ${SECTION_VALUES.map(
+            (value) =>
+              `<button class="home-sec-btn${value === state.section ? " is-active" : ""}" type="button" data-pick-section="${value}" aria-pressed="${value === state.section}">${value}</button>`,
+          ).join("")}
+        </div>
+      </div>`
+    : "";
+
+  return `<section class="home-hero">
+    <div class="home-hero-main">
+      <h2>${esc(getTimeGreeting(now))}</h2>
+      <span class="home-hero-sep" aria-hidden="true">·</span>
+      <span class="home-date">${esc(formatDate(now))}</span>
+      <span class="home-section-pill">
+        <span>سكشن ${esc(state.section)}</span>
+        <button type="button" data-home-change-section aria-expanded="${state.homeSectionDrawerOpen ? "true" : "false"}">تغيير</button>
+      </span>
+    </div>
+    <div class="home-hero-actions">${homeFocusActionMarkup()}</div>
+    ${drawer}
+  </section>`;
+}
+
+function renderHome() {
+  if (!state.sectionPicked) {
+    viewEl.innerHTML = renderSectionOnboarding();
+    return;
+  }
+  const now = getCountdownNow();
+  const sched = resolveHomeSchedule(state.section, now);
+  const lectures = collectHomeLectures(sched.focusSubjectIds, now);
+  viewEl.innerHTML = `<div class="home-page">
+    ${renderHomeHero(now)}
+    <div class="home-grid">
+      <div class="home-col">
+        ${renderHomeScheduleCard(sched)}
+        ${renderHomeLecturesCard(lectures, sched.focusSubjectIds)}
+      </div>
+      <div class="home-col">
+        ${renderHomeTasksSlot(sched.focusSubjectIds)}
+        ${renderHomeQuizSlot()}
+        ${renderHomeFocusSlot()}
+      </div>
+    </div>
+  </div>`;
 }
 
 function render() {
   renderModeSwitcher();
+  renderExamCountdown();
   renderNotifications();
   renderSmartStrip();
   renderFacets();
@@ -2659,15 +3596,23 @@ function render() {
     setupScrollSpy();
     return;
   }
+  if (state.feature === "home") {
+    renderTabs();
+    renderHome();
+    document.title = `الرئيسية — ${state.data.title}`;
+    renderSidebar();
+    setupScrollSpy();
+    return;
+  }
   if (state.feature === "schedule") {
     renderTabs();
     renderSchedule();
     document.title = `الجدول الدراسي — ${state.data.title}`;
     renderSidebar();
     setupScrollSpy();
-    if (pendingMidtermHighlight) {
-      pendingMidtermHighlight = false;
-      window.setTimeout(highlightNearestMidterm, 80);
+    if (pendingCalendarScroll) {
+      pendingCalendarScroll = false;
+      document.getElementById("sec-calendar")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     return;
   }
@@ -2732,9 +3677,10 @@ function route() {
   window.HubQuiz?.closeSync?.();
   const parsed = parseHash();
   if (!parsed) {
-    state.feature = null;
-    state.subjectId = defaultSubjectId();
+    state.feature = "home";
     state.tabsExpanded = false;
+    clearSearch();
+    if (!modalEl.hidden) closePreview(false);
     render();
     return;
   }
@@ -2757,13 +3703,23 @@ function route() {
     return;
   }
 
+  if (parsed.subjectId === "home") {
+    state.feature = "home";
+    state.tabsExpanded = false;
+    clearSearch();
+    if (!modalEl.hidden) closePreview(false);
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
   if (parsed.subjectId === "schedule") {
     state.feature = "schedule";
     clearSearch();
     if (!modalEl.hidden) closePreview(false);
-    const highlightMidterm = pendingMidtermHighlight;
+    const scrollToCalendar = pendingCalendarScroll;
     render();
-    if (!highlightMidterm) window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!scrollToCalendar) window.scrollTo({ top: 0, behavior: "smooth" });
     return;
   }
 
@@ -2790,8 +3746,10 @@ function route() {
 
   const subject = state.data.subjects.find((entry) => entry.id === parsed.subjectId);
   if (!subject) {
-    state.feature = null;
-    state.subjectId = defaultSubjectId();
+    state.feature = "home";
+    state.tabsExpanded = false;
+    clearSearch();
+    if (!modalEl.hidden) closePreview(false);
     render();
     return;
   }
@@ -2806,6 +3764,33 @@ function route() {
   if (!parsed.fileId && !modalEl.hidden) closePreview(false);
 
   if (parsed.sectionId) {
+    const lecMatch = /^lec-(\d+)$/.exec(parsed.sectionId);
+    const unitMatch = /^unit-(.+)$/.exec(parsed.sectionId);
+    if (lecMatch) {
+      const card = viewEl.querySelector(`.lec-card[data-lecture="${lecMatch[1]}"]`);
+      if (card) {
+        setLecCardOpen(card, true, { persist: false });
+        syncBulkLecturesButton();
+        if (!parsed.fileId) card.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      return;
+    }
+    if (unitMatch) {
+      const card = viewEl.querySelector(
+        `.lec-card[data-unit="${CSS.escape(unitMatch[1])}"]`,
+      );
+      if (card) {
+        const track = card.closest(".section.net-track");
+        if (track) {
+          track.dataset.open = "true";
+          track.querySelector(".section-head")?.setAttribute("aria-expanded", "true");
+        }
+        setLecCardOpen(card, true, { persist: false });
+        syncBulkLecturesButton();
+        if (!parsed.fileId) card.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      return;
+    }
     const sectionEl = viewEl.querySelector(
       `.section[data-section="${CSS.escape(parsed.sectionId)}"]`,
     );
@@ -2818,7 +3803,7 @@ function route() {
         parsed.sectionId === "midterm-revision"
           ? viewEl.querySelector(".review-block")
           : parsed.sectionId === "lectures"
-            ? viewEl.querySelector(".matrix-wrap")
+            ? viewEl.querySelector("#sec-matrix, .lec-list, .matrix-wrap")
             : null;
       fallback?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -2947,6 +3932,56 @@ function toggleFileInfoPanel(infoBtn) {
 }
 
 viewEl.addEventListener("click", (event) => {
+  if (event.target.closest("[data-open-pomodoro-tracker]")) {
+    window.HubPomodoro?.open({ tab: "tracker" });
+    return;
+  }
+
+  if (event.target.closest("[data-open-pomodoro]")) {
+    window.HubPomodoro?.open({ tab: "timer" });
+    return;
+  }
+
+  const sectionBtn = event.target.closest("[data-pick-section]");
+  if (sectionBtn) {
+    const value = String(sectionBtn.dataset.pickSection);
+    if (!SECTION_VALUES.includes(value)) return;
+    state.section = value;
+    state.sectionPicked = true;
+    state.homeSectionDrawerOpen = false;
+    store.set("hub:mySection", value);
+    store.set(SECTION_PICKED_KEY, "1");
+    if (sectionPickerEl) sectionPickerEl.value = value;
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+  if (event.target.closest("[data-home-change-section]")) {
+    state.homeSectionDrawerOpen = !state.homeSectionDrawerOpen;
+    renderHome();
+    setupScrollSpy();
+    return;
+  }
+
+  if (event.target.closest("[data-home-lectures-toggle]")) {
+    state.homeLecturesExpanded = !state.homeLecturesExpanded;
+    renderHome();
+    setupScrollSpy();
+    return;
+  }
+
+  const homePreview = event.target.closest("[data-home-preview]");
+  if (homePreview) {
+    const subject = state.data.subjects.find(
+      (entry) => entry.id === homePreview.dataset.subject,
+    );
+    const file =
+      subject && subjectFiles(subject).find((entry) => entry.path === homePreview.dataset.file);
+    if (file) openPreview(file);
+    return;
+  }
+
   const infoBtn = event.target.closest("[data-file-info]");
   if (infoBtn) {
     event.preventDefault();
@@ -2981,6 +4016,37 @@ viewEl.addEventListener("click", (event) => {
     state.viewMode = state.viewMode === "matrix" ? "classic" : "matrix";
     store.set("hub:viewMode", state.viewMode);
     render();
+    return;
+  }
+
+  const lecToggle = event.target.closest("[data-lec-toggle]");
+  if (lecToggle) {
+    const card = lecToggle.closest(".lec-card");
+    if (card) {
+      setLecCardOpen(card, card.dataset.open !== "true", { persist: true });
+      syncBulkLecturesButton();
+    }
+    return;
+  }
+
+  const lecturesToggleAll = event.target.closest("[data-lectures-toggle-all]");
+  if (lecturesToggleAll) {
+    const openNext = lecturesToggleAll.dataset.allOpen !== "true";
+    if (openNext && state.subjectId === "computer-networks") {
+      viewEl.querySelectorAll(".section.net-track").forEach((track) => {
+        track.dataset.open = "true";
+        track.querySelector(".section-head")?.setAttribute("aria-expanded", "true");
+        store.set(`section:${track.dataset.section}`, "open");
+      });
+    }
+    const cards = [...viewEl.querySelectorAll(".lec-card")];
+    const openMap = getLecOpenMap();
+    for (const card of cards) {
+      setLecCardOpen(card, openNext, { persist: false });
+      if (card.dataset.lecCard) openMap[card.dataset.lecCard] = openNext;
+    }
+    saveLecOpenMap(openMap);
+    syncBulkLecturesButton();
     return;
   }
 
@@ -3033,10 +4099,13 @@ viewEl.addEventListener("change", (event) => {
   if (checkbox.checked) studied[key] = true;
   else delete studied[key];
   store.setJson("hub:studied", studied);
-  const row = checkbox.closest(".matrix-row, .file");
+  const row = checkbox.closest(".lec-card, .matrix-row, .file");
   if (row) row.classList.toggle("is-studied", checkbox.checked);
   updateStudyProgress(subjectId);
 });
+
+smartStripEl?.addEventListener("change", handleTaskDoneChange);
+viewEl.addEventListener("change", handleTaskDoneChange);
 
 viewEl.addEventListener("keydown", (event) => {
   const head = event.target.closest?.('.section-head[role="button"]');
@@ -3137,7 +4206,7 @@ modeSwitcherEl?.addEventListener("click", (event) => {
   state.filtersOpen = false;
   clearSearch();
   if (mode === "lectures") {
-    navigate(state.lastSubject || defaultSubjectId());
+    navigate(state.lastSubject || "home");
   } else if (mode === "schedule") {
     navigate("schedule");
   } else if (mode === "exam") {
@@ -3165,11 +4234,18 @@ sectionPickerEl?.addEventListener("change", (event) => {
   const value = String(event.target.value);
   if (!SECTION_VALUES.includes(value)) return;
   state.section = value;
+  state.sectionPicked = true;
+  state.homeSectionDrawerOpen = false;
   store.set("hub:mySection", value);
+  store.set(SECTION_PICKED_KEY, "1");
   render();
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && window.HubPomodoro?.isPanelOpen()) {
+    window.HubPomodoro.close();
+    return;
+  }
   const typing = /^(input|textarea)$/i.test(document.activeElement?.tagName || "");
   if (event.key === "/" && !typing) {
     event.preventDefault();
@@ -3767,21 +4843,6 @@ function openYouTubeEmbed(videoId, startSeconds = 0, title = "") {
 }
 
 viewEl.addEventListener("click", (event) => {
-  const toggle = event.target.closest("[data-kanban-toggle]");
-  if (!toggle) return;
-  const secId = toggle.dataset.kanbanToggle;
-  if (!(state.kanbanExpanded instanceof Set)) state.kanbanExpanded = new Set();
-  const isOpen = !state.kanbanExpanded.has(secId);
-  if (isOpen) state.kanbanExpanded.add(secId);
-  else state.kanbanExpanded.delete(secId);
-  const col = toggle.closest(".kanban-col");
-  const body = col?.querySelector(".kanban-col-body");
-  col?.classList.toggle("is-collapsed", !isOpen);
-  toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  if (body) body.hidden = !isOpen;
-});
-
-viewEl.addEventListener("click", (event) => {
   const ytBtn = event.target.closest("[data-yt-embed]");
   if (!ytBtn) return;
   openYouTubeEmbed(
@@ -3827,7 +4888,25 @@ function setFooter() {
   $("#site-subtitle").textContent = state.data.subtitle;
 }
 
-window.addEventListener("hub:mistakes-updated", syncMistakesBadge);
+window.addEventListener("hub:mistakes-updated", () => {
+  syncMistakesBadge();
+  if (state.feature === "home") refreshHomeQuizSlot();
+});
+window.addEventListener("hub:quiz-updated", () => {
+  syncMistakesBadge();
+  if (state.feature === "home") refreshHomeQuizSlot();
+});
+window.addEventListener("hub:focus-updated", () => {
+  if (state.feature === "home" && !searchActive()) {
+    renderHome();
+    setupScrollSpy();
+  }
+});
+window.addEventListener("hub:pomodoro-changed", () => {
+  if (state.feature !== "home" || searchActive()) return;
+  const slot = viewEl.querySelector(".home-hero-actions");
+  if (slot) slot.innerHTML = homeFocusActionMarkup();
+});
 window.addEventListener("hub:bookmarks-updated", (event) => {
   if (event.detail?.source === "ui") return;
   render();
@@ -3872,75 +4951,9 @@ document.addEventListener("click", (event) => {
   }
 });
 
-function hideExamNews() {
-  if (!examNewsEl || examNewsEl.hidden) return;
-  examNewsEl.classList.add("is-leaving");
-  window.setTimeout(() => {
-    examNewsEl.hidden = true;
-    examNewsEl.classList.remove("is-leaving");
-  }, 200);
-}
-
-function activeExamNewsWindow(now = new Date()) {
-  for (const midterm of state.schedule?.midterms || []) {
-    const examStart = parseDateTime(midterm.date, midterm.startTime);
-    if (Number.isNaN(examStart.getTime())) continue;
-    const windowStart = new Date(
-      examStart.getFullYear(),
-      examStart.getMonth(),
-      examStart.getDate() - 1,
-      20,
-      0,
-      0,
-      0,
-    );
-    if (now >= windowStart && now <= examStart) {
-      return { id: `${midterm.subjectId}-${midterm.date}`, midterm };
-    }
-  }
-  return null;
-}
-
-function syncExamNewsVisibility() {
-  if (!examNewsEl) return;
-  const active = activeExamNewsWindow();
-  if (!active) {
-    examNewsEl.hidden = true;
-    return;
-  }
-  const seen = new Set(store.getJson(EXAM_NEWS_SEEN_KEY, []));
-  if (seen.has(active.id)) {
-    examNewsEl.hidden = true;
-    return;
-  }
-  examNewsEl.hidden = false;
-  seen.add(active.id);
-  store.setJson(EXAM_NEWS_SEEN_KEY, Array.from(seen).slice(-30));
-}
-
-function navigateToMidterm() {
-  pendingMidtermHighlight = true;
-  navigate("schedule");
-}
-
-examNewsLinkEl?.addEventListener("click", (event) => {
-  event.preventDefault();
-  navigateToMidterm();
-});
-
-examNewsEl?.addEventListener("click", (event) => {
-  if (event.target.closest(".exam-news-close") || event.target.closest("a")) return;
-  navigateToMidterm();
-});
-
-examNewsCloseEl?.addEventListener("click", hideExamNews);
 document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
-  if (state.notifOpen) {
-    setNotifOpen(false);
-    return;
-  }
-  if (examNewsEl && !examNewsEl.hidden) hideExamNews();
+  if (state.notifOpen) setNotifOpen(false);
 });
 
 async function loadData() {
@@ -3956,13 +4969,27 @@ async function loadData() {
   throw new Error("no manifest available");
 }
 
+async function loadSchedule() {
+  if (location.protocol !== "file:") {
+    try {
+      const response = await fetch("data/schedule.json", { cache: "no-store" });
+      if (response.ok) return await response.json();
+    } catch (error) {
+      console.warn("schedule fetch failed, using embedded copy", error);
+    }
+  }
+  return window.__SITE_SCHEDULE__ || null;
+}
+
 (async function boot() {
   themeInit();
   initSection();
   renderSectionPicker();
 
+  let data;
+  let schedule;
   try {
-    state.data = await loadData();
+    [data, schedule] = await Promise.all([loadData(), loadSchedule()]);
   } catch (error) {
     viewEl.innerHTML = `<div class="empty">
       ${ICONS.file}
@@ -3972,14 +4999,26 @@ async function loadData() {
     return;
   }
 
-  state.schedule = window.__SITE_SCHEDULE__ || null;
+  state.data = data;
+  state.schedule = schedule;
   state.questions = window.__SITE_QUESTIONS__ || {};
   window.HubQuiz?.init({ banks: state.questions, subjects: state.data.subjects });
+  window.HubPomodoro?.init({
+    topbarBtnEl: $("#pomo-toggle"),
+    subjects: state.data.subjects,
+    getCurrentSubjectId: () => (!state.feature && !searchActive() ? state.subjectId : null),
+    getStudyItems: pomodoroStudyItems,
+    onStudyChanged: handlePomodoroStudyChanged,
+  });
   buildSearchIndex();
   setFooter();
   route();
-  syncExamNewsVisibility();
   maybeSendBrowserNotifications();
+
+  window.setInterval(renderExamCountdown, 60000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) renderExamCountdown();
+  });
 
   const topbar = document.querySelector(".topbar");
   const onScroll = () => topbar.classList.toggle("is-stuck", window.scrollY > 4);

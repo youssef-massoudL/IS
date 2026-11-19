@@ -61,13 +61,6 @@ if (!BOT_TOKEN || !ADMIN_ID) {
 }
 
 const API_BASE = `https://api.telegram.org/bot${BOT_TOKEN}`;
-const MIDTERM_SECTION_MAP = {
-  "computer-networks": "computer-networks",
-  "database-2": "database",
-  "information-theory": "information-theory",
-  "research-methods": "research",
-  "system-analysis": "system-analysis",
-};
 
 const pending = new Map();
 
@@ -642,14 +635,6 @@ async function publishUpload(job) {
       }
       addEntryToSection(subjMid, baseEntry);
       addedTo.push(`${subject.id}/midterm-revision`);
-
-      const midtermSubject = manifest.subjects.find((s) => s.id === "midterm-revision");
-      const mappedSectionId = MIDTERM_SECTION_MAP[subject.id];
-      const midtermSec = midtermSubject?.sections.find((s) => s.id === mappedSectionId);
-      if (midtermSec) {
-        addEntryToSection(midtermSec, baseEntry);
-        addedTo.push(`midterm-revision/${mappedSectionId}`);
-      }
     }
   }
 
@@ -831,6 +816,640 @@ function removeSubjectLinkInRepo(subjectId, kind, removeIdx) {
   const remaining = (Array.isArray(meta.links) ? meta.links.length : 0) + (Array.isArray(meta.youtubeLinks) ? meta.youtubeLinks.length : 0);
   const { commit } = commitAndPush(repoDir, manifest, `Remove link (${removedLabel}) from ${subject.nameAr || subjectId}`);
   return { subjectName: subject.nameAr || subject.name, removedLabel, remaining, commit };
+}
+
+// ---------------------------------------------------------------------------
+// Weekly tasks & news (/task)
+// ---------------------------------------------------------------------------
+
+const TASK_KINDS = [
+  { key: "assignment", label: "📝 تسليم (Assignment)" },
+  { key: "quiz", label: "⚡ كويز (Quiz)" },
+  { key: "presentation", label: "🎤 عرض (Presentation)" },
+  { key: "project", label: "🛠 مشروع (Project)" },
+  { key: "news", label: "📢 خبر / تنبيه (News)" },
+];
+
+const TASK_ROLES = [
+  { key: "doctor", label: "👨‍🏫 دكتور" },
+  { key: "ta", label: "🧑‍💻 معيد" },
+  { key: "admin", label: "🏛 إدارة / عام" },
+];
+
+const TASK_ROLE_LABELS = { doctor: "دكتور", ta: "معيد", admin: "إدارة" };
+
+function normalizeDigits(value) {
+  return String(value ?? "")
+    .replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x06f0));
+}
+
+function cairoDateOf(value) {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Africa/Cairo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const pick = (type) => parts.find((part) => part.type === type)?.value || "";
+  return `${pick("year")}-${pick("month")}-${pick("day")}`;
+}
+
+function cairoDateStr(offsetDays = 0) {
+  return cairoDateOf(new Date(Date.now() + Number(offsetDays || 0) * 86400000));
+}
+
+function addDaysIso(isoDate, days) {
+  const [year, month, day] = String(isoDate).split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day + Number(days || 0)));
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`;
+}
+
+function isValidIsoDate(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || "").trim());
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (month < 1 || month > 12 || day < 1) return false;
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
+
+function parseSectionsInput(raw) {
+  const clean = normalizeDigits(raw)
+    .replace(/[–—−]/g, "-")
+    .replace(/[،,]/g, " ")
+    .trim();
+  if (!clean) return null;
+
+  const values = new Set();
+  for (const token of clean.split(/\s+/).filter(Boolean)) {
+    const range = /^(\d+)-(\d+)$/.exec(token);
+    if (range) {
+      const start = Number(range[1]);
+      const end = Number(range[2]);
+      if (start < 1 || end > 11 || start > end) return null;
+      for (let n = start; n <= end; n += 1) values.add(n);
+      continue;
+    }
+    if (!/^\d+$/.test(token)) return null;
+    const n = Number(token);
+    if (n < 1 || n > 11) return null;
+    values.add(n);
+  }
+  return values.size ? [...values].sort((a, b) => a - b) : null;
+}
+
+function isWeeklyTaskExpired(task, todayIso = cairoDateStr(0)) {
+  if (!task) return false;
+  if (task.expiresAt && isValidIsoDate(task.expiresAt)) {
+    return todayIso > task.expiresAt;
+  }
+  if (task.dueDate && isValidIsoDate(task.dueDate)) {
+    return todayIso > addDaysIso(task.dueDate, 2);
+  }
+  if (task.createdAt) {
+    const createdIso = cairoDateOf(task.createdAt);
+    if (createdIso) return todayIso > addDaysIso(createdIso, 14);
+  }
+  return false;
+}
+
+function suggestTaskAuthors(schedule, subjectId, role, sections) {
+  if (!schedule || !subjectId || subjectId === "general" || role === "admin") return [];
+  if (role === "doctor") {
+    const doctors = schedule?.coursesMeta?.[subjectId]?.doctors || [];
+    return [...new Set(doctors.filter(Boolean))];
+  }
+  if (role !== "ta") return [];
+
+  const timetable = schedule?.sectionsTimetable || {};
+  const sectionKeys =
+    sections === "all" || !sections
+      ? Object.keys(timetable)
+      : (Array.isArray(sections) ? sections : [sections]).map(String);
+  const names = [];
+  for (const key of sectionKeys) {
+    for (const entry of timetable[key] || []) {
+      if (entry?.subjectId !== subjectId) continue;
+      const name = String(entry.instructor || "").trim();
+      if (name && !names.includes(name)) names.push(name);
+      if (names.length >= 6) return names;
+    }
+  }
+  return names.slice(0, 6);
+}
+
+function taskKindLabel(kind) {
+  return TASK_KINDS.find((item) => item.key === kind)?.label || kind || "—";
+}
+
+function taskSectionsLabel(sections) {
+  if (sections === "all" || !sections) return "كل السكاشن (1–11)";
+  if (Array.isArray(sections)) return `سكاشن ${sections.join("، ")}`;
+  return String(sections);
+}
+
+function taskSubjectName(subjects, subjectId) {
+  if (!subjectId || subjectId === "general") return "عام — القسم";
+  const subject = (subjects || []).find((item) => item.id === subjectId);
+  return subject?.nameAr || subject?.name || subjectId;
+}
+
+function formatTaskPreviewHtml(task, subjectName) {
+  const lines = [
+    `<b>${escapeHtml(task.title || "")}</b>`,
+    `• المادة: ${escapeHtml(subjectName || "عام — القسم")}`,
+    `• النوع: ${escapeHtml(taskKindLabel(task.kind))}`,
+    `• السكاشن: ${escapeHtml(taskSectionsLabel(task.sections))}`,
+    `• المصدر: ${escapeHtml(TASK_ROLE_LABELS[task.authorRole] || task.authorRole || "—")}${
+      task.authorName ? ` — ${escapeHtml(task.authorName)}` : ""
+    }`,
+    `• آخر موعد: ${task.dueDate ? `<code>${escapeHtml(task.dueDate)}</code>` : "<i>بدون تاريخ</i>"}`,
+  ];
+  if (task.details) lines.push(`• التفاصيل: ${escapeHtml(task.details)}`);
+  return lines.join("\n");
+}
+
+function readScheduleInRepo(repoDir) {
+  const schedulePath = path.join(repoDir, "data", "schedule.json");
+  if (!fs.existsSync(schedulePath)) throw new Error("data/schedule.json not found");
+  return JSON.parse(fs.readFileSync(schedulePath, "utf8"));
+}
+
+function getWeeklyTasksFromRepo(repoDir) {
+  const schedule = readScheduleInRepo(repoDir);
+  return Array.isArray(schedule.weeklyTasks) ? schedule.weeklyTasks : [];
+}
+
+function addWeeklyTaskInRepo(taskData) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const schedulePath = path.join(repoDir, "data", "schedule.json");
+  if (!fs.existsSync(schedulePath)) throw new Error("data/schedule.json not found");
+  const schedule = JSON.parse(fs.readFileSync(schedulePath, "utf8"));
+  if (!Array.isArray(schedule.weeklyTasks)) schedule.weeklyTasks = [];
+
+  const title = String(taskData.title || "").trim();
+  if (!title) throw new Error("Task title is required.");
+
+  let id = `task-${cairoDateStr(0).replace(/-/g, "")}-${Math.random().toString(36).slice(2, 8)}`;
+  while (schedule.weeklyTasks.some((task) => task?.id === id)) {
+    id = `task-${cairoDateStr(0).replace(/-/g, "")}-${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  const task = {
+    id,
+    subjectId: taskData.subjectId || "general",
+    kind: taskData.kind || "news",
+    title,
+    details: String(taskData.details || "").trim(),
+    authorRole: taskData.authorRole || "admin",
+    authorName: String(taskData.authorName || "").trim(),
+    sections: taskData.sections === "all" ? "all" : Array.isArray(taskData.sections) ? [...taskData.sections] : "all",
+    dueDate: taskData.dueDate || null,
+    expiresAt: taskData.expiresAt || null,
+    createdAt: new Date().toISOString(),
+  };
+
+  schedule.weeklyTasks.push(task);
+  fs.writeFileSync(schedulePath, JSON.stringify(schedule, null, 2) + "\n", "utf8");
+
+  const { commit } = commitAndPush(repoDir, manifest, `Add weekly task: ${task.title.slice(0, 50)}`);
+  return { task, total: schedule.weeklyTasks.length, commit };
+}
+
+function removeWeeklyTaskInRepo(taskId) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const schedulePath = path.join(repoDir, "data", "schedule.json");
+  if (!fs.existsSync(schedulePath)) throw new Error("data/schedule.json not found");
+  const schedule = JSON.parse(fs.readFileSync(schedulePath, "utf8"));
+  if (!Array.isArray(schedule.weeklyTasks)) schedule.weeklyTasks = [];
+
+  const idx = schedule.weeklyTasks.findIndex((task) => task?.id === taskId);
+  if (idx < 0) throw new Error("Weekly task not found (it may have already been removed).");
+  const [removed] = schedule.weeklyTasks.splice(idx, 1);
+  fs.writeFileSync(schedulePath, JSON.stringify(schedule, null, 2) + "\n", "utf8");
+
+  const { commit } = commitAndPush(repoDir, manifest, `Remove weekly task: ${String(removed.title || taskId).slice(0, 50)}`);
+  return { removed, remaining: schedule.weeklyTasks.length, commit };
+}
+
+function pruneExpiredTasksInRepo() {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const schedulePath = path.join(repoDir, "data", "schedule.json");
+  if (!fs.existsSync(schedulePath)) throw new Error("data/schedule.json not found");
+  const schedule = JSON.parse(fs.readFileSync(schedulePath, "utf8"));
+  const tasks = Array.isArray(schedule.weeklyTasks) ? schedule.weeklyTasks : [];
+  const kept = tasks.filter((task) => !isWeeklyTaskExpired(task));
+  const removedCount = tasks.length - kept.length;
+  if (removedCount === 0) {
+    return { removedCount: 0, remaining: kept.length, commit: "no-changes" };
+  }
+
+  schedule.weeklyTasks = kept;
+  fs.writeFileSync(schedulePath, JSON.stringify(schedule, null, 2) + "\n", "utf8");
+  const { commit } = commitAndPush(repoDir, manifest, `Prune ${removedCount} expired weekly task(s)`);
+  return { removedCount, remaining: kept.length, commit };
+}
+
+function taskCancelRow() {
+  return [{ text: "❌ Cancel", callback_data: "cancel" }];
+}
+
+function taskSubjectsKeyboard(subjects) {
+  const rows = (subjects || []).map((subject, idx) => [
+    { text: subject.nameAr || subject.name || subject.id, callback_data: `task:subj:${idx}` },
+  ]);
+  rows.push([{ text: "🏛 عام — القسم كله", callback_data: "task:subj:general" }]);
+  rows.push(taskCancelRow());
+  return { inline_keyboard: rows };
+}
+
+function taskKindsKeyboard() {
+  const rows = TASK_KINDS.map((kind) => [{ text: kind.label, callback_data: `task:kind:${kind.key}` }]);
+  rows.push(taskCancelRow());
+  return { inline_keyboard: rows };
+}
+
+function taskSectionsKeyboard() {
+  return {
+    inline_keyboard: [
+      [{ text: "👥 كل السكاشن (1–11)", callback_data: "task:sec:all" }],
+      [{ text: "🎯 سكاشن معينة", callback_data: "task:sec:custom" }],
+      taskCancelRow(),
+    ],
+  };
+}
+
+function taskRolesKeyboard() {
+  const rows = TASK_ROLES.map((role) => [{ text: role.label, callback_data: `task:role:${role.key}` }]);
+  rows.push(taskCancelRow());
+  return { inline_keyboard: rows };
+}
+
+function taskAuthorsKeyboard(suggestions) {
+  const rows = (suggestions || []).map((name, idx) => [{ text: name, callback_data: `task:author:pick:${idx}` }]);
+  rows.push([{ text: "⏭ تخطي الاسم", callback_data: "task:author:skip" }]);
+  rows.push(taskCancelRow());
+  return { inline_keyboard: rows };
+}
+
+function taskDueKeyboard() {
+  return {
+    inline_keyboard: [
+      [{ text: `📌 اليوم (${cairoDateStr(0)})`, callback_data: "task:due:today" }],
+      [{ text: `📅 غداً (${cairoDateStr(1)})`, callback_data: "task:due:tomorrow" }],
+      [{ text: `🗓 بعد 3 أيام (${cairoDateStr(3)})`, callback_data: "task:due:3d" }],
+      [{ text: `🗓 بعد أسبوع (${cairoDateStr(7)})`, callback_data: "task:due:7d" }],
+      [{ text: "⏭ بدون تاريخ محدد", callback_data: "task:due:skip" }],
+      taskCancelRow(),
+    ],
+  };
+}
+
+async function askTaskSubjectStep(chatId, job) {
+  job.step = "task_subject";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: "1️⃣ <b>اختر المادة</b> الخاصة بالمهمة أو الخبر:",
+    parse_mode: "HTML",
+    reply_markup: taskSubjectsKeyboard(job.subjects),
+  });
+}
+
+async function askTaskKindStep(chatId, job) {
+  job.step = "task_kind";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: "2️⃣ <b>اختر النوع:</b>",
+    parse_mode: "HTML",
+    reply_markup: taskKindsKeyboard(),
+  });
+}
+
+async function askTaskSectionsStep(chatId, job) {
+  job.step = "task_sections_pick";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: "3️⃣ <b>السكاشن المستهدفة:</b>",
+    parse_mode: "HTML",
+    reply_markup: taskSectionsKeyboard(),
+  });
+}
+
+async function askTaskSectionsCustomStep(chatId, job) {
+  job.step = "task_sections";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text:
+      "🎯 اكتب أرقام السكاشن (مثال: <code>1, 2, 3</code> أو <code>4-6</code>).\n" +
+      "المسموح من 1 إلى 11.",
+    parse_mode: "HTML",
+    reply_markup: { inline_keyboard: [taskCancelRow()] },
+  });
+}
+
+async function askTaskRoleStep(chatId, job) {
+  job.step = "task_role";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: "4️⃣ <b>صاحب المهمة:</b>",
+    parse_mode: "HTML",
+    reply_markup: taskRolesKeyboard(),
+  });
+}
+
+async function askTaskAuthorStep(chatId, job) {
+  job.step = "task_author";
+  job.suggestedAuthors = suggestTaskAuthors(job.schedule, job.draft.subjectId, job.draft.authorRole, job.draft.sections);
+  const hasSuggestions = job.suggestedAuthors.length > 0;
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: hasSuggestions
+      ? "5️⃣ <b>اسم الدكتور / المعيد</b>\nاختر من الأزرار أو اكتب الاسم بنفسك:"
+      : "5️⃣ <b>اسم الدكتور / المعيد</b>\nاكتب الاسم أو اضغط تخطي:",
+    parse_mode: "HTML",
+    reply_markup: taskAuthorsKeyboard(job.suggestedAuthors),
+  });
+}
+
+async function askTaskTitleStep(chatId, job) {
+  job.step = "task_title";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: "6️⃣ ✏️ <b>اكتب عنوان المهمة أو الخبر</b>\nمثال: كويز على المحاضرة 5 و 6",
+    parse_mode: "HTML",
+    reply_markup: { inline_keyboard: [taskCancelRow()] },
+  });
+}
+
+async function askTaskDetailsStep(chatId, job) {
+  job.step = "task_details";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: "7️⃣ 📄 <b>تفاصيل إضافية</b> (القاعة، المطلوب تسليمه، رابط...) أو اضغط تخطي:",
+    parse_mode: "HTML",
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: "⏭ تخطي التفاصيل", callback_data: "task:details:skip" }],
+        taskCancelRow(),
+      ],
+    },
+  });
+}
+
+async function askTaskDueStep(chatId, job) {
+  job.step = "task_due";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: "8️⃣ 📅 <b>آخر موعد</b>\nاختر بسرعة أو اكتب التاريخ بصيغة <code>YYYY-MM-DD</code>:",
+    parse_mode: "HTML",
+    reply_markup: taskDueKeyboard(),
+  });
+}
+
+async function askTaskConfirmStep(chatId, job) {
+  job.step = "task_confirm";
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text:
+      "✅ <b>معاينة قبل النشر</b>\n\n" +
+      formatTaskPreviewHtml(job.draft, taskSubjectName(job.subjects, job.draft.subjectId)),
+    parse_mode: "HTML",
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: "✅ نشر على الموقع", callback_data: "task:confirm:save" }],
+        taskCancelRow(),
+      ],
+    },
+  });
+}
+
+function taskListKeyboard(tasks) {
+  const rows = (tasks || []).map((task, idx) => {
+    const title = String(task?.title || "مهمة").replace(/\s+/g, " ").trim();
+    const short = title.length > 36 ? `${title.slice(0, 33)}...` : title;
+    return [{ text: `🗑 ${short}`, callback_data: `task:del:${idx}` }];
+  });
+  rows.push([{ text: "➕ إضافة مهمة جديدة", callback_data: "task:menu:add" }]);
+  rows.push(taskCancelRow());
+  return { inline_keyboard: rows };
+}
+
+async function handleTaskCallback(chatId, job, data) {
+  if (job.flow !== "task") {
+    await tg("sendMessage", { chat_id: chatId, text: "Session expired. Send /task to start again." });
+    return;
+  }
+
+  if (data === "task:menu:add") {
+    job.draft = {
+      subjectId: null,
+      kind: null,
+      sections: "all",
+      authorRole: null,
+      authorName: "",
+      title: "",
+      details: "",
+      dueDate: null,
+      expiresAt: null,
+    };
+    await askTaskSubjectStep(chatId, job);
+    return;
+  }
+
+  if (data === "task:menu:list") {
+    const tasks = Array.isArray(job.currentTasks) ? job.currentTasks : [];
+    if (tasks.length === 0) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "📋 لا توجد مهام حالياً.",
+        parse_mode: "HTML",
+        reply_markup: { inline_keyboard: [[{ text: "➕ إضافة مهمة", callback_data: "task:menu:add" }], taskCancelRow()] },
+      });
+      return;
+    }
+    const summary = tasks
+      .map((task, idx) => {
+        const expired = isWeeklyTaskExpired(task) ? " <b>[منتهي]</b>" : "";
+        const subject = taskSubjectName(job.subjects, task.subjectId);
+        const due = task.dueDate ? ` · ${escapeHtml(task.dueDate)}` : "";
+        return `${idx + 1}. <b>${escapeHtml(task.title || "بدون عنوان")}</b>${expired}\n   • ${escapeHtml(subject)} · ${escapeHtml(
+          taskKindLabel(task.kind),
+        )} · ${escapeHtml(taskSectionsLabel(task.sections))}${due}`;
+      })
+      .join("\n\n");
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `📋 <b>المهام الحالية (${tasks.length}):</b>\n\n${summary}\n\nاختر مهمة لحذفها:`,
+      parse_mode: "HTML",
+      reply_markup: taskListKeyboard(tasks),
+    });
+    return;
+  }
+
+  if (data === "task:menu:prune") {
+    pending.delete(chatId);
+    await tg("sendMessage", { chat_id: chatId, text: "🧹 جاري تنظيف المهام المنتهية والنشر..." });
+    const res = pruneExpiredTasksInRepo();
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        res.removedCount > 0
+          ? `✅ <b>تم التنظيف!</b>\n• تم حذف: ${res.removedCount}\n• المتبقي: ${res.remaining}\n• Commit: <code>${escapeHtml(res.commit)}</code>`
+          : `ℹ️ لا توجد مهام منتهية.\n• المتبقي: ${res.remaining}`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
+  }
+
+  if (data.startsWith("task:subj:")) {
+    const raw = data.slice("task:subj:".length);
+    if (raw === "general") {
+      job.draft.subjectId = "general";
+    } else {
+      const idx = Number.parseInt(raw, 10);
+      const subject = job.subjects?.[idx];
+      if (!subject) return;
+      job.draft.subjectId = subject.id;
+    }
+    await askTaskKindStep(chatId, job);
+    return;
+  }
+
+  if (data.startsWith("task:kind:")) {
+    const kind = data.slice("task:kind:".length);
+    if (!TASK_KINDS.some((item) => item.key === kind)) return;
+    job.draft.kind = kind;
+    await askTaskSectionsStep(chatId, job);
+    return;
+  }
+
+  if (data === "task:sec:all") {
+    job.draft.sections = "all";
+    await askTaskRoleStep(chatId, job);
+    return;
+  }
+
+  if (data === "task:sec:custom") {
+    await askTaskSectionsCustomStep(chatId, job);
+    return;
+  }
+
+  if (data.startsWith("task:role:")) {
+    const role = data.slice("task:role:".length);
+    if (!TASK_ROLES.some((item) => item.key === role)) return;
+    job.draft.authorRole = role;
+    await askTaskAuthorStep(chatId, job);
+    return;
+  }
+
+  if (data.startsWith("task:author:pick:")) {
+    const idx = Number.parseInt(data.slice("task:author:pick:".length), 10);
+    const name = job.suggestedAuthors?.[idx];
+    if (!name) return;
+    job.draft.authorName = name;
+    await askTaskTitleStep(chatId, job);
+    return;
+  }
+
+  if (data === "task:author:skip") {
+    job.draft.authorName = "";
+    await askTaskTitleStep(chatId, job);
+    return;
+  }
+
+  if (data === "task:details:skip") {
+    job.draft.details = "";
+    await askTaskDueStep(chatId, job);
+    return;
+  }
+
+  if (data.startsWith("task:due:")) {
+    const option = data.slice("task:due:".length);
+    const offsets = { today: 0, tomorrow: 1, "3d": 3, "7d": 7 };
+    if (option === "skip") {
+      job.draft.dueDate = null;
+    } else if (Object.prototype.hasOwnProperty.call(offsets, option)) {
+      job.draft.dueDate = cairoDateStr(offsets[option]);
+    } else {
+      return;
+    }
+    await askTaskConfirmStep(chatId, job);
+    return;
+  }
+
+  if (data === "task:confirm:save") {
+    pending.delete(chatId);
+    await tg("sendMessage", { chat_id: chatId, text: "⏳ جاري النشر على الموقع..." });
+    const res = addWeeklyTaskInRepo(job.draft);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>تم نشر المهمة!</b>\n` +
+        `• العنوان: ${escapeHtml(res.task.title)}\n` +
+        `• المادة: ${escapeHtml(taskSubjectName(job.subjects, res.task.subjectId))}\n` +
+        `• إجمالي المهام: ${res.total}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>\n\n` +
+        `ستظهر في قسم "أخبار ومطلوب الأسبوع" خلال دقيقة.`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
+  }
+
+  if (data.startsWith("task:del:")) {
+    const idx = Number.parseInt(data.slice("task:del:".length), 10);
+    const task = job.currentTasks?.[idx];
+    if (!task) {
+      await tg("sendMessage", { chat_id: chatId, text: "المهمة غير موجودة. أرسل /task من جديد." });
+      return;
+    }
+    job.deleteTargetId = task.id;
+    job.deleteTargetTitle = task.title;
+    job.deleteTargetIdx = idx;
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `⚠️ <b>تأكيد الحذف</b>\n\nهل تريد حذف:\n<b>${escapeHtml(task.title || "بدون عنوان")}</b>؟`,
+      parse_mode: "HTML",
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: "✅ تأكيد الحذف", callback_data: `task:del_confirm:${idx}` }],
+          taskCancelRow(),
+        ],
+      },
+    });
+    return;
+  }
+
+  if (data.startsWith("task:del_confirm:")) {
+    const idx = Number.parseInt(data.slice("task:del_confirm:".length), 10);
+    const taskId = job.deleteTargetId || job.currentTasks?.[idx]?.id;
+    if (!taskId) {
+      await tg("sendMessage", { chat_id: chatId, text: "المهمة غير موجودة. أرسل /task من جديد." });
+      return;
+    }
+    pending.delete(chatId);
+    await tg("sendMessage", { chat_id: chatId, text: "⏳ جاري حذف المهمة والنشر..." });
+    const res = removeWeeklyTaskInRepo(taskId);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>تم حذف المهمة!</b>\n` +
+        `• العنوان: ${escapeHtml(res.removed.title || taskId)}\n` +
+        `• المتبقي: ${res.remaining}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+  }
 }
 
 function setInfoInRepo(relPath, infoText) {
@@ -1424,6 +2043,8 @@ async function handleMessage(msg) {
         `/youtube — Add or clear subject YouTube links\n` +
         `/move [query] — Move a file to another section\n` +
         `/delete [query] — Delete a file\n\n` +
+        `<b>Tasks &amp; News:</b>\n` +
+        `/task — Add, view, or delete weekly tasks &amp; news\n\n` +
         `<b>Repo &amp; Safety:</b>\n` +
         `/status — Repo &amp; site status\n` +
         `/rollback — Revert a recent commit\n` +
@@ -1517,6 +2138,42 @@ async function handleMessage(msg) {
     return;
   }
 
+  if (parsed?.cmd === "task") {
+    const repoDir = ensureRepo();
+    const manifest = readManifest(repoDir);
+    const schedule = readScheduleInRepo(repoDir);
+    const tasks = Array.isArray(schedule.weeklyTasks) ? schedule.weeklyTasks : [];
+    const expiredCount = tasks.filter((task) => isWeeklyTaskExpired(task)).length;
+    pending.set(chatId, {
+      flow: "task",
+      step: "task_menu",
+      subjects: manifest.subjects || [],
+      currentTasks: tasks,
+      schedule,
+    });
+
+    const rows = [[{ text: "➕ إضافة مهمة / خبر جديد", callback_data: "task:menu:add" }]];
+    if (tasks.length > 0) {
+      rows.push([{ text: `📋 عرض / حذف المهام (${tasks.length})`, callback_data: "task:menu:list" }]);
+    }
+    if (expiredCount > 0) {
+      rows.push([{ text: `🧹 تنظيف المهام المنتهية (${expiredCount})`, callback_data: "task:menu:prune" }]);
+    }
+    rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `🗓 <b>المهام والأخبار الأسبوعية</b>\n\n` +
+        `• المهام الحالية: ${tasks.length}\n` +
+        `• منتهية (تحتاج تنظيف): ${expiredCount}\n\n` +
+        `اختر الإجراء:`,
+      parse_mode: "HTML",
+      reply_markup: { inline_keyboard: rows },
+    });
+    return;
+  }
+
   if (parsed && ["files", "rename", "info", "label", "move", "delete"].includes(parsed.cmd)) {
     await startPickerOrSearch(chatId, parsed.cmd, parsed.arg);
     return;
@@ -1584,7 +2241,78 @@ async function handleMessage(msg) {
   }
 
   const job = pending.get(chatId);
-  if (!job || !text) return;
+  if (!job) return;
+  if (!text) {
+    if (job.flow === "task" && job.step === "task_title") {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "⚠️ العنوان مطلوب. اكتب عنوان المهمة أو الخبر:",
+        reply_markup: { inline_keyboard: [taskCancelRow()] },
+      });
+    }
+    return;
+  }
+
+  if (job.flow === "task" && job.step === "task_sections") {
+    const sections = parseSectionsInput(text);
+    if (!sections) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          "⚠️ صيغة غير صحيحة. اكتب أرقام سكاشن من 1 إلى 11، مثال:\n" +
+          "<code>1, 2, 3</code> أو <code>4-6</code>",
+        parse_mode: "HTML",
+        reply_markup: { inline_keyboard: [taskCancelRow()] },
+      });
+      return;
+    }
+    job.draft.sections = sections;
+    await askTaskRoleStep(chatId, job);
+    return;
+  }
+
+  if (job.flow === "task" && job.step === "task_author") {
+    job.draft.authorName = text.trim().slice(0, 120);
+    await askTaskTitleStep(chatId, job);
+    return;
+  }
+
+  if (job.flow === "task" && job.step === "task_title") {
+    const title = text.trim();
+    if (!title) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "⚠️ العنوان مطلوب. اكتب عنوان المهمة أو الخبر:",
+        reply_markup: { inline_keyboard: [taskCancelRow()] },
+      });
+      return;
+    }
+    job.draft.title = title.slice(0, 200);
+    await askTaskDetailsStep(chatId, job);
+    return;
+  }
+
+  if (job.flow === "task" && job.step === "task_details") {
+    job.draft.details = text.trim().slice(0, 800);
+    await askTaskDueStep(chatId, job);
+    return;
+  }
+
+  if (job.flow === "task" && job.step === "task_due") {
+    const dueDate = normalizeDigits(text).trim();
+    if (!isValidIsoDate(dueDate)) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "⚠️ تاريخ غير صحيح. اكتب التاريخ بصيغة <code>YYYY-MM-DD</code> مثل <code>2026-11-25</code>:",
+        parse_mode: "HTML",
+        reply_markup: taskDueKeyboard(),
+      });
+      return;
+    }
+    job.draft.dueDate = dueDate;
+    await askTaskConfirmStep(chatId, job);
+    return;
+  }
 
   if (job.step === "tag") {
     job.docTag = text.toLowerCase() === "clear" ? "" : text;
@@ -1845,6 +2573,11 @@ async function handleCallback(cb) {
   const job = pending.get(chatId);
   if (!job) {
     await tg("sendMessage", { chat_id: chatId, text: "Session expired. Please start again." });
+    return;
+  }
+
+  if (data.startsWith("task:")) {
+    await handleTaskCallback(chatId, job, data);
     return;
   }
 
@@ -2364,6 +3097,7 @@ async function poll() {
         { command: "info", description: "Edit or clear file info icon" },
         { command: "link", description: "Add or remove subject links" },
         { command: "youtube", description: "Add or clear subject YouTube link" },
+        { command: "task", description: "Add or manage weekly tasks & news" },
         { command: "move", description: "Move a file to another section" },
         { command: "delete", description: "Delete a file" },
         { command: "status", description: "Repo & site status" },

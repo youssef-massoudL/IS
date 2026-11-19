@@ -60,6 +60,9 @@
   var MISTAKES_KEY = "hub:mistakes";
   var CORRECTED_KEY = "hub:corrected";
   var CONFIG_KEY = "hub:quizConfig";
+  var HISTORY_KEY = "hub:quizHistory";
+  var MAX_HISTORY = 40;
+  var MAX_SYNC_HISTORY = 15;
   var MAX_LECTURE = 7;
   var PASS_MARK = 50;
 
@@ -122,6 +125,7 @@
     ui.config = store.getJson(CONFIG_KEY, defaultConfig());
     if (!ui.config || typeof ui.config !== "object") ui.config = defaultConfig();
     ui.config = Object.assign(defaultConfig(), ui.config);
+    seedHistoryFromExamStates();
   }
 
   function subjectById(id) {
@@ -182,6 +186,310 @@
 
   function examKey(subjectId) {
     return "hub:examState:" + subjectId;
+  }
+
+  function historySubjectName(subjectId) {
+    var subject = subjectById(subjectId);
+    return subject ? subject.nameAr : "كل المواد";
+  }
+
+  function historySubjectAccent(subjectId) {
+    var subject = subjectById(subjectId);
+    return subject ? subject.accent : "#4e8d9c";
+  }
+
+  function sanitizeHistoryEntry(raw) {
+    if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+    var total = Number(raw.total);
+    if (!isFinite(total) || total <= 0) return null;
+    var correct = Math.max(0, Math.min(total, Number(raw.correct) || 0));
+    var answered = Math.max(0, Math.min(total, Number(raw.answered) || 0));
+    var score = Number(raw.percent);
+    if (!isFinite(score)) score = percent(correct, total);
+    score = Math.max(0, Math.min(100, Math.round(score)));
+    var subjectId =
+      typeof raw.subjectId === "string" && raw.subjectId ? raw.subjectId : "all";
+    var finishedAt = typeof raw.finishedAt === "string" ? raw.finishedAt : "";
+    var id =
+      typeof raw.id === "string" && raw.id
+        ? raw.id
+        : "qh-" + (Date.parse(finishedAt) || 0) + "-" + subjectId;
+    return {
+      id: id,
+      subjectId: subjectId,
+      mode: typeof raw.mode === "string" ? raw.mode : "practice",
+      examTypeLabel: typeof raw.examTypeLabel === "string" ? raw.examTypeLabel : "",
+      correct: correct,
+      answered: answered,
+      total: total,
+      percent: score,
+      finishedAt: finishedAt,
+    };
+  }
+
+  function sortHistoryNewestFirst(list) {
+    return list.sort(function (a, b) {
+      return String(b.finishedAt || "").localeCompare(String(a.finishedAt || ""));
+    });
+  }
+
+  function getHistory() {
+    var raw = store.getJson(HISTORY_KEY, []);
+    if (!Array.isArray(raw)) return [];
+    return sortHistoryNewestFirst(
+      raw
+        .map(function (entry) {
+          return sanitizeHistoryEntry(entry);
+        })
+        .filter(Boolean),
+    );
+  }
+
+  function saveHistory(list) {
+    var clean = sortHistoryNewestFirst(
+      (Array.isArray(list) ? list : [])
+        .map(function (entry) {
+          return sanitizeHistoryEntry(entry);
+        })
+        .filter(Boolean),
+    ).slice(0, MAX_HISTORY);
+    store.setJson(HISTORY_KEY, clean);
+    try {
+      window.dispatchEvent(new CustomEvent("hub:quiz-updated"));
+    } catch (error) {
+      void error;
+    }
+    return clean;
+  }
+
+  function recordHistoryFromSession(session) {
+    if (!session || !Array.isArray(session.ids)) return null;
+    var total = session.ids.length;
+    var answered = session.answers ? answeredCount(session) : 0;
+    if (answered <= 0 || total <= 0) return null;
+    var correct = correctCount(session);
+    var finishedAt = session.finishedAt || new Date().toISOString();
+    var subjectId = session.subjectId || "all";
+    var entry = sanitizeHistoryEntry({
+      id: "qh-" + (Date.parse(finishedAt) || Date.now()) + "-" + subjectId,
+      subjectId: subjectId,
+      mode: session.mode || "practice",
+      examTypeLabel: session.examTypeLabel || "",
+      correct: correct,
+      answered: answered,
+      total: total,
+      percent: percent(correct, total),
+      finishedAt: finishedAt,
+    });
+    if (!entry) return null;
+    var list = getHistory().filter(function (item) {
+      return item.id !== entry.id;
+    });
+    list.unshift(entry);
+    saveHistory(list);
+    return entry;
+  }
+
+  function seedHistoryFromExamStates() {
+    try {
+      if (localStorage.getItem(HISTORY_KEY) !== null) return;
+    } catch (error) {
+      return;
+    }
+    var examIds = ["all"].concat(
+      subjects.map(function (subject) {
+        return subject.id;
+      }),
+    );
+    var seeded = [];
+    examIds.forEach(function (subjectId) {
+      var session = store.getJson(examKey(subjectId), null);
+      if (!session || !session.finished || !session.score || !session.answers) return;
+      var total = Number(session.score.total);
+      if (!isFinite(total) || total <= 0) return;
+      if (answeredCount(session) <= 0) return;
+      var finishedAt = session.finishedAt || session.startedAt || "";
+      var entry = sanitizeHistoryEntry({
+        id: "qh-seed-" + subjectId + "-" + (Date.parse(finishedAt) || 0),
+        subjectId: subjectId,
+        mode: session.mode || "practice",
+        examTypeLabel: session.examTypeLabel || "",
+        correct: Number(session.score.correct) || 0,
+        answered: answeredCount(session),
+        total: total,
+        percent: percent(Number(session.score.correct) || 0, total),
+        finishedAt: finishedAt,
+      });
+      if (entry) seeded.push(entry);
+    });
+    store.setJson(HISTORY_KEY, sortHistoryNewestFirst(seeded).slice(0, MAX_HISTORY));
+  }
+
+  function mergeHistory(current, incoming) {
+    var merged = [];
+    var seen = {};
+    (Array.isArray(current) ? current : [])
+      .concat(Array.isArray(incoming) ? incoming : [])
+      .forEach(function (raw) {
+        var entry = sanitizeHistoryEntry(raw);
+        if (!entry) return;
+        var key = entry.id || entry.subjectId + "|" + entry.finishedAt;
+        if (seen[key]) return;
+        seen[key] = true;
+        merged.push(entry);
+      });
+    return sortHistoryNewestFirst(merged).slice(0, MAX_HISTORY);
+  }
+
+  function getSummary() {
+    var history = getHistory();
+    var attempts = history.length;
+    var scoreSum = 0;
+    var bestScore = null;
+    history.forEach(function (entry) {
+      scoreSum += entry.percent;
+      if (bestScore === null || entry.percent > bestScore) bestScore = entry.percent;
+    });
+
+    var bySubject = {};
+    subjects.forEach(function (subject) {
+      bySubject[subject.id] = {
+        attempts: 0,
+        avgScore: null,
+        lastScore: null,
+        activeMistakes: 0,
+        mastered: 0,
+      };
+    });
+
+    var subjectScoreSum = {};
+    var subjectScoreCount = {};
+    history.forEach(function (entry) {
+      var bucket = bySubject[entry.subjectId];
+      if (!bucket) return;
+      bucket.attempts += 1;
+      if (bucket.lastScore === null) bucket.lastScore = entry.percent;
+      subjectScoreSum[entry.subjectId] = (subjectScoreSum[entry.subjectId] || 0) + entry.percent;
+      subjectScoreCount[entry.subjectId] = (subjectScoreCount[entry.subjectId] || 0) + 1;
+    });
+    subjects.forEach(function (subject) {
+      var count = subjectScoreCount[subject.id] || 0;
+      if (count) {
+        bySubject[subject.id].avgScore = Math.round(subjectScoreSum[subject.id] / count);
+      }
+    });
+
+    var mistakes = mistakeEntries();
+    mistakes.forEach(function (entry) {
+      if (bySubject[entry.subjectId]) bySubject[entry.subjectId].activeMistakes += 1;
+    });
+    var corrected = correctedEntries();
+    corrected.forEach(function (entry) {
+      if (bySubject[entry.subjectId]) bySubject[entry.subjectId].mastered += 1;
+    });
+
+    var scoreRank = function (value) {
+      return value === null ? 101 : value;
+    };
+    var weakest = null;
+    var withMistakes = subjects
+      .map(function (subject) {
+        return { subject: subject, data: bySubject[subject.id] };
+      })
+      .filter(function (item) {
+        return item.data.activeMistakes > 0;
+      })
+      .sort(function (a, b) {
+        if (b.data.activeMistakes !== a.data.activeMistakes) {
+          return b.data.activeMistakes - a.data.activeMistakes;
+        }
+        return scoreRank(a.data.avgScore) - scoreRank(b.data.avgScore);
+      });
+    if (withMistakes.length) weakest = withMistakes[0];
+    if (!weakest) {
+      var lowScores = subjects
+        .map(function (subject) {
+          return { subject: subject, data: bySubject[subject.id] };
+        })
+        .filter(function (item) {
+          return (
+            item.data.attempts > 0 &&
+            item.data.avgScore !== null &&
+            item.data.avgScore < 85
+          );
+        })
+        .sort(function (a, b) {
+          return a.data.avgScore - b.data.avgScore;
+        });
+      if (lowScores.length) weakest = lowScores[0];
+    }
+
+    var progress = null;
+    ["all"]
+      .concat(
+        subjects.map(function (subject) {
+          return subject.id;
+        }),
+      )
+      .forEach(function (subjectId) {
+        var session = store.getJson(examKey(subjectId), null);
+        if (
+          !session ||
+          session.finished ||
+          !Array.isArray(session.ids) ||
+          !session.ids.length ||
+          !session.answers ||
+          answeredCount(session) <= 0
+        ) {
+          return;
+        }
+        var stamp = String(session.startedAt || "");
+        if (!progress || stamp > progress.stamp) {
+          progress = { stamp: stamp, subjectId: subjectId, session: session };
+        }
+      });
+
+    var last = history[0] || null;
+    return {
+      attempts: attempts,
+      avgScore: attempts ? Math.round(scoreSum / attempts) : null,
+      bestScore: attempts ? bestScore : null,
+      lastAttempt: last
+        ? {
+            id: last.id,
+            subjectId: last.subjectId,
+            subjectName: historySubjectName(last.subjectId),
+            accent: historySubjectAccent(last.subjectId),
+            correct: last.correct,
+            answered: last.answered,
+            total: last.total,
+            percent: last.percent,
+            mode: last.mode,
+            examTypeLabel: last.examTypeLabel,
+            finishedAt: last.finishedAt,
+          }
+        : null,
+      activeMistakes: mistakes.length,
+      masteredMistakes: corrected.length,
+      weakestSubject: weakest
+        ? {
+            subjectId: weakest.subject.id,
+            subjectName: weakest.subject.nameAr,
+            accent: weakest.subject.accent,
+            mistakes: weakest.data.activeMistakes,
+            avgScore: weakest.data.avgScore,
+          }
+        : null,
+      bySubject: bySubject,
+      hasInProgress: progress
+        ? {
+            subjectId: progress.subjectId,
+            subjectName: historySubjectName(progress.subjectId),
+            answered: answeredCount(progress.session),
+            total: progress.session.ids.length,
+          }
+        : null,
+    };
   }
 
   function getMistakes() {
@@ -529,6 +837,56 @@
     );
   }
 
+  function telemetryStat(icon, label, value, href) {
+    var body =
+      icon +
+      "<span>" +
+      esc(label) +
+      "</span><strong>" +
+      esc(value) +
+      "</strong>";
+    if (href) {
+      return (
+        '<a class="qt-stat" href="' + esc(href) + '">' + body + "</a>"
+      );
+    }
+    return '<span class="qt-stat">' + body + "</span>";
+  }
+
+  function performanceStrip() {
+    var summary = getSummary();
+    if (
+      summary.attempts <= 0 &&
+      summary.activeMistakes <= 0 &&
+      summary.masteredMistakes <= 0
+    ) {
+      return "";
+    }
+    var chips = "";
+    if (summary.attempts > 0) {
+      chips += telemetryStat(ICONS.question, "الاختبارات المكتملة", summary.attempts, "");
+    }
+    if (summary.avgScore !== null) {
+      chips += telemetryStat(ICONS.trophy, "متوسط الدرجات", summary.avgScore + "%", "");
+    }
+    chips += telemetryStat(
+      ICONS.bolt,
+      "أخطاء للمراجعة",
+      summary.activeMistakes,
+      summary.activeMistakes > 0 ? "#mistakes" : "",
+    );
+    if (summary.masteredMistakes > 0) {
+      chips += telemetryStat(ICONS.check, "أسئلة متقنة", summary.masteredMistakes, "");
+    }
+    return (
+      '<div class="quiz-telemetry-strip" aria-label="ملخص أدائك في الاختبارات" style="--accent:' +
+      historySubjectAccent(ui.subjectId) +
+      '">' +
+      chips +
+      "</div>"
+    );
+  }
+
   function renderPractice(container, options) {
     bind(container);
     ui.container = container;
@@ -576,6 +934,7 @@
       "<span>بنك أخطائي</span></a>" +
       "</div>" +
       "</div>" +
+      performanceStrip() +
       builderCard() +
       "</div>";
     startTimer();
@@ -1324,6 +1683,7 @@
       });
     }
     store.setJson(examKey(session.subjectId), session);
+    recordHistoryFromSession(session);
     ui.screen = "result";
     clearTimer();
     rerender();
@@ -1549,6 +1909,7 @@
       config: Object.assign({}, ui.config || defaultConfig()),
       studied: store.getJson("hub:studied", {}),
       bookmarks: store.getJson("hub:bookmarks", {}),
+      history: getHistory().slice(0, MAX_SYNC_HISTORY),
     };
   }
 
@@ -1726,6 +2087,7 @@
     var hasBookmarks = Boolean(
       data.bookmarks && typeof data.bookmarks === "object" && !Array.isArray(data.bookmarks),
     );
+    var hasHistory = Array.isArray(data.history);
     var mistakes;
     var corrected;
     var studied;
@@ -1751,6 +2113,9 @@
       store.setJson("hub:bookmarks", bookmarks);
       window.dispatchEvent(new CustomEvent("hub:bookmarks-updated"));
     }
+    if (hasHistory) {
+      saveHistory(mode === "replace" ? mergeHistory([], data.history) : mergeHistory(getHistory(), data.history));
+    }
     if (data.config && typeof data.config === "object" && !Array.isArray(data.config)) {
       ui.config = Object.assign(defaultConfig(), mode === "replace" ? data.config : ui.config, data.config);
       store.setJson(CONFIG_KEY, ui.config);
@@ -1760,6 +2125,7 @@
       corrected: Object.keys(corrected).length,
       studied: Object.keys(studied).length,
       bookmarks: Object.keys(bookmarks).length,
+      history: getHistory().length,
     };
   }
 
@@ -1768,6 +2134,7 @@
     var corrected = data && data.corrected && typeof data.corrected === "object" ? data.corrected : {};
     var studied = data && data.studied && typeof data.studied === "object" ? data.studied : {};
     var bookmarks = data && data.bookmarks && typeof data.bookmarks === "object" ? data.bookmarks : {};
+    var history = data && Array.isArray(data.history) ? data.history : [];
     return (
       Object.keys(mistakes).length +
       " خطأ · " +
@@ -1776,7 +2143,9 @@
       Object.keys(studied).length +
       " عنصر مذاكرة · " +
       Object.keys(bookmarks).length +
-      " في المفضلة"
+      " في المفضلة · " +
+      history.length +
+      " نتيجة"
     );
   }
 
@@ -1820,7 +2189,7 @@
       '<div><span class="eyebrow">' +
       ICONS.sync +
       " نقل التقدم</span><h2 id=\"sync-title\">نقل تقدمي للموبايل</h2>" +
-      "<p>انقل بنك أخطائك وقائمة التصحيح وإعدادات الاختبار وعناصر المذاكرة والملفات المحفوظة بين الأجهزة. البيانات تبقى داخل متصفحك.</p></div>" +
+      "<p>انقل بنك أخطائك وقائمة التصحيح وسجل نتائج الاختبارات وإعدادات الاختبار وعناصر المذاكرة والملفات المحفوظة بين الأجهزة. البيانات تبقى داخل متصفحك.</p></div>" +
       '<button type="button" class="sync-close" data-sync-close aria-label="إغلاق">' +
       ICONS.close +
       "</button></header>" +
@@ -1949,7 +2318,7 @@
     }
     if (
       mode === "replace" &&
-      !window.confirm("سيتم استبدال بنك الأخطاء وقائمة التصحيح وعناصر المذاكرة والملفات المحفوظة وإعدادات الاختبار بالبيانات المستلمة. هل تريد المتابعة؟")
+      !window.confirm("سيتم استبدال بنك الأخطاء وقائمة التصحيح وعناصر المذاكرة والملفات المحفوظة وإعدادات الاختبار وسجل نتائج الاختبارات بالبيانات المستلمة. هل تريد المتابعة؟")
     ) {
       return;
     }
@@ -1961,6 +2330,8 @@
       " خطأ، " +
       counts.corrected +
       " مصحح، " +
+      counts.history +
+      " نتيجة، " +
       counts.bookmarks +
       " في المفضلة.";
     syncStatus(overlay, "تم تطبيق النقل بنجاح. سيُحدَّث بنك الأخطاء والمفضلة الآن.", false);
@@ -2030,6 +2401,7 @@
       }
       data.studied = store.getJson("hub:studied", {});
       data.bookmarks = store.getJson("hub:bookmarks", {});
+      data.history = getHistory();
     } catch (error) {
       ui.message = "تعذّر الوصول إلى التخزين المحلي في هذا المتصفح.";
       rerender();
@@ -2061,18 +2433,20 @@
         var corrected = data.corrected && typeof data.corrected === "object" ? data.corrected : null;
         var bookmarks =
           data.bookmarks && typeof data.bookmarks === "object" ? data.bookmarks : null;
-        if (!mistakes && !corrected && !data.exams && !data.studied && !bookmarks) {
+        var history = Array.isArray(data.history) ? data.history : null;
+        if (!mistakes && !corrected && !data.exams && !data.studied && !bookmarks && !history) {
           throw new Error("invalid");
         }
         if (
           !window.confirm(
-            "سيتم استبدال بنك الأخطاء وقائمة التصحيح وجلسات الاختبار المحفوظة وعناصر المذاكرة والملفات المحفوظة بالبيانات الموجودة في الملف. هل تريد المتابعة؟",
+            "سيتم استبدال بنك الأخطاء وقائمة التصحيح وجلسات الاختبار المحفوظة وعناصر المذاكرة والملفات المحفوظة وسجل نتائج الاختبارات بالبيانات الموجودة في الملف. هل تريد المتابعة؟",
           )
         ) {
           return;
         }
         if (mistakes) saveMistakes(mistakes);
         if (corrected) saveCorrected(corrected);
+        if (history) saveHistory(mergeHistory([], history));
         if (data.exams && typeof data.exams === "object") {
           Object.keys(data.exams).forEach(function (key) {
             if (key.indexOf("hub:examState:") !== 0) return;
@@ -2302,6 +2676,7 @@
     },
     renderPractice: renderPractice,
     renderMistakes: renderMistakes,
+    getSummary: getSummary,
     exportProgress: exportProgress,
     openSync: openSync,
     closeSync: closeSync,

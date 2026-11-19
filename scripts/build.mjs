@@ -6,7 +6,6 @@ const MANIFEST = path.join(SITE, "data", "subjects.json");
 const SCHEDULE = path.join(SITE, "data", "schedule.json");
 const QUESTIONS_DIR = path.join(SITE, "data", "questions");
 const FILES = path.join(SITE, "files");
-const COMMITTEES = path.join(FILES, "committees");
 const EMBED = path.join(SITE, "assets", "data.js");
 const args = new Set(process.argv.slice(2));
 const checkOnly = args.has("--check");
@@ -296,10 +295,8 @@ const walk = (dir) => {
   if (!fs.existsSync(dir)) return;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      if (path.resolve(full) === path.resolve(COMMITTEES)) continue;
-      walk(full);
-    } else onDisk.push(path.resolve(full));
+    if (entry.isDirectory()) walk(full);
+    else onDisk.push(path.resolve(full));
   }
 };
 walk(FILES);
@@ -327,12 +324,6 @@ const readJson = (file, label) => {
 };
 
 const schedule = fs.existsSync(SCHEDULE) ? readJson(SCHEDULE, "data/schedule.json") : null;
-
-for (const midterm of schedule?.midterms || []) {
-  if (!midterm.hallsFile) continue;
-  const absolute = path.join(SITE, midterm.hallsFile.replace(/\//g, path.sep));
-  if (!fs.existsSync(absolute)) problems.push(`missing hallsFile: ${midterm.hallsFile} (${midterm.subjectId})`);
-}
 
 const questions = {};
 if (fs.existsSync(QUESTIONS_DIR)) {
