@@ -1,7 +1,7 @@
 {
   "title": "سنة تالتة — الترم الأول",
   "subtitle": "نظم المعلومات · ملازم ومحاضرات ومراجعات",
-  "updated": "2026-11-19",
+  "updated": "2026-11-21",
   "subjects": [
     {
       "id": "computer-networks",
@@ -3237,6 +3237,38 @@
                 "04",
                 "Research",
                 "Methods"
+              ]
+            },
+            {
+              "id": "fci-it-is-rm-hala-ahmed-week-05-lec",
+              "title": "FCI-IT-IS-RM-Hala-Ahmed-Week-05-Lec",
+              "original": "FCI-IT-IS-RM-Hala-Ahmed-Week-05-Lec .pdf",
+              "path": "files/research-methods/lectures/fci-it-is-rm-hala-ahmed-week-05-lec.pdf",
+              "ext": "pdf",
+              "size": 1007886,
+              "youtube": "",
+              "addedAt": "2026-11-21T20:26:20.655Z",
+              "lecture": null,
+              "kind": "lecture",
+              "keywords": [
+                "محاضرة",
+                "محاضرات",
+                "lecture",
+                "lec",
+                "مناهج البحث",
+                "Research Methods",
+                "research-methods",
+                "المحاضرات",
+                "Lectures",
+                "pdf",
+                "FCI",
+                "IT",
+                "IS",
+                "RM",
+                "Hala",
+                "Ahmed",
+                "Week",
+                "05"
               ]
             }
           ]
