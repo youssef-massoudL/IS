@@ -63,6 +63,22 @@ if (!BOT_TOKEN || !ADMIN_ID) {
 const API_BASE = `https://api.telegram.org/bot${BOT_TOKEN}`;
 
 const pending = new Map();
+const mediaGroups = new Map();
+
+const SECTION_META = {
+  lectures: { name: "المحاضرات", nameEn: "Lectures" },
+  summaries: { name: "الملخصات", nameEn: "Summaries" },
+  questions: { name: "الأسئلة", nameEn: "Questions" },
+  books: { name: "الكتب", nameEn: "Books" },
+  "midterm-revision": { name: "المراجعات والملفات الشاملة", nameEn: "Comprehensive Reviews" },
+};
+
+const SLOT_CONFIG = {
+  lecture: { sectionId: "lectures", kind: "lecture", label: "المحاضرة", icon: "📖" },
+  summary: { sectionId: "summaries", kind: "summary", label: "الملخص", icon: "📝" },
+  questions: { sectionId: "questions", kind: "questions", label: "الأسئلة", icon: "❓" },
+  solution: { sectionId: "questions", kind: "solution", label: "حل الأسئلة", icon: "✅" },
+};
 
 function sanitizeError(msg) {
   let text = String(msg || "");
@@ -210,12 +226,91 @@ function findExistingMatches(manifest, fileName, fileSize) {
     .slice(0, 5);
 }
 
+function isArabicEntry(file) {
+  const tag = String(file?.docTag || "");
+  const title = String(file?.title || "");
+  return tag === "نسخة عربية" || tag === "عربي" || /النسخة العربية|نسخة عربية/i.test(title);
+}
+
 function sortFiles(files) {
-  files.sort(
-    (a, b) =>
-      firstNumber(a.title) - firstNumber(b.title) ||
-      String(a.title).localeCompare(String(b.title), "ar", { numeric: true }),
-  );
+  files.sort((a, b) => {
+    const lecA = Number.isInteger(a?.lecture) ? a.lecture : firstNumber(a?.title);
+    const lecB = Number.isInteger(b?.lecture) ? b.lecture : firstNumber(b?.title);
+    if (lecA !== lecB) return lecA - lecB;
+    const arA = isArabicEntry(a) ? 1 : 0;
+    const arB = isArabicEntry(b) ? 1 : 0;
+    if (arA !== arB) return arA - arB;
+    return String(a?.title || "").localeCompare(String(b?.title), "ar", { numeric: true });
+  });
+}
+
+function detectLectureFromText(text) {
+  const normalized = normalizeDigits(String(text || "")).toLowerCase();
+  let match = normalized.match(/lec(?:ture)?[-_\s]*0*(\d{1,2})/);
+  if (match) return Number(match[1]);
+  match = normalized.match(/محاضر(?:ة|ه|ات)?[-_\s]*0*(\d{1,2})/);
+  if (match) return Number(match[1]);
+  match = normalized.match(/(?:week|الأسبوع|الاسبوع|اسبوع)[-_\s]*0*(\d{1,2})/);
+  if (match) return Number(match[1]);
+  return null;
+}
+
+function subjectMaxLecture(subject) {
+  let max = 0;
+  for (const sec of subject?.sections || []) {
+    for (const f of sec.files || []) {
+      if (Number.isInteger(f.lecture) && f.lecture > max) max = f.lecture;
+      if (Array.isArray(f.lectureSpan)) {
+        for (const n of f.lectureSpan) {
+          if (Number.isInteger(n) && n > max) max = n;
+        }
+      }
+    }
+  }
+  return max;
+}
+
+function getFilesInLectureSlot(subject, lectureNum, slotKind) {
+  if (!subject || !Number.isInteger(lectureNum)) return [];
+  const matches = [];
+  for (const sec of subject.sections || []) {
+    if (sec.id === "midterm-revision") continue;
+    for (const f of sec.files || []) {
+      const applies =
+        f.lecture === lectureNum ||
+        (Array.isArray(f.lectureSpan) && f.lectureSpan.includes(lectureNum));
+      if (!applies) continue;
+      if (slotKind && f.kind !== slotKind) continue;
+      matches.push({
+        subjectId: subject.id,
+        subjectNameAr: subject.nameAr || subject.name || subject.id,
+        sectionId: sec.id,
+        sectionName: sec.name || sec.id,
+        file: f,
+      });
+    }
+  }
+  return matches;
+}
+
+function buildSmartLectureTitle(slotKind, lectureNum, isArabic = false) {
+  const numStr = Number.isInteger(lectureNum) ? String(lectureNum).padStart(2, "0") : "";
+  let base = "";
+  if (slotKind === "summary") base = numStr ? `ملخص المحاضرة ${numStr}` : "ملخص";
+  else if (slotKind === "questions") base = numStr ? `أسئلة المحاضرة ${numStr}` : "أسئلة";
+  else if (slotKind === "solution") base = numStr ? `حل أسئلة المحاضرة ${numStr}` : "حل الأسئلة";
+  else base = numStr ? `المحاضرة ${numStr}` : "محاضرة";
+  return isArabic ? `${base} — النسخة العربية` : base;
+}
+
+function ensureSubjectSection(subject, sectionId) {
+  let sec = subject.sections.find((s) => s.id === sectionId);
+  if (!sec) {
+    const meta = SECTION_META[sectionId] || { name: sectionId, nameEn: sectionId };
+    sec = { id: sectionId, name: meta.name, nameEn: meta.nameEn, files: [] };
+    subject.sections.push(sec);
+  }
+  return sec;
 }
 
 async function tg(method, body) {
@@ -460,7 +555,7 @@ async function extractQuestionsWithGemini(filePath, subjectId, title) {
   return { items: parsed };
 }
 
-async function updateQuestionBankFromUpload(repoDir, filePath, subjectId, title) {
+async function updateQuestionBankFromUpload(repoDir, filePath, subjectId, title, defaultLecture = null) {
   const questionsDir = path.join(repoDir, "data", "questions");
   const bankPath = path.join(questionsDir, `${subjectId}.json`);
   const existing = fs.existsSync(bankPath) ? JSON.parse(fs.readFileSync(bankPath, "utf8")) : [];
@@ -505,7 +600,12 @@ async function updateQuestionBankFromUpload(repoDir, filePath, subjectId, title)
 
     const difficulty = ["easy", "medium", "hard"].includes(raw.difficulty) ? raw.difficulty : "medium";
     const type = ["mcq", "tf"].includes(raw.type) ? raw.type : options.length === 2 ? "tf" : "mcq";
-    const lecture = Number.isInteger(raw.lecture) && raw.lecture > 0 ? raw.lecture : null;
+    const lecture =
+      Number.isInteger(raw.lecture) && raw.lecture > 0
+        ? raw.lecture
+        : Number.isInteger(defaultLecture) && defaultLecture > 0
+          ? defaultLecture
+          : null;
     const explanation = typeof raw.explanation === "string" ? raw.explanation.trim() : "";
 
     existing.push({
@@ -542,21 +642,19 @@ async function updateQuestionBankFromUpload(repoDir, filePath, subjectId, title)
 
 async function publishUpload(job) {
   const repoDir = ensureRepo();
-  const manifestPath = path.join(repoDir, "data", "subjects.json");
   const manifest = readManifest(repoDir);
   const subject = manifest.subjects.find((s) => s.id === job.subjectId);
   if (!subject) throw new Error(`Unknown subject: ${job.subjectId}`);
 
   const nowIso = new Date().toISOString();
-  const addedTo = [];
-  let relPath = "";
-  let savedFilePath = "";
+  const addedToSet = new Set();
+  const relPaths = [];
+  const savedItems = [];
   let commitAction = "Add";
 
   if (job.mode === "replace" && job.replaceTarget) {
-    relPath = job.replaceTarget.file.path;
+    const relPath = job.replaceTarget.file.path;
     const dest = path.join(repoDir, relPath.replace(/\//g, path.sep));
-    savedFilePath = dest;
     const size = await downloadTelegramFile(job.fileId, dest);
     const ext = path.extname(relPath).slice(1).toLowerCase() || "pdf";
 
@@ -570,6 +668,18 @@ async function publishUpload(job) {
             f.size = size;
             f.ext = ext;
             f.addedAt = nowIso;
+            if (job.docTag !== undefined) {
+              if (job.docTag) f.docTag = job.docTag;
+              else delete f.docTag;
+            }
+            if (job.lectureNum !== undefined) {
+              f.lecture = Number.isInteger(job.lectureNum) && job.lectureNum > 0 ? job.lectureNum : null;
+              f.lectureLocked = true;
+            }
+            if (job.slotKind) {
+              f.kind = job.slotKind;
+              f.kindLocked = true;
+            }
             if (job.info !== undefined) {
               if (job.info) f.info = job.info;
               else delete f.info;
@@ -579,80 +689,143 @@ async function publishUpload(job) {
         }
         if (updatedInSec) {
           sortFiles(sec.files);
-          addedTo.push(`${s.id}/${sec.id} (replaced)`);
+          addedToSet.add(`${s.id}/${sec.id} (replaced)`);
         }
       }
     }
+    relPaths.push(relPath);
+    savedItems.push({ path: dest, title: job.title, docTag: job.docTag || job.replaceTarget.file.docTag || "" });
     commitAction = "Update";
   } else {
-    const ext = path.extname(job.fileName).toLowerCase() || ".pdf";
-    const slug = slugify(path.basename(job.fileName, ext));
+    const uploadItems =
+      job.isBatch && Array.isArray(job.files) && job.files.length > 0
+        ? job.files
+        : [
+            {
+              fileId: job.fileId,
+              fileName: job.fileName,
+              title: job.title,
+              docTag: job.docTag,
+              info: job.info,
+            },
+          ];
 
-    // Primary storage folder: chosen section, or midterm-revision if Hero-only
     const primarySectionId = job.mode === "hero" ? "midterm-revision" : job.sectionId;
     const outDir = path.join(repoDir, "files", subject.id, primarySectionId);
     fs.mkdirSync(outDir, { recursive: true });
 
-    let dest = path.join(outDir, `${slug}${ext}`);
-    let counter = 2;
-    while (fs.existsSync(dest)) {
-      dest = path.join(outDir, `${slug}-${counter++}${ext}`);
-    }
+    for (const item of uploadItems) {
+      const ext = path.extname(item.fileName).toLowerCase() || ".pdf";
+      const slug = slugify(path.basename(item.fileName, ext));
 
-    const size = await downloadTelegramFile(job.fileId, dest);
-    savedFilePath = dest;
-    relPath = path.posix.join("files", subject.id, primarySectionId, path.basename(dest));
-    const entryId = path.basename(dest, ext);
-
-    const baseEntry = {
-      id: entryId,
-      title: job.title,
-      original: job.fileName,
-      path: relPath,
-      ext: ext.slice(1),
-      size,
-      youtube: "",
-      addedAt: nowIso,
-    };
-    if (job.docTag) baseEntry.docTag = job.docTag;
-    if (job.info) baseEntry.info = job.info;
-
-    if (job.mode === "section" || job.mode === "both") {
-      let sec = subject.sections.find((s) => s.id === job.sectionId);
-      if (!sec) {
-        sec = { id: job.sectionId, name: job.sectionId, nameEn: job.sectionId, files: [] };
-        subject.sections.push(sec);
+      let dest = path.join(outDir, `${slug}${ext}`);
+      let counter = 2;
+      while (fs.existsSync(dest)) {
+        dest = path.join(outDir, `${slug}-${counter++}${ext}`);
       }
-      addEntryToSection(sec, baseEntry);
-      addedTo.push(`${subject.id}/${sec.id}`);
-    }
 
-    if (job.mode === "hero" || job.mode === "both") {
-      let subjMid = subject.sections.find((s) => s.id === "midterm-revision");
-      if (!subjMid) {
-        subjMid = { id: "midterm-revision", name: "مراجعة الميدترم", nameEn: "Midterm Revision", files: [] };
-        subject.sections.push(subjMid);
+      const size = await downloadTelegramFile(item.fileId, dest);
+      const relPath = path.posix.join("files", subject.id, primarySectionId, path.basename(dest));
+      const entryId = path.basename(dest, ext);
+
+      const baseEntry = {
+        id: entryId,
+        title: item.title,
+        original: item.fileName,
+        path: relPath,
+        ext: ext.slice(1),
+        size,
+        youtube: "",
+        addedAt: nowIso,
+      };
+      const effectiveTag = item.docTag !== undefined ? item.docTag : job.docTag;
+      const effectiveInfo = item.info !== undefined ? item.info : job.info;
+      if (effectiveTag) baseEntry.docTag = effectiveTag;
+      if (effectiveInfo) baseEntry.info = effectiveInfo;
+
+      if (job.lectureNum !== undefined) {
+        baseEntry.lecture = Number.isInteger(job.lectureNum) && job.lectureNum > 0 ? job.lectureNum : null;
+        baseEntry.lectureLocked = true;
       }
-      addEntryToSection(subjMid, baseEntry);
-      addedTo.push(`${subject.id}/midterm-revision`);
+      if (job.slotKind) {
+        baseEntry.kind = job.slotKind;
+        baseEntry.kindLocked = true;
+      }
+      if (job.mode !== "hero" && job.mode !== "both" && Number.isInteger(job.lectureNum) && job.lectureNum > 0) {
+        baseEntry.midtermReview = false;
+      }
+
+      if (job.mode === "section" || job.mode === "both") {
+        const sec = ensureSubjectSection(subject, job.sectionId);
+        addEntryToSection(sec, baseEntry);
+        addedToSet.add(`${subject.id}/${sec.id}`);
+      }
+
+      if (job.mode === "hero" || job.mode === "both") {
+        const subjMid = ensureSubjectSection(subject, "midterm-revision");
+        const heroEntry =
+          job.mode === "both"
+            ? {
+                ...baseEntry,
+                lecture: null,
+                kind: "review",
+                midtermReview: true,
+              }
+            : baseEntry;
+        if (job.mode === "both") {
+          delete heroEntry.lectureLocked;
+          delete heroEntry.kindLocked;
+        }
+        addEntryToSection(subjMid, heroEntry);
+        addedToSet.add(`${subject.id}/midterm-revision`);
+      }
+
+      relPaths.push(relPath);
+      savedItems.push({ path: dest, title: item.title, docTag: effectiveTag || "" });
     }
   }
 
   let questionBank = null;
-  const isQuestionsUpload =
-    job.sectionId === "questions" ||
-    job.docTag === "أسئلة" ||
-    relPath.toLowerCase().includes("/questions/");
-  if (isQuestionsUpload && savedFilePath) {
-    try {
-      questionBank = await updateQuestionBankFromUpload(repoDir, savedFilePath, subject.id, job.title);
-    } catch (err) {
-      questionBank = { added: 0, total: 0, note: `failed (${sanitizeError(err.message)})` };
+  for (const saved of savedItems) {
+    const isQuestionsUpload =
+      job.sectionId === "questions" ||
+      job.slotKind === "questions" ||
+      job.slotKind === "solution" ||
+      saved.docTag === "أسئلة" ||
+      saved.path.toLowerCase().includes(`${path.sep}questions${path.sep}`);
+    if (isQuestionsUpload) {
+      try {
+        const qbRes = await updateQuestionBankFromUpload(
+          repoDir,
+          saved.path,
+          subject.id,
+          saved.title,
+          job.lectureNum,
+        );
+        if (!questionBank) questionBank = { ...qbRes };
+        else {
+          questionBank.added += qbRes.added || 0;
+          questionBank.total = qbRes.total || questionBank.total;
+          if (qbRes.note) questionBank.note = qbRes.note;
+        }
+      } catch (err) {
+        questionBank = { added: 0, total: 0, note: `failed (${sanitizeError(err.message)})` };
+      }
     }
   }
 
-  const { commit } = commitAndPush(repoDir, manifest, `${commitAction} ${job.title} (${subject.id})`);
-  return { relPath, addedTo, commit, questionBank };
+  const commitLabel =
+    savedItems.length > 1
+      ? `${commitAction} ${savedItems.length} files${Number.isInteger(job.lectureNum) ? ` (Lec ${job.lectureNum})` : ""} (${subject.id})`
+      : `${commitAction} ${job.title} (${subject.id})`;
+  const { commit } = commitAndPush(repoDir, manifest, commitLabel);
+  return {
+    relPath: relPaths[0] || "",
+    relPaths,
+    addedTo: [...addedToSet],
+    commit,
+    questionBank,
+  };
 }
 
 function renameFileInRepo(relPath, newTitle) {
@@ -1642,6 +1815,35 @@ function revertCommitInRepo(sha) {
   return { revertedSha: sha, newSha };
 }
 
+function setLectureAndKindInRepo(relPath, lectureNum, slotKind) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+  const matches = findEntriesByPath(manifest, relPath);
+  if (matches.length === 0) throw new Error(`File not found in manifest: ${relPath}`);
+
+  const title = matches[0].file.title;
+  const touchedSections = [];
+  for (const m of matches) {
+    if (lectureNum !== undefined) {
+      m.file.lecture = Number.isInteger(lectureNum) && lectureNum > 0 ? lectureNum : null;
+      m.file.lectureLocked = true;
+    }
+    if (slotKind) {
+      m.file.kind = slotKind;
+      m.file.kindLocked = true;
+    }
+    if (m.section.id !== "midterm-revision" && Number.isInteger(m.file.lecture) && m.file.lecture > 0) {
+      m.file.midtermReview = false;
+    }
+    sortFiles(m.section.files);
+    touchedSections.push(`${m.subject.id}/${m.section.id}`);
+  }
+
+  const lecLabel = Number.isInteger(lectureNum) && lectureNum > 0 ? `Lec ${lectureNum}` : "General";
+  const { commit } = commitAndPush(repoDir, manifest, `Set ${title} -> ${lecLabel}${slotKind ? ` (${slotKind})` : ""}`);
+  return { title, lectureNum, slotKind, touchedSections, commit };
+}
+
 function subjectKeyboard(subjects) {
   return {
     inline_keyboard: subjects
@@ -1652,19 +1854,83 @@ function subjectKeyboard(subjects) {
 
 function destinationKeyboard(subject) {
   const rows = [
-    [{ text: "⭐ Hero Review + Midterm Revision", callback_data: "dest:hero" }],
+    [
+      { text: "📖 محاضرة (Lecture)", callback_data: "dest:slot:lecture" },
+      { text: "📝 ملخص (Summary)", callback_data: "dest:slot:summary" },
+    ],
+    [
+      { text: "❓ أسئلة (Questions)", callback_data: "dest:slot:questions" },
+      { text: "✅ حل أسئلة (Solution)", callback_data: "dest:slot:solution" },
+    ],
+    [
+      { text: "⭐ Hero Review", callback_data: "dest:hero" },
+      { text: "📚 Summary + Hero", callback_data: "dest:both:summaries" },
+    ],
   ];
-  for (const sec of subject.sections) {
-    if (sec.id === "midterm-revision") continue;
+  const coreIds = new Set(["lectures", "summaries", "questions", "midterm-revision"]);
+  for (const sec of subject.sections || []) {
+    if (coreIds.has(sec.id)) continue;
     rows.push([{ text: `📁 ${sec.name} (${sec.id})`, callback_data: `dest:sec:${sec.id}` }]);
   }
-  const hasSummaries = subject.sections.some((s) => s.id === "summaries" || s.id === "simplified-explanations");
-  const defaultMainSec = subject.sections.find((s) => s.id === "summaries")?.id
-    || subject.sections.find((s) => s.id === "simplified-explanations")?.id
-    || "lectures";
-  if (hasSummaries || defaultMainSec) {
-    rows.push([{ text: `📚 Both (${defaultMainSec} + Hero Review)`, callback_data: `dest:both:${defaultMainSec}` }]);
+  if (!(subject.sections || []).some((s) => s.id === "books")) {
+    rows.push([{ text: "📕 كتاب / مرجع (Books)", callback_data: "dest:sec:books" }]);
   }
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+function lectureNumberKeyboard(subject, slotKind, detectedLecture = null, prefix = "lec") {
+  const maxLec = subjectMaxLecture(subject);
+  const count = Math.max(8, Math.min(16, maxLec + 2));
+  const rows = [];
+
+  if (Number.isInteger(detectedLecture) && detectedLecture > 0) {
+    const existingCount = getFilesInLectureSlot(subject, detectedLecture, slotKind).length;
+    const suffix = existingCount > 0 ? ` (${existingCount})` : "";
+    rows.push([{ text: `✨ Detected: Lec ${detectedLecture}${suffix}`, callback_data: `${prefix}:${detectedLecture}` }]);
+  }
+
+  for (let start = 1; start <= count; start += 4) {
+    const row = [];
+    for (let n = start; n < start + 4 && n <= count; n += 1) {
+      const existingCount = getFilesInLectureSlot(subject, n, slotKind).length;
+      const suffix = existingCount > 0 ? ` (${existingCount})` : "";
+      row.push({ text: `Lec ${n}${suffix}`, callback_data: `${prefix}:${n}` });
+    }
+    rows.push(row);
+  }
+
+  rows.push([
+    { text: "🔢 Type # (أخرى)", callback_data: `${prefix}:custom` },
+    { text: "📁 General (بدون رقم)", callback_data: `${prefix}:none` },
+  ]);
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+function slotActionKeyboard(existingMatches) {
+  const rows = [
+    [{ text: "🇸🇦 Add beneath as Arabic Version (نسخة عربية)", callback_data: "slotact:arabic" }],
+    [{ text: "➕ Add beneath as 2nd file (Extra)", callback_data: "slotact:second" }],
+  ];
+  existingMatches.slice(0, 3).forEach((m, idx) => {
+    const label = String(m.file.title || "file");
+    const short = label.length > 30 ? label.slice(0, 27) + "..." : label;
+    rows.push([{ text: `🔄 Replace "${short}"`, callback_data: `slotact:replace:${idx}` }]);
+  });
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
+}
+
+function batchModeKeyboard(job) {
+  const rows = [];
+  if (job.files.length === 2 && Number.isInteger(job.lectureNum)) {
+    const mainTitle = buildSmartLectureTitle(job.slotKind, job.lectureNum, false);
+    const arTitle = buildSmartLectureTitle(job.slotKind, job.lectureNum, true);
+    rows.push([{ text: `🇸🇦 #1 "${mainTitle}" + #2 "${arTitle}"`, callback_data: "batch:arabic" }]);
+  }
+  rows.push([{ text: "📄 Use filenames as titles", callback_data: "batch:filenames" }]);
+  rows.push([{ text: "✏️ Send custom titles (line by line)", callback_data: "batch:custom" }]);
   rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
   return { inline_keyboard: rows };
 }
@@ -1677,9 +1943,10 @@ function docTagKeyboard(prefix = "tag") {
         { text: "❓ أسئلة", callback_data: `${prefix}:أسئلة` },
       ],
       [
+        { text: "🇸🇦 نسخة عربية", callback_data: `${prefix}:نسخة عربية` },
         { text: "📌 مراجعة", callback_data: `${prefix}:مراجعة` },
-        { text: "🚫 بدون شارة", callback_data: `${prefix}:none` },
       ],
+      [{ text: "🚫 بدون شارة", callback_data: `${prefix}:none` }],
       [{ text: "❌ Cancel", callback_data: "cancel" }],
     ],
   };
@@ -1709,14 +1976,28 @@ async function askInfoStep(chatId, job) {
   });
 }
 
-function titleKeyboard(defaultTitle) {
-  const preview = defaultTitle.length > 35 ? defaultTitle.slice(0, 32) + "..." : defaultTitle;
-  return {
-    inline_keyboard: [
-      [{ text: `✅ Use "${preview}"`, callback_data: "title:default" }],
-      [{ text: "❌ Cancel", callback_data: "cancel" }],
-    ],
-  };
+function titleKeyboard(defaultTitle, job = null) {
+  const rows = [];
+  if (job && Number.isInteger(job.lectureNum) && job.slotKind) {
+    const smartTitle = buildSmartLectureTitle(job.slotKind, job.lectureNum, false);
+    const arabicTitle = buildSmartLectureTitle(job.slotKind, job.lectureNum, true);
+    if (job.variant === "arabic") {
+      rows.push([{ text: `🇸🇦 Use "${arabicTitle}"`, callback_data: "title:arabic" }]);
+    }
+    rows.push([{ text: `✅ Use "${smartTitle}"`, callback_data: "title:smart" }]);
+    if (job.variant !== "arabic") {
+      rows.push([{ text: `🇸🇦 Arabic: "${arabicTitle}"`, callback_data: "title:arabic" }]);
+    }
+    if (defaultTitle && defaultTitle !== smartTitle && defaultTitle !== arabicTitle) {
+      const preview = defaultTitle.length > 35 ? defaultTitle.slice(0, 32) + "..." : defaultTitle;
+      rows.push([{ text: `📄 Use "${preview}"`, callback_data: "title:default" }]);
+    }
+  } else {
+    const preview = defaultTitle.length > 35 ? defaultTitle.slice(0, 32) + "..." : defaultTitle;
+    rows.push([{ text: `✅ Use "${preview}"`, callback_data: "title:default" }]);
+  }
+  rows.push([{ text: "❌ Cancel", callback_data: "cancel" }]);
+  return { inline_keyboard: rows };
 }
 
 function duplicateKeyboard(matches) {
@@ -1754,6 +2035,7 @@ const PAGE_SIZE = 8;
 const ACTION_TITLES = {
   files: "📂 Browse Files",
   rename: "✏️ Rename a File",
+  lecture: "🔢 Set Lecture # & Type",
   youtube: "🎥 Set YouTube Link",
   info: "ℹ️ Edit Info Note",
   label: "🏷 Edit Label",
@@ -1811,22 +2093,46 @@ function searchResultsKeyboard(results) {
   return { inline_keyboard: rows };
 }
 
+function editKindKeyboard() {
+  return {
+    inline_keyboard: [
+      [
+        { text: "📖 محاضرة (Lecture)", callback_data: "edit_kind:lecture" },
+        { text: "📝 ملخص (Summary)", callback_data: "edit_kind:summary" },
+      ],
+      [
+        { text: "❓ أسئلة (Questions)", callback_data: "edit_kind:questions" },
+        { text: "✅ حل أسئلة (Solution)", callback_data: "edit_kind:solution" },
+      ],
+      [
+        { text: "⭐ مراجعة (Review)", callback_data: "edit_kind:review" },
+        { text: "📕 كتاب (Book)", callback_data: "edit_kind:book" },
+      ],
+      [{ text: "⏭ Keep current type", callback_data: "edit_kind:keep" }],
+      [{ text: "❌ Cancel", callback_data: "cancel" }],
+    ],
+  };
+}
+
 function fileActionsKeyboard() {
   return {
     inline_keyboard: [
       [
         { text: "✏️ Rename", callback_data: "act:rename" },
+        { text: "🔢 Lecture #", callback_data: "act:lecture" },
+      ],
+      [
         { text: "🏷 Label", callback_data: "act:label" },
-      ],
-      [
         { text: "ℹ️ Info", callback_data: "act:info" },
-        { text: "🎥 YouTube", callback_data: "act:youtube" },
       ],
       [
+        { text: "🎥 YouTube", callback_data: "act:youtube" },
         { text: "📦 Move", callback_data: "act:move" },
-        { text: "🗑 Delete", callback_data: "act:delete" },
       ],
-      [{ text: "❌ Close", callback_data: "cancel" }],
+      [
+        { text: "🗑 Delete", callback_data: "act:delete" },
+        { text: "❌ Close", callback_data: "cancel" },
+      ],
     ],
   };
 }
@@ -1893,11 +2199,14 @@ async function proceedWithPickedFile(chatId, job, target) {
     const ytLine = f.youtube ? `\n• YouTube: ${escapeHtml(f.youtube)}` : "\n• YouTube: <i>none</i>";
     const labelLine = f.docTag ? `\n• Label: <code>${escapeHtml(f.docTag)}</code>` : "\n• Label: <i>none</i>";
     const infoLine = f.info ? `\n• Info (ⓘ): ${escapeHtml(f.info)}` : "\n• Info (ⓘ): <i>none</i>";
+    const lecLine = Number.isInteger(f.lecture) ? `Lec ${f.lecture}` : "<i>General / none</i>";
+    const kindLine = f.kind ? escapeHtml(f.kind) : "<i>auto</i>";
     await tg("sendMessage", {
       chat_id: chatId,
       text:
         `📄 <b>${escapeHtml(f.title)}</b>\n` +
         `• Subject: ${escapeHtml(target.subjectNameAr)} / ${escapeHtml(target.sectionName)}\n` +
+        `• Lecture: ${lecLine} · Type: ${kindLine}\n` +
         `• Path: <code>${escapeHtml(f.path)}</code>\n` +
         `• Size: ${formatBytes(f.size)}` +
         labelLine +
@@ -1905,6 +2214,24 @@ async function proceedWithPickedFile(chatId, job, target) {
         ytLine,
       parse_mode: "HTML",
       reply_markup: fileActionsKeyboard(),
+    });
+    return;
+  }
+
+  if (job.action === "lecture") {
+    const subj = job.subjects?.find((s) => s.id === target.subjectId) || { id: target.subjectId, sections: [] };
+    job.step = "edit_lec_num";
+    const curLec = Number.isInteger(f.lecture) ? `Lec ${f.lecture}` : "<i>none</i>";
+    const detected = detectLectureFromText(`${f.title} ${f.original || ""}`);
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `🔢 <b>Set Lecture # &amp; Type</b>\n` +
+        `File: <b>${escapeHtml(f.title)}</b>\n` +
+        `Current: ${curLec} · ${escapeHtml(f.kind || "auto")}\n\n` +
+        `Choose the lecture number:`,
+      parse_mode: "HTML",
+      reply_markup: lectureNumberKeyboard(subj, null, detected, "edit_lec"),
     });
     return;
   }
@@ -2013,6 +2340,204 @@ async function proceedWithPickedFile(chatId, job, target) {
   }
 }
 
+async function askTitleStep(chatId, job) {
+  job.step = "title";
+  const hint =
+    job.variant === "arabic"
+      ? `🇸🇦 <b>Arabic Version</b> — choose a title or send a custom one:`
+      : `✏️ <b>Choose a title</b> or send a custom Arabic/English title:`;
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: `${hint}\n\nFilename: <code>${escapeHtml(job.defaultTitle)}</code>`,
+    parse_mode: "HTML",
+    reply_markup: titleKeyboard(job.defaultTitle, job),
+  });
+}
+
+async function askLectureNumberStep(chatId, job) {
+  const subject = job.subjects.find((s) => s.id === job.subjectId);
+  const detected = detectLectureFromText(
+    job.isBatch ? job.files.map((f) => f.fileName).join(" ") : job.fileName,
+  );
+  job.step = "lecture_num";
+  const slotLabel = SLOT_CONFIG[job.slotKind]?.label || job.sectionId;
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text:
+      `🔢 <b>Which lecture number?</b>\n` +
+      `• Subject: ${escapeHtml(subject?.nameAr || job.subjectId)}\n` +
+      `• Slot / Section: ${escapeHtml(slotLabel)}\n\n` +
+      `Choose a lecture number <i>(numbers in parentheses show existing files in that spot)</i>:`,
+    parse_mode: "HTML",
+    reply_markup: lectureNumberKeyboard(subject, job.slotKind, detected, "lec"),
+  });
+}
+
+async function afterLectureNumberPicked(chatId, job) {
+  const subject = job.subjects.find((s) => s.id === job.subjectId);
+  if (job.isBatch) {
+    job.step = "batch_mode";
+    const list = job.files.map((f, i) => `${i + 1}. <code>${escapeHtml(f.fileName)}</code>`).join("\n");
+    const lecText = Number.isInteger(job.lectureNum) ? `Lec ${job.lectureNum}` : "General";
+    const slotLabel = SLOT_CONFIG[job.slotKind]?.label || job.sectionId;
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `📚 <b>Batch Upload (${job.files.length} files)</b>\n` +
+        `• Subject: ${escapeHtml(subject?.nameAr || job.subjectId)}\n` +
+        `• Spot: ${escapeHtml(lecText)} — ${escapeHtml(slotLabel)}\n\n` +
+        `${list}\n\nHow should I title these files?`,
+      parse_mode: "HTML",
+      reply_markup: batchModeKeyboard(job),
+    });
+    return;
+  }
+
+  if (Number.isInteger(job.lectureNum) && job.slotKind && job.mode !== "replace") {
+    const existing = getFilesInLectureSlot(subject, job.lectureNum, job.slotKind);
+    if (existing.length > 0) {
+      job.slotExisting = existing;
+      job.step = "slot_action";
+      const list = existing
+        .map((m, i) => `${i + 1}. <b>${escapeHtml(m.file.title)}</b> (${formatBytes(m.file.size)})`)
+        .join("\n");
+      const slotLabel = SLOT_CONFIG[job.slotKind]?.label || job.slotKind;
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `📌 <b>Lec ${job.lectureNum} (${escapeHtml(slotLabel)}) already has ${existing.length} file(s):</b>\n` +
+          `${list}\n\nHow would you like to add this file?`,
+        parse_mode: "HTML",
+        reply_markup: slotActionKeyboard(existing),
+      });
+      return;
+    }
+  }
+
+  if (job.mode === "both" && job.docTag === undefined) {
+    job.step = "tag";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: "Choose badge (docTag) for Hero / Midterm:",
+      reply_markup: docTagKeyboard(),
+    });
+    return;
+  }
+
+  await askTitleStep(chatId, job);
+}
+
+async function handleIncomingDocuments(chatId, docs) {
+  const repoDir = ensureRepo();
+  const manifest = readManifest(repoDir);
+
+  if (docs.length > 1) {
+    const files = docs.map((d) => {
+      const fileName = d.file_name || "document.pdf";
+      const defaultTitle = cleanTitleFromFilename(fileName);
+      return {
+        fileId: d.file_id,
+        fileName,
+        fileSize: d.file_size || 0,
+        defaultTitle,
+        title: defaultTitle,
+      };
+    });
+    pending.set(chatId, {
+      isBatch: true,
+      step: "subject",
+      files,
+      subjects: manifest.subjects,
+    });
+    const list = files.map((f, i) => `${i + 1}. <b>${escapeHtml(f.fileName)}</b>`).join("\n");
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `📚 Received <b>${files.length} files</b> together:\n${list}\n\nWhich subject are these for?`,
+      parse_mode: "HTML",
+      reply_markup: subjectKeyboard(manifest.subjects),
+    });
+    return;
+  }
+
+  const doc = docs[0];
+  const fileName = doc.file_name || "document.pdf";
+  const fileSize = doc.file_size || 0;
+  const defaultTitle = cleanTitleFromFilename(fileName);
+
+  const prevJob = pending.get(chatId);
+  if (prevJob && prevJob.step === "await_second_file") {
+    const nextJob = {
+      step: "slot_action",
+      mode: prevJob.mode || "section",
+      subjectId: prevJob.subjectId,
+      sectionId: prevJob.sectionId,
+      slotKind: prevJob.slotKind,
+      lectureNum: prevJob.lectureNum,
+      fileId: doc.file_id,
+      fileName,
+      fileSize,
+      defaultTitle,
+      title: defaultTitle,
+      subjects: manifest.subjects,
+    };
+    pending.set(chatId, nextJob);
+    await afterLectureNumberPicked(chatId, nextJob);
+    return;
+  }
+
+  const matches = findExistingMatches(manifest, fileName, fileSize);
+  if (matches.length > 0) {
+    pending.set(chatId, {
+      step: "duplicate",
+      fileId: doc.file_id,
+      fileName,
+      fileSize,
+      defaultTitle,
+      title: defaultTitle,
+      subjects: manifest.subjects,
+      matches,
+    });
+
+    const listText = matches
+      .map(
+        (m, idx) =>
+          `<b>#${idx + 1}</b> ${escapeHtml(m.file.title)}\n` +
+          `   • Subject: ${escapeHtml(m.subjectNameAr)} / ${escapeHtml(m.sectionName)}\n` +
+          `   • Existing: <code>${escapeHtml(m.file.original || m.file.path)}</code> (${formatBytes(m.file.size)})\n` +
+          `   • Match: ${escapeHtml(m.reasons.join(", "))}`,
+      )
+      .join("\n\n");
+
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `⚠️ <b>Similar file already exists!</b>\n` +
+        `Received: <code>${escapeHtml(fileName)}</code> (${formatBytes(fileSize)})\n\n` +
+        `${listText}\n\nWhat would you like to do?`,
+      parse_mode: "HTML",
+      reply_markup: duplicateKeyboard(matches),
+    });
+    return;
+  }
+
+  pending.set(chatId, {
+    step: "subject",
+    fileId: doc.file_id,
+    fileName,
+    fileSize,
+    defaultTitle,
+    title: defaultTitle,
+    subjects: manifest.subjects,
+  });
+
+  await tg("sendMessage", {
+    chat_id: chatId,
+    text: `📄 Received: <b>${escapeHtml(fileName)}</b>\n\nWhich subject is this for?`,
+    parse_mode: "HTML",
+    reply_markup: subjectKeyboard(manifest.subjects),
+  });
+}
+
 function parseCommand(text) {
   const match = String(text || "").match(/^\/([a-z0-9_]+)(?:@\w+)?(?:\s+([\s\S]+))?$/i);
   if (!match) return null;
@@ -2036,6 +2561,7 @@ async function handleMessage(msg) {
         `• Send or forward any PDF to upload &amp; publish it.\n\n` +
         `<b>File Management:</b>\n` +
         `/files [query] — Browse or search files\n` +
+        `/lecture [query] — Set lecture # &amp; type (lecture/summary/questions)\n` +
         `/rename [query] — Rename a file title\n` +
         `/label [query] — Edit or clear file label\n` +
         `/info [query] — Edit or clear info icon (ⓘ)\n` +
@@ -2174,69 +2700,34 @@ async function handleMessage(msg) {
     return;
   }
 
-  if (parsed && ["files", "rename", "info", "label", "move", "delete"].includes(parsed.cmd)) {
+  if (parsed && ["files", "rename", "lecture", "info", "label", "move", "delete"].includes(parsed.cmd)) {
     await startPickerOrSearch(chatId, parsed.cmd, parsed.arg);
     return;
   }
 
   if (msg.document) {
-    const fileName = msg.document.file_name || "document.pdf";
-    const fileSize = msg.document.file_size || 0;
-    const repoDir = ensureRepo();
-    const manifest = readManifest(repoDir);
-    const defaultTitle = cleanTitleFromFilename(fileName);
-    const matches = findExistingMatches(manifest, fileName, fileSize);
-
-    if (matches.length > 0) {
-      pending.set(chatId, {
-        step: "duplicate",
-        fileId: msg.document.file_id,
-        fileName,
-        fileSize,
-        defaultTitle,
-        title: defaultTitle,
-        subjects: manifest.subjects,
-        matches,
-      });
-
-      const listText = matches
-        .map(
-          (m, idx) =>
-            `<b>#${idx + 1}</b> ${escapeHtml(m.file.title)}\n` +
-            `   • Subject: ${escapeHtml(m.subjectNameAr)} / ${escapeHtml(m.sectionName)}\n` +
-            `   • Existing: <code>${escapeHtml(m.file.original || m.file.path)}</code> (${formatBytes(m.file.size)})\n` +
-            `   • Match: ${escapeHtml(m.reasons.join(", "))}`,
-        )
-        .join("\n\n");
-
-      await tg("sendMessage", {
-        chat_id: chatId,
-        text:
-          `⚠️ <b>Similar file already exists!</b>\n` +
-          `Received: <code>${escapeHtml(fileName)}</code> (${formatBytes(fileSize)})\n\n` +
-          `${listText}\n\nWhat would you like to do?`,
-        parse_mode: "HTML",
-        reply_markup: duplicateKeyboard(matches),
-      });
+    if (msg.media_group_id) {
+      const groupKey = `${chatId}:${msg.media_group_id}`;
+      let entry = mediaGroups.get(groupKey);
+      if (!entry) {
+        entry = { docs: [], timer: null };
+        mediaGroups.set(groupKey, entry);
+      }
+      entry.docs.push(msg.document);
+      clearTimeout(entry.timer);
+      entry.timer = setTimeout(() => {
+        mediaGroups.delete(groupKey);
+        handleIncomingDocuments(chatId, entry.docs).catch(async (err) => {
+          await tg("sendMessage", {
+            chat_id: chatId,
+            text: `❌ Error:\n${sanitizeError(err.message)}`,
+          }).catch(() => {});
+        });
+      }, 750);
       return;
     }
 
-    pending.set(chatId, {
-      step: "subject",
-      fileId: msg.document.file_id,
-      fileName,
-      fileSize,
-      defaultTitle,
-      title: defaultTitle,
-      subjects: manifest.subjects,
-    });
-
-    await tg("sendMessage", {
-      chat_id: chatId,
-      text: `📄 Received: <b>${escapeHtml(fileName)}</b>\n\nWhich subject is this for?`,
-      parse_mode: "HTML",
-      reply_markup: subjectKeyboard(manifest.subjects),
-    });
+    await handleIncomingDocuments(chatId, [msg.document]);
     return;
   }
 
@@ -2314,14 +2805,62 @@ async function handleMessage(msg) {
     return;
   }
 
-  if (job.step === "tag") {
-    job.docTag = text.toLowerCase() === "clear" ? "" : text;
-    job.step = "title";
+  if (job.step === "lecture_custom") {
+    const num = Number.parseInt(normalizeDigits(text), 10);
+    if (!Number.isInteger(num) || num < 1 || num > 99) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "⚠️ Please send a valid lecture number between 1 and 99:",
+        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+      });
+      return;
+    }
+    job.lectureNum = num;
+    await afterLectureNumberPicked(chatId, job);
+    return;
+  }
+
+  if (job.step === "edit_lec_custom" && job.pickTarget) {
+    const num = Number.parseInt(normalizeDigits(text), 10);
+    if (!Number.isInteger(num) || num < 1 || num > 99) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "⚠️ Please send a valid lecture number between 1 and 99:",
+        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+      });
+      return;
+    }
+    job.editLectureNum = num;
+    job.step = "edit_lec_kind";
     await tg("sendMessage", {
       chat_id: chatId,
-      text: `Send a custom Arabic title as a text message, or tap below to use:\n"${job.defaultTitle}"`,
-      reply_markup: titleKeyboard(job.defaultTitle),
+      text: `🔢 Lecture set to <b>Lec ${num}</b>.\n\nChoose the file type/slot:`,
+      parse_mode: "HTML",
+      reply_markup: editKindKeyboard(),
     });
+    return;
+  }
+
+  if (job.step === "batch_titles" && job.isBatch) {
+    const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+    if (lines.length < job.files.length) {
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: `⚠️ Please send ${job.files.length} titles, one per line (got ${lines.length}):`,
+        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+      });
+      return;
+    }
+    job.files.forEach((f, idx) => {
+      f.title = lines[idx];
+    });
+    await askInfoStep(chatId, job);
+    return;
+  }
+
+  if (job.step === "tag") {
+    job.docTag = text.toLowerCase() === "clear" ? "" : text;
+    await askTitleStep(chatId, job);
     return;
   }
 
@@ -2526,7 +3065,10 @@ async function handleMessage(msg) {
 
 async function runPublishFlow(chatId, job) {
   pending.delete(chatId);
-  await tg("sendMessage", { chat_id: chatId, text: `⏳ Adding "${job.title}" and pushing to GitHub...` });
+  const progressTitle = job.isBatch
+    ? `${job.files.length} files`
+    : `"${job.title}"`;
+  await tg("sendMessage", { chat_id: chatId, text: `⏳ Adding ${progressTitle} and pushing to GitHub...` });
   try {
     const result = await publishUpload(job);
     const qbLine = result.questionBank
@@ -2534,17 +3076,40 @@ async function runPublishFlow(chatId, job) {
         ? `• Question Bank: ${result.questionBank.note}\n`
         : `• Question Bank: +${result.questionBank.added} questions (total: ${result.questionBank.total})\n`
       : "";
+    const lecLine = Number.isInteger(job.lectureNum)
+      ? `• Lecture: Lec ${job.lectureNum}${job.slotKind ? ` (${job.slotKind})` : ""}\n`
+      : "";
+    const titlesLine = job.isBatch
+      ? `• Files:\n${job.files.map((f, i) => `  ${i + 1}. ${f.title}`).join("\n")}\n`
+      : `• Title: ${job.title}\n• File: ${result.relPath}\n`;
+
+    let replyMarkup = START_KEYBOARD;
+    if (!job.isBatch && Number.isInteger(job.lectureNum) && job.slotKind && job.sectionId && job.mode !== "hero") {
+      const subjIdx = (job.subjects || []).findIndex((s) => s.id === job.subjectId);
+      if (subjIdx >= 0) {
+        const slotLabel = SLOT_CONFIG[job.slotKind]?.label || job.slotKind;
+        const cbData = `add2:${subjIdx}:${job.sectionId}:${job.lectureNum}:${job.slotKind}`;
+        if (Buffer.byteLength(cbData, "utf8") <= 64) {
+          replyMarkup = {
+            inline_keyboard: [
+              [{ text: `➕ Add 2nd file to Lec ${job.lectureNum} (${slotLabel})`, callback_data: cbData }],
+            ],
+          };
+        }
+      }
+    }
+
     await tg("sendMessage", {
       chat_id: chatId,
       text:
         `✅ Published!\n` +
-        `• Title: ${job.title}\n` +
-        `• File: ${result.relPath}\n` +
+        titlesLine +
+        lecLine +
         `• Sections: ${result.addedTo.join(", ")}\n` +
         qbLine +
         `• Commit: ${result.commit}\n\n` +
         `GitHub Pages will be live in ~1 minute.`,
-      reply_markup: START_KEYBOARD,
+      reply_markup: replyMarkup,
     });
   } catch (err) {
     await tg("sendMessage", {
@@ -2567,6 +3132,39 @@ async function handleCallback(cb) {
   if (data === "cancel") {
     pending.delete(chatId);
     await tg("sendMessage", { chat_id: chatId, text: "Cancelled." });
+    return;
+  }
+
+  if (data.startsWith("add2:")) {
+    const [, rawSubjIdx, sectionId, rawLec, slotKind] = data.split(":");
+    const subjIdx = Number.parseInt(rawSubjIdx, 10);
+    const lectureNum = Number.parseInt(rawLec, 10);
+    const repoDir = ensureRepo();
+    const manifest = readManifest(repoDir);
+    const subject = manifest.subjects?.[subjIdx];
+    if (!subject || !Number.isInteger(lectureNum)) {
+      await tg("sendMessage", { chat_id: chatId, text: "Subject or lecture not found. Please send the PDF again." });
+      return;
+    }
+    pending.set(chatId, {
+      step: "await_second_file",
+      mode: "section",
+      subjectId: subject.id,
+      sectionId,
+      lectureNum,
+      slotKind,
+      subjects: manifest.subjects,
+    });
+    const slotLabel = SLOT_CONFIG[slotKind]?.label || slotKind;
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `📎 <b>Send the 2nd PDF now</b> for:\n` +
+        `• Subject: ${escapeHtml(subject.nameAr || subject.name)}\n` +
+        `• Spot: Lec ${lectureNum} (${escapeHtml(slotLabel)})`,
+      parse_mode: "HTML",
+      reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+    });
     return;
   }
 
@@ -2833,11 +3431,55 @@ async function handleCallback(cb) {
 
   if (data.startsWith("act:") && job.pickTarget) {
     const nextAction = data.slice(4);
-    if (["rename", "youtube", "info", "label", "move", "delete"].includes(nextAction)) {
+    if (["rename", "lecture", "youtube", "info", "label", "move", "delete"].includes(nextAction)) {
       job.action = nextAction;
       await proceedWithPickedFile(chatId, job, job.pickTarget);
       return;
     }
+  }
+
+  if (data.startsWith("edit_lec:") && job.pickTarget) {
+    const raw = data.slice("edit_lec:".length);
+    if (raw === "custom") {
+      job.step = "edit_lec_custom";
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text: "🔢 Send the lecture number (1–99):",
+        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+      });
+      return;
+    }
+    job.editLectureNum = raw === "none" ? null : Number.parseInt(raw, 10);
+    job.step = "edit_lec_kind";
+    const lecText = Number.isInteger(job.editLectureNum) ? `Lec ${job.editLectureNum}` : "General (no lecture #)";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text: `🔢 Lecture set to <b>${escapeHtml(lecText)}</b>.\n\nChoose the file type/slot:`,
+      parse_mode: "HTML",
+      reply_markup: editKindKeyboard(),
+    });
+    return;
+  }
+
+  if (data.startsWith("edit_kind:") && job.pickTarget) {
+    const kind = data.slice("edit_kind:".length);
+    const targetPath = job.pickTarget.file.path;
+    const lectureNum = job.editLectureNum;
+    pending.delete(chatId);
+    await tg("sendMessage", { chat_id: chatId, text: "⏳ Updating lecture # & type and pushing..." });
+    const res = setLectureAndKindInRepo(targetPath, lectureNum, kind === "keep" ? null : kind);
+    const lecText = Number.isInteger(res.lectureNum) ? `Lec ${res.lectureNum}` : "General";
+    await tg("sendMessage", {
+      chat_id: chatId,
+      text:
+        `✅ <b>Updated!</b>\n` +
+        `• File: ${escapeHtml(res.title)}\n` +
+        `• Lecture: ${escapeHtml(lecText)}${res.slotKind ? ` (${escapeHtml(res.slotKind)})` : ""}\n` +
+        `• Commit: <code>${escapeHtml(res.commit)}</code>`,
+      parse_mode: "HTML",
+      reply_markup: START_KEYBOARD,
+    });
+    return;
   }
 
   if (data.startsWith("edit_tag:") && job.pickTarget) {
@@ -3017,33 +3659,131 @@ async function handleCallback(cb) {
     if (data === "dest:hero") {
       job.mode = "hero";
       job.sectionId = "midterm-revision";
+      job.slotKind = "review";
+      job.lectureNum = null;
       job.step = "tag";
       await tg("sendMessage", {
         chat_id: chatId,
         text: "Choose badge (docTag) for Hero / Midterm:",
         reply_markup: docTagKeyboard(),
       });
+      return;
+    }
+    if (data.startsWith("dest:slot:")) {
+      const slotKey = data.slice("dest:slot:".length);
+      const cfg = SLOT_CONFIG[slotKey];
+      if (!cfg) return;
+      job.mode = "section";
+      job.sectionId = cfg.sectionId;
+      job.slotKind = cfg.kind;
+      await askLectureNumberStep(chatId, job);
       return;
     }
     if (data.startsWith("dest:both:")) {
       job.mode = "both";
       job.sectionId = data.slice("dest:both:".length);
-      job.step = "tag";
-      await tg("sendMessage", {
-        chat_id: chatId,
-        text: "Choose badge (docTag) for Hero / Midterm:",
-        reply_markup: docTagKeyboard(),
-      });
+      job.slotKind = job.sectionId === "summaries" ? "summary" : "lecture";
+      await askLectureNumberStep(chatId, job);
       return;
     }
     if (data.startsWith("dest:sec:")) {
       job.mode = "section";
       job.sectionId = data.slice("dest:sec:".length);
-      job.step = "title";
+      if (["lectures", "summaries", "questions", "original-pptx"].includes(job.sectionId)) {
+        job.slotKind =
+          job.sectionId === "summaries"
+            ? "summary"
+            : job.sectionId === "questions"
+              ? "questions"
+              : "lecture";
+        await askLectureNumberStep(chatId, job);
+        return;
+      }
+      job.slotKind = job.sectionId === "books" ? "book" : null;
+      job.lectureNum = null;
+      if (job.isBatch) {
+        await afterLectureNumberPicked(chatId, job);
+      } else {
+        await askTitleStep(chatId, job);
+      }
+      return;
+    }
+  }
+
+  if (data.startsWith("lec:")) {
+    const raw = data.slice(4);
+    if (raw === "custom") {
+      job.step = "lecture_custom";
       await tg("sendMessage", {
         chat_id: chatId,
-        text: `Send a custom Arabic title as a text message, or tap below to use:\n"${job.defaultTitle}"`,
-        reply_markup: titleKeyboard(job.defaultTitle),
+        text: "🔢 Send the lecture number (1–99):",
+        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
+      });
+      return;
+    }
+    job.lectureNum = raw === "none" ? null : Number.parseInt(raw, 10);
+    await afterLectureNumberPicked(chatId, job);
+    return;
+  }
+
+  if (data.startsWith("slotact:")) {
+    const raw = data.slice("slotact:".length);
+    if (raw === "arabic") {
+      job.variant = "arabic";
+      job.docTag = "نسخة عربية";
+      await askTitleStep(chatId, job);
+      return;
+    }
+    if (raw === "second") {
+      job.variant = "second";
+      await askTitleStep(chatId, job);
+      return;
+    }
+    if (raw.startsWith("replace:")) {
+      const idx = Number.parseInt(raw.slice("replace:".length), 10);
+      const match = Array.isArray(job.slotExisting) ? job.slotExisting[idx] : null;
+      if (!match) return;
+      job.mode = "replace";
+      job.replaceTarget = match;
+      job.sectionId = match.sectionId;
+      job.step = "replace_title";
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `🔄 Replacing <b>${escapeHtml(match.file.title)}</b> in ${escapeHtml(match.subjectNameAr)} / ${escapeHtml(match.sectionName)}.\n\n` +
+          `Send a custom title, or choose one below:`,
+        parse_mode: "HTML",
+        reply_markup: replaceTitleKeyboard(match.file.title, job.defaultTitle),
+      });
+      return;
+    }
+  }
+
+  if (data.startsWith("batch:") && job.isBatch) {
+    const mode = data.slice("batch:".length);
+    if (mode === "arabic" && job.files.length === 2 && Number.isInteger(job.lectureNum)) {
+      job.files[0].title = buildSmartLectureTitle(job.slotKind, job.lectureNum, false);
+      job.files[1].title = buildSmartLectureTitle(job.slotKind, job.lectureNum, true);
+      job.files[1].docTag = "نسخة عربية";
+      await askInfoStep(chatId, job);
+      return;
+    }
+    if (mode === "filenames") {
+      job.files.forEach((f) => {
+        f.title = f.defaultTitle;
+      });
+      await askInfoStep(chatId, job);
+      return;
+    }
+    if (mode === "custom") {
+      job.step = "batch_titles";
+      const list = job.files.map((f, i) => `${i + 1}. <code>${escapeHtml(f.fileName)}</code>`).join("\n");
+      await tg("sendMessage", {
+        chat_id: chatId,
+        text:
+          `✏️ Send <b>${job.files.length} titles</b>, one per line:\n\n${list}`,
+        parse_mode: "HTML",
+        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] },
       });
       return;
     }
@@ -3052,17 +3792,29 @@ async function handleCallback(cb) {
   if (data.startsWith("tag:")) {
     const tag = data.slice(4);
     job.docTag = tag === "none" ? "" : tag;
-    job.step = "title";
-    await tg("sendMessage", {
-      chat_id: chatId,
-      text: `Send a custom Arabic title as a text message, or tap below to use:\n"${job.defaultTitle}"`,
-      reply_markup: titleKeyboard(job.defaultTitle),
-    });
+    if (job.isBatch) {
+      await afterLectureNumberPicked(chatId, job);
+    } else {
+      await askTitleStep(chatId, job);
+    }
     return;
   }
 
   if (data === "title:keep" && job.replaceTarget) {
     job.title = job.replaceTarget.file.title;
+    await askInfoStep(chatId, job);
+    return;
+  }
+
+  if (data === "title:smart" && Number.isInteger(job.lectureNum)) {
+    job.title = buildSmartLectureTitle(job.slotKind, job.lectureNum, false);
+    await askInfoStep(chatId, job);
+    return;
+  }
+
+  if (data === "title:arabic" && Number.isInteger(job.lectureNum)) {
+    job.title = buildSmartLectureTitle(job.slotKind, job.lectureNum, true);
+    if (!job.docTag) job.docTag = "نسخة عربية";
     await askInfoStep(chatId, job);
     return;
   }
@@ -3092,6 +3844,7 @@ async function poll() {
       commands: [
         { command: "start", description: "Show instructions & commands" },
         { command: "files", description: "Browse or search files" },
+        { command: "lecture", description: "Set lecture # & type for a file" },
         { command: "rename", description: "Rename a file title" },
         { command: "label", description: "Edit or clear file label" },
         { command: "info", description: "Edit or clear file info icon" },

@@ -6597,6 +6597,12 @@ h3 {
   border-color: #fde3a7;
 }
 
+.doc-tag.is-arabic {
+  color: #15803d;
+  background: #ecfdf3;
+  border-color: #bbf7d0;
+}
+
 [data-theme="dark"] .doc-tag.is-summary {
   color: #a9c2ff;
   background: rgba(37, 99, 235, 0.18);
@@ -6607,6 +6613,12 @@ h3 {
   color: #fcd34d;
   background: rgba(161, 98, 7, 0.2);
   border-color: rgba(250, 204, 21, 0.28);
+}
+
+[data-theme="dark"] .doc-tag.is-arabic {
+  color: #86efac;
+  background: rgba(21, 128, 61, 0.2);
+  border-color: rgba(74, 222, 128, 0.3);
 }
 
 @media (max-width: 1280px) {

@@ -78,9 +78,14 @@ const ARABIC_ORDINALS = [
   ["الاول", 1],
 ];
 
+const VALID_KINDS = new Set(["lecture", "summary", "questions", "solution", "review", "book"]);
+
 function isReviewItem(subjectId, sectionId, item, haystack) {
   if (item.midtermReview === false) return false;
   if (item.midtermReview === true) return true;
+  if (item.lectureLocked === true && Number.isInteger(item.lecture) && item.lecture > 0 && sectionId !== "midterm-revision") {
+    return false;
+  }
   if (subjectId === "midterm-revision" || sectionId === "midterm-revision") return true;
   if (String(item.path || "").toLowerCase().includes("/midterm-revision/")) return true;
   return REVIEW_RANGE_PATTERNS.some((pattern) => pattern.test(haystack));
@@ -91,6 +96,9 @@ function extractLectureNumber(item, haystack) {
   if (match) return Number(match[1]);
 
   match = haystack.match(/محاضر(?:ه|ات)?\s*0*(\d{1,2})/);
+  if (match) return Number(match[1]);
+
+  match = haystack.match(/(?:week|الاسبوع|اسبوع)[-_\s]*0*(\d{1,2})/);
   if (match) return Number(match[1]);
 
   for (const [word, number] of ARABIC_ORDINALS) {
@@ -154,6 +162,7 @@ function inferKind(sectionId, haystack) {
 
   if (questionish && !solutionish) return "questions";
   if (solutionish) return "solution";
+  if (sectionId === "questions") return "questions";
 
   if (
     sectionId === "summaries" ||
@@ -227,10 +236,28 @@ function classifyItem(subject, section, item) {
   const haystack = normalizeAr(itemText(item));
   const review = isReviewItem(subject.id, section.id, item, haystack);
   const span = review ? null : detectLectureSpan(item, subject.id, section.id, haystack);
-  const lecture = review ? null : span
-    ? span[0]
-    : extractLectureNumber(item, haystack);
-  const kind = review ? "review" : inferKind(section.id, haystack);
+
+  let lecture;
+  if (item.lectureLocked === true) {
+    lecture = Number.isInteger(item.lecture) && item.lecture > 0 ? item.lecture : null;
+  } else if (review) {
+    lecture = null;
+  } else if (span) {
+    lecture = span[0];
+  } else {
+    const extracted = extractLectureNumber(item, haystack);
+    if (extracted !== null) lecture = extracted;
+    else if (Number.isInteger(item.lecture) && item.lecture > 0) lecture = item.lecture;
+    else lecture = null;
+  }
+
+  let kind;
+  if (item.kindLocked === true && VALID_KINDS.has(item.kind)) {
+    kind = item.kind;
+  } else {
+    kind = review ? "review" : inferKind(section.id, haystack);
+  }
+
   const classification = { lecture, kind, keywords: buildKeywords(subject, section, item, kind, lecture) };
   if (span) classification.lectureSpan = span;
   return classification;

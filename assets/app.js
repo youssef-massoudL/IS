@@ -1567,7 +1567,7 @@ function fileRow(file, subject, sectionId, variant = "", options = {}) {
     <span class="file-badge ${badge}">${badge}</span>
     <div class="file-main">
       <span class="file-title" title="${esc(file.original || file.title)}">${highlightText(file.title, tokens)}</span>
-      ${file.docTag ? `<span class="doc-tag ${file.docTag === "ملخص" ? "is-summary" : "is-questions"}">${esc(file.docTag)}</span>` : ""}
+      ${file.docTag ? `<span class="doc-tag ${file.docTag === "ملخص" ? "is-summary" : (file.docTag === "نسخة عربية" || file.docTag === "عربي") ? "is-arabic" : "is-questions"}">${esc(file.docTag)}</span>` : ""}
       ${options.showOriginal && file.original ? `<span class="file-original" dir="ltr">${highlightText(file.original, tokens)}</span>` : ""}
       <span class="file-sub">
         ${meta ? `<span class="file-meta">${esc(meta)}</span><span class="sep">·</span>` : ""}
