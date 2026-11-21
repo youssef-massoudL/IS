@@ -2864,7 +2864,7 @@ a.task-subject:hover {
 }
 
 .review-block {
-  margin: 0 0 14px;
+  margin: 16px 0 14px;
   background:
     radial-gradient(120% 150% at 100% 0%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 62%),
     var(--surface);
