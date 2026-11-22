@@ -75,40 +75,6 @@ site/
 
 3. Commit — سيعمل الـ Action تلقائيًا، يبني الـ ZIPs، وينشر الموقع.
 
-أو من سطر الأوامر:
-
-```powershell
-node scripts/add-file.mjs --subject computer-networks --section lectures `
-  --file "C:\path\to\Lecture 07.pdf" --title "المحاضرة 07" `
-  --youtube "https://youtu.be/XXXXXXXXXXX"
-
-powershell -ExecutionPolicy Bypass -File scripts/build-zips.ps1
-```
-
-`--subject` و`--section` هما الـ `id` في المانيفست. لو القسم غير موجود يُنشأ تلقائيًا.
-
-## 4) روابط يوتيوب
-
-- رابط المادة كاملة (قائمة تشغيل) → حقل `youtube` داخل المادة.
-- رابط محاضرة واحدة → حقل `youtube` داخل الملف.
-
-عند وجود رابط تظهر أيقونة تشغيل بجانب الملف، وزر «قائمة المحاضرات» في بطاقة المادة.
-
-## 5) نشر الموقع على GitHub Pages
-
-1. أنشئ مستودعًا **Public** جديدًا.
-2. اجعل محتوى مجلد `site/` هو جذر المستودع:
-
-```powershell
-cd site
-git init
-git add .
-git commit -m "initial site"
-git branch -M main
-git remote add origin https://github.com/<user>/<repo>.git
-git push -u origin main
-```
-
 3. في المستودع: `Settings → Pages → Build and deployment → Source: GitHub Actions`.
 4. انتظر الـ workflow «Deploy study site»، ثم افتح `https://<user>.github.io/<repo>/`.
 
@@ -117,15 +83,6 @@ git push -u origin main
 
 ### حدود يجب معرفتها
 
-- **الخطة المجانية = مستودع Public.** أي شخص لديه الرابط يرى الملفات. `robots.txt`
-  و`noindex` يمنعان محركات البحث فقط، وليس الوصول المباشر. لو ده غير مقبول قانونيًا،
-  الحل هو استضافة مع حماية (Cloudflare Pages + Access) أو مستودع خاص بخطة مدفوعة.
-- **GitHub Pages لا يستقبل رفع ملفات من الواجهة.** الرفع = Commit في المستودع (قسم 3).
 - الملف الواحد يجب أن يكون أقل من 100MB، وإجمالي الموقع أقل من 1GB.
 - نطاق ترددي مجاني ~100GB/شهر: تحميل `all.zip` مرة واحدة ≈ 173MB.
 
-## 6) ما بعد التسليم (أفكار)
-
-- إضافة روابط يوتيوب الفعلية.
-- صفحة `admin.html` للرفع بالسحب والإفلات عبر GitHub API (اختياري).
-- تحويل ملفات PPTX إلى PDF لمعاينتها داخل الموقع.
