@@ -1,0 +1,31 @@
+name: Request Material / طلب إضافة ملف أو لينك
+description: Suggest a missing lecture, summary, YouTube link, or schedule update (no Git needed) / طلب إضافة محاضرة أو ملخص أو رابط يوتيوب أو تعديل جدول
+title: "[Material]: "
+labels: ["material"]
+body:
+  - type: input
+    id: subject
+    attributes:
+      label: Subject / المادة
+      placeholder: e.g. Computer Networks, Database 2, System Analysis
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Material Type / النوع
+      options:
+        - Lecture / محاضرة
+        - Summary / ملخص
+        - Questions / أسئلة
+        - YouTube Link / رابط يوتيوب
+        - Schedule or Task Update / تعديل جدول أو تاسك
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details & Link / التفاصيل والرابط
+      description: Provide a Google Drive / Telegram / YouTube link or describe what needs to be updated.
+    validations:
+      required: true

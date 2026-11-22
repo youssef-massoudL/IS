@@ -1,0 +1,19 @@
+name: Feature Proposal / اقتراح ميزة جديدة
+description: Propose a new feature or UI change before writing code / اقتراح فكرة أو تطوير جديد قبل البدء في البرمجة
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Goal / المشكلة أو الهدف
+      description: What student workflow does this improve?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution / الحل المقترح
+      description: Describe how it should look and behave. Maintainers will review scope before implementation.
+    validations:
+      required: true
