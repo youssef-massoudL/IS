@@ -1,0 +1,18 @@
+# Default owner: every PR requires maintainer review when branch protection
+# "Require review from Code Owners" is enabled on main.
+* @youssef-massoudL
+
+# Critical security, deployment, and automation paths — maintainer only.
+/.github/ @youssef-massoudL
+/bot/ @youssef-massoudL
+/scripts/ @youssef-massoudL
+/index.html @youssef-massoudL
+/assets/ @youssef-massoudL
+/package.json @youssef-massoudL
+/Dockerfile @youssef-massoudL
+/railway.json @youssef-massoudL
+
+# Content & study data — you may optionally add trusted section reps here later,
+# keeping @youssef-massoudL on the rules above.
+/data/ @youssef-massoudL
+/files/ @youssef-massoudL
