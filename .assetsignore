@@ -1,0 +1,33 @@
+# Exclude non-site files, bot/scripts, docs, and archives from Cloudflare static assets
+.git
+.github
+.gitignore
+.gitattributes
+.nojekyll
+.assetsignore
+.env*
+bot
+scripts
+Plans
+Review
+docs
+network oraghinz
+جداول
+Skills
+node_modules
+downloads
+_site
+Dockerfile
+railway.json
+package.json
+package-lock.json
+bun.lock
+bun.lockb
+wrangler.jsonc
+README.md
+CONTRIBUTING.md
+LICENSE
+SECURITY.md
+HANDOFF.md
+plan_addition.md
+Website logo.jfif

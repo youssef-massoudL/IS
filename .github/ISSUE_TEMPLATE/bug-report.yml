@@ -1,0 +1,28 @@
+name: Bug Report / الإبلاغ عن خطأ
+description: Report a broken file, wrong quiz answer, schedule error, or UI bug / الإبلاغ عن ملف لا يعمل أو سؤال خطأ أو مشكلة في الموقع
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area / القسم
+      options:
+        - Files / Preview / Download (الملفات والمعاينة)
+        - Quiz / Question Bank (الأسئلة والامتحان)
+        - Schedule / Tasks (الجدول والمهام)
+        - UI / Mobile / Theme (الواجهة والموبايل)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened? / ما المشكلة؟
+      description: Include the subject/question/file name and what the correct behavior should be.
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Browser & Device / المتصفح والجهاز (اختياري)
+      placeholder: e.g. Chrome on Android, Edge on Windows
