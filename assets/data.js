@@ -4696,7 +4696,21 @@ window.__SITE_SCHEDULE__ = {
       "note": "أسبوعان"
     }
   ],
-  "weeklyTasks": [],
+  "weeklyTasks": [
+    {
+      "id": "task-20261122-d6vv1w",
+      "subjectId": "general",
+      "kind": "news",
+      "title": "الغياب هيترفع لسيستم الجامعه بكره ، مفيش درجات بس الغياب هيكون ب انذار ثم فصل بعدها",
+      "details": "",
+      "authorRole": "doctor",
+      "authorName": "",
+      "sections": "all",
+      "dueDate": "2026-11-23",
+      "expiresAt": null,
+      "createdAt": "2026-11-22T16:14:45.041Z"
+    }
+  ],
   "periods": [
     {
       "id": 1,
