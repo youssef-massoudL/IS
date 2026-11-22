@@ -11,6 +11,8 @@
 /package.json @youssef-massoudL
 /Dockerfile @youssef-massoudL
 /railway.json @youssef-massoudL
+/wrangler.jsonc @youssef-massoudL
+/.assetsignore @youssef-massoudL
 
 # Content & study data — you may optionally add trusted section reps here later,
 # keeping @youssef-massoudL on the rules above.

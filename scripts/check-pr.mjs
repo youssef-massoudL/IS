@@ -3,7 +3,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 
 const SITE = path.resolve(import.meta.dirname, "..");
-const MAX_FILE_BYTES = 50 * 1024 * 1024;
+const MAX_FILE_BYTES = 25 * 1024 * 1024;
 const MAX_TOTAL_FILES_BYTES = 450 * 1024 * 1024;
 const URL_KEYS = new Set(["youtube", "url", "href"]);
 
@@ -78,7 +78,7 @@ function checkFileSizes() {
         if (size > MAX_FILE_BYTES) {
           const rel = path.relative(SITE, full).replace(/\\/g, "/");
           errors.push(
-            `file exceeds ${(MAX_FILE_BYTES / 1048576).toFixed(0)} MB limit: ${rel} (${(size / 1048576).toFixed(1)} MB)`,
+            `file exceeds ${(MAX_FILE_BYTES / 1048576).toFixed(0)} MiB Cloudflare Workers limit: ${rel} (${(size / 1048576).toFixed(2)} MiB)`,
           );
         }
       }

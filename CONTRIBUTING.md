@@ -44,7 +44,7 @@ Open an **Issue** using our templates:
 
 ## Rules & Guardrails / القواعد والضوابط
 
-- **File Sizes:** Keep individual files in `files/` under **50 MB** (compress large scanned PDFs before uploading). Total site size must stay well below GitHub Pages' 1 GB limit.
+- **File Sizes:** Keep individual files in `files/` under **25 MiB** (Cloudflare Workers' per-file static asset limit; compress large scanned PDFs before uploading). Total site size must stay well below GitHub Pages' 1 GB limit.
 - **Valid URLs Only:** Any `youtube`, `url`, or `href` values in JSON files must use `https://` or `http://`.
 - **No Sensitive Data or Secrets:** Never commit `.env` files, API tokens, student IDs, phone numbers, or private personal data.
 - **Copyright Notice:** While the website source code and scripts are licensed under the [MIT License](LICENSE), third-party lecture slides, books, and exam files remain the property of their respective authors/instructors. Do not upload commercial textbooks or unauthorized paid materials.

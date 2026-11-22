@@ -13,6 +13,6 @@
 
 - [ ] Ran `node scripts/build.mjs --fix` (or `node scripts/build.mjs`) to update `data/subjects.json` and `assets/data.js`
 - [ ] Ran `node scripts/build.mjs --check` and `node scripts/check-pr.mjs` locally with zero errors
-- [ ] Single files added to `files/` are under 50 MB and compressed cleanly if scanned/large
+- [ ] Single files added to `files/` are under 25 MiB (Cloudflare Workers static asset limit) and compressed cleanly if scanned/large
 - [ ] No private student data, secrets/tokens, or unauthorized copyrighted textbooks are included
 - [ ] For major UI or architecture changes, an Issue was opened and discussed first
