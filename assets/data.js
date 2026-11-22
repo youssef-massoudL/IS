@@ -1,7 +1,7 @@
 window.__SITE_DATA__ = {
   "title": "سنة تالتة — الترم الأول",
   "subtitle": "نظم المعلومات · ملازم ومحاضرات ومراجعات",
-  "updated": "2026-11-21",
+  "updated": "2026-11-22",
   "subjects": [
     {
       "id": "computer-networks",
@@ -3886,6 +3886,39 @@ window.__SITE_DATA__ = {
                 "05",
                 "System",
                 "analysis"
+              ]
+            },
+            {
+              "id": "lecture-6",
+              "title": "المحاضرة 06",
+              "original": "Lecture.-6.pdf",
+              "path": "files/system-analysis/lectures/lecture-6.pdf",
+              "ext": "pdf",
+              "size": 2309287,
+              "youtube": "",
+              "addedAt": "2026-11-22T14:57:17.555Z",
+              "lecture": 6,
+              "lectureLocked": true,
+              "kind": "lecture",
+              "kindLocked": true,
+              "midtermReview": false,
+              "keywords": [
+                "محاضرة",
+                "محاضرات",
+                "lecture",
+                "lec",
+                "تحليل النظم",
+                "System Analysis",
+                "system-analysis",
+                "المحاضرات",
+                "Lectures",
+                "محاضرة 6",
+                "lecture 6",
+                "lec 6",
+                "6",
+                "pdf",
+                "المحاضرة",
+                "06"
               ]
             }
           ]
