@@ -4331,6 +4331,43 @@
                 "Lecture",
                 "Unsolved"
               ]
+            },
+            {
+              "id": "lecture-06-systemquestions-solved",
+              "title": "حل أسئلة المحاضرة 06",
+              "original": "Lecture 06_SYSTEMQuestions solved.pdf",
+              "path": "files/system-analysis/questions/lecture-06-systemquestions-solved.pdf",
+              "ext": "pdf",
+              "size": 1156837,
+              "youtube": "",
+              "addedAt": "2026-11-24T01:43:31.815Z",
+              "lecture": 6,
+              "lectureLocked": true,
+              "kind": "solution",
+              "kindLocked": true,
+              "midtermReview": false,
+              "keywords": [
+                "حل",
+                "إجابة",
+                "solved",
+                "solution",
+                "answers",
+                "تحليل النظم",
+                "System Analysis",
+                "system-analysis",
+                "الأسئلة",
+                "Questions",
+                "محاضرة 6",
+                "lecture 6",
+                "lec 6",
+                "6",
+                "pdf",
+                "أسئلة",
+                "المحاضرة",
+                "06",
+                "Lecture",
+                "SYSTEMQuestions"
+              ]
             }
           ]
         },
