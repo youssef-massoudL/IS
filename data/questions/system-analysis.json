@@ -5564,5 +5564,665 @@
     ],
     "answer": 1,
     "explanation": "Past final exam question. Correct answer: MIS"
+  },
+  {
+    "id": "sa-l6-365",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "An _____ approach emphasizes continuous feedback, and each incremental step is affected by what was learned in the prior steps.",
+    "options": [
+      "Structured",
+      "Agile"
+    ],
+    "answer": 1,
+    "explanation": "An agile approach emphasizes continuous feedback and adjusts each incremental step based on prior learning. المنهج الرشيق (Agile) يعتمد على التغذية الراجعة المستمرة وتطوير كل خطوة بناءً على ما تم تعلمه سابقًا."
+  },
+  {
+    "id": "sa-l6-366",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Many agile developers prefer not to use CASE tools at all, and rely instead on whiteboard displays and arrangements of movable sticky notes.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True — Agile teams often favor lightweight visual collaboration like whiteboards and sticky notes over heavy CASE tools. صحيح — يفضل مطورو Agile غالبًا اللوحات البيضاء والملصقات القابلة للتحريك بدلًا من أدوات CASE الثقيلة."
+  },
+  {
+    "id": "sa-l6-367",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Agile developers believe their approach reinforces the agile strategy: simple, rapid, flexible, and NOT user-oriented.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False — The agile strategy is simple, rapid, flexible, and user-oriented. خطأ — استراتيجية Agile بسيطة وسريعة ومرنة وموجهة للمستخدم (user-oriented)."
+  },
+  {
+    "id": "sa-l6-368",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "_____ attempt to develop a system incrementally, by building a series of prototypes and constantly adjusting them to user requirements.",
+    "options": [
+      "Agile methods",
+      "Agile approaches"
+    ],
+    "answer": 0,
+    "explanation": "Agile methods develop systems incrementally using prototypes adjusted continuously to user needs. تعتمد أساليب Agile (Agile methods) على التطوير التدريجي وبناء نماذج أولية معدلة باستمرار حسب متطلبات المستخدم."
+  },
+  {
+    "id": "sa-l6-369",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which of the following is NOT an Agile methodology?",
+    "options": [
+      "Scrum, Lean, and Kanban",
+      "XP (Extreme Programming)",
+      "Crystal",
+      "Feature Driven Development (FDD)",
+      "Waterfall",
+      "Dynamic Systems Development Method (DSDM)"
+    ],
+    "answer": 4,
+    "explanation": "Waterfall is a traditional predictive SDLC model, not an Agile methodology. نموذج Waterfall تقليدي تنبؤي وليس من منهجيات Agile."
+  },
+  {
+    "id": "sa-l6-370",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "How does Scrum enable teams to get started quickly and learn as they go when implementing Agile principles?",
+    "options": [
+      "Sprints",
+      "Continuous Feedback",
+      "Empirical Process",
+      "Collaboration and Communication",
+      "All of the following"
+    ],
+    "answer": 4,
+    "explanation": "Scrum combines sprints, continuous feedback, empirical process control, and close team collaboration. يجمع Scrum بين السبرينت والتغذية الراجعة المستمرة والعملية التجريبية والتعاون والتواصل."
+  },
+  {
+    "id": "sa-l6-371",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "How long is a typical Scrum sprint?",
+    "options": [
+      "1–2 days",
+      "2–4 weeks"
+    ],
+    "answer": 1,
+    "explanation": "Scrum sprints typically last 2 to 4 weeks with clear start and finish dates. تستغرق فترة الـ Sprint النموذجية في Scrum من أسبوعين إلى 4 أسابيع."
+  },
+  {
+    "id": "sa-l6-372",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Scrum teams commit to ship working software through set intervals called _____.",
+    "options": [
+      "Sprints",
+      "Method",
+      "Agile"
+    ],
+    "answer": 0,
+    "explanation": "In Scrum, fixed intervals for shipping working software are called Sprints. تُسمى الفترات الزمنية المحددة لتسليم برمجيات عاملة في Scrum بالـ Sprints."
+  },
+  {
+    "id": "sa-l6-373",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ has the goal of creating learning loops to quickly gather and integrate customer feedback.",
+    "options": [
+      "Scrum",
+      "Kanban"
+    ],
+    "answer": 0,
+    "explanation": "Scrum uses short sprints to create learning loops for rapid customer feedback integration. يهدف Scrum إلى إنشاء حلقات تعلم سريعة لجمع ودمج ملاحظات العملاء."
+  },
+  {
+    "id": "sa-l6-374",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The name SCRUM comes from the rugby term scrum.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True — Scrum is named after the rugby formation where teammates work closely together toward an objective. صحيح — اسم Scrum مأخوذ من مصطلح في لعبة الرجبي."
+  },
+  {
+    "id": "sa-l6-375",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Scrum moves fast, with sprints of two to at most _____ weeks with clear start and finish dates. The short time frame forces complex tasks to be split into smaller stories and helps the team learn quickly.",
+    "options": [
+      "4",
+      "5"
+    ],
+    "answer": 0,
+    "explanation": "Scrum sprints run from two to at most four weeks. تمتد السبرينت في Scrum من أسبوعين إلى 4 أسابيع كحد أقصى."
+  },
+  {
+    "id": "sa-l6-376",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What are the three key roles defined in Scrum?",
+    "options": [
+      "Product Owner, Scrum Master, Development Team",
+      "Team Leader, Stakeholder, Project Manager",
+      "Analyst, Tester, Developer",
+      "Customer, Developer, Consultant"
+    ],
+    "answer": 0,
+    "explanation": "Scrum defines three roles: Product Owner, Scrum Master, and Development Team. الأدوار الثلاثة الأساسية في Scrum هي: مالك المنتج (Product Owner)، وسكرام ماستر (Scrum Master)، وفريق التطوير."
+  },
+  {
+    "id": "sa-l6-377",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which Agile methodology uses sprints and daily standups?",
+    "options": [
+      "Kanban",
+      "Scrum",
+      "Extreme Programming",
+      "Lean"
+    ],
+    "answer": 1,
+    "explanation": "Scrum is characterized by fixed-length sprints and daily standup meetings (Daily Scrum). تعتمد منهجية Scrum على السبرينت والاجتماعات اليومية."
+  },
+  {
+    "id": "sa-l6-378",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ advocates for the customer, manages the product backlog, and helps prioritize the work by the development team.",
+    "options": [
+      "Product Owner",
+      "Scrum Master"
+    ],
+    "answer": 0,
+    "explanation": "The Product Owner represents the customer, owns the product backlog, and prioritizes work. يمثل مالك المنتج (Product Owner) العميل ويدير قائمة المنتج ويرتب أولويات العمل."
+  },
+  {
+    "id": "sa-l6-379",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ helps the team stay grounded in the Scrum principles.",
+    "options": [
+      "Scrum Master",
+      "Product Owner"
+    ],
+    "answer": 0,
+    "explanation": "The Scrum Master coaches the team and keeps them grounded in Scrum principles and practices. يساعد الـ Scrum Master الفريق على الالتزام بمبادئ Scrum."
+  },
+  {
+    "id": "sa-l6-380",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ chooses the work to be done, delivers increments, and demonstrates collective accountability.",
+    "options": [
+      "Scrum Master",
+      "The development team"
+    ],
+    "answer": 1,
+    "explanation": "The Development Team selects work for the sprint, builds increments, and shares collective accountability. فريق التطوير يختار العمل المطلوب ويسلم الزيادات (Increments) ويتحمل المسؤولية الجماعية."
+  },
+  {
+    "id": "sa-l6-381",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is a key characteristic of a Scrum team?",
+    "options": [
+      "It is managed by the Scrum Master",
+      "It is self-organizing with equal responsibilities",
+      "It relies heavily on CASE tools",
+      "It works in undefined time frames"
+    ],
+    "answer": 1,
+    "explanation": "Scrum teams have no single boss; they are self-organizing and everyone shares responsibility equally. فريق Scrum ذاتي التنظيم ويتساوى أعضاؤه في المسؤولية."
+  },
+  {
+    "id": "sa-l6-382",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "_____ is the number of story points completed in a sprint and is the central metric for Scrum teams.",
+    "options": [
+      "Velocity",
+      "Backlog"
+    ],
+    "answer": 0,
+    "explanation": "Velocity measures the story points completed per sprint. السرعة (Velocity) هي عدد نقاط القصة (story points) المكتملة في السبرينت."
+  },
+  {
+    "id": "sa-l6-383",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the primary metric used in Scrum to measure progress?",
+    "options": [
+      "Velocity",
+      "Backlog"
+    ],
+    "answer": 0,
+    "explanation": "Velocity is the central metric used in Scrum to gauge team progress and capacity. المقياس الأساسي في Scrum لقياس التقدم هو الـ Velocity."
+  },
+  {
+    "id": "sa-l6-384",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which artifact shows whether the team is on track to complete all sprint tasks?",
+    "options": [
+      "Task Board",
+      "Product Backlog",
+      "Burndown Chart"
+    ],
+    "answer": 2,
+    "explanation": "The Sprint Burndown Chart plots remaining work daily to show if the team is on track. يوضح مخطط الاحتراق (Burndown Chart) ما إذا كان الفريق على المسار الصحيح لإنجاز مهام السبرينت."
+  },
+  {
+    "id": "sa-l6-385",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "_____ is a set of work items ordered and stated, something to do like a requirement to implement or bug to solve.",
+    "options": [
+      "Velocity",
+      "Backlog"
+    ],
+    "answer": 1,
+    "explanation": "A Backlog is an ordered list of work items such as requirements or bug fixes. قائمة المهام (Backlog) هي مجموعة مرتبة من عناصر العمل مثل المتطلبات أو إصلاح الأخطاء."
+  },
+  {
+    "id": "sa-l6-386",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ is the way to figure the velocity.",
+    "options": [
+      "Backlog",
+      "Burndown chart"
+    ],
+    "answer": 1,
+    "explanation": "The burndown chart tracks remaining work over time and helps figure out team velocity. يُستخدم الـ Burndown Chart لتتبع العمل المتبقي وحساب السرعة (Velocity)."
+  },
+  {
+    "id": "sa-l6-387",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ not only makes release and iteration planning easier, it broadcasts all the things the team intends to spend time on—including internal work that the customer will never notice.",
+    "options": [
+      "Well-prioritized agile backlog",
+      "Well-prioritized method backlog"
+    ],
+    "answer": 0,
+    "explanation": "A well-prioritized agile backlog makes release and iteration planning easier and makes all planned work visible. قائمة العمل المرنة المرتبة الأولويات (Well-prioritized agile backlog) تسهل التخطيط وتوضح كل ما سيعمل عليه الفريق."
+  },
+  {
+    "id": "sa-l6-388",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Often, each item on the Sprint Backlog is broken down into tasks. Once all members agree the Sprint Backlog is achievable, the Sprint starts.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True — Sprint items are decomposed into tasks, and the sprint begins once the team agrees the Sprint Backlog is achievable. صحيح — يتم تقسيم عناصر الـ Sprint Backlog إلى مهام، ويبدأ السبرينت بعد موافقة الفريق على إمكانية تحقيقها."
+  },
+  {
+    "id": "sa-l6-389",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Daily Scrum is a daily meeting limited to _____ minutes.",
+    "options": [
+      "20",
+      "15"
+    ],
+    "answer": 1,
+    "explanation": "The Daily Scrum is timeboxed to 15 minutes. اجتماع الـ Daily Scrum اليومي محدد بـ 15 دقيقة."
+  },
+  {
+    "id": "sa-l6-390",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Once the Sprint starts, the team executes on the Sprint Backlog. Scrum does not specify how the team should execute; that is left for the team to decide.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True — Scrum defines the framework while leaving execution details to the self-organizing team. صحيح — يترك Scrum للفريق حرية اختيار طريقة التنفيذ."
+  },
+  {
+    "id": "sa-l6-391",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "_____ is a prioritized list of value the team can deliver.",
+    "options": [
+      "Product backlog",
+      "Burndown chart"
+    ],
+    "answer": 0,
+    "explanation": "The Product Backlog is a prioritized list of valuable items the team can deliver. الـ Product Backlog هو قائمة مرتبة بالأولوية للقيمة التي يمكن للفريق تسليمها."
+  },
+  {
+    "id": "sa-l6-392",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "To aid the Daily Scrum, teams often review _____.",
+    "options": [
+      "Task board",
+      "Sprint burndown",
+      "Both of them"
+    ],
+    "answer": 2,
+    "explanation": "Teams commonly review both the Task Board and the Sprint Burndown during Daily Scrum. يراجع الفريق عادةً لوحة المهام ومخطط الاحتراق (كلاهما) أثناء الاجتماع اليومي."
+  },
+  {
+    "id": "sa-l6-393",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ provides a visual way of tracking progress for each backlog item by listing each backlog item the team is working on, broken down into tasks placed in To Do, In Progress, and Done columns.",
+    "options": [
+      "Task board",
+      "Sprint burndown"
+    ],
+    "answer": 0,
+    "explanation": "The Task Board tracks backlog items and tasks across To Do, In Progress, and Done columns. لوحة المهام (Task Board) تتبع المهام بصريًا عبر أعمدة To Do وIn Progress وDone."
+  },
+  {
+    "id": "sa-l6-394",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A graph that plots the daily total of remaining work (typically in hours) to show whether the team is \"on track\" to complete all the work by the end of the Sprint is called _____.",
+    "options": [
+      "Task board",
+      "Sprint burndown"
+    ],
+    "answer": 1,
+    "explanation": "The Sprint Burndown plots remaining hours of work daily against the sprint timeline. مخطط احتراق السبرينت (Sprint Burndown) يرسم إجمالي العمل المتبقي يوميًا بالساعات."
+  },
+  {
+    "id": "sa-l6-395",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The team demonstrates what they've accomplished to stakeholders during the _____.",
+    "options": [
+      "Sprint Retrospective",
+      "Sprint Review"
+    ],
+    "answer": 1,
+    "explanation": "In the Sprint Review, the team demos completed work to stakeholders. يعرض الفريق ما أنجزه لأصحاب المصلحة في مراجعة السبرينت (Sprint Review)."
+  },
+  {
+    "id": "sa-l6-396",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The team takes time to reflect on what went well and which areas need improvement during the _____.",
+    "options": [
+      "Sprint Retrospective",
+      "Sprint Review"
+    ],
+    "answer": 0,
+    "explanation": "The Sprint Retrospective focuses on team reflection and process improvement. الـ Sprint Retrospective مخصص لمراجعة ما سار بشكل جيد وما يحتاج إلى تحسين."
+  },
+  {
+    "id": "sa-l6-397",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What does the term \"Increment\" in Scrum refer to?",
+    "options": [
+      "A potentially shippable product output of a sprint",
+      "A task assigned to the development team"
+    ],
+    "answer": 0,
+    "explanation": "An Increment is the potentially shippable product output produced by a sprint. الـ Increment هو مخرج منتج قابل للشحن (Potentially Shippable) ناتج عن السبرينت."
+  },
+  {
+    "id": "sa-l6-398",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "A sprint's output should be of shippable quality, even if it's part of something bigger and can't ship by itself. It should meet all the quality criteria set by the team and Product Owner.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True — Every sprint increment must meet the agreed quality criteria and be of shippable quality. صحيح — يجب أن يكون مخرج السبرينت بجودة قابلة للإطلاق ويستوفي معايير الجودة."
+  },
+  {
+    "id": "sa-l6-399",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the purpose of the Daily Scrum?",
+    "options": [
+      "To complete all sprint tasks",
+      "To discuss challenges and plan the day's work"
+    ],
+    "answer": 1,
+    "explanation": "The Daily Scrum aligns the team, surfaces impediments/challenges, and plans the next 24 hours of work. الهدف من الـ Daily Scrum هو مناقشة التحديات وتخطيط عمل اليوم."
+  },
+  {
+    "id": "sa-l6-400",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Scrum is very popular because it provides just enough framework to guide teams, while giving them flexibility in how they execute.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True — Scrum offers lightweight structure without dictating low-level execution steps. صحيح — يوازن Scrum بين الإطار الإرشادي والمرونة في التنفيذ."
+  },
+  {
+    "id": "sa-l6-401",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Sprint Planning selects the next items on the Product Backlog and the cycle repeats (repeat – learn – improve). This iterative cycle provides the team with lots of opportunities to learn and improve.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True — Repeating the sprint cycle creates continuous opportunities to learn and improve. صحيح — تكرار الدورة عبر Sprint Planning يتيح للفريق التعلم والتحسن باستمرار."
+  },
+  {
+    "id": "sa-l6-402",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "While broadly fitting under the umbrella of Agile, both Scrum and Kanban are quite similar.",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "explanation": "False — Although both are Agile, Scrum and Kanban are quite different (sprints and defined roles vs. continuous flow without fixed roles). خطأ — رغم انتماء كليهما لـ Agile، يختلف Scrum عن Kanban جوهريًا."
+  },
+  {
+    "id": "sa-l6-403",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "_____ help users, managers, and IT professionals understand the design of a system. Modeling involves graphical methods and nontechnical language that represent the system at various stages of development.",
+    "options": [
+      "Modeling techniques",
+      "Modeling approaches"
+    ],
+    "answer": 0,
+    "explanation": "Modeling techniques use graphical methods and nontechnical language to represent system design. تقنيات النمذجة (Modeling techniques) تستخدم أساليب رسومية ولغة غير تقنية لتوضيح تصميم النظام."
+  },
+  {
+    "id": "sa-l6-404",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ is a top-down representation of a function or process, similar to drawing an organization chart.",
+    "options": [
+      "BPM (Business Process Modeling)",
+      "FDD (Functional Decomposition Diagrams)"
+    ],
+    "answer": 1,
+    "explanation": "A Functional Decomposition Diagram (FDD) breaks down functions/processes top-down like an org chart. مخطط التفكيك الوظيفي (FDD) يمثل العمليات من أعلى لأسفل مثل الهيكل التنظيمي."
+  },
+  {
+    "id": "sa-l6-405",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "_____ represents one or more business processes.",
+    "options": [
+      "BPM (Business Process Modeling)",
+      "FDD (Functional Decomposition Diagrams)"
+    ],
+    "answer": 0,
+    "explanation": "A Business Process Model (BPM) represents one or more business processes. نمذجة عمليات الأعمال (BPM) تمثل عملية أعمال واحدة أو أكثر."
+  },
+  {
+    "id": "sa-l6-406",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ includes various shapes and symbols to represent events, processes, and workflows.",
+    "options": [
+      "BPM (Business Process Modeling)",
+      "BPMN (Business Process Modeling Notation)"
+    ],
+    "answer": 1,
+    "explanation": "BPMN provides standard shapes and symbols for events, processes, and workflows. لغة BPMN توفر أشكالًا ورموزًا قياسية للأحداث والعمليات وتدفقات العمل."
+  },
+  {
+    "id": "sa-l6-407",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "During requirements modeling, analysts often create models that use a standard language called Business Process Modeling Notation (BPMN).",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "explanation": "True — Analysts use BPMN as a standard notation during requirements modeling. صحيح — يستخدم المحللون BPMN كلغة قياسية أثناء نمذجة المتطلبات."
+  },
+  {
+    "id": "sa-l6-408",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Working from a functional decomposition diagram, analysts can create _____ to show how the system stores, processes, and transforms data.",
+    "options": [
+      "DFD (Data Flow Diagrams)",
+      "BPMN (Business Process Modeling Notation)"
+    ],
+    "answer": 0,
+    "explanation": "Data Flow Diagrams (DFDs) are derived from FDDs to illustrate data storage, processing, and transformation. تُنشأ مخططات تدفق البيانات (DFD) انطلاقًا من FDD لتوضيح تخزين البيانات ومعالجتها وتحويلها."
+  },
+  {
+    "id": "sa-l6-409",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "_____ is a widely used method of visualizing and documenting software systems design.",
+    "options": [
+      "UML (The Unified Modeling Language)",
+      "ML (Machine Learning)"
+    ],
+    "answer": 0,
+    "explanation": "UML (Unified Modeling Language) is widely used to visualize and document software system design. لغة النمذجة الموحدة (UML) طريقة شائعة لتصور وتوثيق تصميم الأنظمة."
+  },
+  {
+    "id": "sa-l6-410",
+    "subjectId": "system-analysis",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "_____ uses object-oriented design concepts, but it is independent of any specific programming language and can be used to describe business processes and requirements generally (e.g., Use Case Diagram, Sequence Diagram).",
+    "options": [
+      "UML (The Unified Modeling Language)",
+      "ML (Machine Learning)"
+    ],
+    "answer": 0,
+    "explanation": "UML is language-independent, object-oriented, and includes diagrams like Use Case and Sequence diagrams. تستخدم UML مفاهيم البرمجة كائنية التوجه بشكل مستقل عن لغة برمجة معينة."
   }
 ]

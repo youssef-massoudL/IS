@@ -13379,5 +13379,293 @@
     ],
     "answer": 0,
     "explanation": "True"
+  },
+  {
+    "id": "cn-amr-605",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "........... topology is used to interconnect the routers in the network.",
+    "options": [
+      "Mesh",
+      "Bus",
+      "Ring",
+      "Star"
+    ],
+    "answer": 0,
+    "explanation": "Routers in the network core are interconnected in a mesh topology for redundant paths. تتصل الراوترات في قلب الشبكة بطوبولوجيا Mesh لتوفير مسارات بديلة."
+  },
+  {
+    "id": "cn-amr-606",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is forwarding?",
+    "options": [
+      "The process of transmitting data to its destination",
+      "The process of determining the optimal path for data transmission",
+      "The process of encrypting data for secure transmission",
+      "The process of compressing data for faster transmission"
+    ],
+    "answer": 0,
+    "explanation": "Forwarding is the local action of moving a packet from a router's input to the appropriate output link toward its destination, whereas routing determines the end-to-end path. التمرير (Forwarding) هو إرسال الحزمة فعليًا إلى وجهتها عبر الخرج المناسب."
+  },
+  {
+    "id": "cn-amr-607",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The typical transmission rate for wide-area cellular access networks is ......",
+    "options": [
+      "1 Gbps",
+      "100 Kbps",
+      "10's Mbps",
+      "10's Gbps"
+    ],
+    "answer": 2,
+    "explanation": "Wide-area cellular access networks (4G/5G) typically provide tens of Mbps (10's Mbps). سرعة شبكات الوصول الخلوية واسعة النطاق تكون عادةً عشرات الميجابت في الثانية (10's Mbps)."
+  },
+  {
+    "id": "cn-amr-608",
+    "subjectId": "computer-networks",
+    "lecture": 1,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "All communication activity on the Internet is governed by ......",
+    "options": [
+      "services",
+      "ISP",
+      "gateway",
+      "protocols"
+    ],
+    "answer": 3,
+    "explanation": "All communication activity on the Internet is governed by protocols. كل أنشطة الاتصال على الإنترنت تحكمها البروتوكولات (Protocols)."
+  },
+  {
+    "id": "cn-amr-609",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "...... provide(s) encrypted TCP connections, data integrity, and end-point authentication.",
+    "options": [
+      "TCP sockets",
+      "TLS",
+      "Vanilla TCP & UDP sockets",
+      "UDP sockets"
+    ],
+    "answer": 1,
+    "explanation": "Transport Layer Security (TLS) adds encryption, data integrity, and end-point authentication over TCP. يوفر بروتوكول TLS اتصالات TCP مشفرة وسلامة البيانات ومصادقة الطرفين."
+  },
+  {
+    "id": "cn-amr-610",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which network topology provides the highest level of fault tolerance?",
+    "options": [
+      "Star topology",
+      "Bus topology",
+      "Ring topology",
+      "Mesh topology"
+    ],
+    "answer": 3,
+    "explanation": "Mesh topology connects devices with redundant links so traffic can reroute if a link fails, giving the highest fault tolerance. طوبولوجيا Mesh توفر أعلى درجة تحمل للأخطاء لوجود مسارات بديلة."
+  },
+  {
+    "id": "cn-amr-611",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What is the measurement unit used for bandwidth in digital networks?",
+    "options": [
+      "Mbps",
+      "GB",
+      "MHz",
+      "KB"
+    ],
+    "answer": 0,
+    "explanation": "In digital computer networks, bandwidth/throughput is measured in bits per second such as Mbps. يُقاس عرض النطاق الترددي في الشبكات الرقمية بوحدة Mbps."
+  },
+  {
+    "id": "cn-amr-612",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is the standard number for Token Ring technology defined by the IEEE?",
+    "options": [
+      "802.3",
+      "802.11",
+      "802.15",
+      "802.5"
+    ],
+    "answer": 3,
+    "explanation": "IEEE 802.5 defines Token Ring (while 802.3 is Ethernet and 802.11 is Wi-Fi). معيار IEEE لتقنية Token Ring هو 802.5."
+  },
+  {
+    "id": "cn-amr-613",
+    "subjectId": "computer-networks",
+    "lecture": 5,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which protocol is commonly used by routers to exchange routing information?",
+    "options": [
+      "TCP",
+      "UDP",
+      "DNS",
+      "RIP"
+    ],
+    "answer": 3,
+    "explanation": "RIP (Routing Information Protocol) is a routing protocol used by routers to exchange routing tables. يستخدم الراوتر بروتوكول التوجيه RIP لتبادل معلومات التوجيه."
+  },
+  {
+    "id": "cn-amr-614",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which type of network card is more popular than Token Ring?",
+    "options": [
+      "Ethernet",
+      "Coaxial",
+      "BNC",
+      "RJ-45"
+    ],
+    "answer": 0,
+    "explanation": "Ethernet and Token Ring are the classic network interface card types, and Ethernet is more popular. بطاقات شبكة Ethernet هي الأكثر انتشارًا مقارنة بـ Token Ring."
+  },
+  {
+    "id": "cn-amr-615",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Which wireless standard provides the highest data transfer rate?",
+    "options": [
+      "802.11a",
+      "802.11b",
+      "802.11g",
+      "802.11ac"
+    ],
+    "answer": 3,
+    "explanation": "Among 802.11a, 802.11b, 802.11g, and 802.11ac, IEEE 802.11ac provides the highest data rate. معيار 802.11ac هو الأحدث والأسرع بين المعايير المذكورة."
+  },
+  {
+    "id": "cn-amr-616",
+    "subjectId": "computer-networks",
+    "lecture": 3,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What device is used to amplify the strength of a network signal?",
+    "options": [
+      "Repeater",
+      "Bridge",
+      "Router",
+      "Switch"
+    ],
+    "answer": 0,
+    "explanation": "A repeater amplifies/regenerates the received signal and sends it on. المكرر (Repeater) يقوم بتقوية الإشارة وإعادة إرسالها."
+  },
+  {
+    "id": "cn-amr-617",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The Frame Check Sequence (FCS) field in an Ethernet frame is used for:",
+    "options": [
+      "Error correction",
+      "Flow control",
+      "Error detection using CRC",
+      "Frame synchronization"
+    ],
+    "answer": 2,
+    "explanation": "The 4-byte FCS field in an Ethernet frame holds a CRC value used for error detection. يُستخدم حقل FCS في إطار Ethernet لاكتشاف الأخطاء باستخدام CRC."
+  },
+  {
+    "id": "cn-amr-618",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "What happens when data packets collide in CSMA/CD?",
+    "options": [
+      "The packets are discarded",
+      "The packets wait for a random time before retransmission",
+      "The packets are combined into a single packet",
+      "The packets are retransmitted immediately"
+    ],
+    "answer": 1,
+    "explanation": "Upon collision, CSMA/CD sends a jam signal and uses a backoff algorithm so stations wait a random time before retransmitting. عند التصادم في CSMA/CD تنتظر الأجهزة وقتًا عشوائيًا (Backoff) قبل إعادة الإرسال."
+  },
+  {
+    "id": "cn-amr-619",
+    "subjectId": "computer-networks",
+    "lecture": 6,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Which technology uses a fixed packet size of 53 bytes?",
+    "options": [
+      "Satellite systems",
+      "DQDB",
+      "Ethernet",
+      "ATM"
+    ],
+    "answer": 3,
+    "explanation": "ATM (Asynchronous Transfer Mode) uses fixed 53-byte cells. تستخدم تقنية ATM حزمًا ثابتة الحجم تبلغ 53 بايت."
+  },
+  {
+    "id": "cn-amr-620",
+    "subjectId": "computer-networks",
+    "lecture": 4,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Does UDP provide error-checking and retransmission of lost packets?",
+    "options": [
+      "Yes, it provides both error-checking and retransmission.",
+      "Yes, it provides error-checking but not retransmission.",
+      "No, it provides neither error-checking nor retransmission.",
+      "No, it provides retransmission but not error-checking."
+    ],
+    "answer": 1,
+    "explanation": "UDP includes a checksum for error-checking, but does not retransmit lost or corrupted packets. يوفر UDP فحص الأخطاء عبر Checksum لكنه لا يعيد إرسال الحزم المفقودة."
+  },
+  {
+    "id": "cn-amr-621",
+    "subjectId": "computer-networks",
+    "lecture": 7,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "................. is device interfaces that can physically reach each other without passing through an intervening router.",
+    "options": [
+      "Subnet",
+      "WFQ",
+      "NAT",
+      "DHCP"
+    ],
+    "answer": 0,
+    "explanation": "A subnet consists of device interfaces that can physically reach each other directly without crossing a router. الشبكة الفرعية (Subnet) هي مجموعة واجهات الأجهزة التي تصل لبعضها دون المرور عبر راوتر."
+  },
+  {
+    "id": "cn-amr-622",
+    "subjectId": "computer-networks",
+    "lecture": 2,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "DNS database must be distributed to avoid ___",
+    "options": [
+      "traffic volume",
+      "distant centralized database",
+      "single point of failure",
+      "All are true"
+    ],
+    "answer": 3,
+    "explanation": "A centralized DNS would suffer from a single point of failure, high traffic volume, distant database latency, and maintenance issues. يتم توزيع قاعدة بيانات DNS لتجنب نقطة الفشل الواحدة وضغط الزحام والبعد الجغرافي."
   }
 ]

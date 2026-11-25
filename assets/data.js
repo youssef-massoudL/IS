@@ -19142,6 +19142,294 @@ window.__SITE_QUESTIONS__ = {
       ],
       "answer": 0,
       "explanation": "True"
+    },
+    {
+      "id": "cn-amr-605",
+      "subjectId": "computer-networks",
+      "lecture": 1,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "........... topology is used to interconnect the routers in the network.",
+      "options": [
+        "Mesh",
+        "Bus",
+        "Ring",
+        "Star"
+      ],
+      "answer": 0,
+      "explanation": "Routers in the network core are interconnected in a mesh topology for redundant paths. تتصل الراوترات في قلب الشبكة بطوبولوجيا Mesh لتوفير مسارات بديلة."
+    },
+    {
+      "id": "cn-amr-606",
+      "subjectId": "computer-networks",
+      "lecture": 1,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "What is forwarding?",
+      "options": [
+        "The process of transmitting data to its destination",
+        "The process of determining the optimal path for data transmission",
+        "The process of encrypting data for secure transmission",
+        "The process of compressing data for faster transmission"
+      ],
+      "answer": 0,
+      "explanation": "Forwarding is the local action of moving a packet from a router's input to the appropriate output link toward its destination, whereas routing determines the end-to-end path. التمرير (Forwarding) هو إرسال الحزمة فعليًا إلى وجهتها عبر الخرج المناسب."
+    },
+    {
+      "id": "cn-amr-607",
+      "subjectId": "computer-networks",
+      "lecture": 1,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "The typical transmission rate for wide-area cellular access networks is ......",
+      "options": [
+        "1 Gbps",
+        "100 Kbps",
+        "10's Mbps",
+        "10's Gbps"
+      ],
+      "answer": 2,
+      "explanation": "Wide-area cellular access networks (4G/5G) typically provide tens of Mbps (10's Mbps). سرعة شبكات الوصول الخلوية واسعة النطاق تكون عادةً عشرات الميجابت في الثانية (10's Mbps)."
+    },
+    {
+      "id": "cn-amr-608",
+      "subjectId": "computer-networks",
+      "lecture": 1,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "All communication activity on the Internet is governed by ......",
+      "options": [
+        "services",
+        "ISP",
+        "gateway",
+        "protocols"
+      ],
+      "answer": 3,
+      "explanation": "All communication activity on the Internet is governed by protocols. كل أنشطة الاتصال على الإنترنت تحكمها البروتوكولات (Protocols)."
+    },
+    {
+      "id": "cn-amr-609",
+      "subjectId": "computer-networks",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "...... provide(s) encrypted TCP connections, data integrity, and end-point authentication.",
+      "options": [
+        "TCP sockets",
+        "TLS",
+        "Vanilla TCP & UDP sockets",
+        "UDP sockets"
+      ],
+      "answer": 1,
+      "explanation": "Transport Layer Security (TLS) adds encryption, data integrity, and end-point authentication over TCP. يوفر بروتوكول TLS اتصالات TCP مشفرة وسلامة البيانات ومصادقة الطرفين."
+    },
+    {
+      "id": "cn-amr-610",
+      "subjectId": "computer-networks",
+      "lecture": 3,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Which network topology provides the highest level of fault tolerance?",
+      "options": [
+        "Star topology",
+        "Bus topology",
+        "Ring topology",
+        "Mesh topology"
+      ],
+      "answer": 3,
+      "explanation": "Mesh topology connects devices with redundant links so traffic can reroute if a link fails, giving the highest fault tolerance. طوبولوجيا Mesh توفر أعلى درجة تحمل للأخطاء لوجود مسارات بديلة."
+    },
+    {
+      "id": "cn-amr-611",
+      "subjectId": "computer-networks",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "What is the measurement unit used for bandwidth in digital networks?",
+      "options": [
+        "Mbps",
+        "GB",
+        "MHz",
+        "KB"
+      ],
+      "answer": 0,
+      "explanation": "In digital computer networks, bandwidth/throughput is measured in bits per second such as Mbps. يُقاس عرض النطاق الترددي في الشبكات الرقمية بوحدة Mbps."
+    },
+    {
+      "id": "cn-amr-612",
+      "subjectId": "computer-networks",
+      "lecture": 3,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "What is the standard number for Token Ring technology defined by the IEEE?",
+      "options": [
+        "802.3",
+        "802.11",
+        "802.15",
+        "802.5"
+      ],
+      "answer": 3,
+      "explanation": "IEEE 802.5 defines Token Ring (while 802.3 is Ethernet and 802.11 is Wi-Fi). معيار IEEE لتقنية Token Ring هو 802.5."
+    },
+    {
+      "id": "cn-amr-613",
+      "subjectId": "computer-networks",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Which protocol is commonly used by routers to exchange routing information?",
+      "options": [
+        "TCP",
+        "UDP",
+        "DNS",
+        "RIP"
+      ],
+      "answer": 3,
+      "explanation": "RIP (Routing Information Protocol) is a routing protocol used by routers to exchange routing tables. يستخدم الراوتر بروتوكول التوجيه RIP لتبادل معلومات التوجيه."
+    },
+    {
+      "id": "cn-amr-614",
+      "subjectId": "computer-networks",
+      "lecture": 3,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Which type of network card is more popular than Token Ring?",
+      "options": [
+        "Ethernet",
+        "Coaxial",
+        "BNC",
+        "RJ-45"
+      ],
+      "answer": 0,
+      "explanation": "Ethernet and Token Ring are the classic network interface card types, and Ethernet is more popular. بطاقات شبكة Ethernet هي الأكثر انتشارًا مقارنة بـ Token Ring."
+    },
+    {
+      "id": "cn-amr-615",
+      "subjectId": "computer-networks",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Which wireless standard provides the highest data transfer rate?",
+      "options": [
+        "802.11a",
+        "802.11b",
+        "802.11g",
+        "802.11ac"
+      ],
+      "answer": 3,
+      "explanation": "Among 802.11a, 802.11b, 802.11g, and 802.11ac, IEEE 802.11ac provides the highest data rate. معيار 802.11ac هو الأحدث والأسرع بين المعايير المذكورة."
+    },
+    {
+      "id": "cn-amr-616",
+      "subjectId": "computer-networks",
+      "lecture": 3,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "What device is used to amplify the strength of a network signal?",
+      "options": [
+        "Repeater",
+        "Bridge",
+        "Router",
+        "Switch"
+      ],
+      "answer": 0,
+      "explanation": "A repeater amplifies/regenerates the received signal and sends it on. المكرر (Repeater) يقوم بتقوية الإشارة وإعادة إرسالها."
+    },
+    {
+      "id": "cn-amr-617",
+      "subjectId": "computer-networks",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The Frame Check Sequence (FCS) field in an Ethernet frame is used for:",
+      "options": [
+        "Error correction",
+        "Flow control",
+        "Error detection using CRC",
+        "Frame synchronization"
+      ],
+      "answer": 2,
+      "explanation": "The 4-byte FCS field in an Ethernet frame holds a CRC value used for error detection. يُستخدم حقل FCS في إطار Ethernet لاكتشاف الأخطاء باستخدام CRC."
+    },
+    {
+      "id": "cn-amr-618",
+      "subjectId": "computer-networks",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "What happens when data packets collide in CSMA/CD?",
+      "options": [
+        "The packets are discarded",
+        "The packets wait for a random time before retransmission",
+        "The packets are combined into a single packet",
+        "The packets are retransmitted immediately"
+      ],
+      "answer": 1,
+      "explanation": "Upon collision, CSMA/CD sends a jam signal and uses a backoff algorithm so stations wait a random time before retransmitting. عند التصادم في CSMA/CD تنتظر الأجهزة وقتًا عشوائيًا (Backoff) قبل إعادة الإرسال."
+    },
+    {
+      "id": "cn-amr-619",
+      "subjectId": "computer-networks",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Which technology uses a fixed packet size of 53 bytes?",
+      "options": [
+        "Satellite systems",
+        "DQDB",
+        "Ethernet",
+        "ATM"
+      ],
+      "answer": 3,
+      "explanation": "ATM (Asynchronous Transfer Mode) uses fixed 53-byte cells. تستخدم تقنية ATM حزمًا ثابتة الحجم تبلغ 53 بايت."
+    },
+    {
+      "id": "cn-amr-620",
+      "subjectId": "computer-networks",
+      "lecture": 4,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Does UDP provide error-checking and retransmission of lost packets?",
+      "options": [
+        "Yes, it provides both error-checking and retransmission.",
+        "Yes, it provides error-checking but not retransmission.",
+        "No, it provides neither error-checking nor retransmission.",
+        "No, it provides retransmission but not error-checking."
+      ],
+      "answer": 1,
+      "explanation": "UDP includes a checksum for error-checking, but does not retransmit lost or corrupted packets. يوفر UDP فحص الأخطاء عبر Checksum لكنه لا يعيد إرسال الحزم المفقودة."
+    },
+    {
+      "id": "cn-amr-621",
+      "subjectId": "computer-networks",
+      "lecture": 7,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "................. is device interfaces that can physically reach each other without passing through an intervening router.",
+      "options": [
+        "Subnet",
+        "WFQ",
+        "NAT",
+        "DHCP"
+      ],
+      "answer": 0,
+      "explanation": "A subnet consists of device interfaces that can physically reach each other directly without crossing a router. الشبكة الفرعية (Subnet) هي مجموعة واجهات الأجهزة التي تصل لبعضها دون المرور عبر راوتر."
+    },
+    {
+      "id": "cn-amr-622",
+      "subjectId": "computer-networks",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "DNS database must be distributed to avoid ___",
+      "options": [
+        "traffic volume",
+        "distant centralized database",
+        "single point of failure",
+        "All are true"
+      ],
+      "answer": 3,
+      "explanation": "A centralized DNS would suffer from a single point of failure, high traffic volume, distant database latency, and maintenance issues. يتم توزيع قاعدة بيانات DNS لتجنب نقطة الفشل الواحدة وضغط الزحام والبعد الجغرافي."
     }
   ],
   "database-2": [
@@ -24786,17 +25074,17 @@ window.__SITE_QUESTIONS__ = {
       "id": "it-l1-001",
       "subjectId": "information-theory",
       "lecture": 1,
-      "difficulty": "medium",
+      "difficulty": "easy",
       "type": "mcq",
-      "q": "Information theory was founded primarily by:",
+      "q": "Who is considered the father of information theory?",
       "options": [
-        "Bit",
-        "1 bit",
-        "Entropy",
-        "Claude Shannon"
+        "Alan Turing",
+        "John von Neumann",
+        "Claude Shannon",
+        "Norbert Wiener"
       ],
-      "answer": 3,
-      "explanation": "1948 سنة المعلومات نظرية مؤسس"
+      "answer": 2,
+      "explanation": "Claude Shannon founded information theory with his 1948 paper “A Mathematical Theory of Communication”. كلود شانون هو مؤسس نظرية المعلومات بورقته عام 1948."
     },
     {
       "id": "it-l1-002",
@@ -24806,13 +25094,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "The uncertainty associated with a random variable is measured by:",
       "options": [
-        "1 bit",
-        "0",
+        "Channel capacity",
         "Entropy",
-        "Bit"
+        "Redundancy",
+        "Bandwidth"
       ],
-      "answer": 2,
-      "explanation": "Correct answer: Entropy"
+      "answer": 1,
+      "explanation": "Entropy is the average uncertainty of a random variable. الإنتروبي هو مقياس متوسط عدم التأكد للمتغير العشوائي."
     },
     {
       "id": "it-l1-003",
@@ -24822,13 +25110,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "The unit of entropy when the logarithm is to base 2 is:",
       "options": [
-        "0",
-        "H(X) = -∑ p(x) log2 p(x)",
-        "1 bit",
-        "Bit"
+        "The bit",
+        "The nat",
+        "The hertz",
+        "The byte"
       ],
-      "answer": 3,
-      "explanation": "Correct answer: Bit"
+      "answer": 0,
+      "explanation": "Logarithm base 2 gives entropy in bits; the natural logarithm gives nats. اللوغاريتم للأساس 2 يعطي البت، والأساس e يعطي النات."
     },
     {
       "id": "it-l1-004",
@@ -24838,13 +25126,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "For a binary random variable with equal probabilities, the entropy is:",
       "options": [
-        "H(X) = -∑ p(x) log2 p(x)",
-        "Equally probable",
-        "0",
-        "1 bit"
+        "0 bits",
+        "0.5 bits",
+        "1 bit",
+        "2 bits"
       ],
-      "answer": 3,
-      "explanation": "→ }0.5 ,0.5{ العادلة العملة احتم الت ألن"
+      "answer": 2,
+      "explanation": "H = −(0.5 log₂0.5 + 0.5 log₂0.5) = 1 bit. الحدثان متساويان في الاحتمال، فالإنتروبي = 1 بت."
     },
     {
       "id": "it-l3-005",
@@ -24852,15 +25140,15 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 3,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "If an event has probability 1, its self- information is:",
+      "q": "If an event has probability 1, its self-information is:",
       "options": [
-        "Equally probable",
-        "log2 M",
-        "H(X) = -∑ p(x) log2 p(x)",
-        "0"
+        "0",
+        "1 bit",
+        "log₂ M",
+        "Infinite"
       ],
-      "answer": 3,
-      "explanation": "log2(1) =- :مفاجأة مفيهوش مؤكد حدث ألن"
+      "answer": 0,
+      "explanation": "I(x) = −log₂P(x); for P(x) = 1, I = −log₂1 = 0. الحدث المؤكد لا يحمل معلومات، فمعلوماته = 0."
     },
     {
       "id": "it-l1-006",
@@ -24870,13 +25158,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "The entropy of a discrete random variable X is defined as:",
       "options": [
-        "Equally probable",
-        "0",
-        "log2 M",
-        "H(X) = -∑ p(x) log2 p(x)"
+        "H(X) = Σ p(x) log₂ p(x)",
+        "H(X) = −Σ p(x) log₂ p(x)",
+        "H(X) = Σ p(x)²",
+        "H(X) = log₂ p(x)"
       ],
-      "answer": 3,
-      "explanation": "الحتمال مجموع( لإلنتروبي األساسي القانون .)مقلوبه لوغاريتم في"
+      "answer": 1,
+      "explanation": "Entropy is the expected value of self-information: H(X) = −Σ p(x) log₂ p(x). الإنتروبي هو متوسط المعلومات الذاتية لكل النواتج."
     },
     {
       "id": "it-l1-007",
@@ -24886,13 +25174,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "Entropy reaches its maximum when the possible outcomes are:",
       "options": [
-        "0",
-        "log2 M",
-        "Uncertainty about X given Y",
-        "Equally probable"
+        "All equally probable",
+        "All impossible",
+        "One outcome certain",
+        "Only two outcomes exist"
       ],
-      "answer": 3,
-      "explanation": ")Uniform( متساوية تكون النواتج"
+      "answer": 0,
+      "explanation": "The uniform distribution maximises entropy: H = log₂ M. الإنتروبي يكون أقصى ما يمكن عند تساوي احتمالات النواتج."
     },
     {
       "id": "it-l1-009",
@@ -24902,13 +25190,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "For a random variable with M equally likely outcomes, the entropy is:",
       "options": [
-        "Uncertainty about X given Y",
-        "I(X; Y) = H(X) - H(X | Y)",
-        "Shared information between X and Y",
-        "log2 M"
+        "0",
+        "1 bit",
+        "log₂ M",
+        "M bits"
       ],
-      "answer": 3,
-      "explanation": "H(X) = :الحتمال متساوية النواتج لما"
+      "answer": 2,
+      "explanation": "H = log₂ M for M equally likely outcomes. لمتغير له M نواتج متساوية الاحتمال، الإنتروبي = log₂ M."
     },
     {
       "id": "it-l2-010",
@@ -24918,13 +25206,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "Conditional entropy H(X | Y) represents:",
       "options": [
-        "Shared information between X and Y",
-        "I(X; Y) = H(X) - H(X | Y)",
-        "I(X; Y) = 0",
-        "Uncertainty about X given Y"
+        "The uncertainty about X given Y",
+        "The uncertainty about Y only",
+        "The joint uncertainty of X and Y",
+        "The information shared by X and Y"
       ],
-      "answer": 3,
-      "explanation": "Y قيمة معرفة بعد X في المتبقية الحيرة"
+      "answer": 0,
+      "explanation": "H(X|Y) is the remaining uncertainty about X after Y is known. هو عدم التأكد المتبقي في X بعد معرفة Y."
     },
     {
       "id": "it-l2-011",
@@ -24934,13 +25222,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "Mutual information I(X; Y) measures:",
       "options": [
-        "I(X; Y) = H(X) - H(X | Y)",
-        "D(p || q) ≥ 0",
-        "I(X; Y) = 0",
-        "Shared information between X and Y"
+        "The uncertainty of X alone",
+        "The information shared between X and Y",
+        "The total entropy of X and Y",
+        "The channel bandwidth"
       ],
-      "answer": 3,
-      "explanation": "بين المتبادلة أو المشتركة المعلومات كمية .Y و X المتغيرين"
+      "answer": 1,
+      "explanation": "I(X;Y) is the reduction in uncertainty about X due to Y. هو كمية المعلومات المشتركة بين X و Y."
     },
     {
       "id": "it-l3-012",
@@ -24950,13 +25238,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "Which equation is correct for I(X; Y)?",
       "options": [
-        "D(p || q) ≥ 0",
-        "p = q almost everywhere",
-        "I(X; Y) = 0",
-        "I(X; Y) = H(X) - H(X | Y)"
+        "I(X;Y) = H(X) + H(Y)",
+        "I(X;Y) = H(X) − H(X|Y)",
+        "I(X;Y) = H(X|Y) − H(X)",
+        "I(X;Y) = H(X) · H(Y)"
       ],
-      "answer": 3,
-      "explanation": "ناقص األصلية الحيرة = المتبادلة المعلومات .Y معرفة بعد المتبقية الحيرة"
+      "answer": 1,
+      "explanation": "I(X;Y) = H(X) − H(X|Y) = H(Y) − H(Y|X). المعلومات المتبادلة = الحيرة الأصلية ناقص الحيرة المتبقية."
     },
     {
       "id": "it-l3-013",
@@ -24966,13 +25254,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "If X and Y are statistically independent, then:",
       "options": [
-        "D(p || q) ≥ 0",
-        "Claude Shannon",
-        "p = q almost everywhere",
-        "I(X; Y) = 0"
+        "I(X;Y) = H(X)",
+        "I(X;Y) = 0",
+        "I(X;Y) = H(X) + H(Y)",
+        "I(X;Y) = 1"
       ],
-      "answer": 3,
-      "explanation": "I(X;Y) = 0 فـ بينهم مشتركة"
+      "answer": 1,
+      "explanation": "Independence means Y tells us nothing about X, so I(X;Y) = 0. المتغيران المستقلان لا يقدمان معلومات أحدهما عن الآخر."
     },
     {
       "id": "it-l3-014",
@@ -24980,15 +25268,15 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 3,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "For Kullback-Leibler divergence D(p || q), which property is always true?",
+      "q": "For Kullback–Leibler divergence D(p || q), which property is always true?",
       "options": [
-        "p = q almost everywhere",
-        "Entropy",
-        "Claude Shannon",
-        "D(p || q) ≥ 0"
+        "D(p||q) ≥ 0",
+        "D(p||q) ≤ 0",
+        "D(p||q) = 1",
+        "D(p||q) can be negative"
       ],
-      "answer": 3,
-      "explanation": "Non-( صفر تساوي أو موجبة ًدايم )Question( الكتاب في السؤالCorrect( الصحيحة اإلجابة بالعربي والفهم السبب"
+      "answer": 0,
+      "explanation": "Gibbs' inequality gives D(p||q) ≥ 0, with equality iff p = q. التباعد KL دائمًا غير سالب ويساوي صفرًا فقط عند تطابق التوزيعين."
     },
     {
       "id": "it-l3-015",
@@ -24998,13 +25286,13 @@ window.__SITE_QUESTIONS__ = {
       "type": "mcq",
       "q": "D(p || q) = 0 if and only if:",
       "options": [
-        "Claude Shannon",
-        "Entropy",
-        "Bit",
-        "p = q almost everywhere"
+        "p and q are independent",
+        "p = q almost everywhere",
+        "p has zero entropy",
+        "q is uniform"
       ],
-      "answer": 3,
-      "explanation": "q و p التوزيعين لو فقط صفر بتساوي .ًتمام متطابقين )88–87 ص ،وغلط صح سؤال 15("
+      "answer": 1,
+      "explanation": "KL divergence is zero only when the two distributions are identical. يساوي صفرًا فقط عندما يتطابق التوزيعان تمامًا."
     },
     {
       "id": "it-l1-tf-01",
@@ -25214,7 +25502,7 @@ window.__SITE_QUESTIONS__ = {
         "False"
       ],
       "answer": 0,
-      "explanation": "اإلنتروبي زادت والعشوائية الحيرة زادت كلما )77–76 ص ،الكتاب في الرسميين تعريف 30 الـ( Part B: Definition Questions :MCQ الـ أو Written الـ في كاملة الدرجة تاخد عشان مصطلح 30 الـ من مصطلح لكل رسمي تعريف وأدق أقصر )Term( المصطلح بالعربي المعنى + )Official Definition( باإلنجليزي النموذجي التعريف .)التأكد عدم تزيل رسالة( .)واحد حدث معلومات( )Term( المصطلح بالعربي المعنى + )Official Definition( باإلنجليزي النموذجي التعريف )80–77 ص ،مسائل 10 الـ حل( Part C: Equation and Calculation Questions :)Marginals( واألعمدة الصفوف نجمع :ًأو • .H(X) = 1 bit إذن ⇒ p(X=1) = 0.2 + 0.3 = 0.5 و ،p(X=0) = 0.4 + 0.1 = 0.5 :p(X) الصفوف مجموع - إذن ⇒ p(Y=1) = 0.1 + 0.3 = 0.4 و ،p(Y=0) = 0.4 + 0.2 = 0.6 :p(Y) األعمدة مجموع - :Q5 (Joint Entropy H(X,Y)) حل • :Chain Rule الـ باستخدام :Q6 (Conditional Entropy H(X|Y)) حل • :Q7 (Mutual Information I(X;Y)) حل • أن وبما .H(Y|X) = Hb(p) إذن ،}p, p-1{ فيه صف كل BSC الـ في :)Derivation( الستنتاج • .C = 1 - Hb(p) إذن ،p(x) = (0.5, 0.5) عندما bit 1 هي H(Y) لـ قيمة وأقصى ،I(X;Y) = H(Y) - H(Y|X) = H(Y) - Hb(p) :p = 0.1 عند الحساب • )83–80 ص ،مختصرة بطريقة كاملة إثباتات 10 الـ( Part D: Proof Questions :)!بس سطرين إثبات كل( إثباتات 10 الـ من سؤال لكل نموذجي رياضي إثبات أقصر إثباته المطلوب)Model Proof( المختصر النموذجي اإلثبات خطوات إثباته المطلوب)Model Proof( المختصر النموذجي اإلثبات خطوات ،Huffman, Shannon-Fano, Arithmetic( والمقارنات التكويد مسائل حل :Part E, F, & G )85–83 ص )83 ص( Part E — Huffman Coding Questions .1 :}A: 0.40, B: 0.20, C: 0.15, D: 0.15, E: 0.10{ الرموز :E.Q1 مسألة حل نجمع :}0.15 ,0.20 ,0.25 ,0.40{ القائمة )2 .)D=0.15 + E=0.10 = 0.25( اتنين أصغر نجمع )1 :السريعة الجمع خطوات • )4 .)0.60 = 0.25 + 0.35( اتنين أصغر نجمع :}0.25 ,0.35 ,0.40{ القائمة )3 .)B=0.20 + C=0.15 = 0.35( اتنين أصغر .)A=0.40 = 1.0 + 0.60( اتنين آخر نجمع | C (0.15) → 001 (l=3) | B (0.20) → 000 (l=3) | A (0.40) → 1 (l=1) :وأطوالها األكواد • .L = 0.25 + 0.35 + 0.60 + 1.0 = 2.20 bits/symbol :النواتج بجمع )Average Length L( الطول متوسط • :)Source Entropy H(X)( اإلنتروبي • .η = (2.146 / 2.20) × 100% = 97.55% :)Coding Efficiency η( الكفاءة • :P = {0.35, 0.25, 0.20, 0.10, 0.10} التوزيع :E.Q2 مسألة حل )4 .0.35 + 0.25 = 0.60 )3 .0.20 + 0.20 = 0.40 )2 .0.10 + 0.10 = 0.20 )1 :السريعة الجمع خطوات • :األطوال( L = 0.20 + 0.40 + 0.60 + 1.0 = 2.20 bits/symbol :النواتج بجمع )Average Length L( الطول متوسط • .)Optimal( مثالي فالكود ،95.68% والكفاءة H(X) ≤ L < H(X) + 1 أن وبما ،H(X) = 2.105 bits :اإلنتروبي مع المقارنة • )84 ص( Part F — Shannon–Fano Coding .2 :P = {0.4, 0.2, 0.15, 0.15, 0.1} التوزيع :F.Q1 مسألة حل واللي 0 ياخد فوق اللي( المجموع في متقاربتين لمجموعتين لتحت فوق من المرتبة القائمة بنقسم Shannon-Fano طريقة في :)1 ياخد تحت .{0.15, 0.15, 0.1} (1 → 0.4 مجموعهم) و {0.4, 0.2} (0 → 0.6 مجموعهم) :األوىل القسمة )1 .0.2 → 01 (l=2) و ،0.4 → 00 (l=2) :فوق اللي المجموعة نقسم )2 .0.1 → 111 (l=3) و 0.15 110 → التانية (l=3) لـ نقسمه والباقي ،0.15 10 → األوىل (l=2) :تحت اللي المجموعة نقسم )3 2.20 هافمان من أطول إنه الحظ( L = 0.4(2) + 0.2(2) + 0.15(2) + 0.15(3) + 0.1(3) = 2.25 bits :L الطول متوسط • .η = (2.146 / 2.25) × 100% = 95.38% والكفاءة ،H(X) = 2.146 bits :والكفاءة اإلنتروبي • :)Huffman vs. Shannon-Fano مقارنة( F.Q2 سؤال حل Shannon-Fano is Top-Down بينما ،)لفوق تحت من احتمالين أصغر يدمج( Procedure: Huffman is Bottom-Up .1 .)لتحت فوق من لنصين الحتم الت يقسم( .Prefix-free (Instantaneous) الـ شرط يحقق كالهما :Prefix Property .4 .فانو-شانون تساوي أو ًدايم أعىل هافمان كفاءة :Compression Efficiency .5 )85–84 ص( Part G — Arithmetic Coding .3 :P(A) = 0.5, P(B) = 0.3, P(C) = 0.2 بأن ًعلم )ABC( الكلمة تشفير :G.Q1 مسألة حل .C → [0.8, 1.0) | B → [0.5, 0.8) | A → [0, 0.5) :)1 لـ 0 من الحروف فترات تجهيز( 1 خطوة • :)بالقانون C ثم B ثم A الكلمة حروف عىل نمشي( 2 خطوة • .Low = 0.0, High = 0.5 ⇒ Range = 0.5 - 0 = 0.5 :األصلية A الـ فترة ياخد :)A [0, 0.5 األول الحرف .1 :)B [0.5, 0.8 الثاني الحرف .2 :)C [0.8, 1.0 الثالث الحرف .3 .)Tag = 0.38 مثل داخلها رقم أي اختيار ويمكن( )0.40 ,0.37[ :هي ABC لتشفير النهائية الفترة إذن ⇒ :)Huffman vs. Arithmetic Coding مقارنة( G.Q3 سؤال حل المقارنة وجهHuffman Coding .)رمز لكل منفصل كود( Symbol-by-symbol Efficiency .2صحيح رقم الطول ألن كبيرة الحتم الت لو كفاءة أقل .)bit/symbol 1 لـ يصل إهدار( من ًجد يقترب ،)State-of-the-art( كفاءة أعىل .integer الـ إهدار بدون النظرية اإلنتروبي .l(x) ∈ Z+ صحيح طول له رمز كل.الفترة تضييق عبر رمز لكل bit الـ من أجزاء مع يتعامل .كاملة شجرة بناء ويحتاج الغالب في ثابت المتغيرة الحتم الت مع التكيف وسهل ًجد مرن .)مباشر بحث جدول( ًجد وسريع بسيط لتجنب دقيقة عشرية ضرب عمليات يحتاج( ًحسابي أعقد .)underflow الـ )87–85 ص( المقالية واألسئلة شانون نظريات إجابات :Part H & Part I :)ًجد مشهور امتحانات سؤال — األساسية كميات 4 الـ بين الفرق( H.Q5 .)حاجة نستلم ما قبل المرسل في حيرتنا( .H(X): Prior uncertainty about the source input X before transmission • الحيرة( .H(X | Y): Remaining uncertainty (equivocation) about X after observing the channel output Y • .)الخرج استالم بعد المتبقية :Part I (Q16–Q20) في التطبيقات أسئلة إجابات ملخص وتقليل )Arithmetic coding و Huffman عبر ZIP, GZIP, PNG( فقد بدون الملفات ضغط :Data Compression في • .النقل ووقت التخزين مساحة 4G/5G و Wi-Fi الـ شبكات في )Channel coding( األخطاء تصحيح أكواد تصميم :Communication Networks في • .)C( شانون لسعة للوصول الفضائية و التص الت ،)Information Gain / Mutual Information باستخدام Decision Trees( القرار أشجار بناء :Machine Learning & AI في • Image texture( الصور وتحليل ،)العصبية الشبكات في D(p||q) Cross-Entropy & KL Divergence( الخسارة ودوال )Master Formula Sheet( واحد جدول في المتحان مسائل قوانين جميع ملخص Law / Formula( القانون اسم )Mathematical Equation( الرياضية الصيغة المتحان؟ في نستخدمه متى pi احتماله واحد لحدث المعلومات كمية حساب .)متساوية لو log2 M أو( H(X) = -∑ p(x) log2 p(x) bitsلتمثيل bits عدد أقل أو الحيرة متوسط حساب .المصدر H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)وقاعدة p(x,y) المشترك التوزيع جداول مسائل .)Chain Rule( السلسلة والمستقبل المرسل بين المتبادلة المعلومات .)مستقلين لو 0 =( p = لو 0 =( q و p توزيعين بين المسافة قياس .أخطاء بدون التصال لقناة سعة أقصى حساب ،الطول متوسط ،Prefix code الـ أطوال فحص .الكود وكفاءة"
+      "explanation": "More uncertainty means more entropy up to the maximum log₂ M. زيادة عدم التأكد ترفع الإنتروبي حتى الحد الأقصى log₂ M."
     },
     {
       "id": "it-l1-def-01",
@@ -25222,7 +25510,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 1,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A measure of the average uncertainty of a random variable (average bits required per”?",
+      "q": "Which term is defined as: “A measure of the average uncertainty of a random variable (the average number of bits required to describe it)”?",
       "options": [
         "Conditional entropy H(X|Y)",
         "Mutual information I(X;Y)",
@@ -25230,7 +25518,7 @@ window.__SITE_QUESTIONS__ = {
         "Entropy H(X)"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Entropy H(X)"
+      "explanation": "Entropy H(X) is the average uncertainty, measured in bits. الإنتروبي هو متوسط عدم التأكد ويقاس بالبت."
     },
     {
       "id": "it-l2-def-02",
@@ -25254,7 +25542,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 2,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “The remaining uncertainty about random variable X given the knowledge of another”?",
+      "q": "Which term is defined as: “The remaining uncertainty about random variable X given the knowledge of another random variable Y”?",
       "options": [
         "Relative entropy D(p||q)",
         "Redundancy",
@@ -25262,7 +25550,7 @@ window.__SITE_QUESTIONS__ = {
         "Conditional entropy H(X|Y)"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Conditional entropy H(X|Y)"
+      "explanation": "Conditional entropy H(X|Y) is the uncertainty left in X after Y is known. هو عدم التأكد المتبقي في X بعد معرفة Y."
     },
     {
       "id": "it-l2-def-04",
@@ -25286,7 +25574,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 1,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A measure of the distance between two probability distributions p and q (inefficiency of”?",
+      "q": "Which term is defined as: “A measure of the distance between two probability distributions p and q (the inefficiency of assuming q when the true distribution is p)”?",
       "options": [
         "Information source",
         "Discrete memoryless source",
@@ -25294,7 +25582,7 @@ window.__SITE_QUESTIONS__ = {
         "Relative entropy D(p||q)"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Relative entropy D(p||q)"
+      "explanation": "Relative entropy D(p||q) measures the inefficiency of using q instead of p. الإنتروبي النسبي يقيس كفاءة استخدام توزيع بدل التوزيع الحقيقي."
     },
     {
       "id": "it-l2-def-06",
@@ -25302,7 +25590,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 2,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “Extra or repeated bits in data beyond the source entropy (L - H(X)); removed in”?",
+      "q": "Which term is defined as: “Extra or repeated bits in data beyond the source entropy (L − H(X)); removed in compression”?",
       "options": [
         "Information source",
         "Discrete memoryless source",
@@ -25310,7 +25598,7 @@ window.__SITE_QUESTIONS__ = {
         "Redundancy"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Redundancy"
+      "explanation": "Redundancy is the extra bits removed by compression. التكرار هو البتات الزائدة التي يزيلها الضغط."
     },
     {
       "id": "it-l1-def-07",
@@ -25318,7 +25606,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 1,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A mathematical model or entity that generates a sequence of symbols from a finite”?",
+      "q": "Which term is defined as: “A mathematical model or entity that generates a sequence of symbols from a finite alphabet”?",
       "options": [
         "Discrete memoryless source",
         "Channel",
@@ -25326,7 +25614,7 @@ window.__SITE_QUESTIONS__ = {
         "Information source"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Information source"
+      "explanation": "An information source generates symbol sequences. مصدر المعلومات يولد تسلسلًا من الرموز."
     },
     {
       "id": "it-l1-def-08",
@@ -25334,7 +25622,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 1,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A source emitting symbols from a finite alphabet where each symbol is statistically”?",
+      "q": "Which term is defined as: “A source emitting symbols from a finite alphabet where each symbol is statistically independent of the previous symbols”?",
       "options": [
         "Channel",
         "Communication system",
@@ -25342,7 +25630,7 @@ window.__SITE_QUESTIONS__ = {
         "Discrete memoryless source"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Discrete memoryless source"
+      "explanation": "A discrete memoryless source (DMS) has independent symbols. المصدر المتقطع عديم الذاكرة رموزه مستقلة إحصائيًا."
     },
     {
       "id": "it-l6-def-09",
@@ -25350,7 +25638,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 6,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “The physical or wireless transmission medium used to carry data signals from”?",
+      "q": "Which term is defined as: “The physical or wireless transmission medium used to carry data signals from one device to another”?",
       "options": [
         "Communication system",
         "Noiseless channel",
@@ -25358,7 +25646,7 @@ window.__SITE_QUESTIONS__ = {
         "Channel"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Channel"
+      "explanation": "A channel is the transmission medium. القناة هي وسيط الإرسال."
     },
     {
       "id": "it-l3-def-10",
@@ -25366,7 +25654,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 5,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A system consisting of Source Encoder, Channel Encoder, Channel, Channel Decoder,”?",
+      "q": "Which term is defined as: “A system consisting of Source Encoder, Channel Encoder, Channel, Channel Decoder, and Source Decoder”?",
       "options": [
         "Channel capacity (C)",
         "Noiseless channel",
@@ -25374,7 +25662,7 @@ window.__SITE_QUESTIONS__ = {
         "Communication system"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Communication system"
+      "explanation": "This full chain is a communication system. هذه السلسلة الكاملة هي نظام اتصال."
     },
     {
       "id": "it-l6-def-11",
@@ -25454,7 +25742,7 @@ window.__SITE_QUESTIONS__ = {
         "Channel coding"
       ],
       "answer": 3,
-      "explanation": ")Term( المصطلح بالعربي المعنى + )Official Definition( باإلنجليزي النموذجي التعريف"
+      "explanation": "Adding controlled redundancy for error detection and correction is channel coding. إضافة تكرار منظم لاكتشاف الأخطاء وتصحيحها هي التكويد القنوي."
     },
     {
       "id": "it-l5-def-16",
@@ -25478,7 +25766,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 5,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “Another name for a prefix code; each codeword can be decoded immediately without”?",
+      "q": "Which term is defined as: “Another name for a prefix code; each codeword can be decoded immediately without waiting for the rest of the message”?",
       "options": [
         "Variable-length code",
         "Huffman coding",
@@ -25486,7 +25774,7 @@ window.__SITE_QUESTIONS__ = {
         "Instantaneous code"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Instantaneous code"
+      "explanation": "A prefix code is also called an instantaneous code. الكود البادئي يسمى أيضًا الكود الفوري."
     },
     {
       "id": "it-l5-def-18",
@@ -25510,7 +25798,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 5,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A code that assigns shorter codewords to frequent symbols and longer codewords to”?",
+      "q": "Which term is defined as: “A code that assigns shorter codewords to frequent symbols and longer codewords to infrequent symbols”?",
       "options": [
         "Huffman coding",
         "Shannon–Fano coding",
@@ -25518,7 +25806,7 @@ window.__SITE_QUESTIONS__ = {
         "Variable-length code"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Variable-length code"
+      "explanation": "Variable-length codes exploit symbol probabilities. الأكواد المتغيرة الطول تستفيد من احتمالات الرموز."
     },
     {
       "id": "it-l5-def-20",
@@ -25526,7 +25814,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 5,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “An optimal bottom-up lossless prefix symbol coding algorithm that repeatedly combines”?",
+      "q": "Which term is defined as: “An optimal bottom-up lossless prefix symbol coding algorithm that repeatedly combines the two least probable symbols”?",
       "options": [
         "Shannon–Fano coding",
         "Arithmetic coding",
@@ -25534,7 +25822,7 @@ window.__SITE_QUESTIONS__ = {
         "Huffman coding"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Huffman coding"
+      "explanation": "Huffman coding builds the tree bottom-up. كود هافمان يبني الشجرة من الأسفل للأعلى."
     },
     {
       "id": "it-l5-def-21",
@@ -25542,7 +25830,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 5,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A top-down variable-length prefix coding method that recursively splits sorted”?",
+      "q": "Which term is defined as: “A top-down variable-length prefix coding method that recursively splits sorted symbol probabilities into two groups of nearly equal probability”?",
       "options": [
         "Arithmetic coding",
         "Kraft inequality",
@@ -25550,7 +25838,7 @@ window.__SITE_QUESTIONS__ = {
         "Shannon–Fano coding"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Shannon–Fano coding"
+      "explanation": "Shannon–Fano coding splits the sorted probabilities top-down. كود شانون–فانو يقسم الاحتمالات المرتبة من الأعلى للأسفل."
     },
     {
       "id": "it-l5-def-22",
@@ -25558,7 +25846,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 5,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A prefix coding technique that uses the binary expansion of the modified cumulative”?",
+      "q": "Which term is defined as: “A prefix coding technique that uses the binary expansion of the modified cumulative distribution to construct codewords”?",
       "options": [
         "Arithmetic coding",
         "Kraft inequality",
@@ -25566,7 +25854,7 @@ window.__SITE_QUESTIONS__ = {
         "Shannon–Fano–Elias coding"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Shannon–Fano–Elias coding"
+      "explanation": "Shannon–Fano–Elias uses the cumulative distribution. شانون–فانو–إلياس يعتمد على التوزيع التراكمي."
     },
     {
       "id": "it-l5-def-23",
@@ -25574,7 +25862,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 5,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A lossless compression technique that encodes an entire sequence of symbols as a”?",
+      "q": "Which term is defined as: “A lossless compression technique that encodes an entire sequence of symbols as a single fractional interval”?",
       "options": [
         "Kraft inequality",
         "Data compression",
@@ -25582,7 +25870,7 @@ window.__SITE_QUESTIONS__ = {
         "Arithmetic coding"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Arithmetic coding"
+      "explanation": "Arithmetic coding maps a whole sequence to one interval. التكويد الحسابي يمثل السلسلة كاملة بفترة واحدة."
     },
     {
       "id": "it-l5-def-24",
@@ -25590,7 +25878,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 5,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “A necessary and sufficient condition for the existence of a D-ary prefix code with”?",
+      "q": "Which term is defined as: “A necessary and sufficient condition for the existence of a D-ary prefix code with given codeword lengths, Σ D^(−lᵢ) ≤ 1”?",
       "options": [
         "Data compression",
         "Entropy H(X)",
@@ -25598,7 +25886,7 @@ window.__SITE_QUESTIONS__ = {
         "Kraft inequality"
       ],
       "answer": 3,
-      "explanation": "Correct answer: Kraft inequality"
+      "explanation": "Kraft's inequality checks whether codeword lengths are feasible. متباينة كرافت تتحقق من إمكانية أطوال الأكواد."
     },
     {
       "id": "it-l5-def-25",
@@ -25622,7 +25910,7 @@ window.__SITE_QUESTIONS__ = {
       "lecture": 5,
       "difficulty": "medium",
       "type": "mcq",
-      "q": "Which term is defined as: “Reducing the size of data files by encoding information more efficiently and eliminating”?",
+      "q": "Which term is defined as: “Reducing the size of data files by encoding information more efficiently and eliminating redundancy”?",
       "options": [
         "Joint entropy H(X,Y)",
         "Conditional entropy H(X|Y)",
@@ -25630,7 +25918,7 @@ window.__SITE_QUESTIONS__ = {
         "Data compression"
       ],
       "answer": 3,
-      "explanation": ")80–77 ص ،مسائل 10 الـ حل("
+      "explanation": "Data compression removes redundancy to reduce size. ضغط البيانات يزيل التكرار لتقليل الحجم."
     },
     {
       "id": "it-l2-056",
@@ -26271,6 +26559,918 @@ window.__SITE_QUESTIONS__ = {
       ],
       "answer": 0,
       "explanation": "Base 2 → bits; base e → nats."
+    },
+    {
+      "id": "it-l1-100",
+      "subjectId": "information-theory",
+      "lecture": 1,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Information is best described as:",
+      "options": [
+        "A sequence of symbols that can be interpreted as a message",
+        "A physical communication device",
+        "A type of computer processor",
+        "A method of storing electricity"
+      ],
+      "answer": 0,
+      "explanation": "Information is data that reduces uncertainty and can be interpreted as a message. المعلومات هي بيانات تقلل عدم التأكد ويمكن تفسيرها كرسالة."
+    },
+    {
+      "id": "it-l1-101",
+      "subjectId": "information-theory",
+      "lecture": 1,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "The amount of information increases when:",
+      "options": [
+        "The number of possible outcomes decreases",
+        "The outcome becomes completely predictable",
+        "The number of possible outcomes increases",
+        "The uncertainty becomes zero"
+      ],
+      "answer": 2,
+      "explanation": "More possible outcomes mean more uncertainty, so each observed outcome carries more information. زيادة عدد النواتج المحتملة ترفع عدم التأكد، فيحمل كل ناتج معلومات أكثر."
+    },
+    {
+      "id": "it-l1-102",
+      "subjectId": "information-theory",
+      "lecture": 1,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Which event provides more information?",
+      "options": [
+        "An event with probability 0.9",
+        "An event with probability 0.5",
+        "An event with probability 0.1",
+        "All events provide equal information"
+      ],
+      "answer": 2,
+      "explanation": "I(x) = −log₂P(x) is larger for smaller probabilities, so rare events are more informative. الأحداث النادرة تحمل معلومات أكبر لأن معلوماتها = −log₂P(x)."
+    },
+    {
+      "id": "it-l1-103",
+      "subjectId": "information-theory",
+      "lecture": 1,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Claude Shannon published “The Mathematical Theory of Communication” in:",
+      "options": [
+        "1936",
+        "1948",
+        "1955",
+        "1962"
+      ],
+      "answer": 1,
+      "explanation": "Shannon's founding paper appeared in 1948. نُشرت الورقة المؤسسة لشانون عام 1948."
+    },
+    {
+      "id": "it-l1-104",
+      "subjectId": "information-theory",
+      "lecture": 1,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Channel encoding increases redundancy in order to improve:",
+      "options": [
+        "Data reliability",
+        "File size reduction",
+        "Source uncertainty",
+        "Computer memory capacity"
+      ],
+      "answer": 0,
+      "explanation": "Channel coding adds controlled redundancy so errors can be detected and corrected, improving reliability. التكويد القنوي يضيف تكرارًا منظمًا لاكتشاف الأخطاء وتصحيحها، فيحسّن الموثوقية."
+    },
+    {
+      "id": "it-l1-105",
+      "subjectId": "information-theory",
+      "lecture": 1,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "A binary source has P(0) = 0.25 and P(1) = 0.75. Its entropy is approximately:",
+      "options": [
+        "0.811 bits",
+        "0.500 bits",
+        "0.250 bits",
+        "2.000 bits"
+      ],
+      "answer": 0,
+      "explanation": "H = −0.25log₂0.25 − 0.75log₂0.75 = 0.5 + 0.311 = 0.811 bits. حساب الإنتروبي لمصدر ثنائي غير متساوي الاحتمال."
+    },
+    {
+      "id": "it-l2-100",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Entropy represents the average amount of:",
+      "options": [
+        "Errors in a channel",
+        "Surprise in observing outcomes",
+        "Data transmitted per second",
+        "Noise in a system"
+      ],
+      "answer": 1,
+      "explanation": "Entropy is the average surprise (uncertainty) of the outcomes of a source. الإنتروبي هو متوسط المفاجأة أو عدم التأكد عند مشاهدة النواتج."
+    },
+    {
+      "id": "it-l2-101",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "In a binary noiseless channel with equally likely inputs, the probability of each input is:",
+      "options": [
+        "0",
+        "1/4",
+        "1/2",
+        "1"
+      ],
+      "answer": 2,
+      "explanation": "Equally likely binary inputs each have probability 1/2. المدخلان الثنائيان المتساويان في الاحتمال لكل منهما احتمال 1/2."
+    },
+    {
+      "id": "it-l2-102",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "For a binary symmetric channel with equally likely inputs, the output probabilities are:",
+      "options": [
+        "P(Y=0) = 0 and P(Y=1) = 1",
+        "P(Y=0) = 1/2 and P(Y=1) = 1/2",
+        "P(Y=0) = 1 and P(Y=1) = 0",
+        "P(Y=0) = 1/4 and P(Y=1) = 3/4"
+      ],
+      "answer": 1,
+      "explanation": "With uniform inputs, the BSC output is also uniform: P(Y=0) = P(Y=1) = 1/2. مع مدخلات متساوية، يكون خرج القناة المتماثلة الثنائية متساويًا أيضًا."
+    },
+    {
+      "id": "it-l2-103",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The entropy of the output of a binary symmetric channel with equally likely inputs is:",
+      "options": [
+        "0 bits",
+        "0.5 bits",
+        "1 bit",
+        "2 bits"
+      ],
+      "answer": 2,
+      "explanation": "The output is uniform over two symbols, so H(Y) = log₂2 = 1 bit. الخرج موزع بالتساوي على رمزين، لذا H(Y) = 1 بت."
+    },
+    {
+      "id": "it-l2-104",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Marginal entropy measures the uncertainty of:",
+      "options": [
+        "A single random variable",
+        "Two variables only",
+        "The channel noise only",
+        "The transmission rate"
+      ],
+      "answer": 0,
+      "explanation": "A marginal entropy such as H(X) describes one variable alone. الإنتروبي الهامشي مثل H(X) يصف متغيرًا واحدًا فقط."
+    },
+    {
+      "id": "it-l2-105",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Conditional entropy is averaged over the:",
+      "options": [
+        "Channel capacity",
+        "Number of bits",
+        "Conditioning random variable",
+        "Noise level"
+      ],
+      "answer": 2,
+      "explanation": "H(X|Y) = Σ p(y) H(X|Y=y), so the average is taken over the conditioning variable Y. يتم أخذ المتوسط على المتغير الشرطي Y."
+    },
+    {
+      "id": "it-l2-106",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The chain rule of entropy states that:",
+      "options": [
+        "H(X,Y) = H(X) − H(Y)",
+        "H(X,Y) = H(X) + H(Y)",
+        "H(X,Y) = H(X) + H(Y|X)",
+        "H(X,Y) = H(X) × H(Y)"
+      ],
+      "answer": 2,
+      "explanation": "The chain rule expands joint entropy as H(X,Y) = H(X) + H(Y|X). قاعدة السلسلة تفكك الإنتروبي المشترك بهذه الصورة."
+    },
+    {
+      "id": "it-l2-107",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "If X and Y are independent, then:",
+      "options": [
+        "H(X,Y) = 0",
+        "H(X,Y) = H(X) + H(Y)",
+        "H(X,Y) = H(X) − H(Y)",
+        "H(X,Y) = H(X|Y)"
+      ],
+      "answer": 1,
+      "explanation": "Independence gives p(x,y) = p(x)p(y), so H(X,Y) = H(X) + H(Y). الاستقلال يجعل الإنتروبي المشترك مجموع الإنتروبيين."
+    },
+    {
+      "id": "it-l2-108",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "In the lecture's joint entropy example, four equally likely outcomes have joint entropy equal to:",
+      "options": [
+        "0 bits",
+        "1 bit",
+        "2 bits",
+        "4 bits"
+      ],
+      "answer": 2,
+      "explanation": "Each of the four outcomes has probability 1/4, so H(X,Y) = log₂4 = 2 bits. لكل ناتج احتمال 1/4، إذن H = log₂4 = 2 بت."
+    },
+    {
+      "id": "it-l2-109",
+      "subjectId": "information-theory",
+      "lecture": 2,
+      "difficulty": "hard",
+      "type": "mcq",
+      "q": "Conditional entropy H(X|Y) is calculated using the expected value of:",
+      "options": [
+        "The channel capacities",
+        "The transmission rates",
+        "The conditional distributions",
+        "The code lengths only"
+      ],
+      "answer": 2,
+      "explanation": "H(X|Y) averages −log₂ p(x|y) over the joint distribution using the conditional distributions p(x|y). يعتمد حساب H(X|Y) على التوزيعات الشرطية p(x|y)."
+    },
+    {
+      "id": "it-l3-100",
+      "subjectId": "information-theory",
+      "lecture": 3,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Entropy is measured in nats when using:",
+      "options": [
+        "Base 2 logarithm",
+        "Base 10 logarithm",
+        "The natural logarithm",
+        "No logarithm"
+      ],
+      "answer": 2,
+      "explanation": "Natural logarithms (base e) give entropy in nats. اللوغاريتم الطبيعي (الأساس e) يعطي الإنتروبي بوحدة النات."
+    },
+    {
+      "id": "it-l3-101",
+      "subjectId": "information-theory",
+      "lecture": 3,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The entropy of a uniform random variable with 32 outcomes is:",
+      "options": [
+        "2 bits",
+        "4 bits",
+        "5 bits",
+        "32 bits"
+      ],
+      "answer": 2,
+      "explanation": "H = log₂32 = 5 bits. الإنتروبي لتوزيع منتظم على 32 ناتجًا = log₂32 = 5 بت."
+    },
+    {
+      "id": "it-l3-102",
+      "subjectId": "information-theory",
+      "lecture": 3,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Which formula represents conditional entropy?",
+      "options": [
+        "H(X|Y) = H(X) + H(Y)",
+        "H(X|Y) = H(X,Y) − H(Y)",
+        "H(X|Y) = H(X) − H(Y)",
+        "H(X|Y) = H(Y) − H(X,Y)"
+      ],
+      "answer": 1,
+      "explanation": "From the chain rule, H(X,Y) = H(X|Y) + H(Y); rearranging gives H(X|Y) = H(X,Y) − H(Y). من قاعدة السلسلة نحصل على هذه الصيغة."
+    },
+    {
+      "id": "it-l3-103",
+      "subjectId": "information-theory",
+      "lecture": 3,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "When are H(X|Y) and H(X) equal?",
+      "options": [
+        "When X and Y are independent",
+        "When X is deterministic only",
+        "When Y has no outcomes",
+        "Never"
+      ],
+      "answer": 0,
+      "explanation": "If X and Y are independent, knowing Y gives no information about X, so H(X|Y) = H(X). عند الاستقلال لا تفيد معرفة Y في X، فيتساوى الإنتروبيان."
+    },
+    {
+      "id": "it-l3-104",
+      "subjectId": "information-theory",
+      "lecture": 3,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Relative entropy is also known as:",
+      "options": [
+        "Shannon entropy",
+        "Kullback–Leibler divergence",
+        "Joint entropy",
+        "Conditional entropy"
+      ],
+      "answer": 1,
+      "explanation": "Relative entropy is the Kullback–Leibler (KL) divergence D(p||q). الإنتروبي النسبي هو تباعد كولباك–ليبيلر."
+    },
+    {
+      "id": "it-l3-105",
+      "subjectId": "information-theory",
+      "lecture": 3,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Mutual information is symmetric, meaning:",
+      "options": [
+        "I(X;Y) = 0 always",
+        "I(X;Y) > 1 always",
+        "I(X;Y) = I(Y;X)",
+        "I(X;Y) = H(X) + H(Y)"
+      ],
+      "answer": 2,
+      "explanation": "The information X gives about Y equals the information Y gives about X. المعلومات التي يقدمها X عن Y تساوي تلك التي يقدمها Y عن X."
+    },
+    {
+      "id": "it-l3-106",
+      "subjectId": "information-theory",
+      "lecture": 3,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "For a uniform distribution over 8 outcomes, the entropy is:",
+      "options": [
+        "1 bit",
+        "2 bits",
+        "3 bits",
+        "8 bits"
+      ],
+      "answer": 2,
+      "explanation": "H = log₂8 = 3 bits. الإنتروبي = log₂8 = 3 بت."
+    },
+    {
+      "id": "it-l4-100",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The channel capacity of a discrete memoryless channel is the maximum:",
+      "options": [
+        "Joint entropy H(X,Y)",
+        "Mutual information I(X;Y)",
+        "Error probability",
+        "Noise power"
+      ],
+      "answer": 1,
+      "explanation": "C = max over p(x) of I(X;Y). سعة القناة هي أقصى معلومات متبادلة بين الدخل والخرج."
+    },
+    {
+      "id": "it-l4-101",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The input distribution that achieves channel capacity is called:",
+      "options": [
+        "A random distribution",
+        "A conditional distribution",
+        "An output distribution",
+        "The optimum input distribution"
+      ],
+      "answer": 3,
+      "explanation": "The distribution p(x) maximising I(X;Y) is the optimum input distribution. التوزيع الذي يعطي أقصى معلومات متبادلة هو توزيع الدخل الأمثل."
+    },
+    {
+      "id": "it-l4-102",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "BSC stands for:",
+      "options": [
+        "Binary Storage Channel",
+        "Basic Signal Channel",
+        "Binary Symmetric Channel",
+        "Binary Switching Code"
+      ],
+      "answer": 2,
+      "explanation": "BSC = Binary Symmetric Channel. BSC تعني القناة المتماثلة الثنائية."
+    },
+    {
+      "id": "it-l4-103",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "In a Binary Symmetric Channel, input symbols are complemented with a certain:",
+      "options": [
+        "Probability",
+        "Frequency only",
+        "Voltage",
+        "Temperature"
+      ],
+      "answer": 0,
+      "explanation": "The BSC flips each input bit with crossover probability p. تقلب القناة المتماثلة الثنائية كل بت باحتمال p."
+    },
+    {
+      "id": "it-l4-104",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "The Binary Symmetric Channel is considered:",
+      "options": [
+        "The most complex channel",
+        "The simplest model of a channel with errors",
+        "A noiseless channel",
+        "A channel without inputs"
+      ],
+      "answer": 1,
+      "explanation": "The BSC is the simplest noisy channel model. القناة المتماثلة الثنائية أبسط نموذج لقناة بها أخطاء."
+    },
+    {
+      "id": "it-l4-105",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Why is the Binary Symmetric Channel called symmetric?",
+      "options": [
+        "It has only one input",
+        "It has no errors",
+        "The probability of changing 0 to 1 equals the probability of changing 1 to 0",
+        "It has three outputs"
+      ],
+      "answer": 2,
+      "explanation": "Both error directions have the same probability p. احتمال الخطأ في الاتجاهين متساوٍ."
+    },
+    {
+      "id": "it-l4-106",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "The probability transition matrix is used to describe:",
+      "options": [
+        "Channel transition probabilities",
+        "Data storage capacity",
+        "Network speed",
+        "File size"
+      ],
+      "answer": 0,
+      "explanation": "The transition matrix lists p(y|x) for every input/output pair. مصفوفة الانتقال تسرد احتمال كل خرج لكل دخل."
+    },
+    {
+      "id": "it-l4-107",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Binary entropy is represented by:",
+      "options": [
+        "H(X,Y)",
+        "H(p)",
+        "H(X|Y)",
+        "C(X)"
+      ],
+      "answer": 1,
+      "explanation": "Binary entropy H(p) = −p log₂p − (1−p) log₂(1−p). إنتروبي المصدر الثنائي يُرمز له بـ H(p)."
+    },
+    {
+      "id": "it-l4-108",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "In a symmetric channel, all rows of the transition matrix are:",
+      "options": [
+        "Identical",
+        "Always zero",
+        "Permutations of each other",
+        "Random numbers"
+      ],
+      "answer": 2,
+      "explanation": "Symmetric rows are permutations of one another, giving equal row entropy. صفوف القناة المتماثلة تبديلات لبعضها."
+    },
+    {
+      "id": "it-l4-109",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "hard",
+      "type": "mcq",
+      "q": "A weakly symmetric channel requires:",
+      "options": [
+        "All rows to contain zeros",
+        "Only one possible input",
+        "No transition probabilities",
+        "Every row to be a permutation of every other row, with equal column sums"
+      ],
+      "answer": 3,
+      "explanation": "Weak symmetry needs permuted rows and equal column sums. التماثل الضعيف يتطلب صفوفًا متبادلة ومجموع أعمدة متساويًا."
+    },
+    {
+      "id": "it-l4-110",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "For a weakly symmetric channel, capacity is achieved by:",
+      "options": [
+        "A uniform distribution on the input alphabet",
+        "A zero input distribution",
+        "A random output distribution",
+        "A distribution with one input only"
+      ],
+      "answer": 0,
+      "explanation": "A uniform input distribution achieves capacity for weakly symmetric channels. التوزيع المنتظم للدخل يحقق السعة."
+    },
+    {
+      "id": "it-l4-111",
+      "subjectId": "information-theory",
+      "lecture": 4,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Data transmission differs from data compression because transmission:",
+      "options": [
+        "Removes all redundancy",
+        "Increases the source entropy",
+        "Adds redundancy in a controlled way to combat channel errors",
+        "Eliminates the channel"
+      ],
+      "answer": 2,
+      "explanation": "Compression removes redundancy; transmission adds controlled redundancy to detect and correct errors. الضغط يزيل التكرار، أما الإرسال فيضيف تكرارًا منظمًا لمقاومة أخطاء القناة."
+    },
+    {
+      "id": "it-l5-100",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "What is the basic idea of data compression?",
+      "options": [
+        "Assigning longer codes to frequent symbols",
+        "Assigning shorter codes to frequent symbols",
+        "Removing all source symbols",
+        "Increasing the message size"
+      ],
+      "answer": 1,
+      "explanation": "Frequent symbols get short codewords to reduce the average length. الرموز الأكثر تكرارًا تأخذ أكوادًا أقصر لتقليل الطول المتوسط."
+    },
+    {
+      "id": "it-l5-101",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Morse code is an example of:",
+      "options": [
+        "A fixed-length code",
+        "A variable-length symbol code",
+        "An encryption code",
+        "An error-correcting code"
+      ],
+      "answer": 1,
+      "explanation": "Morse code uses variable-length codewords. شفرة مورس تستخدم أكوادًا متغيرة الطول."
+    },
+    {
+      "id": "it-l5-102",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "In Morse code, the most frequent English letter, E, is represented by:",
+      "options": [
+        "A long dash",
+        "Two dots",
+        "A single dot",
+        "Three dashes"
+      ],
+      "answer": 2,
+      "explanation": "E is a single dot, the shortest codeword. حرف E يمثله نقطة واحدة، وهو أقصر كود."
+    },
+    {
+      "id": "it-l5-103",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Morse code was developed for:",
+      "options": [
+        "Electric telegraph systems",
+        "Computer networks",
+        "Digital cameras",
+        "Satellite communication"
+      ],
+      "answer": 0,
+      "explanation": "Morse code was designed for electric telegraphy. صُممت شفرة مورس للتلغراف الكهربائي."
+    },
+    {
+      "id": "it-l5-104",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "An alphabet is defined as:",
+      "options": [
+        "A sequence of numbers only",
+        "A probability distribution",
+        "A finite set of elements or symbols",
+        "A type of compression algorithm"
+      ],
+      "answer": 2,
+      "explanation": "An alphabet is a finite set of symbols. الأبجدية مجموعة منتهية من الرموز."
+    },
+    {
+      "id": "it-l5-105",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The source alphabet represents:",
+      "options": [
+        "The symbols used for encoding",
+        "The set of source symbols to be encoded",
+        "The output channel",
+        "The code length"
+      ],
+      "answer": 1,
+      "explanation": "The source alphabet is the set of messages/symbols being encoded. أبجدية المصدر هي رموز الرسالة الأصلية."
+    },
+    {
+      "id": "it-l5-106",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The code alphabet represents:",
+      "options": [
+        "The symbols used to generate codewords",
+        "The source messages",
+        "The probability of each symbol",
+        "The number of source messages"
+      ],
+      "answer": 0,
+      "explanation": "The code alphabet (often {0,1}) builds the codewords. أبجدية الكود (غالبًا {0,1}) تُبنى منها الأكواد."
+    },
+    {
+      "id": "it-l5-107",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "A source code is a function that:",
+      "options": [
+        "Converts a symbol into a codeword",
+        "Calculates channel noise",
+        "Deletes source symbols",
+        "Measures transmission speed"
+      ],
+      "answer": 0,
+      "explanation": "A source code maps each source symbol to a codeword. كود المصدر يحول كل رمز إلى كلمة كود."
+    },
+    {
+      "id": "it-l5-108",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Expected code length measures:",
+      "options": [
+        "The number of source symbols only",
+        "The amount of channel noise",
+        "How much compression a code achieves on average",
+        "The number of errors"
+      ],
+      "answer": 2,
+      "explanation": "L = Σ p(x) l(x) is the average bits per symbol. الطول المتوقع هو متوسط عدد البتات لكل رمز."
+    },
+    {
+      "id": "it-l5-109",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Code efficiency is calculated as:",
+      "options": [
+        "H(X) × L(C)",
+        "L(C) / H(X)",
+        "H(X) + L(C)",
+        "H(X) / L(C)"
+      ],
+      "answer": 3,
+      "explanation": "Efficiency η = H(X)/L(C); it is 100% for an ideal code with L = H(X). الكفاءة هي نسبة الإنتروبي إلى متوسط طول الكود."
+    },
+    {
+      "id": "it-l5-110",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "A nonsingular code means:",
+      "options": [
+        "All symbols have the same codeword",
+        "Every source symbol maps into a different codeword",
+        "Every codeword has one bit",
+        "No codeword can be decoded"
+      ],
+      "answer": 1,
+      "explanation": "Nonsingular means distinct symbols get distinct codewords. الكود غير المنفرد يعني أن كل رمز له كود مختلف."
+    },
+    {
+      "id": "it-l5-111",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "A uniquely decodable code is one in which:",
+      "options": [
+        "A sequence can be decoded in only one way",
+        "Every codeword has equal length",
+        "Every codeword starts with zero",
+        "All codewords are identical"
+      ],
+      "answer": 0,
+      "explanation": "A uniquely decodable code has only one parsing for any encoded string. الكود القابل للفك بشكل وحيد له تفسير واحد فقط لأي سلسلة."
+    },
+    {
+      "id": "it-l5-112",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "In a prefix-code tree diagram, codewords are located at:",
+      "options": [
+        "Root nodes only",
+        "Internal nodes",
+        "All nodes",
+        "Leaf nodes"
+      ],
+      "answer": 3,
+      "explanation": "Prefix codewords sit only at leaves, so none is a prefix of another. أكواد البادئة تقع على الأوراق فقط."
+    },
+    {
+      "id": "it-l5-113",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "If a code has more than one possible source sequence for the same encoded sequence, it is:",
+      "options": [
+        "Prefix-free",
+        "Uniquely decodable",
+        "Not uniquely decodable",
+        "Instantaneous"
+      ],
+      "answer": 2,
+      "explanation": "Ambiguous decoding means the code is not uniquely decodable. وجود أكثر من تفسير يعني أن الكود غير قابل للفك بشكل وحيد."
+    },
+    {
+      "id": "it-l5-114",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Kraft's inequality is associated with:",
+      "options": [
+        "Instantaneous (prefix) codes",
+        "Channel noise",
+        "Binary entropy only",
+        "Data encryption"
+      ],
+      "answer": 0,
+      "explanation": "Kraft's inequality characterises possible prefix-code lengths. متباينة كرافت تحدد إمكانية أطوال أكواد البادئة."
+    },
+    {
+      "id": "it-l5-115",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "In Kraft's inequality, D represents:",
+      "options": [
+        "The number of source messages",
+        "The size of the code alphabet",
+        "The expected code length",
+        "The channel capacity"
+      ],
+      "answer": 1,
+      "explanation": "D is the alphabet size of the code (D-ary code). D هو حجم أبجدية الكود."
+    },
+    {
+      "id": "it-l5-116",
+      "subjectId": "information-theory",
+      "lecture": 5,
+      "difficulty": "hard",
+      "type": "mcq",
+      "q": "The expected codeword length L of an optimal D-ary code satisfies:",
+      "options": [
+        "L < H(X)",
+        "L = H(X) always",
+        "H(X) ≤ L < H(X) + 1",
+        "L ≥ H(X) + 1"
+      ],
+      "answer": 2,
+      "explanation": "For an optimal code, H(X) ≤ L < H(X) + 1; L can approach the entropy but never fall below it. للكود الأمثل: الإنتروبي ≤ L < الإنتروبي + 1."
+    },
+    {
+      "id": "it-l6-100",
+      "subjectId": "information-theory",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "The Binary Erasure Channel (BEC) is similar to the BSC, but:",
+      "options": [
+        "Bits are duplicated",
+        "Bits are erased rather than corrupted",
+        "Bits are always correct",
+        "Inputs are removed"
+      ],
+      "answer": 1,
+      "explanation": "The BEC loses (erases) bits instead of flipping them. قناة الحذف تفقد البتات بدلًا من قلبها."
+    },
+    {
+      "id": "it-l6-101",
+      "subjectId": "information-theory",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "In a Binary Erasure Channel, α represents:",
+      "options": [
+        "The fraction of bits erased",
+        "The number of input symbols",
+        "The channel capacity",
+        "The number of outputs"
+      ],
+      "answer": 0,
+      "explanation": "A fraction α of the transmitted bits is erased. نسبة α من البتات المرسلة تُحذف."
+    },
+    {
+      "id": "it-l6-102",
+      "subjectId": "information-theory",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "If a proportion α of bits is erased, the maximum proportion of bits that can be recovered is:",
+      "options": [
+        "α",
+        "1 + α",
+        "1 − α",
+        "1 / α"
+      ],
+      "answer": 2,
+      "explanation": "At most the non-erased fraction 1 − α can be recovered. يمكن استرجاع نسبة 1 − α على الأكثر."
+    },
+    {
+      "id": "it-l6-103",
+      "subjectId": "information-theory",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "A Binary Erasure Channel has:",
+      "options": [
+        "Two inputs and two outputs",
+        "Two inputs and three outputs",
+        "Three inputs and two outputs",
+        "Three inputs and three outputs"
+      ],
+      "answer": 1,
+      "explanation": "BEC inputs are {0,1}; outputs are {0,1,e} (erasure). مدخلان وثلاثة مخارج تشمل رمز الحذف."
+    },
+    {
+      "id": "it-l6-104",
+      "subjectId": "information-theory",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The capacity of a noiseless binary channel is:",
+      "options": [
+        "0 bits per channel use",
+        "0.5 bits per channel use",
+        "1 bit per channel use",
+        "2 bits per channel use"
+      ],
+      "answer": 2,
+      "explanation": "A noiseless binary channel transmits one bit perfectly per use, so C = 1 bit per channel use. القناة الثنائية عديمة الضوضاء تنقل بتًا واحدًا بشكل مثالي في كل استخدام."
     }
   ],
   "research-methods": [
@@ -33867,6 +35067,666 @@ window.__SITE_QUESTIONS__ = {
       ],
       "answer": 1,
       "explanation": "Past final exam question. Correct answer: MIS"
+    },
+    {
+      "id": "sa-l6-365",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "An _____ approach emphasizes continuous feedback, and each incremental step is affected by what was learned in the prior steps.",
+      "options": [
+        "Structured",
+        "Agile"
+      ],
+      "answer": 1,
+      "explanation": "An agile approach emphasizes continuous feedback and adjusts each incremental step based on prior learning. المنهج الرشيق (Agile) يعتمد على التغذية الراجعة المستمرة وتطوير كل خطوة بناءً على ما تم تعلمه سابقًا."
+    },
+    {
+      "id": "sa-l6-366",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Many agile developers prefer not to use CASE tools at all, and rely instead on whiteboard displays and arrangements of movable sticky notes.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "True — Agile teams often favor lightweight visual collaboration like whiteboards and sticky notes over heavy CASE tools. صحيح — يفضل مطورو Agile غالبًا اللوحات البيضاء والملصقات القابلة للتحريك بدلًا من أدوات CASE الثقيلة."
+    },
+    {
+      "id": "sa-l6-367",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Agile developers believe their approach reinforces the agile strategy: simple, rapid, flexible, and NOT user-oriented.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "explanation": "False — The agile strategy is simple, rapid, flexible, and user-oriented. خطأ — استراتيجية Agile بسيطة وسريعة ومرنة وموجهة للمستخدم (user-oriented)."
+    },
+    {
+      "id": "sa-l6-368",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "_____ attempt to develop a system incrementally, by building a series of prototypes and constantly adjusting them to user requirements.",
+      "options": [
+        "Agile methods",
+        "Agile approaches"
+      ],
+      "answer": 0,
+      "explanation": "Agile methods develop systems incrementally using prototypes adjusted continuously to user needs. تعتمد أساليب Agile (Agile methods) على التطوير التدريجي وبناء نماذج أولية معدلة باستمرار حسب متطلبات المستخدم."
+    },
+    {
+      "id": "sa-l6-369",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Which of the following is NOT an Agile methodology?",
+      "options": [
+        "Scrum, Lean, and Kanban",
+        "XP (Extreme Programming)",
+        "Crystal",
+        "Feature Driven Development (FDD)",
+        "Waterfall",
+        "Dynamic Systems Development Method (DSDM)"
+      ],
+      "answer": 4,
+      "explanation": "Waterfall is a traditional predictive SDLC model, not an Agile methodology. نموذج Waterfall تقليدي تنبؤي وليس من منهجيات Agile."
+    },
+    {
+      "id": "sa-l6-370",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "How does Scrum enable teams to get started quickly and learn as they go when implementing Agile principles?",
+      "options": [
+        "Sprints",
+        "Continuous Feedback",
+        "Empirical Process",
+        "Collaboration and Communication",
+        "All of the following"
+      ],
+      "answer": 4,
+      "explanation": "Scrum combines sprints, continuous feedback, empirical process control, and close team collaboration. يجمع Scrum بين السبرينت والتغذية الراجعة المستمرة والعملية التجريبية والتعاون والتواصل."
+    },
+    {
+      "id": "sa-l6-371",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "How long is a typical Scrum sprint?",
+      "options": [
+        "1–2 days",
+        "2–4 weeks"
+      ],
+      "answer": 1,
+      "explanation": "Scrum sprints typically last 2 to 4 weeks with clear start and finish dates. تستغرق فترة الـ Sprint النموذجية في Scrum من أسبوعين إلى 4 أسابيع."
+    },
+    {
+      "id": "sa-l6-372",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Scrum teams commit to ship working software through set intervals called _____.",
+      "options": [
+        "Sprints",
+        "Method",
+        "Agile"
+      ],
+      "answer": 0,
+      "explanation": "In Scrum, fixed intervals for shipping working software are called Sprints. تُسمى الفترات الزمنية المحددة لتسليم برمجيات عاملة في Scrum بالـ Sprints."
+    },
+    {
+      "id": "sa-l6-373",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ has the goal of creating learning loops to quickly gather and integrate customer feedback.",
+      "options": [
+        "Scrum",
+        "Kanban"
+      ],
+      "answer": 0,
+      "explanation": "Scrum uses short sprints to create learning loops for rapid customer feedback integration. يهدف Scrum إلى إنشاء حلقات تعلم سريعة لجمع ودمج ملاحظات العملاء."
+    },
+    {
+      "id": "sa-l6-374",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "The name SCRUM comes from the rugby term scrum.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "True — Scrum is named after the rugby formation where teammates work closely together toward an objective. صحيح — اسم Scrum مأخوذ من مصطلح في لعبة الرجبي."
+    },
+    {
+      "id": "sa-l6-375",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Scrum moves fast, with sprints of two to at most _____ weeks with clear start and finish dates. The short time frame forces complex tasks to be split into smaller stories and helps the team learn quickly.",
+      "options": [
+        "4",
+        "5"
+      ],
+      "answer": 0,
+      "explanation": "Scrum sprints run from two to at most four weeks. تمتد السبرينت في Scrum من أسبوعين إلى 4 أسابيع كحد أقصى."
+    },
+    {
+      "id": "sa-l6-376",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "What are the three key roles defined in Scrum?",
+      "options": [
+        "Product Owner, Scrum Master, Development Team",
+        "Team Leader, Stakeholder, Project Manager",
+        "Analyst, Tester, Developer",
+        "Customer, Developer, Consultant"
+      ],
+      "answer": 0,
+      "explanation": "Scrum defines three roles: Product Owner, Scrum Master, and Development Team. الأدوار الثلاثة الأساسية في Scrum هي: مالك المنتج (Product Owner)، وسكرام ماستر (Scrum Master)، وفريق التطوير."
+    },
+    {
+      "id": "sa-l6-377",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Which Agile methodology uses sprints and daily standups?",
+      "options": [
+        "Kanban",
+        "Scrum",
+        "Extreme Programming",
+        "Lean"
+      ],
+      "answer": 1,
+      "explanation": "Scrum is characterized by fixed-length sprints and daily standup meetings (Daily Scrum). تعتمد منهجية Scrum على السبرينت والاجتماعات اليومية."
+    },
+    {
+      "id": "sa-l6-378",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ advocates for the customer, manages the product backlog, and helps prioritize the work by the development team.",
+      "options": [
+        "Product Owner",
+        "Scrum Master"
+      ],
+      "answer": 0,
+      "explanation": "The Product Owner represents the customer, owns the product backlog, and prioritizes work. يمثل مالك المنتج (Product Owner) العميل ويدير قائمة المنتج ويرتب أولويات العمل."
+    },
+    {
+      "id": "sa-l6-379",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ helps the team stay grounded in the Scrum principles.",
+      "options": [
+        "Scrum Master",
+        "Product Owner"
+      ],
+      "answer": 0,
+      "explanation": "The Scrum Master coaches the team and keeps them grounded in Scrum principles and practices. يساعد الـ Scrum Master الفريق على الالتزام بمبادئ Scrum."
+    },
+    {
+      "id": "sa-l6-380",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ chooses the work to be done, delivers increments, and demonstrates collective accountability.",
+      "options": [
+        "Scrum Master",
+        "The development team"
+      ],
+      "answer": 1,
+      "explanation": "The Development Team selects work for the sprint, builds increments, and shares collective accountability. فريق التطوير يختار العمل المطلوب ويسلم الزيادات (Increments) ويتحمل المسؤولية الجماعية."
+    },
+    {
+      "id": "sa-l6-381",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "What is a key characteristic of a Scrum team?",
+      "options": [
+        "It is managed by the Scrum Master",
+        "It is self-organizing with equal responsibilities",
+        "It relies heavily on CASE tools",
+        "It works in undefined time frames"
+      ],
+      "answer": 1,
+      "explanation": "Scrum teams have no single boss; they are self-organizing and everyone shares responsibility equally. فريق Scrum ذاتي التنظيم ويتساوى أعضاؤه في المسؤولية."
+    },
+    {
+      "id": "sa-l6-382",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "_____ is the number of story points completed in a sprint and is the central metric for Scrum teams.",
+      "options": [
+        "Velocity",
+        "Backlog"
+      ],
+      "answer": 0,
+      "explanation": "Velocity measures the story points completed per sprint. السرعة (Velocity) هي عدد نقاط القصة (story points) المكتملة في السبرينت."
+    },
+    {
+      "id": "sa-l6-383",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "What is the primary metric used in Scrum to measure progress?",
+      "options": [
+        "Velocity",
+        "Backlog"
+      ],
+      "answer": 0,
+      "explanation": "Velocity is the central metric used in Scrum to gauge team progress and capacity. المقياس الأساسي في Scrum لقياس التقدم هو الـ Velocity."
+    },
+    {
+      "id": "sa-l6-384",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Which artifact shows whether the team is on track to complete all sprint tasks?",
+      "options": [
+        "Task Board",
+        "Product Backlog",
+        "Burndown Chart"
+      ],
+      "answer": 2,
+      "explanation": "The Sprint Burndown Chart plots remaining work daily to show if the team is on track. يوضح مخطط الاحتراق (Burndown Chart) ما إذا كان الفريق على المسار الصحيح لإنجاز مهام السبرينت."
+    },
+    {
+      "id": "sa-l6-385",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "_____ is a set of work items ordered and stated, something to do like a requirement to implement or bug to solve.",
+      "options": [
+        "Velocity",
+        "Backlog"
+      ],
+      "answer": 1,
+      "explanation": "A Backlog is an ordered list of work items such as requirements or bug fixes. قائمة المهام (Backlog) هي مجموعة مرتبة من عناصر العمل مثل المتطلبات أو إصلاح الأخطاء."
+    },
+    {
+      "id": "sa-l6-386",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ is the way to figure the velocity.",
+      "options": [
+        "Backlog",
+        "Burndown chart"
+      ],
+      "answer": 1,
+      "explanation": "The burndown chart tracks remaining work over time and helps figure out team velocity. يُستخدم الـ Burndown Chart لتتبع العمل المتبقي وحساب السرعة (Velocity)."
+    },
+    {
+      "id": "sa-l6-387",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ not only makes release and iteration planning easier, it broadcasts all the things the team intends to spend time on—including internal work that the customer will never notice.",
+      "options": [
+        "Well-prioritized agile backlog",
+        "Well-prioritized method backlog"
+      ],
+      "answer": 0,
+      "explanation": "A well-prioritized agile backlog makes release and iteration planning easier and makes all planned work visible. قائمة العمل المرنة المرتبة الأولويات (Well-prioritized agile backlog) تسهل التخطيط وتوضح كل ما سيعمل عليه الفريق."
+    },
+    {
+      "id": "sa-l6-388",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Often, each item on the Sprint Backlog is broken down into tasks. Once all members agree the Sprint Backlog is achievable, the Sprint starts.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "True — Sprint items are decomposed into tasks, and the sprint begins once the team agrees the Sprint Backlog is achievable. صحيح — يتم تقسيم عناصر الـ Sprint Backlog إلى مهام، ويبدأ السبرينت بعد موافقة الفريق على إمكانية تحقيقها."
+    },
+    {
+      "id": "sa-l6-389",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Daily Scrum is a daily meeting limited to _____ minutes.",
+      "options": [
+        "20",
+        "15"
+      ],
+      "answer": 1,
+      "explanation": "The Daily Scrum is timeboxed to 15 minutes. اجتماع الـ Daily Scrum اليومي محدد بـ 15 دقيقة."
+    },
+    {
+      "id": "sa-l6-390",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Once the Sprint starts, the team executes on the Sprint Backlog. Scrum does not specify how the team should execute; that is left for the team to decide.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "True — Scrum defines the framework while leaving execution details to the self-organizing team. صحيح — يترك Scrum للفريق حرية اختيار طريقة التنفيذ."
+    },
+    {
+      "id": "sa-l6-391",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "_____ is a prioritized list of value the team can deliver.",
+      "options": [
+        "Product backlog",
+        "Burndown chart"
+      ],
+      "answer": 0,
+      "explanation": "The Product Backlog is a prioritized list of valuable items the team can deliver. الـ Product Backlog هو قائمة مرتبة بالأولوية للقيمة التي يمكن للفريق تسليمها."
+    },
+    {
+      "id": "sa-l6-392",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "To aid the Daily Scrum, teams often review _____.",
+      "options": [
+        "Task board",
+        "Sprint burndown",
+        "Both of them"
+      ],
+      "answer": 2,
+      "explanation": "Teams commonly review both the Task Board and the Sprint Burndown during Daily Scrum. يراجع الفريق عادةً لوحة المهام ومخطط الاحتراق (كلاهما) أثناء الاجتماع اليومي."
+    },
+    {
+      "id": "sa-l6-393",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ provides a visual way of tracking progress for each backlog item by listing each backlog item the team is working on, broken down into tasks placed in To Do, In Progress, and Done columns.",
+      "options": [
+        "Task board",
+        "Sprint burndown"
+      ],
+      "answer": 0,
+      "explanation": "The Task Board tracks backlog items and tasks across To Do, In Progress, and Done columns. لوحة المهام (Task Board) تتبع المهام بصريًا عبر أعمدة To Do وIn Progress وDone."
+    },
+    {
+      "id": "sa-l6-394",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "A graph that plots the daily total of remaining work (typically in hours) to show whether the team is \"on track\" to complete all the work by the end of the Sprint is called _____.",
+      "options": [
+        "Task board",
+        "Sprint burndown"
+      ],
+      "answer": 1,
+      "explanation": "The Sprint Burndown plots remaining hours of work daily against the sprint timeline. مخطط احتراق السبرينت (Sprint Burndown) يرسم إجمالي العمل المتبقي يوميًا بالساعات."
+    },
+    {
+      "id": "sa-l6-395",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The team demonstrates what they've accomplished to stakeholders during the _____.",
+      "options": [
+        "Sprint Retrospective",
+        "Sprint Review"
+      ],
+      "answer": 1,
+      "explanation": "In the Sprint Review, the team demos completed work to stakeholders. يعرض الفريق ما أنجزه لأصحاب المصلحة في مراجعة السبرينت (Sprint Review)."
+    },
+    {
+      "id": "sa-l6-396",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "The team takes time to reflect on what went well and which areas need improvement during the _____.",
+      "options": [
+        "Sprint Retrospective",
+        "Sprint Review"
+      ],
+      "answer": 0,
+      "explanation": "The Sprint Retrospective focuses on team reflection and process improvement. الـ Sprint Retrospective مخصص لمراجعة ما سار بشكل جيد وما يحتاج إلى تحسين."
+    },
+    {
+      "id": "sa-l6-397",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "What does the term \"Increment\" in Scrum refer to?",
+      "options": [
+        "A potentially shippable product output of a sprint",
+        "A task assigned to the development team"
+      ],
+      "answer": 0,
+      "explanation": "An Increment is the potentially shippable product output produced by a sprint. الـ Increment هو مخرج منتج قابل للشحن (Potentially Shippable) ناتج عن السبرينت."
+    },
+    {
+      "id": "sa-l6-398",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "A sprint's output should be of shippable quality, even if it's part of something bigger and can't ship by itself. It should meet all the quality criteria set by the team and Product Owner.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "True — Every sprint increment must meet the agreed quality criteria and be of shippable quality. صحيح — يجب أن يكون مخرج السبرينت بجودة قابلة للإطلاق ويستوفي معايير الجودة."
+    },
+    {
+      "id": "sa-l6-399",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "What is the purpose of the Daily Scrum?",
+      "options": [
+        "To complete all sprint tasks",
+        "To discuss challenges and plan the day's work"
+      ],
+      "answer": 1,
+      "explanation": "The Daily Scrum aligns the team, surfaces impediments/challenges, and plans the next 24 hours of work. الهدف من الـ Daily Scrum هو مناقشة التحديات وتخطيط عمل اليوم."
+    },
+    {
+      "id": "sa-l6-400",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Scrum is very popular because it provides just enough framework to guide teams, while giving them flexibility in how they execute.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "True — Scrum offers lightweight structure without dictating low-level execution steps. صحيح — يوازن Scrum بين الإطار الإرشادي والمرونة في التنفيذ."
+    },
+    {
+      "id": "sa-l6-401",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "Sprint Planning selects the next items on the Product Backlog and the cycle repeats (repeat – learn – improve). This iterative cycle provides the team with lots of opportunities to learn and improve.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "True — Repeating the sprint cycle creates continuous opportunities to learn and improve. صحيح — تكرار الدورة عبر Sprint Planning يتيح للفريق التعلم والتحسن باستمرار."
+    },
+    {
+      "id": "sa-l6-402",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "While broadly fitting under the umbrella of Agile, both Scrum and Kanban are quite similar.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "explanation": "False — Although both are Agile, Scrum and Kanban are quite different (sprints and defined roles vs. continuous flow without fixed roles). خطأ — رغم انتماء كليهما لـ Agile، يختلف Scrum عن Kanban جوهريًا."
+    },
+    {
+      "id": "sa-l6-403",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "_____ help users, managers, and IT professionals understand the design of a system. Modeling involves graphical methods and nontechnical language that represent the system at various stages of development.",
+      "options": [
+        "Modeling techniques",
+        "Modeling approaches"
+      ],
+      "answer": 0,
+      "explanation": "Modeling techniques use graphical methods and nontechnical language to represent system design. تقنيات النمذجة (Modeling techniques) تستخدم أساليب رسومية ولغة غير تقنية لتوضيح تصميم النظام."
+    },
+    {
+      "id": "sa-l6-404",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ is a top-down representation of a function or process, similar to drawing an organization chart.",
+      "options": [
+        "BPM (Business Process Modeling)",
+        "FDD (Functional Decomposition Diagrams)"
+      ],
+      "answer": 1,
+      "explanation": "A Functional Decomposition Diagram (FDD) breaks down functions/processes top-down like an org chart. مخطط التفكيك الوظيفي (FDD) يمثل العمليات من أعلى لأسفل مثل الهيكل التنظيمي."
+    },
+    {
+      "id": "sa-l6-405",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "_____ represents one or more business processes.",
+      "options": [
+        "BPM (Business Process Modeling)",
+        "FDD (Functional Decomposition Diagrams)"
+      ],
+      "answer": 0,
+      "explanation": "A Business Process Model (BPM) represents one or more business processes. نمذجة عمليات الأعمال (BPM) تمثل عملية أعمال واحدة أو أكثر."
+    },
+    {
+      "id": "sa-l6-406",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ includes various shapes and symbols to represent events, processes, and workflows.",
+      "options": [
+        "BPM (Business Process Modeling)",
+        "BPMN (Business Process Modeling Notation)"
+      ],
+      "answer": 1,
+      "explanation": "BPMN provides standard shapes and symbols for events, processes, and workflows. لغة BPMN توفر أشكالًا ورموزًا قياسية للأحداث والعمليات وتدفقات العمل."
+    },
+    {
+      "id": "sa-l6-407",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "During requirements modeling, analysts often create models that use a standard language called Business Process Modeling Notation (BPMN).",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "True — Analysts use BPMN as a standard notation during requirements modeling. صحيح — يستخدم المحللون BPMN كلغة قياسية أثناء نمذجة المتطلبات."
+    },
+    {
+      "id": "sa-l6-408",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "Working from a functional decomposition diagram, analysts can create _____ to show how the system stores, processes, and transforms data.",
+      "options": [
+        "DFD (Data Flow Diagrams)",
+        "BPMN (Business Process Modeling Notation)"
+      ],
+      "answer": 0,
+      "explanation": "Data Flow Diagrams (DFDs) are derived from FDDs to illustrate data storage, processing, and transformation. تُنشأ مخططات تدفق البيانات (DFD) انطلاقًا من FDD لتوضيح تخزين البيانات ومعالجتها وتحويلها."
+    },
+    {
+      "id": "sa-l6-409",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "easy",
+      "type": "mcq",
+      "q": "_____ is a widely used method of visualizing and documenting software systems design.",
+      "options": [
+        "UML (The Unified Modeling Language)",
+        "ML (Machine Learning)"
+      ],
+      "answer": 0,
+      "explanation": "UML (Unified Modeling Language) is widely used to visualize and document software system design. لغة النمذجة الموحدة (UML) طريقة شائعة لتصور وتوثيق تصميم الأنظمة."
+    },
+    {
+      "id": "sa-l6-410",
+      "subjectId": "system-analysis",
+      "lecture": 6,
+      "difficulty": "medium",
+      "type": "mcq",
+      "q": "_____ uses object-oriented design concepts, but it is independent of any specific programming language and can be used to describe business processes and requirements generally (e.g., Use Case Diagram, Sequence Diagram).",
+      "options": [
+        "UML (The Unified Modeling Language)",
+        "ML (Machine Learning)"
+      ],
+      "answer": 0,
+      "explanation": "UML is language-independent, object-oriented, and includes diagrams like Use Case and Sequence diagrams. تستخدم UML مفاهيم البرمجة كائنية التوجه بشكل مستقل عن لغة برمجة معينة."
     }
   ]
 };
