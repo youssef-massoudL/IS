@@ -2400,5 +2400,309 @@
     ],
     "answer": 2,
     "explanation": "A noiseless binary channel transmits one bit perfectly per use, so C = 1 bit per channel use. القناة الثنائية عديمة الضوضاء تنقل بتًا واحدًا بشكل مثالي في كل استخدام."
+  },
+  {
+    "id": "it-l7-100",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "What is a sample space?",
+    "options": [
+      "The set of all possible outcomes of an experiment",
+      "A set of possible probabilities",
+      "A collection of random variables",
+      "A set of independent events"
+    ],
+    "answer": 0,
+    "explanation": "The sample space S is the set of all possible outcomes of an experiment. فضاء العينة هو مجموعة كل النواتج الممكنة للتجربة."
+  },
+  {
+    "id": "it-l7-101",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "When throwing a standard die, the sample space is:",
+    "options": [
+      "{1, 2, 3, 4, 5, 6}",
+      "{1, 2, 3, 4, 5}",
+      "{2, 4, 6}",
+      "{0, 1}"
+    ],
+    "answer": 0,
+    "explanation": "A die has six outcomes, so S = {1, 2, 3, 4, 5, 6}. حجر النرد له ستة نواتج."
+  },
+  {
+    "id": "it-l7-102",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "An event (E) is defined as:",
+    "options": [
+      "A subset of the sample space",
+      "The entire sample space only",
+      "A random variable",
+      "A probability distribution"
+    ],
+    "answer": 0,
+    "explanation": "An event is a subset of the sample space. الحدث هو مجموعة جزئية من فضاء العينة."
+  },
+  {
+    "id": "it-l7-103",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "When rolling a die, the event of getting an odd number is:",
+    "options": [
+      "{1, 3, 5}",
+      "{2, 4, 6}",
+      "{1, 2, 3}",
+      "{4, 5, 6}"
+    ],
+    "answer": 0,
+    "explanation": "The odd outcomes are 1, 3 and 5, so E = {1, 3, 5}. النواتج الفردية هي 1 و3 و5."
+  },
+  {
+    "id": "it-l7-104",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Two events are mutually exclusive if:",
+    "options": [
+      "They cannot occur at the same time",
+      "They always occur together",
+      "They are always independent",
+      "They have equal probabilities"
+    ],
+    "answer": 0,
+    "explanation": "Mutually exclusive events cannot occur together: P(A ∩ B) = 0. الحدثان المتنافيان لا يقعان معًا."
+  },
+  {
+    "id": "it-l7-105",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Two events A and B are independent if:",
+    "options": [
+      "Knowing one gives no information about the probability of the other",
+      "They cannot happen together",
+      "They have the same probability",
+      "They always happen together"
+    ],
+    "answer": 0,
+    "explanation": "Independence means one event gives no information about the other. الاستقلال يعني أن معرفة حدث لا تفيد في احتمال الآخر."
+  },
+  {
+    "id": "it-l7-106",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "If A and B are independent events, then:",
+    "options": [
+      "P(A ∩ B) = P(A) + P(B)",
+      "P(A ∩ B) = P(A) · P(B)",
+      "P(A) = P(B)",
+      "P(A ∩ B) = 0"
+    ],
+    "answer": 1,
+    "explanation": "For independent events the joint probability is the product: P(A ∩ B) = P(A)P(B). للأحداث المستقلة، احتمال التقاطع = حاصل ضرب الاحتمالين."
+  },
+  {
+    "id": "it-l7-107",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Conditional probability is the probability of:",
+    "options": [
+      "A given that B has occurred",
+      "A and B never occurring",
+      "A without any conditions",
+      "All possible outcomes"
+    ],
+    "answer": 0,
+    "explanation": "P(A|B) is the probability of A inside the new sample space B. الاحتمال الشرطي هو احتمال A بعد معرفة وقوع B."
+  },
+  {
+    "id": "it-l7-108",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Conditional probability is:",
+    "options": [
+      "Always symmetric",
+      "Not symmetric",
+      "Always equal to zero",
+      "Always equal to one"
+    ],
+    "answer": 1,
+    "explanation": "In general P(A|B) ≠ P(B|A); conditional probability is not symmetric. الاحتمال الشرطي غير متماثل عمومًا."
+  },
+  {
+    "id": "it-l7-109",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A partition of a sample space consists of events that are:",
+    "options": [
+      "Non-empty, non-overlapping, and cover the sample space",
+      "Overlapping and empty",
+      "Always independent",
+      "Always equally probable"
+    ],
+    "answer": 0,
+    "explanation": "A partition is non-empty, disjoint and covers S. التجزئة أحداث غير خالية ومتنافية وتغطي فضاء العينة."
+  },
+  {
+    "id": "it-l7-110",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The law of total probability is used to calculate:",
+    "options": [
+      "The overall probability of an event using a partition",
+      "The variance of a random variable",
+      "The expected code length",
+      "The entropy of a channel"
+    ],
+    "answer": 0,
+    "explanation": "Total probability sums the event's probability over a partition of S. قانون الاحتمال الكلي يجمع احتمالات الحدث عبر تجزئة الفضاء."
+  },
+  {
+    "id": "it-l7-111",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "The multiplication rule is used to find the probability of:",
+    "options": [
+      "Two events happening at the same time",
+      "Only one event occurring",
+      "Two events being impossible",
+      "A random variable's mean"
+    ],
+    "answer": 0,
+    "explanation": "The multiplication rule gives P(A ∩ B) = P(A)P(B|A). قاعدة الضرب تحسب احتمال وقوع الحدثين معًا."
+  },
+  {
+    "id": "it-l7-112",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "Bayes' rule is mainly used to:",
+    "options": [
+      "Reverse conditional probabilities",
+      "Calculate expected values",
+      "Calculate sample spaces",
+      "Measure variance"
+    ],
+    "answer": 0,
+    "explanation": "Bayes' rule turns P(B|A) into P(A|B). قاعدة بايز تعكس الاحتمال الشرطي من اتجاه لآخر."
+  },
+  {
+    "id": "it-l7-113",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Bayes' rule is useful for:",
+    "options": [
+      "Statistical inference",
+      "Data compression",
+      "Source coding",
+      "Channel encoding"
+    ],
+    "answer": 0,
+    "explanation": "Bayes' rule is a core tool for statistical inference. قاعدة بايز أساسية في الاستدلال الإحصائي."
+  },
+  {
+    "id": "it-l7-114",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "In medical diagnosis, Bayes' rule can calculate:",
+    "options": [
+      "The probability of having a disease given a positive test result",
+      "The number of hospital rooms",
+      "The patient's age",
+      "The number of medical tests"
+    ],
+    "answer": 0,
+    "explanation": "Bayes' rule updates P(disease|positive test) from the test's sensitivity and specificity. تحسب قاعدة بايز احتمال المرض بعد نتيجة اختبار موجبة."
+  },
+  {
+    "id": "it-l7-115",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "medium",
+    "type": "mcq",
+    "q": "A random variable is a function from:",
+    "options": [
+      "A sample space to a number system",
+      "A number system to a sample space",
+      "A probability to an event",
+      "An event to a codeword"
+    ],
+    "answer": 0,
+    "explanation": "A random variable maps outcomes to numbers. المتغير العشوائي يحول النواتج إلى أرقام."
+  },
+  {
+    "id": "it-l7-116",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "The expected value of a random variable is also called:",
+    "options": [
+      "The mean",
+      "Variance",
+      "Probability",
+      "Sample space"
+    ],
+    "answer": 0,
+    "explanation": "The expected value is the mean E[X]. القيمة المتوقعة هي المتوسط."
+  },
+  {
+    "id": "it-l7-117",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Expected value represents:",
+    "options": [
+      "The average value obtained when an experiment is repeated many times",
+      "The maximum possible outcome",
+      "The difference between two events",
+      "The probability of an impossible event"
+    ],
+    "answer": 0,
+    "explanation": "The expected value is the long-run average of the random variable. القيمة المتوقعة هي المتوسط على المدى الطويل."
+  },
+  {
+    "id": "it-l7-118",
+    "subjectId": "information-theory",
+    "lecture": 7,
+    "difficulty": "easy",
+    "type": "mcq",
+    "q": "Variance measures:",
+    "options": [
+      "The spread of values around the mean",
+      "The number of possible outcomes",
+      "The probability of an event",
+      "The size of the sample space"
+    ],
+    "answer": 0,
+    "explanation": "Variance measures how far values spread from the mean. التباين يقيس تشتت القيم حول المتوسط."
   }
 ]
