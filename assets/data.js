@@ -1,7 +1,7 @@
 window.__SITE_DATA__ = {
   "title": "سنة تالتة — الترم الأول",
   "subtitle": "نظم المعلومات · ملازم ومحاضرات ومراجعات",
-  "updated": "2026-11-24",
+  "updated": "2026-11-25",
   "subjects": [
     {
       "id": "computer-networks",
@@ -2748,6 +2748,50 @@ window.__SITE_DATA__ = {
                 "06",
                 "information",
                 "theory"
+              ]
+            },
+            {
+              "id": "9fci-is-3rd-grade-information-theory-week-08-pptx-20261125-135948",
+              "title": "المحاضرة 07",
+              "original": "9FCI_IS_3rd_Grade_Information_Theory_Week_08_pptx_20261125_135948.pdf",
+              "path": "files/information-theory/lectures/9fci-is-3rd-grade-information-theory-week-08-pptx-20261125-135948.pdf",
+              "ext": "pdf",
+              "size": 945648,
+              "youtube": "",
+              "addedAt": "2026-11-25T12:01:16.789Z",
+              "lecture": 7,
+              "lectureLocked": true,
+              "kind": "lecture",
+              "kindLocked": true,
+              "midtermReview": false,
+              "keywords": [
+                "محاضرة",
+                "محاضرات",
+                "lecture",
+                "lec",
+                "نظرية المعلومات",
+                "Information Theory",
+                "information-theory",
+                "المحاضرات",
+                "Lectures",
+                "محاضرة 7",
+                "lecture 7",
+                "lec 7",
+                "7",
+                "pdf",
+                "المحاضرة",
+                "07",
+                "9FCI",
+                "IS",
+                "3rd",
+                "Grade",
+                "Information",
+                "Theory",
+                "Week",
+                "08",
+                "pptx",
+                "20261125",
+                "135948"
               ]
             }
           ]
