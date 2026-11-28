@@ -3616,6 +3616,46 @@ window.__SITE_DATA__ = {
                 "Nageh",
                 "Lecture"
               ]
+            },
+            {
+              "id": "it324p-research-methodology-lec-6-study-summary-yousef-nageh",
+              "title": "ملخص المحاضرة 06",
+              "original": "IT324P_Research_Methodology_Lec_6_â_Study_Summary_â_Yousef_Nageh.pdf",
+              "path": "files/research-methods/summaries/it324p-research-methodology-lec-6-study-summary-yousef-nageh.pdf",
+              "ext": "pdf",
+              "size": 406780,
+              "youtube": "",
+              "addedAt": "2026-11-28T09:36:41.283Z",
+              "lecture": 6,
+              "lectureLocked": true,
+              "kind": "summary",
+              "kindLocked": true,
+              "midtermReview": false,
+              "keywords": [
+                "ملخص",
+                "ملخصات",
+                "summary",
+                "خلاصة",
+                "مناهج البحث",
+                "Research Methods",
+                "research-methods",
+                "الملخصات",
+                "Summaries",
+                "محاضرة 6",
+                "lecture 6",
+                "lec 6",
+                "6",
+                "pdf",
+                "المحاضرة",
+                "06",
+                "IT324P",
+                "Research",
+                "Methodology",
+                "Lec",
+                "Study",
+                "Yousef",
+                "Nageh"
+              ]
             }
           ]
         },
